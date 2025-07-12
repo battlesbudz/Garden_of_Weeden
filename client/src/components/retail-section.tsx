@@ -19,8 +19,8 @@ export default function RetailSection() {
     },
     {
       name: "Cosmic Chewz",
-      description: "Premium cannabis-infused candy with precise dosing and amazing flavors.",
-      image: "https://images.unsplash.com/photo-1519047336400-d923dd4b1000?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      description: "100mg per package, 10mg per piece. Hard on the outside, soft on the inside. RSO infused with cosmic flavors including watermelon, blue raspberry, strawberry, banana, cherry, and cheesecake.",
+      image: "@assets/20240228_223118_1752304447251.jpg",
     },
     {
       name: "Freedom Fog Vapes",
