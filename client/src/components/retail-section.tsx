@@ -24,8 +24,8 @@ export default function RetailSection() {
     },
     {
       name: "Freedom Fog Vapes",
-      description: "High-quality vape cartridges featuring pure cannabis extracts.",
-      image: "https://images.unsplash.com/photo-1549140725-6a1f87dc8e27?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      description: "Premium 1G vape cartridges with military-inspired camouflage design. High-quality cannabis extracts for the ultimate vaping experience.",
+      image: "@assets/20240303_120951_1752304725882.jpg",
     },
   ];
 
