@@ -10,16 +10,10 @@ export default function TeamSection() {
 
   const teamMembers = [
     {
-      name: "Justin Battles",
-      role: "Founder & CEO",
-      description: "8-year Army veteran and paratrooper. Oversees cultivation and product creation at Battles Budz, bringing military discipline to cannabis excellence.",
-      image: "https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
-    },
-    {
-      name: "Andrea",
-      role: "COO & Customer Experience Director",
-      description: "15 years in sales and customer service. Personal advocate for cannabis in managing PTSD and bipolar disorder. Leading dispensary operations and customer experience.",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+      name: "Justin & Andrea Battles",
+      role: "Founding Team",
+      description: "Justin: 8-year Army veteran and CEO overseeing cultivation and product creation. Andrea: COO with 15 years in sales and customer service, leading dispensary operations and customer experience.",
+      image: "@assets/Screenshot_20250712_032136_Gallery_1752304907026.jpg",
     },
   ];
 
