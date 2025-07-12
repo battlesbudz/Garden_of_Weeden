@@ -2,12 +2,15 @@ import {
   users, 
   newsletterSubscribers, 
   contactSubmissions,
+  eventBookings,
   type User, 
   type InsertUser,
   type NewsletterSubscriber,
   type InsertNewsletterSubscriber,
   type ContactSubmission,
-  type InsertContactSubmission
+  type InsertContactSubmission,
+  type EventBooking,
+  type InsertEventBooking
 } from "@shared/schema";
 
 export interface IStorage {
@@ -23,23 +26,31 @@ export interface IStorage {
   // Contact submissions
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
   getAllContactSubmissions(): Promise<ContactSubmission[]>;
+  
+  // Event bookings
+  createEventBooking(booking: InsertEventBooking): Promise<EventBooking>;
+  getAllEventBookings(): Promise<EventBooking[]>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private newsletterSubscribers: Map<number, NewsletterSubscriber>;
   private contactSubmissions: Map<number, ContactSubmission>;
+  private eventBookings: Map<number, EventBooking>;
   private currentUserId: number;
   private currentSubscriberId: number;
   private currentSubmissionId: number;
+  private currentBookingId: number;
 
   constructor() {
     this.users = new Map();
     this.newsletterSubscribers = new Map();
     this.contactSubmissions = new Map();
+    this.eventBookings = new Map();
     this.currentUserId = 1;
     this.currentSubscriberId = 1;
     this.currentSubmissionId = 1;
+    this.currentBookingId = 1;
   }
 
   async getUser(id: number): Promise<User | undefined> {
@@ -93,6 +104,22 @@ export class MemStorage implements IStorage {
 
   async getAllContactSubmissions(): Promise<ContactSubmission[]> {
     return Array.from(this.contactSubmissions.values());
+  }
+
+  async createEventBooking(insertBooking: InsertEventBooking): Promise<EventBooking> {
+    const id = this.currentBookingId++;
+    const booking: EventBooking = { 
+      ...insertBooking, 
+      message: insertBooking.message || null,
+      id, 
+      createdAt: new Date() 
+    };
+    this.eventBookings.set(id, booking);
+    return booking;
+  }
+
+  async getAllEventBookings(): Promise<EventBooking[]> {
+    return Array.from(this.eventBookings.values());
   }
 }
 

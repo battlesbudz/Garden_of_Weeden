@@ -2,11 +2,13 @@
 
 ## Overview
 
-This is a full-stack web application for Battles Budz, a veteran-owned cannabis microbusiness in Gloversville, NY. The application serves as a marketing website with newsletter subscription and contact form functionality, built using modern web technologies with a focus on premium user experience and brand presentation.
+This is a full-stack web application for Battles Budz, a veteran-owned cannabis microbusiness in Gloversville, NY. The application serves as a premium cannabis tourism and retail website featuring black and yellow branding, event booking for the consumption lounge, product showcase including Cosmic Chewz and Freedom Fog Vapes, and educational content. Built for both investor presentations and consumer engagement as a tourism destination.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Brand colors: Black and yellow only
+Focus: Premium cannabis tourism experience for consumers and compelling investor presentation
 
 ## System Architecture
 
@@ -37,19 +39,22 @@ Preferred communication style: Simple, everyday language.
 
 ### Frontend Components
 1. **Navigation**: Fixed navigation with smooth scrolling and mobile menu
-2. **Hero Section**: Full-screen landing with brand messaging
-3. **Retail Section**: Product showcase with grid layout
+2. **Hero Section**: Full-screen landing with brand messaging and authentic founder story
+3. **Retail Section**: Product showcase featuring actual products (Cosmic Chewz, Freedom Fog Vapes, Battle Brew Sweet Tea, Heirloom Flower)
 4. **Services Section**: Vertically integrated business offerings
-5. **About Section**: Founder story and company values
-6. **Team Section**: Team member profiles
-7. **Newsletter Section**: Email subscription with social media links
-8. **Footer**: Contact information and site navigation
+5. **About Section**: Authentic founder story based on Justin's actual military and cannabis journey
+6. **Team Section**: Justin and Andrea profiles with accurate backgrounds
+7. **Events Section**: Premium lounge event booking system with forms for private tastings, educational workshops, and group tours
+8. **Education Section**: Cannabis education blog content and resource categories
+9. **Newsletter Section**: Email subscription with social media links
+10. **Footer**: Contact information and site navigation
 
 ### Backend Services
 1. **Newsletter Service**: Email subscription management with duplicate prevention
 2. **Contact Service**: Contact form submission handling
-3. **Storage Interface**: Abstracted storage layer supporting multiple implementations
-4. **Validation**: Shared Zod schemas for data validation
+3. **Event Booking Service**: Premium lounge event booking with comprehensive form validation
+4. **Storage Interface**: Abstracted storage layer supporting multiple implementations
+5. **Validation**: Shared Zod schemas for data validation including event bookings
 
 ### UI System
 - **Design System**: shadcn/ui with custom Battles Budz branding (gold and black theme)

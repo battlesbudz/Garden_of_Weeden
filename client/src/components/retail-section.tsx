@@ -18,9 +18,14 @@ export default function RetailSection() {
       image: "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
     },
     {
-      name: "Legacy Blunts",
-      description: "Hand-rolled premium blunts using time-honored techniques.",
-      image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      name: "Cosmic Chewz",
+      description: "Premium cannabis-infused candy with precise dosing and amazing flavors.",
+      image: "https://images.unsplash.com/photo-1519047336400-d923dd4b1000?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+    },
+    {
+      name: "Freedom Fog Vapes",
+      description: "High-quality vape cartridges featuring pure cannabis extracts.",
+      image: "https://images.unsplash.com/photo-1549140725-6a1f87dc8e27?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
     },
   ];
 
@@ -37,7 +42,7 @@ export default function RetailSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {products.map((product, index) => (
             <div
               key={index}
@@ -66,7 +71,7 @@ export default function RetailSection() {
         <div className="text-center mt-12">
           <p className="text-lg text-battles-gray mb-6">
             <span className="text-battles-gold mr-2">📅</span>
-            Retail operations launching Summer 2024
+            Retail operations launching 2025
           </p>
           <button
             onClick={() => scrollToSection("newsletter")}

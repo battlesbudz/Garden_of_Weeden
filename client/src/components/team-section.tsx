@@ -17,8 +17,8 @@ export default function TeamSection() {
     },
     {
       name: "Andrea",
-      role: "Co-Founder & Customer Experience Director",
-      description: "15 years in sales and customer service. Personal advocate for cannabis in managing PTSD and bipolar conditions.",
+      role: "COO & Customer Experience Director",
+      description: "15 years in sales and customer service. Personal advocate for cannabis in managing PTSD and bipolar disorder. Leading dispensary operations and customer experience.",
       image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
     },
   ];

@@ -54,6 +54,8 @@ export default function Footer() {
                 { id: "services", label: "Services" },
                 { id: "about", label: "About" },
                 { id: "team", label: "Team" },
+                { id: "events", label: "Events" },
+                { id: "education", label: "Education" },
               ].map((item) => (
                 <li key={item.id}>
                   <button

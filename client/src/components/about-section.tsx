@@ -38,37 +38,20 @@ export default function AboutSection() {
 
             <div className="space-y-6 text-lg text-battles-gray">
               <p>
-                <strong className="text-battles-black">Justin Battles</strong>{" "}
-                discovered cannabis at 14, finding it helped him focus and
-                manage what would later be diagnosed as ADHD. His journey took
-                him through military service as a paratrooper, where he
-                sustained injuries that led to his medical retirement from the
-                Army.
+                <strong className="text-battles-black">Justin Battles</strong> first turned to cannabis at 14 as the only thing that helped him feel calm and focused. Later, during his eight years in the Army, he was diagnosed with ADHD and tried medications like Adderall and Ritalin, but they didn't help. They killed his appetite, caused insomnia, and left him unfocused.
               </p>
 
               <p>
-                After his service, Justin's ADHD diagnosis confirmed what he had
-                intuitively known years earlier - cannabis wasn't just
-                recreation for him, it was medicine. This realization
-                transformed his relationship with the plant from personal use to
-                passionate advocacy.
+                During his military service, Justin injured his knees jumping out of planes, leading to his medical retirement. Cannabis was the one thing that helped him manage pain and stay clear-headed, inspiring him to learn everything he could about the plant.
               </p>
 
               <p>
-                Today, Justin channels his military discipline and personal
-                cannabis journey into building{" "}
-                <strong className="text-battles-gold">Battles Budz</strong> - a
-                vertically integrated microbusiness that honors both the healing
-                potential of cannabis and the highest standards of quality and
-                service.
+                That passion led him to study cultivation and processing and grow medical cannabis for himself and his wife. At Battles Budz, Justin oversees cultivation and product creation, channeling his military discipline into building a business that serves the community with integrity.
               </p>
 
               <div className="bg-battles-black text-white p-6 rounded-lg">
                 <p className="italic text-battles-gold font-medium">
-                  "My mission is to create a business that serves the community
-                  with integrity, provides healing through quality cannabis, and
-                  demonstrates that veteran entrepreneurs can lead positive
-                  change in emerging industries."
+                  "We're building a facility that will house a dispensary and an indoor consumption lounge, allowing people to safely enjoy cannabis while seeing how it's grown and made. We're excited to launch, grow, and take Battles Budz national."
                 </p>
                 <p className="mt-4 text-sm">— Justin Battles, Founder & CEO</p>
               </div>

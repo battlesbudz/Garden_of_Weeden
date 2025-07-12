@@ -49,6 +49,8 @@ export default function Navigation() {
                 { id: "services", label: "Services" },
                 { id: "about", label: "About" },
                 { id: "team", label: "Team" },
+                { id: "events", label: "Events" },
+                { id: "education", label: "Education" },
                 { id: "contact", label: "Contact" },
               ].map((item) => (
                 <button
@@ -84,6 +86,8 @@ export default function Navigation() {
               { id: "services", label: "Services" },
               { id: "about", label: "About" },
               { id: "team", label: "Team" },
+              { id: "events", label: "Events" },
+              { id: "education", label: "Education" },
               { id: "contact", label: "Contact" },
             ].map((item) => (
               <button

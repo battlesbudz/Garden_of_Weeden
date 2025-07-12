@@ -22,6 +22,18 @@ export const contactSubmissions = pgTable("contact_submissions", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const eventBookings = pgTable("event_bookings", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  eventType: text("event_type").notNull(),
+  preferredDate: text("preferred_date").notNull(),
+  guestCount: text("guest_count").notNull(),
+  message: text("message"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -37,9 +49,21 @@ export const insertContactSubmissionSchema = createInsertSchema(contactSubmissio
   message: true,
 });
 
+export const insertEventBookingSchema = createInsertSchema(eventBookings).pick({
+  name: true,
+  email: true,
+  phone: true,
+  eventType: true,
+  preferredDate: true,
+  guestCount: true,
+  message: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertNewsletterSubscriber = z.infer<typeof insertNewsletterSubscriberSchema>;
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSchema>;
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
+export type InsertEventBooking = z.infer<typeof insertEventBookingSchema>;
+export type EventBooking = typeof eventBookings.$inferSelect;
