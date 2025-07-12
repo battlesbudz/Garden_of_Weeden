@@ -12,7 +12,7 @@ export default function TeamSection() {
     {
       name: "Justin Battles",
       role: "Founder & CEO",
-      description: "Army veteran and cannabis advocate committed to building a business that serves the community with integrity and quality.",
+      description: "8-year Army veteran and paratrooper. Oversees cultivation and product creation at Battles Budz, bringing military discipline to cannabis excellence.",
       image: "https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
     },
     {
