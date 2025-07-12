@@ -1,3 +1,6 @@
+import cosmicChewzImg from "@assets/20240228_223118_1752304447251.jpg";
+import freedomFogImg from "@assets/20240303_120951_1752304725882.jpg";
+
 export default function RetailSection() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -20,12 +23,12 @@ export default function RetailSection() {
     {
       name: "Cosmic Chewz",
       description: "100mg per package, 10mg per piece. Hard on the outside, soft on the inside. RSO infused with cosmic flavors including watermelon, blue raspberry, strawberry, banana, cherry, and cheesecake.",
-      image: "@assets/20240228_223118_1752304447251.jpg",
+      image: cosmicChewzImg,
     },
     {
       name: "Freedom Fog Vapes",
       description: "Premium 1G vape cartridges with military-inspired camouflage design. High-quality cannabis extracts for the ultimate vaping experience.",
-      image: "@assets/20240303_120951_1752304725882.jpg",
+      image: freedomFogImg,
     },
   ];
 

@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import teamPhotoImg from "@assets/Screenshot_20250712_032136_Gallery_1752304907026.jpg";
 
 export default function TeamSection() {
   const scrollToSection = (sectionId: string) => {
@@ -13,7 +14,7 @@ export default function TeamSection() {
       name: "Justin & Andrea Battles",
       role: "Founding Team",
       description: "Justin: 8-year Army veteran and CEO overseeing cultivation and product creation. Andrea: COO with 15 years in sales and customer service, leading dispensary operations and customer experience.",
-      image: "@assets/Screenshot_20250712_032136_Gallery_1752304907026.jpg",
+      image: teamPhotoImg,
     },
   ];
 
