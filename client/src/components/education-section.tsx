@@ -8,7 +8,7 @@ export default function EducationSection() {
       excerpt: "Learn how terpenes influence the cannabis experience and why they're essential for choosing the right product.",
       category: "Education",
       readTime: "5 min read",
-      image: "https://images.unsplash.com/photo-1585155967849-d0635fc23762?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      image: "https://images.unsplash.com/photo-1550592704-6c76defa9985?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
     },
     {
       id: 2,
@@ -16,7 +16,7 @@ export default function EducationSection() {
       excerpt: "Take a behind-the-scenes look at how we grow premium cannabis using sustainable, organic practices.",
       category: "Cultivation",
       readTime: "7 min read",
-      image: "https://images.unsplash.com/photo-1612198190797-97f8e36f8b74?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      image: "https://images.unsplash.com/photo-1464207687429-7505649dae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
     },
     {
       id: 3,
@@ -24,7 +24,7 @@ export default function EducationSection() {
       excerpt: "Justin Battles shares how cannabis transformed his approach to managing ADHD and post-military life.",
       category: "Personal",
       readTime: "6 min read",
-      image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
     },
     {
       id: 4,
@@ -32,7 +32,7 @@ export default function EducationSection() {
       excerpt: "Essential tips for new cannabis users on dosing, timing, and creating a safe consumption experience.",
       category: "Safety",
       readTime: "4 min read",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
     },
   ];
 
