@@ -22,7 +22,14 @@ export default function LoginPage() {
   }
 
   const handleAuthSuccess = () => {
-    setLocation("/");
+    // After successful login, redirect based on user role
+    setTimeout(() => {
+      if (isAdmin) {
+        setLocation("/dashboard");
+      } else {
+        setLocation("/shop");
+      }
+    }, 100);
   };
 
   return (

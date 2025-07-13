@@ -34,11 +34,20 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
 
   const onSubmit = (data: LoginFormData) => {
     login.mutate(data, {
-      onSuccess: () => {
+      onSuccess: (response: any) => {
         toast({
           title: "Welcome back!",
           description: "You have successfully logged in.",
         });
+        
+        // Redirect based on user role from the response
+        const user = response?.user;
+        if (user?.role === 'admin') {
+          window.location.href = '/dashboard';
+        } else {
+          window.location.href = '/shop';
+        }
+        
         onSuccess?.();
       },
       onError: (error: any) => {
