@@ -12,7 +12,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center text-center text-white overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center text-center text-white overflow-hidden pt-20"
     >
       {/* Background image with overlay */}
       <div
@@ -23,11 +23,11 @@ export default function HeroSection() {
       />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex justify-center">
+        <div className="mb-8">
           <img
             src={logoPath}
             alt="Battles Budz Logo"
-            className="h-16 w-auto max-w-full object-contain"
+            className="h-24 w-auto mx-auto mb-6"
           />
         </div>
 
