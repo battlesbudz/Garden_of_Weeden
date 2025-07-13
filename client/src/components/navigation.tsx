@@ -81,6 +81,11 @@ export default function Navigation() {
                   Shop
                 </a>
               </Link>
+              <Link href="/investors">
+                <a className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  Investors
+                </a>
+              </Link>
 
               {/* Authentication Links */}
               {isAuthenticated ? (
@@ -159,6 +164,11 @@ export default function Navigation() {
               <a className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
                 <ShoppingBag className="h-4 w-4 mr-2" />
                 Shop
+              </a>
+            </Link>
+            <Link href="/investors">
+              <a className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
+                Investors
               </a>
             </Link>
             

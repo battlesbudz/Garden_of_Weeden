@@ -1,4 +1,4 @@
-import { pgTable, text, serial, timestamp, decimal, integer, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, serial, timestamp, decimal, integer, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -84,6 +84,44 @@ export const jobApplications = pgTable("job_applications", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+// Investor portal tables
+export const investorUpdates = pgTable("investor_updates", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 500 }).notNull(),
+  content: text("content").notNull(),
+  type: varchar("type", { length: 50 }).notNull(), // 'financial', 'operational', 'milestone', 'general'
+  quarter: varchar("quarter", { length: 10 }), // e.g., 'Q1 2025'
+  year: integer("year").notNull(),
+  isPublished: boolean("is_published").default(false),
+  publishedAt: timestamp("published_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const investorDocuments = pgTable("investor_documents", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 500 }).notNull(),
+  description: text("description"),
+  category: varchar("category", { length: 100 }).notNull(), // 'financial', 'legal', 'business_plan', 'reports'
+  fileName: varchar("file_name", { length: 255 }).notNull(),
+  fileData: text("file_data"), // Base64 encoded file data
+  fileSize: integer("file_size"),
+  mimeType: varchar("mime_type", { length: 100 }),
+  isPublic: boolean("is_public").default(false), // Whether visible to all investors or admin only
+  uploadedAt: timestamp("uploaded_at").defaultNow(),
+});
+
+export const investorAccess = pgTable("investor_access", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id),
+  accessLevel: varchar("access_level", { length: 50 }).notNull(), // 'investor', 'advisor', 'board_member'
+  companyName: varchar("company_name", { length: 255 }),
+  investmentAmount: decimal("investment_amount", { precision: 12, scale: 2 }),
+  investmentDate: timestamp("investment_date"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   email: true,
@@ -162,6 +200,36 @@ export const insertJobApplicationSchema = createInsertSchema(jobApplications).pi
   resumeFileData: true,
 });
 
+export const insertInvestorUpdateSchema = createInsertSchema(investorUpdates).pick({
+  title: true,
+  content: true,
+  type: true,
+  quarter: true,
+  year: true,
+  isPublished: true,
+  publishedAt: true,
+});
+
+export const insertInvestorDocumentSchema = createInsertSchema(investorDocuments).pick({
+  title: true,
+  description: true,
+  category: true,
+  fileName: true,
+  fileData: true,
+  fileSize: true,
+  mimeType: true,
+  isPublic: true,
+});
+
+export const insertInvestorAccessSchema = createInsertSchema(investorAccess).pick({
+  userId: true,
+  accessLevel: true,
+  companyName: true,
+  investmentAmount: true,
+  investmentDate: true,
+  isActive: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type LoginRequest = z.infer<typeof loginSchema>;
@@ -180,3 +248,9 @@ export type InsertOrder = z.infer<typeof insertOrderSchema>;
 export type Order = typeof orders.$inferSelect;
 export type InsertOrderItem = z.infer<typeof insertOrderItemSchema>;
 export type OrderItem = typeof orderItems.$inferSelect;
+export type InsertInvestorUpdate = z.infer<typeof insertInvestorUpdateSchema>;
+export type InvestorUpdate = typeof investorUpdates.$inferSelect;
+export type InsertInvestorDocument = z.infer<typeof insertInvestorDocumentSchema>;
+export type InvestorDocument = typeof investorDocuments.$inferSelect;
+export type InsertInvestorAccess = z.infer<typeof insertInvestorAccessSchema>;
+export type InvestorAccess = typeof investorAccess.$inferSelect;

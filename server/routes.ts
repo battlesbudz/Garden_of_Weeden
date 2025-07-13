@@ -592,6 +592,93 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Investor Portal API Routes
+  app.get("/api/investor/updates", requireAuth, async (req, res) => {
+    try {
+      // For now, return published updates for all authenticated users
+      // In production, you might want to check investor access level
+      const updates = await storage.getPublishedInvestorUpdates();
+      res.json(updates);
+    } catch (error) {
+      console.error("Error fetching investor updates:", error);
+      res.status(500).json({ message: "Failed to fetch updates" });
+    }
+  });
+
+  app.get("/api/investor/documents", requireAuth, async (req, res) => {
+    try {
+      // For now, return public documents for all authenticated users
+      // In production, you might want to check investor access level
+      const documents = await storage.getPublicInvestorDocuments();
+      res.json(documents);
+    } catch (error) {
+      console.error("Error fetching investor documents:", error);
+      res.status(500).json({ message: "Failed to fetch documents" });
+    }
+  });
+
+  // Admin routes for managing investor content
+  app.get("/api/admin/investor/updates", requireAdmin, async (req, res) => {
+    try {
+      const updates = await storage.getAllInvestorUpdates();
+      res.json(updates);
+    } catch (error) {
+      console.error("Error fetching all investor updates:", error);
+      res.status(500).json({ message: "Failed to fetch updates" });
+    }
+  });
+
+  app.get("/api/admin/investor/documents", requireAdmin, async (req, res) => {
+    try {
+      const documents = await storage.getAllInvestorDocuments();
+      res.json(documents);
+    } catch (error) {
+      console.error("Error fetching all investor documents:", error);
+      res.status(500).json({ message: "Failed to fetch documents" });
+    }
+  });
+
+  // CSV Download Endpoints for Admin
+  app.get("/api/admin/newsletter-subscribers/download", requireAdmin, async (req, res) => {
+    try {
+      const subscribers = await storage.getAllNewsletterSubscribers();
+      
+      const csvHeader = "Email,Subscribed Date\n";
+      const csvContent = subscribers
+        .map(sub => `${sub.email},${new Date(sub.createdAt).toISOString()}`)
+        .join("\n");
+      
+      const csv = csvHeader + csvContent;
+      
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename="newsletter-subscribers.csv"');
+      res.send(csv);
+    } catch (error) {
+      console.error("Error downloading newsletter subscribers CSV:", error);
+      res.status(500).json({ message: "Failed to download CSV" });
+    }
+  });
+
+  app.get("/api/admin/job-applications/download", requireAdmin, async (req, res) => {
+    try {
+      const applications = await storage.getAllJobApplications();
+      
+      const csvHeader = "First Name,Last Name,Email,Phone,Position,Experience,Availability,Applied Date\n";
+      const csvContent = applications
+        .map(app => `${app.firstName},${app.lastName},${app.email},${app.phone || ''},${app.position},${app.experience},${app.availability},${new Date(app.createdAt).toISOString()}`)
+        .join("\n");
+      
+      const csv = csvHeader + csvContent;
+      
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename="job-applications.csv"');
+      res.send(csv);
+    } catch (error) {
+      console.error("Error downloading job applications CSV:", error);
+      res.status(500).json({ message: "Failed to download CSV" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

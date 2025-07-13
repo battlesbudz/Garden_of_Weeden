@@ -7,6 +7,9 @@ import {
   contactSubmissions,
   eventBookings,
   jobApplications,
+  investorUpdates,
+  investorDocuments,
+  investorAccess,
   type User, 
   type InsertUser,
   type Product,
@@ -22,10 +25,16 @@ import {
   type EventBooking,
   type InsertEventBooking,
   type JobApplication,
-  type InsertJobApplication
+  type InsertJobApplication,
+  type InvestorUpdate,
+  type InsertInvestorUpdate,
+  type InvestorDocument,
+  type InsertInvestorDocument,
+  type InvestorAccess,
+  type InsertInvestorAccess
 } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 
 export interface IStorage {
   // User authentication
@@ -65,6 +74,24 @@ export interface IStorage {
   // Job applications
   createJobApplication(application: InsertJobApplication): Promise<JobApplication>;
   getAllJobApplications(): Promise<JobApplication[]>;
+  
+  // Investor portal
+  getAllInvestorUpdates(): Promise<InvestorUpdate[]>;
+  getPublishedInvestorUpdates(): Promise<InvestorUpdate[]>;
+  createInvestorUpdate(update: InsertInvestorUpdate): Promise<InvestorUpdate>;
+  updateInvestorUpdate(id: number, update: Partial<InsertInvestorUpdate>): Promise<InvestorUpdate>;
+  deleteInvestorUpdate(id: number): Promise<void>;
+  
+  getAllInvestorDocuments(): Promise<InvestorDocument[]>;
+  getPublicInvestorDocuments(): Promise<InvestorDocument[]>;
+  createInvestorDocument(document: InsertInvestorDocument): Promise<InvestorDocument>;
+  updateInvestorDocument(id: number, document: Partial<InsertInvestorDocument>): Promise<InvestorDocument>;
+  deleteInvestorDocument(id: number): Promise<void>;
+  
+  getAllInvestorAccess(): Promise<InvestorAccess[]>;
+  getInvestorAccessByUserId(userId: number): Promise<InvestorAccess | undefined>;
+  createInvestorAccess(access: InsertInvestorAccess): Promise<InvestorAccess>;
+  updateInvestorAccess(id: number, access: Partial<InsertInvestorAccess>): Promise<InvestorAccess>;
 }
 
 export class MemStorage implements IStorage {
@@ -332,6 +359,102 @@ export class DatabaseStorage implements IStorage {
 
   async getAllJobApplications(): Promise<JobApplication[]> {
     return await db.select().from(jobApplications);
+  }
+
+  // Investor portal methods
+  async getAllInvestorUpdates(): Promise<InvestorUpdate[]> {
+    return await db.select().from(investorUpdates).orderBy(desc(investorUpdates.createdAt));
+  }
+
+  async getPublishedInvestorUpdates(): Promise<InvestorUpdate[]> {
+    return await db
+      .select()
+      .from(investorUpdates)
+      .where(eq(investorUpdates.isPublished, true))
+      .orderBy(desc(investorUpdates.publishedAt));
+  }
+
+  async createInvestorUpdate(insertUpdate: InsertInvestorUpdate): Promise<InvestorUpdate> {
+    const [update] = await db
+      .insert(investorUpdates)
+      .values(insertUpdate)
+      .returning();
+    return update;
+  }
+
+  async updateInvestorUpdate(id: number, updateData: Partial<InsertInvestorUpdate>): Promise<InvestorUpdate> {
+    const [update] = await db
+      .update(investorUpdates)
+      .set(updateData)
+      .where(eq(investorUpdates.id, id))
+      .returning();
+    return update;
+  }
+
+  async deleteInvestorUpdate(id: number): Promise<void> {
+    await db.delete(investorUpdates).where(eq(investorUpdates.id, id));
+  }
+
+  async getAllInvestorDocuments(): Promise<InvestorDocument[]> {
+    return await db.select().from(investorDocuments).orderBy(desc(investorDocuments.uploadedAt));
+  }
+
+  async getPublicInvestorDocuments(): Promise<InvestorDocument[]> {
+    return await db
+      .select()
+      .from(investorDocuments)
+      .where(eq(investorDocuments.isPublic, true))
+      .orderBy(desc(investorDocuments.uploadedAt));
+  }
+
+  async createInvestorDocument(insertDocument: InsertInvestorDocument): Promise<InvestorDocument> {
+    const [document] = await db
+      .insert(investorDocuments)
+      .values(insertDocument)
+      .returning();
+    return document;
+  }
+
+  async updateInvestorDocument(id: number, updateData: Partial<InsertInvestorDocument>): Promise<InvestorDocument> {
+    const [document] = await db
+      .update(investorDocuments)
+      .set(updateData)
+      .where(eq(investorDocuments.id, id))
+      .returning();
+    return document;
+  }
+
+  async deleteInvestorDocument(id: number): Promise<void> {
+    await db.delete(investorDocuments).where(eq(investorDocuments.id, id));
+  }
+
+  async getAllInvestorAccess(): Promise<InvestorAccess[]> {
+    return await db.select().from(investorAccess);
+  }
+
+  async getInvestorAccessByUserId(userId: number): Promise<InvestorAccess | undefined> {
+    const [access] = await db
+      .select()
+      .from(investorAccess)
+      .where(eq(investorAccess.userId, userId));
+    return access;
+  }
+
+  async createInvestorAccess(insertAccess: InsertInvestorAccess): Promise<InvestorAccess> {
+    const [access] = await db
+      .insert(investorAccess)
+      .values(insertAccess)
+      .returning();
+    return access;
+  }
+
+  async updateInvestorAccess(id: number, updateData: Partial<InsertInvestorAccess>): Promise<InvestorAccess> {
+    const [access] = await db
+      .update(investorAccess)
+      .set(updateData)
+      .where(eq(investorAccess.id, id))
+      .returning();
+    return access;
   }
 }
 
