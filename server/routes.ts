@@ -47,6 +47,50 @@ async function sendNewSubscriberNotification(subscriberEmail: string) {
   }
 }
 
+// Send email notification for new job application
+async function sendJobApplicationNotification(application: any) {
+  if (!mailService) {
+    return;
+  }
+
+  try {
+    await mailService.send({
+      to: 'Battlesbudz@gmail.com',
+      from: 'Battlesbudz@gmail.com',
+      subject: 'New Job Application - Battles Budz',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #000000; color: #FFD700;">
+          <div style="text-align: center; padding: 20px; background-color: #FFD700; color: #000;">
+            <h1 style="margin: 0;">🎖️ New Job Application Received</h1>
+          </div>
+          <div style="padding: 20px; background-color: #1a1a1a;">
+            <h2 style="color: #FFD700;">Application Details:</h2>
+            <p><strong>Name:</strong> ${application.firstName} ${application.lastName}</p>
+            <p><strong>Email:</strong> ${application.email}</p>
+            <p><strong>Phone:</strong> ${application.phone}</p>
+            <p><strong>Position:</strong> ${application.position}</p>
+            <p><strong>Experience:</strong> ${application.experience}</p>
+            <p><strong>Military Status:</strong> ${application.militaryStatus}</p>
+            <p><strong>Cannabis Experience:</strong> ${application.cannabisExperience}</p>
+            <p><strong>Why Battles Budz:</strong> ${application.whyBattlesBudz}</p>
+            <p><strong>Availability:</strong> ${application.availability}</p>
+            <p><strong>References:</strong> ${application.references}</p>
+            <p><strong>Additional Info:</strong> ${application.additionalInfo}</p>
+            <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+            <p><strong>Time:</strong> ${new Date().toLocaleTimeString()}</p>
+          </div>
+          <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
+            <p>Visit your admin portal to view all applications</p>
+          </div>
+        </div>
+      `
+    });
+    console.log('Job application notification sent successfully');
+  } catch (error) {
+    console.error('Failed to send job application notification:', error);
+  }
+}
+
 // Send welcome email to new subscriber
 async function sendWelcomeEmail(subscriberEmail: string) {
   if (!mailService) {
@@ -231,6 +275,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertJobApplicationSchema.parse(req.body);
       const application = await storage.createJobApplication(validatedData);
+      
+      // Send email notification to admin
+      await sendJobApplicationNotification(application);
+      
       res.status(201).json({ 
         message: "Job application submitted successfully",
         application: { 
