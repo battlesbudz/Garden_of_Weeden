@@ -45,7 +45,12 @@ export function useAuth() {
       return await apiRequest("POST", "/api/auth/logout");
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/auth/me"] });
+      // Clear all cached data
+      queryClient.clear();
+      // Also manually set the user query to undefined
+      queryClient.setQueryData(["/api/auth/me"], undefined);
+      // Clear any stored redirect
+      sessionStorage.removeItem('redirectAfterLogin');
     },
   });
 
