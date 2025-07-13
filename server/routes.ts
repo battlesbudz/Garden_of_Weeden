@@ -70,7 +70,7 @@ async function sendWelcomeEmail(subscriberEmail: string) {
               <li>New premium cannabis products</li>
               <li>Exclusive lounge events and tastings</li>
               <li>Educational content and industry news</li>
-              <li>Special veteran discounts and offers</li>
+              <li>Company updates and community news</li>
             </ul>
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
