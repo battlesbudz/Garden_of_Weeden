@@ -13,7 +13,7 @@ export default function RetailSection() {
     {
       name: "Heirloom Flower",
       description: "Small-batch, hand-trimmed premium flower from legacy genetics.",
-      image: "https://images.unsplash.com/photo-1574936019166-81fa21c0f80b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      image: "https://images.unsplash.com/photo-1566303612084-5177e19b8eab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
     },
     {
       name: "Battle Brew Sweet Tea",
