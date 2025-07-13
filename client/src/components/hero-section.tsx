@@ -48,13 +48,13 @@ export default function HeroSection() {
           />
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-playfair font-bold mb-6">
+        <h1 className="text-5xl md:text-7xl font-playfair font-bold mb-4">
           <span className="text-battles-gold">Rooted in Purpose.</span>
           <br />
           <span className="text-white">Grown with Integrity.</span>
         </h1>
 
-        <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light">
+        <p className="text-xl md:text-2xl mb-6 max-w-3xl mx-auto font-light">
           Veteran-owned premium cannabis cultivation, processing, and consumption
           experiences in the heart of New York's Mohawk Valley.
         </p>
