@@ -1,4 +1,4 @@
-import { Sprout, FlaskConical, Sofa, GraduationCap, MapPin } from "lucide-react";
+import { Sprout, FlaskConical, Store, Truck, Sofa, Calendar } from "lucide-react";
 
 export default function ServicesSection() {
   const services = [
@@ -12,21 +12,25 @@ export default function ServicesSection() {
       title: "Processing",
       description: "Expert extraction and infusion capabilities for edibles, beverages, and concentrates using cutting-edge technology.",
     },
-
+    {
+      icon: Store,
+      title: "Retail",
+      description: "Premium cannabis retail experience featuring our signature products including Cosmic Chewz, Freedom Fog Vapes, and BattleBrew.",
+    },
+    {
+      icon: Truck,
+      title: "Delivery",
+      description: "Fast, reliable delivery service bringing premium Battles Budz products directly to your door with professional service.",
+    },
     {
       icon: Sofa,
-      title: "Consumption Lounge",
-      description: "Premium on-site consumption experience with comfortable seating, entertainment, and guided tastings.",
+      title: "On-Site Consumption Lounge",
+      description: "Premium consumption experience with comfortable seating, entertainment, and guided tastings in a welcoming environment.",
     },
     {
-      icon: GraduationCap,
-      title: "Educational Events",
-      description: "Cannabis education workshops, cultivation classes, and community events to promote responsible use and knowledge.",
-    },
-    {
-      icon: MapPin,
-      title: "Cannabis Tourism",
-      description: "Unique destination experience combining retail, consumption lounge, and educational tours for cannabis enthusiasts.",
+      icon: Calendar,
+      title: "Events",
+      description: "Educational workshops, cultivation classes, and entertaining events like smoke and paint, laugh and smoke sessions, live bands, and glass blowing demonstrations.",
     },
   ];
 
