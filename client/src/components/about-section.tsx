@@ -1,4 +1,5 @@
 import { Award, Heart, Leaf } from "lucide-react";
+import cultivationImg from "@assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg";
 
 export default function AboutSection() {
   const values = [
@@ -25,8 +26,8 @@ export default function AboutSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <img
-              src="https://images.unsplash.com/photo-1585155967849-d0635fc23762?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-              alt="Cannabis cultivation and processing"
+              src={cultivationImg}
+              alt="Battles Budz cannabis cultivation"
               className="rounded-xl shadow-lg w-full"
             />
           </div>
