@@ -12,6 +12,9 @@ export default function Navigation() {
   const [location, setLocation] = useLocation();
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
 
+  // Debug auth state
+  console.log('Navigation - Auth State:', { user, isAuthenticated, isAdmin });
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 100);
