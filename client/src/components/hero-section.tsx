@@ -26,17 +26,14 @@ export default function HeroSection() {
           loop
           playsInline
           poster={heroBackgroundImg}
+          onError={(e) => {
+            console.log('Video failed to load:', e);
+            e.currentTarget.style.display = 'none';
+          }}
         >
           <source src={heroVideo} type="video/mp4" />
+          Your browser does not support the video tag.
         </video>
-        
-        {/* Fallback background image if video fails */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('${heroBackgroundImg}')`,
-          }}
-        />
 
       </div>
       <div className="absolute inset-0 bg-black/30" />
@@ -46,7 +43,7 @@ export default function HeroSection() {
           <img
             src={logoPath}
             alt="Battles Budz Logo"
-            className="h-24 w-auto mx-auto mb-6"
+            className="h-32 md:h-40 w-auto mx-auto mb-6"
           />
         </div>
 
