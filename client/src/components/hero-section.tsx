@@ -40,11 +40,11 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-black/30" />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-6">
+        <div className="mb-2">
           <img
             src={logoPath}
             alt="Battles Budz Logo"
-            className="h-44 md:h-56 w-auto mx-auto mb-4"
+            className="h-44 md:h-56 w-auto mx-auto mb-1"
           />
         </div>
 
