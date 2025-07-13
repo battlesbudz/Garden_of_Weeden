@@ -2,6 +2,7 @@ import cosmicChewzImg from "@assets/20240228_223118_1752304447251.jpg";
 import freedomFogImg from "@assets/20240303_120951_1752304725882.jpg";
 import cannabisFlower1 from "@assets/Screenshot_20250713_025012_Gallery_1752391497264.jpg";
 import cannabisFlower2 from "@assets/Screenshot_20250713_025012_Gallery_1752389462115.jpg";
+import battleBrewImg from "@assets/file_00000000a95c61f9a7846b7990b6738f_1752394948359.png";
 
 export default function RetailSection() {
   const scrollToSection = (sectionId: string) => {
@@ -18,9 +19,9 @@ export default function RetailSection() {
       image: cannabisFlower1,
     },
     {
-      name: "Battle Brew Sweet Tea",
-      description: "Our signature cannabis-infused sweet tea, crafted with regional pride.",
-      image: "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      name: "BattleBrew Infused Sweet Tea",
+      description: "Our signature cannabis-infused sweet tea. 10mg THC per can, 12 FL OZ. Military-inspired design with bold Battles Budz branding.",
+      image: battleBrewImg,
     },
     {
       name: "Cosmic Chewz",
