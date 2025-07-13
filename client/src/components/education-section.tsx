@@ -4,17 +4,17 @@ export default function EducationSection() {
   const blogPosts = [
     {
       id: 1,
-      title: "Cannabis Cultivation Techniques: Indoor vs Outdoor Growing",
-      excerpt: "Comprehensive guide to cultivation methods, environmental control, and maximizing yields using 2024 best practices.",
+      title: "6 Best Cannabis Cultivation Techniques [2024]",
+      excerpt: "Learn SOG, SCROG, super cropping, topping, fimming, and DWC hydroponics methods for optimal cannabis growth and yields.",
       category: "Cultivation",
       readTime: "7 min read",
-      image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
       url: "https://www.sunmedgrowers.com/education-resources/blog/post/cannabis-cultivation-techniques/",
     },
     {
       id: 2,
-      title: "Cannabis Laws and Legalization: 2024 Update",
-      excerpt: "Stay informed about federal developments, state regulations, and compliance requirements for cannabis businesses.",
+      title: "Federal Cannabis Legalization and Reform: Where Are We in 2024?",
+      excerpt: "U.S. cannabis reform updates including DEA rescheduling, SAFER Banking Act, and state-by-state legalization progress.",
       category: "Legal",
       readTime: "6 min read",
       image: "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
@@ -22,12 +22,12 @@ export default function EducationSection() {
     },
     {
       id: 3,
-      title: "Cannabis for Veterans: Medical Benefits and Research",
-      excerpt: "Scientific research on cannabis use for PTSD, chronic pain, and other veteran health conditions.",
+      title: "FDA Approves Cannabis Study for Veterans with PTSD",
+      excerpt: "Breakthrough MJP2 study cleared by FDA to test cannabis treatment for 320 veterans with PTSD - largest study to date.",
       category: "Medical",
       readTime: "8 min read",
       image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
-      url: "https://jcannabisresearch.biomedcentral.com/",
+      url: "https://www.stripes.com/veterans/2024-11-22/veterans-marijuana-ptsd-trials-fda-15935021.html",
     },
     {
       id: 4,
