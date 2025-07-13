@@ -1,5 +1,5 @@
 import cosmicChewzImg from "@assets/20240228_223118_1752304447251.jpg";
-import freedomFogImg from "@assets/20240303_120951_1752304725882.jpg";
+import freedomFogImg from "@assets/file_0000000084c86230b8826b578af0fa18_1752398828783.png";
 import cannabisFlower1 from "@assets/Screenshot_20250713_025012_Gallery_1752391497264.jpg";
 import cannabisFlower2 from "@assets/Screenshot_20250713_025012_Gallery_1752389462115.jpg";
 import battleBrewImg from "@assets/file_00000000a95c61f9a7846b7990b6738f_1752394948359.png";
