@@ -54,11 +54,13 @@ export default function RetailSection() {
               key={index}
               className="bg-gray-50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-64 object-contain bg-gray-100"
-              />
+              <div className="w-full h-64 bg-gray-50 flex items-center justify-center p-2">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="max-w-full max-h-full object-contain"
+                />
+              </div>
               <div className="p-6">
                 <h3 className="text-2xl font-bold text-battles-black mb-2">
                   {product.name}
