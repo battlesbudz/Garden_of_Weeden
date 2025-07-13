@@ -68,21 +68,56 @@ export default function AdminDashboard() {
         }).join(','))
       ].join('\n');
 
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      // Add BOM for better Excel compatibility
+      const BOM = '\uFEFF';
+      const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', `${filename}-${new Date().toISOString().split('T')[0]}.csv`);
-      link.style.visibility = 'hidden';
+      
+      link.href = url;
+      link.download = `${filename}-${new Date().toISOString().split('T')[0]}.csv`;
+      link.style.display = 'none';
+      
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
       
-      // Clean up the URL object
-      setTimeout(() => URL.revokeObjectURL(url), 100);
+      // Clean up immediately
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
       console.log('CSV export completed');
     } catch (error) {
       console.error('Error exporting CSV:', error);
+    }
+  };
+
+  const downloadResume = (resumeData: string, filename: string) => {
+    try {
+      // Decode base64 data
+      const byteCharacters = atob(resumeData);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      
+      const blob = new Blob([byteArray], { type: 'application/pdf' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      
+      link.href = url;
+      link.download = filename;
+      link.style.display = 'none';
+      
+      document.body.appendChild(link);
+      link.click();
+      
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
+      console.log('Resume download completed');
+    } catch (error) {
+      console.error('Error downloading resume:', error);
     }
   };
 
@@ -384,7 +419,17 @@ export default function AdminDashboard() {
                             </td>
                             <td className="p-4">{application.experience}</td>
                             <td className="p-4">
-                              {application.resumeFileName ? (
+                              {application.resumeFileName && application.resumeFileData ? (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => downloadResume(application.resumeFileData, application.resumeFileName)}
+                                  className="text-battles-gold hover:bg-battles-gold hover:text-black"
+                                >
+                                  <Download className="h-3 w-3 mr-1" />
+                                  {application.resumeFileName}
+                                </Button>
+                              ) : application.resumeFileName ? (
                                 <Badge variant="secondary">
                                   {application.resumeFileName}
                                 </Badge>
