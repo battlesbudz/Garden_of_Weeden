@@ -25,6 +25,7 @@ export default function HeroSection() {
           muted
           loop
           playsInline
+          preload="metadata"
           poster={heroBackgroundImg}
           onError={(e) => {
             console.log('Video failed to load:', e);
@@ -43,7 +44,7 @@ export default function HeroSection() {
           <img
             src={logoPath}
             alt="Battles Budz Logo"
-            className="h-32 md:h-40 w-auto mx-auto mb-6"
+            className="h-36 md:h-48 w-auto mx-auto mb-6"
           />
         </div>
 
