@@ -20,9 +20,10 @@ async function sendNewSubscriberNotification(subscriberEmail: string) {
   }
 
   try {
+    // Send notification to admin
     await mailService.send({
       to: 'Battlesbudz@gmail.com',
-      from: 'Battlesbudz@gmail.com',
+      from: 'Battlesbudz@gmail.com', // Use your verified email
       subject: 'New Newsletter Subscriber - Battles Budz',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -46,6 +47,47 @@ async function sendNewSubscriberNotification(subscriberEmail: string) {
   }
 }
 
+// Send welcome email to new subscriber
+async function sendWelcomeEmail(subscriberEmail: string) {
+  if (!mailService) {
+    return;
+  }
+
+  try {
+    await mailService.send({
+      to: subscriberEmail,
+      from: 'Battlesbudz@gmail.com', // Use your verified email
+      subject: 'Welcome to Battles Budz Newsletter! 🌿',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
+            Welcome to Battles Budz! 🌿
+          </h2>
+          <div style="padding: 20px; background-color: #f9f9f9;">
+            <p>Thank you for subscribing to our newsletter!</p>
+            <p>You'll receive updates about:</p>
+            <ul>
+              <li>New premium cannabis products</li>
+              <li>Exclusive lounge events and tastings</li>
+              <li>Educational content and industry news</li>
+              <li>Special veteran discounts and offers</li>
+            </ul>
+          </div>
+          <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
+            <p><strong>Battles Budz</strong></p>
+            <p>Premium Cannabis Tourism Experience</p>
+            <p>📞 904-415-7635 | 📧 Battlesbudz@gmail.com</p>
+            <p>Instagram: @Battles_budz</p>
+          </div>
+        </div>
+      `
+    });
+    console.log('Welcome email sent successfully to:', subscriberEmail);
+  } catch (error) {
+    console.error('Failed to send welcome email:', error);
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   
   // Newsletter subscription endpoint
@@ -65,6 +107,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Send notification email to admin
       await sendNewSubscriberNotification(subscriber.email);
+      
+      // Send welcome email to subscriber
+      await sendWelcomeEmail(subscriber.email);
       
       res.status(201).json({ 
         message: "Successfully subscribed to newsletter",
