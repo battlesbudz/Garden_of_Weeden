@@ -1,7 +1,15 @@
 import { ChevronDown } from "lucide-react";
 import logoPath from "@assets/BattlesBudz_Logo_1752301078028.png";
 
-export default function HeroSection() {
+interface VideoHeroSectionProps {
+  videoSrc?: string;
+  fallbackImage?: string;
+}
+
+export default function VideoHeroSection({ 
+  videoSrc, 
+  fallbackImage = "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080" 
+}: VideoHeroSectionProps) {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -14,28 +22,34 @@ export default function HeroSection() {
       id="home"
       className="relative min-h-screen flex items-center justify-center text-center text-white overflow-hidden pt-20"
     >
-      {/* Background video/image with overlay */}
+      {/* Background video or image with overlay */}
       <div className="absolute inset-0">
-        {/* Replace with your video - upload your video file to attached_assets folder and uncomment: */}
-        {/* 
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="/path-to-your-video.mp4" type="video/mp4" />
-        </video>
-        */}
-        
-        {/* Current background image - remove this when you add video */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1536924940846-227afb31e2a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')`,
-          }}
-        />
+        {videoSrc ? (
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={fallbackImage}
+          >
+            <source src={videoSrc} type="video/mp4" />
+            {/* Fallback to image if video fails */}
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{
+                backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('${fallbackImage}')`,
+              }}
+            />
+          </video>
+        ) : (
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('${fallbackImage}')`,
+            }}
+          />
+        )}
       </div>
       <div className="absolute inset-0 bg-black/30" />
 
@@ -76,8 +90,8 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-battles-gold">
-        <ChevronDown className="h-8 w-8 animate-bounce" />
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <ChevronDown className="h-8 w-8 text-battles-gold" />
       </div>
     </section>
   );
