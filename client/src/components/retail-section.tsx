@@ -52,14 +52,16 @@ export default function RetailSection() {
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-gray-50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="group cursor-pointer"
             >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-64 object-cover"
-              />
-              <div className="p-6">
+              <div className="bg-transparent rounded-xl overflow-hidden mb-4">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-64 object-contain hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <div className="text-center">
                 <h3 className="text-2xl font-bold text-battles-black mb-2">
                   {product.name}
                 </h3>
