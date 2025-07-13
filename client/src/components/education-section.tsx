@@ -8,7 +8,7 @@ export default function EducationSection() {
       excerpt: "Learn SOG, SCROG, super cropping, topping, fimming, and DWC hydroponics methods for optimal cannabis growth and yields.",
       category: "Cultivation",
       readTime: "7 min read",
-      image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      image: "/attached_assets/360_F_499206936_DTB3BAfocgPpunIz14tRTBZwwy5PC1Oi_1752425020338.jpg",
       url: "https://www.sunmedgrowers.com/education-resources/blog/post/cannabis-cultivation-techniques/",
     },
     {
