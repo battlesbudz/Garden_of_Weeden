@@ -1,5 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import logoPath from "@assets/BattlesBudz_Logo_1752301078028.png";
+import heroVideo from "@assets/received_749885827120964_1_1752390318079.mp4";
+import heroBackgroundImg from "@assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg";
 
 export default function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -23,9 +25,18 @@ export default function HeroSection() {
           muted
           loop
           playsInline
+          poster={heroBackgroundImg}
         >
-          <source src="/attached_assets/received_749885827120964_1_1752390318079.mp4" type="video/mp4" />
+          <source src={heroVideo} type="video/mp4" />
         </video>
+        
+        {/* Fallback background image if video fails */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('${heroBackgroundImg}')`,
+          }}
+        />
 
       </div>
       <div className="absolute inset-0 bg-black/30" />
