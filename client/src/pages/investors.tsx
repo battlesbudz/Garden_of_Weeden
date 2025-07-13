@@ -16,6 +16,7 @@ import {
   Lock
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import Navigation from "@/components/navigation";
 
 export default function InvestorsPage() {
   const { user, isAuthenticated } = useAuth();
@@ -94,7 +95,8 @@ export default function InvestorsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-gradient-to-r from-black to-gray-900 text-white py-16">
+      <Navigation />
+      <div className="bg-gradient-to-r from-black to-gray-900 text-white py-16 pt-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl font-playfair font-bold text-battles-gold mb-4">
