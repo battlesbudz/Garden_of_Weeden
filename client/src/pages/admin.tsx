@@ -17,19 +17,19 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("subscribers");
 
   const { data: subscribers, isLoading: subscribersLoading, refetch: refetchSubscribers } = useQuery({
-    queryKey: ["/api/admin/newsletter/subscribers"],
+    queryKey: ["/api/newsletter/subscribers"],
   });
 
   const { data: contacts, isLoading: contactsLoading, refetch: refetchContacts } = useQuery({
-    queryKey: ["/api/admin/contact/submissions"],
+    queryKey: ["/api/contact/submissions"],
   });
 
   const { data: events, isLoading: eventsLoading, refetch: refetchEvents } = useQuery({
-    queryKey: ["/api/admin/event/bookings"],
+    queryKey: ["/api/event/bookings"],
   });
 
   const { data: applications, isLoading: applicationsLoading, refetch: refetchApplications } = useQuery({
-    queryKey: ["/api/admin/job/applications"],
+    queryKey: ["/api/job/applications"],
   });
 
   const downloadCSV = (data: any[], filename: string) => {

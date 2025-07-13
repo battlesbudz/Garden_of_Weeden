@@ -536,7 +536,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all event bookings (admin endpoint)
+
+
+  // Get all newsletter subscribers (admin only)
+  app.get("/api/newsletter/subscribers", requireAdmin, async (req, res) => {
+    try {
+      const subscribers = await storage.getAllNewsletterSubscribers();
+      res.json(subscribers);
+    } catch (error) {
+      console.error("Error fetching newsletter subscribers:", error);
+      res.status(500).json({ message: "Failed to fetch subscribers" });
+    }
+  });
+
+  // Get all contact submissions (admin only)
+  app.get("/api/contact/submissions", requireAdmin, async (req, res) => {
+    try {
+      const submissions = await storage.getAllContactSubmissions();
+      res.json(submissions);
+    } catch (error) {
+      console.error("Error fetching contact submissions:", error);
+      res.status(500).json({ message: "Failed to fetch submissions" });
+    }
+  });
+
+  // Get all event bookings (admin only)
+  app.get("/api/event/bookings", requireAdmin, async (req, res) => {
+    try {
+      const bookings = await storage.getAllEventBookings();
+      res.json(bookings);
+    } catch (error) {
+      console.error("Error fetching event bookings:", error);
+      res.status(500).json({ message: "Failed to fetch bookings" });
+    }
+  });
+
+  // Get all job applications (admin only)
+  app.get("/api/job/applications", requireAdmin, async (req, res) => {
+    try {
+      const applications = await storage.getAllJobApplications();
+      res.json(applications);
+    } catch (error) {
+      console.error("Error fetching job applications:", error);
+      res.status(500).json({ message: "Failed to fetch applications" });
+    }
+  });
+
+  // Legacy event bookings endpoint (keeping for backward compatibility)
   app.get("/api/events/bookings", async (req, res) => {
     try {
       const bookings = await storage.getAllEventBookings();

@@ -10,6 +10,12 @@ import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { apiRequest } from "@/lib/queryClient";
 
+// Import product images
+import cosmicChewzImg from "@assets/20240228_223118_1752399041772.png";
+import freedomFogImg from "@assets/file_0000000084c86230b8826b578af0fa18_1752398828783.png";
+import cannabisFlowerImg from "@assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg";
+import battleBrewImg from "@assets/file_00000000a95c61f9a7846b7990b6738f_1752399026270.png";
+
 interface Product {
   id: number;
   name: string;
@@ -32,6 +38,15 @@ export default function Shop() {
   const { toast } = useToast();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showCart, setShowCart] = useState(false);
+
+  // Map product names to images
+  const getProductImage = (productName: string) => {
+    if (productName.toLowerCase().includes('cosmic chewz')) return cosmicChewzImg;
+    if (productName.toLowerCase().includes('freedom fog')) return freedomFogImg;
+    if (productName.toLowerCase().includes('battle brew') || productName.toLowerCase().includes('sweet tea')) return battleBrewImg;
+    if (productName.toLowerCase().includes('heirloom') || productName.toLowerCase().includes('flower') || productName.toLowerCase().includes('purple punch')) return cannabisFlowerImg;
+    return null; // Default for merchandise
+  };
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["/api/products"],
@@ -237,11 +252,11 @@ export default function Shop() {
               <Card key={product.id} className="bg-gray-900 border-battles-gold/20 hover:border-battles-gold/60 transition-all">
                 <CardHeader>
                   <div className="aspect-square bg-black/50 rounded-lg mb-4 flex items-center justify-center">
-                    {product.imageUrl ? (
+                    {getProductImage(product.name) ? (
                       <img 
-                        src={product.imageUrl} 
+                        src={getProductImage(product.name)!} 
                         alt={product.name}
-                        className="w-full h-full object-cover rounded-lg"
+                        className="w-full h-full object-contain rounded-lg p-4"
                       />
                     ) : (
                       <div className="text-6xl text-battles-gold/30">🌿</div>
