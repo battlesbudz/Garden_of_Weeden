@@ -4,35 +4,39 @@ export default function EducationSection() {
   const blogPosts = [
     {
       id: 1,
-      title: "Cannabis 101: Understanding Terpenes and Their Effects",
-      excerpt: "Learn how terpenes influence the cannabis experience and why they're essential for choosing the right product.",
-      category: "Education",
-      readTime: "5 min read",
-      image: "https://images.unsplash.com/photo-1566303612084-5177e19b8eab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      title: "Cannabis Cultivation Techniques: Indoor vs Outdoor Growing",
+      excerpt: "Comprehensive guide to cultivation methods, environmental control, and maximizing yields using 2024 best practices.",
+      category: "Cultivation",
+      readTime: "7 min read",
+      image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      url: "https://www.sunmedgrowers.com/education-resources/blog/post/cannabis-cultivation-techniques/",
     },
     {
       id: 2,
-      title: "From Seed to Sale: Our Cultivation Process",
-      excerpt: "Take a behind-the-scenes look at how we grow premium cannabis using sustainable, organic practices.",
-      category: "Cultivation",
-      readTime: "7 min read",
-      image: "https://images.unsplash.com/photo-1574936019166-81fa21c0f80b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      title: "Cannabis Laws and Legalization: 2024 Update",
+      excerpt: "Stay informed about federal developments, state regulations, and compliance requirements for cannabis businesses.",
+      category: "Legal",
+      readTime: "6 min read",
+      image: "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      url: "https://www.cannabisbusinesstimes.com/legislation-and-regulation/news/15686736/federal-cannabis-legalization-and-reform-where-are-we-in-2024",
     },
     {
       id: 3,
-      title: "Cannabis and Veterans: A Personal Journey",
-      excerpt: "Justin Battles shares how cannabis transformed his approach to managing ADHD and post-military life.",
-      category: "Personal",
-      readTime: "6 min read",
-      image: "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      title: "Cannabis for Veterans: Medical Benefits and Research",
+      excerpt: "Scientific research on cannabis use for PTSD, chronic pain, and other veteran health conditions.",
+      category: "Medical",
+      readTime: "8 min read",
+      image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      url: "https://jcannabisresearch.biomedcentral.com/",
     },
     {
       id: 4,
-      title: "Responsible Consumption: Dosing and Safety Guidelines",
-      excerpt: "Essential tips for new cannabis users on dosing, timing, and creating a safe consumption experience.",
-      category: "Safety",
-      readTime: "4 min read",
-      image: "https://images.unsplash.com/photo-1609208261826-5b1a7bd2b1d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      title: "Cannabis Science and Technology: Latest Research",
+      excerpt: "Expert insights on testing, extraction methods, and quality control in cannabis production.",
+      category: "Science",
+      readTime: "5 min read",
+      image: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      url: "https://www.cannabissciencetech.com",
     },
   ];
 
@@ -123,9 +127,14 @@ export default function EducationSection() {
                   <p className="text-battles-gray mb-4 line-clamp-3">
                     {post.excerpt}
                   </p>
-                  <button className="text-battles-gold font-semibold hover:text-yellow-600 transition-colors">
+                  <a
+                    href={post.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-battles-gold font-semibold hover:text-yellow-600 transition-colors"
+                  >
                     Read More →
-                  </button>
+                  </a>
                 </div>
               </article>
             ))}
