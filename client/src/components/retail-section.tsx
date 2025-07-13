@@ -36,13 +36,13 @@ export default function RetailSection() {
   ];
 
   return (
-    <section id="retail" className="py-20 bg-white">
+    <section id="retail" className="py-20 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-battles-black mb-6">
+          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
             Premium <span className="text-battles-gold">Products</span>
           </h2>
-          <p className="text-xl text-battles-gray max-w-3xl mx-auto">
+          <p className="text-xl text-white max-w-3xl mx-auto">
             Carefully cultivated, expertly processed, and thoughtfully curated
             for the discerning cannabis connoisseur.
           </p>
@@ -62,10 +62,10 @@ export default function RetailSection() {
                 />
               </div>
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-battles-black mb-2">
+                <h3 className="text-2xl font-bold text-white mb-2">
                   {product.name}
                 </h3>
-                <p className="text-battles-gray mb-4">{product.description}</p>
+                <p className="text-gray-300 mb-4">{product.description}</p>
                 <div className="flex items-center justify-between">
                   <span className="bg-battles-gold text-battles-black px-4 py-2 rounded-lg font-semibold">
                     Coming Soon
@@ -77,13 +77,13 @@ export default function RetailSection() {
         </div>
 
         <div className="text-center mt-12">
-          <p className="text-lg text-battles-gray mb-6">
+          <p className="text-lg text-gray-300 mb-6">
             <span className="text-battles-gold mr-2">📅</span>
             Retail operations launching 2025
           </p>
           <button
             onClick={() => scrollToSection("newsletter")}
-            className="bg-battles-black text-battles-gold px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
+            className="bg-battles-gold text-battles-black px-8 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
           >
             Get Notified When We Launch
           </button>
