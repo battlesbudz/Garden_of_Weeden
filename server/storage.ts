@@ -11,7 +11,7 @@ import {
   investorDocuments,
   investorAccess,
   type User, 
-  type InsertUser,
+  type UpsertUser,
   type Product,
   type InsertProduct,
   type Order,
@@ -37,12 +37,9 @@ import { db } from "./db";
 import { eq, desc } from "drizzle-orm";
 
 export interface IStorage {
-  // User authentication
-  getUser(id: number): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  getUserByEmail(email: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
-  validateUserCredentials(username: string, password: string): Promise<User | null>;
+  // User operations (IMPORTANT) these user operations are mandatory for Replit Auth.
+  getUser(id: string): Promise<User | undefined>;
+  upsertUser(user: UpsertUser): Promise<User>;
   
   // Products
   getAllProducts(): Promise<Product[]>;
@@ -208,40 +205,26 @@ export class MemStorage implements IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
-  // User authentication methods
-  async getUser(id: number): Promise<User | undefined> {
+  // User operations (IMPORTANT) these user operations are mandatory for Replit Auth.
+  
+  async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user || undefined;
-  }
-
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
-    return user || undefined;
-  }
-
-  async getUserByEmail(email: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.email, email));
-    return user || undefined;
-  }
-
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db
-      .insert(users)
-      .values(insertUser)
-      .returning();
     return user;
   }
 
-  async validateUserCredentials(username: string, password: string): Promise<User | null> {
+  async upsertUser(userData: UpsertUser): Promise<User> {
     const [user] = await db
-      .select()
-      .from(users)
-      .where(eq(users.username, username));
-    
-    if (user && user.password === password) {
-      return user;
-    }
-    return null;
+      .insert(users)
+      .values(userData)
+      .onConflictDoUpdate({
+        target: users.id,
+        set: {
+          ...userData,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return user;
   }
 
   // Product methods

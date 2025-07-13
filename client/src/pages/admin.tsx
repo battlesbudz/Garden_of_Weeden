@@ -4,7 +4,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navigation from "@/components/navigation";
 import { 
   Users, 
@@ -71,270 +70,218 @@ export default function AdminDashboard() {
     document.body.removeChild(link);
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Navigation />
-      <div className="pt-16 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-          <h1 className="text-4xl font-playfair font-bold text-battles-black mb-2">
-            Battles Budz <span className="text-battles-gold">Admin Portal</span>
-          </h1>
-          <p className="text-battles-gray">
-            Manage newsletter subscribers, contacts, events, and applications
-          </p>
+  if (!isAuthenticated || !isAdmin) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Navigation />
+        <div className="pt-16 p-6">
+          <div className="max-w-7xl mx-auto text-center">
+            <h1 className="text-4xl font-playfair font-bold text-battles-black mb-4">
+              Access Denied
+            </h1>
+            <p className="text-battles-gray">
+              You need admin privileges to access this page.
+            </p>
+          </div>
         </div>
+      </div>
+    );
+  }
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="bg-white shadow-lg">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Newsletter Subscribers</CardTitle>
-              <Users className="h-4 w-4 text-battles-gold" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-battles-black">
-                {subscribers?.length || 0}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white shadow-lg">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Contact Submissions</CardTitle>
-              <Mail className="h-4 w-4 text-battles-gold" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-battles-black">
-                {contacts?.length || 0}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white shadow-lg">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Event Bookings</CardTitle>
-              <Calendar className="h-4 w-4 text-battles-gold" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-battles-black">
-                {events?.length || 0}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white shadow-lg">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Job Applications</CardTitle>
-              <FileText className="h-4 w-4 text-battles-gold" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-battles-black">
-                {applications?.length || 0}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Data Tables */}
-        <div className="bg-white rounded-lg shadow-lg">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-4 h-12">
-              <TabsTrigger value="subscribers" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
-                Newsletter Subscribers
-              </TabsTrigger>
-              <TabsTrigger value="contacts" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
-                Contact Submissions
-              </TabsTrigger>
-              <TabsTrigger value="events" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
-                Event Bookings
-              </TabsTrigger>
-              <TabsTrigger value="applications" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
-                Job Applications
-              </TabsTrigger>
-            </TabsList>
-
-            <div className="p-6">
-              <TabsContent value="subscribers" className="mt-0 space-y-4">
-            <Card>
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <CardTitle>Newsletter Subscribers</CardTitle>
-                  <div className="flex space-x-2">
-                    <Button
-                      onClick={() => refetchSubscribers()}
-                      variant="outline"
-                      size="sm"
-                      disabled={subscribersLoading}
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Refresh
-                    </Button>
-                    <Button
-                      onClick={() => downloadCSV(subscribers, 'newsletter-subscribers')}
-                      variant="outline"
-                      size="sm"
-                      disabled={!subscribers || subscribers.length === 0}
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Export CSV
-                    </Button>
-                  </div>
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "subscribers":
+        return (
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>Newsletter Subscribers</CardTitle>
+                <div className="flex space-x-2">
+                  <Button
+                    onClick={() => refetchSubscribers()}
+                    variant="outline"
+                    size="sm"
+                    disabled={subscribersLoading}
+                  >
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Refresh
+                  </Button>
+                  <Button
+                    onClick={() => downloadCSV(subscribers, 'newsletter-subscribers')}
+                    variant="outline"
+                    size="sm"
+                    disabled={!subscribers || subscribers.length === 0}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Export CSV
+                  </Button>
                 </div>
-              </CardHeader>
-              <CardContent>
-                {subscribersLoading ? (
-                  <div className="flex items-center justify-center py-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-battles-gold"></div>
-                  </div>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left p-4 font-semibold">Email</th>
-                          <th className="text-left p-4 font-semibold">Subscribed Date</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {subscribers && subscribers.length > 0 ? (
-                          subscribers.map((subscriber: any) => (
-                            <tr key={subscriber.id} className="border-b hover:bg-gray-50">
-                              <td className="p-4">{subscriber.email}</td>
-                              <td className="p-4">
-                                {new Date(subscriber.createdAt).toLocaleDateString()}
-                              </td>
-                            </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td colSpan={2} className="p-8 text-center text-gray-500">
-                              No newsletter subscribers yet
+              </div>
+            </CardHeader>
+            <CardContent>
+              {subscribersLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-battles-gold"></div>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-4 font-semibold">Email</th>
+                        <th className="text-left p-4 font-semibold">Subscribed Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {subscribers && subscribers.length > 0 ? (
+                        subscribers.map((subscriber: any) => (
+                          <tr key={subscriber.id} className="border-b hover:bg-gray-50">
+                            <td className="p-4">{subscriber.email}</td>
+                            <td className="p-4">
+                              {new Date(subscriber.createdAt).toLocaleDateString()}
                             </td>
                           </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-              <TabsContent value="contacts" className="mt-0 space-y-4">
-            <Card>
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <CardTitle>Contact Submissions</CardTitle>
-                  <div className="flex space-x-2">
-                    <Button
-                      onClick={() => refetchContacts()}
-                      variant="outline"
-                      size="sm"
-                      disabled={contactsLoading}
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Refresh
-                    </Button>
-                    <Button
-                      onClick={() => downloadCSV(contacts, 'contact-submissions')}
-                      variant="outline"
-                      size="sm"
-                      disabled={!contacts || contacts.length === 0}
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Export CSV
-                    </Button>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {contactsLoading ? (
-                  <div className="flex items-center justify-center py-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-battles-gold"></div>
-                  </div>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left p-4 font-semibold">Name</th>
-                          <th className="text-left p-4 font-semibold">Email</th>
-                          <th className="text-left p-4 font-semibold">Message</th>
-                          <th className="text-left p-4 font-semibold">Date</th>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={2} className="p-8 text-center text-gray-500">
+                            No newsletter subscribers yet
+                          </td>
                         </tr>
-                      </thead>
-                      <tbody>
-                        {contacts?.map((contact: any) => (
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        );
+
+      case "contacts":
+        return (
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>Contact Submissions</CardTitle>
+                <div className="flex space-x-2">
+                  <Button
+                    onClick={() => refetchContacts()}
+                    variant="outline"
+                    size="sm"
+                    disabled={contactsLoading}
+                  >
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Refresh
+                  </Button>
+                  <Button
+                    onClick={() => downloadCSV(contacts, 'contact-submissions')}
+                    variant="outline"
+                    size="sm"
+                    disabled={!contacts || contacts.length === 0}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Export CSV
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {contactsLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-battles-gold"></div>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-4 font-semibold">Name</th>
+                        <th className="text-left p-4 font-semibold">Email</th>
+                        <th className="text-left p-4 font-semibold">Message</th>
+                        <th className="text-left p-4 font-semibold">Submitted Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {contacts && contacts.length > 0 ? (
+                        contacts.map((contact: any) => (
                           <tr key={contact.id} className="border-b hover:bg-gray-50">
                             <td className="p-4">{contact.name}</td>
                             <td className="p-4">{contact.email}</td>
-                            <td className="p-4 max-w-md">
-                              <div className="truncate">{contact.message}</div>
-                            </td>
+                            <td className="p-4 max-w-xs truncate">{contact.message}</td>
                             <td className="p-4">
                               {new Date(contact.createdAt).toLocaleDateString()}
                             </td>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-              <TabsContent value="events" className="mt-0 space-y-4">
-            <Card>
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <CardTitle>Event Bookings</CardTitle>
-                  <div className="flex space-x-2">
-                    <Button
-                      onClick={() => refetchEvents()}
-                      variant="outline"
-                      size="sm"
-                      disabled={eventsLoading}
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Refresh
-                    </Button>
-                    <Button
-                      onClick={() => downloadCSV(events, 'event-bookings')}
-                      variant="outline"
-                      size="sm"
-                      disabled={!events || events.length === 0}
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Export CSV
-                    </Button>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {eventsLoading ? (
-                  <div className="flex items-center justify-center py-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-battles-gold"></div>
-                  </div>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left p-4 font-semibold">Name</th>
-                          <th className="text-left p-4 font-semibold">Email</th>
-                          <th className="text-left p-4 font-semibold">Event Type</th>
-                          <th className="text-left p-4 font-semibold">Preferred Date</th>
-                          <th className="text-left p-4 font-semibold">Guests</th>
-                          <th className="text-left p-4 font-semibold">Date</th>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={4} className="p-8 text-center text-gray-500">
+                            No contact submissions yet
+                          </td>
                         </tr>
-                      </thead>
-                      <tbody>
-                        {events?.map((event: any) => (
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        );
+
+      case "events":
+        return (
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>Event Bookings</CardTitle>
+                <div className="flex space-x-2">
+                  <Button
+                    onClick={() => refetchEvents()}
+                    variant="outline"
+                    size="sm"
+                    disabled={eventsLoading}
+                  >
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Refresh
+                  </Button>
+                  <Button
+                    onClick={() => downloadCSV(events, 'event-bookings')}
+                    variant="outline"
+                    size="sm"
+                    disabled={!events || events.length === 0}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Export CSV
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {eventsLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-battles-gold"></div>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-4 font-semibold">Name</th>
+                        <th className="text-left p-4 font-semibold">Email</th>
+                        <th className="text-left p-4 font-semibold">Phone</th>
+                        <th className="text-left p-4 font-semibold">Event Type</th>
+                        <th className="text-left p-4 font-semibold">Preferred Date</th>
+                        <th className="text-left p-4 font-semibold">Guest Count</th>
+                        <th className="text-left p-4 font-semibold">Submitted Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {events && events.length > 0 ? (
+                        events.map((event: any) => (
                           <tr key={event.id} className="border-b hover:bg-gray-50">
                             <td className="p-4">{event.name}</td>
                             <td className="p-4">{event.email}</td>
+                            <td className="p-4">{event.phone}</td>
                             <td className="p-4">
                               <Badge variant="outline">{event.eventType}</Badge>
                             </td>
@@ -344,103 +291,219 @@ export default function AdminDashboard() {
                               {new Date(event.createdAt).toLocaleDateString()}
                             </td>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-              <TabsContent value="applications" className="mt-0 space-y-4">
-            <Card>
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <CardTitle>Job Applications</CardTitle>
-                  <div className="flex space-x-2">
-                    <Button
-                      onClick={() => refetchApplications()}
-                      variant="outline"
-                      size="sm"
-                      disabled={applicationsLoading}
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Refresh
-                    </Button>
-                    <Button
-                      onClick={() => downloadCSV(applications, 'job-applications')}
-                      variant="outline"
-                      size="sm"
-                      disabled={!applications || applications.length === 0}
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Export CSV
-                    </Button>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {applicationsLoading ? (
-                  <div className="flex items-center justify-center py-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-battles-gold"></div>
-                  </div>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left p-4 font-semibold">Name</th>
-                          <th className="text-left p-4 font-semibold">Email</th>
-                          <th className="text-left p-4 font-semibold">Position</th>
-                          <th className="text-left p-4 font-semibold">Experience</th>
-                          <th className="text-left p-4 font-semibold">Resume</th>
-                          <th className="text-left p-4 font-semibold">Date</th>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={7} className="p-8 text-center text-gray-500">
+                            No event bookings yet
+                          </td>
                         </tr>
-                      </thead>
-                      <tbody>
-                        {applications && applications.length > 0 ? (
-                          applications.map((application: any) => (
-                            <tr key={application.id} className="border-b hover:bg-gray-50">
-                              <td className="p-4">
-                                {application.firstName} {application.lastName}
-                              </td>
-                              <td className="p-4">{application.email}</td>
-                              <td className="p-4">
-                                <Badge variant="outline">{application.position}</Badge>
-                              </td>
-                              <td className="p-4">{application.experience}</td>
-                              <td className="p-4">
-                                {application.resumeFileName ? (
-                                  <Badge variant="secondary">
-                                    {application.resumeFileName}
-                                  </Badge>
-                                ) : (
-                                  <span className="text-gray-400">No resume</span>
-                                )}
-                              </td>
-                              <td className="p-4">
-                                {new Date(application.createdAt).toLocaleDateString()}
-                              </td>
-                            </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td colSpan={6} className="p-8 text-center text-gray-500">
-                              No job applications yet
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        );
+
+      case "applications":
+        return (
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>Job Applications</CardTitle>
+                <div className="flex space-x-2">
+                  <Button
+                    onClick={() => refetchApplications()}
+                    variant="outline"
+                    size="sm"
+                    disabled={applicationsLoading}
+                  >
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Refresh
+                  </Button>
+                  <Button
+                    onClick={() => downloadCSV(applications, 'job-applications')}
+                    variant="outline"
+                    size="sm"
+                    disabled={!applications || applications.length === 0}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Export CSV
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {applicationsLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-battles-gold"></div>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-4 font-semibold">Name</th>
+                        <th className="text-left p-4 font-semibold">Email</th>
+                        <th className="text-left p-4 font-semibold">Phone</th>
+                        <th className="text-left p-4 font-semibold">Position</th>
+                        <th className="text-left p-4 font-semibold">Experience</th>
+                        <th className="text-left p-4 font-semibold">Resume</th>
+                        <th className="text-left p-4 font-semibold">Applied Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {applications && applications.length > 0 ? (
+                        applications.map((application: any) => (
+                          <tr key={application.id} className="border-b hover:bg-gray-50">
+                            <td className="p-4">
+                              {application.firstName} {application.lastName}
+                            </td>
+                            <td className="p-4">{application.email}</td>
+                            <td className="p-4">{application.phone}</td>
+                            <td className="p-4">
+                              <Badge variant="outline">{application.position}</Badge>
+                            </td>
+                            <td className="p-4">{application.experience}</td>
+                            <td className="p-4">
+                              {application.resumeFileName ? (
+                                <Badge variant="secondary">
+                                  {application.resumeFileName}
+                                </Badge>
+                              ) : (
+                                <span className="text-gray-400">No resume</span>
+                              )}
+                            </td>
+                            <td className="p-4">
+                              {new Date(application.createdAt).toLocaleDateString()}
                             </td>
                           </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={7} className="p-8 text-center text-gray-500">
+                            No job applications yet
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Navigation />
+      <div className="pt-16 p-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-4xl font-playfair font-bold text-battles-black mb-2">
+              Battles Budz <span className="text-battles-gold">Admin Portal</span>
+            </h1>
+            <p className="text-battles-gray">
+              Manage newsletter subscribers, contacts, events, and applications
+            </p>
+          </div>
+
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <Card className="bg-white shadow-lg">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Newsletter Subscribers</CardTitle>
+                <Users className="h-4 w-4 text-battles-gold" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-battles-black">
+                  {subscribers?.length || 0}
+                </div>
               </CardContent>
             </Card>
-              </TabsContent>
-            </div>
-          </Tabs>
-        </div>
+
+            <Card className="bg-white shadow-lg">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Contact Submissions</CardTitle>
+                <Mail className="h-4 w-4 text-battles-gold" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-battles-black">
+                  {contacts?.length || 0}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white shadow-lg">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Event Bookings</CardTitle>
+                <Calendar className="h-4 w-4 text-battles-gold" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-battles-black">
+                  {events?.length || 0}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white shadow-lg">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Job Applications</CardTitle>
+                <FileText className="h-4 w-4 text-battles-gold" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-battles-black">
+                  {applications?.length || 0}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Data Tables */}
+          <Card className="bg-white shadow-lg">
+            <CardHeader>
+              <div className="flex space-x-2 border-b pb-4">
+                <Button
+                  variant={activeTab === "subscribers" ? "default" : "ghost"}
+                  onClick={() => setActiveTab("subscribers")}
+                  className={activeTab === "subscribers" ? "bg-battles-gold text-black hover:bg-battles-gold/90" : ""}
+                >
+                  Newsletter Subscribers
+                </Button>
+                <Button
+                  variant={activeTab === "contacts" ? "default" : "ghost"}
+                  onClick={() => setActiveTab("contacts")}
+                  className={activeTab === "contacts" ? "bg-battles-gold text-black hover:bg-battles-gold/90" : ""}
+                >
+                  Contact Submissions
+                </Button>
+                <Button
+                  variant={activeTab === "events" ? "default" : "ghost"}
+                  onClick={() => setActiveTab("events")}
+                  className={activeTab === "events" ? "bg-battles-gold text-black hover:bg-battles-gold/90" : ""}
+                >
+                  Event Bookings
+                </Button>
+                <Button
+                  variant={activeTab === "applications" ? "default" : "ghost"}
+                  onClick={() => setActiveTab("applications")}
+                  className={activeTab === "applications" ? "bg-battles-gold text-black hover:bg-battles-gold/90" : ""}
+                >
+                  Job Applications
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="p-6">
+              {renderTabContent()}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

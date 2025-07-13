@@ -1,16 +1,30 @@
-import { pgTable, text, varchar, serial, timestamp, decimal, integer, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, serial, timestamp, decimal, integer, boolean, jsonb, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+// Session storage table.
+// (IMPORTANT) This table is mandatory for Replit Auth, don't drop it.
+export const sessions = pgTable(
+  "sessions",
+  {
+    sid: varchar("sid").primaryKey(),
+    sess: jsonb("sess").notNull(),
+    expire: timestamp("expire").notNull(),
+  },
+  (table) => [index("IDX_session_expire").on(table.expire)],
+);
+
+// User storage table.
+// (IMPORTANT) This table is mandatory for Replit Auth, don't drop it.
 export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  email: text("email").notNull().unique(),
-  password: text("password").notNull(),
-  role: text("role").notNull().default("customer"), // "admin" or "customer"
-  firstName: text("first_name"),
-  lastName: text("last_name"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  id: varchar("id").primaryKey().notNull(),
+  email: varchar("email").unique(),
+  firstName: varchar("first_name"),
+  lastName: varchar("last_name"),
+  profileImageUrl: varchar("profile_image_url"),
+  role: varchar("role", { length: 50 }).default("customer").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const products = pgTable("products", {
@@ -122,25 +136,12 @@ export const investorAccess = pgTable("investor_access", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
+export const upsertUserSchema = createInsertSchema(users).pick({
+  id: true,
   email: true,
-  password: true,
   firstName: true,
   lastName: true,
-});
-
-export const loginSchema = z.object({
-  username: z.string().min(3),
-  password: z.string().min(6),
-});
-
-export const registerSchema = z.object({
-  username: z.string().min(3),
-  email: z.string().email(),
-  password: z.string().min(6),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
+  profileImageUrl: true,
 });
 
 export const insertProductSchema = createInsertSchema(products).pick({
@@ -230,10 +231,8 @@ export const insertInvestorAccessSchema = createInsertSchema(investorAccess).pic
   isActive: true,
 });
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
+export type UpsertUser = z.infer<typeof upsertUserSchema>;
 export type User = typeof users.$inferSelect;
-export type LoginRequest = z.infer<typeof loginSchema>;
-export type RegisterRequest = z.infer<typeof registerSchema>;
 export type InsertNewsletterSubscriber = z.infer<typeof insertNewsletterSubscriberSchema>;
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSchema>;

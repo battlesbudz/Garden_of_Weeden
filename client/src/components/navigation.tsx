@@ -10,7 +10,7 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [location, setLocation] = useLocation();
-  const { user, isAuthenticated, isAdmin, logout } = useAuth();
+  const { user, isAuthenticated, isAdmin } = useAuth();
 
   // Debug auth state
   console.log('Navigation - Auth State:', { user, isAuthenticated, isAdmin });
@@ -45,11 +45,7 @@ export default function Navigation() {
   };
 
   const handleLogout = () => {
-    logout.mutate(undefined, {
-      onSuccess: () => {
-        setLocation("/");
-      },
-    });
+    window.location.href = '/api/logout';
   };
 
   return (
@@ -108,7 +104,7 @@ export default function Navigation() {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="text-battles-gold hover:text-battles-gold/80">
                       <User className="h-4 w-4 mr-2" />
-                      {user?.username}
+                      {user?.email || user?.firstName || 'User'}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-gray-900 border-battles-gold/30">
@@ -130,9 +126,9 @@ export default function Navigation() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <Link href="/login" className="bg-battles-gold hover:bg-battles-gold/90 text-black px-4 py-2 rounded-md text-sm font-semibold transition-colors">
+                <a href="/api/login" className="bg-battles-gold hover:bg-battles-gold/90 text-black px-4 py-2 rounded-md text-sm font-semibold transition-colors">
                   Sign In
-                </Link>
+                </a>
               )}
             </div>
           </div>
@@ -196,13 +192,13 @@ export default function Navigation() {
                   className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
                 >
                   <LogOut className="h-4 w-4 mr-2" />
-                  Logout ({user?.username})
+                  Logout ({user?.email || user?.firstName || 'User'})
                 </button>
               </>
             ) : (
-              <Link href="/login" className="block bg-battles-gold hover:bg-battles-gold/90 text-black px-3 py-2 text-base font-semibold w-full text-center rounded">
+              <a href="/api/login" className="block bg-battles-gold hover:bg-battles-gold/90 text-black px-3 py-2 text-base font-semibold w-full text-center rounded">
                 Sign In
-              </Link>
+              </a>
             )}
           </div>
         </div>
