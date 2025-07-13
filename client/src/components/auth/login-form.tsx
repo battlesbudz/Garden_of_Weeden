@@ -40,12 +40,18 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
           description: "You have successfully logged in.",
         });
         
-        // Redirect based on user role from the response
+        // Check if there's a redirect URL stored (from where user came from)
+        const redirectTo = sessionStorage.getItem('redirectAfterLogin') || '/';
+        sessionStorage.removeItem('redirectAfterLogin');
+        
+        // Redirect based on stored destination or user role
         const user = response?.user;
-        if (user?.role === 'admin') {
+        if (redirectTo && redirectTo !== '/login') {
+          window.location.href = redirectTo;
+        } else if (user?.role === 'admin') {
           window.location.href = '/dashboard';
         } else {
-          window.location.href = '/shop';
+          window.location.href = '/';
         }
         
         onSuccess?.();

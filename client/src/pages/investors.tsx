@@ -48,7 +48,10 @@ export default function InvestorsPage() {
           </CardHeader>
           <CardContent className="text-center">
             <Button 
-              onClick={() => window.location.href = '/login'}
+              onClick={() => {
+                sessionStorage.setItem('redirectAfterLogin', '/investors');
+                window.location.href = '/login';
+              }}
               className="bg-battles-gold hover:bg-battles-gold/90 text-black font-semibold"
             >
               Sign In to Continue

@@ -13,21 +13,32 @@ export default function LoginPage() {
 
   // Redirect if already authenticated
   if (isAuthenticated) {
-    if (isAdmin) {
+    const redirectTo = sessionStorage.getItem('redirectAfterLogin') || '/';
+    sessionStorage.removeItem('redirectAfterLogin');
+    
+    if (redirectTo && redirectTo !== '/login') {
+      setLocation(redirectTo);
+    } else if (isAdmin) {
       setLocation("/dashboard");
     } else {
-      setLocation("/shop");
+      setLocation("/");
     }
     return null;
   }
 
   const handleAuthSuccess = () => {
-    // After successful login, redirect based on user role
+    // Check if there's a redirect URL stored
+    const redirectTo = sessionStorage.getItem('redirectAfterLogin') || '/';
+    sessionStorage.removeItem('redirectAfterLogin');
+    
+    // After successful login, redirect to intended destination
     setTimeout(() => {
-      if (isAdmin) {
+      if (redirectTo && redirectTo !== '/login') {
+        setLocation(redirectTo);
+      } else if (isAdmin) {
         setLocation("/dashboard");
       } else {
-        setLocation("/shop");
+        setLocation("/");
       }
     }, 100);
   };
