@@ -1,4 +1,4 @@
-import { Sprout, FlaskConical, Coffee, Sofa, GraduationCap, MapPin } from "lucide-react";
+import { Sprout, FlaskConical, Sofa, GraduationCap, MapPin } from "lucide-react";
 
 export default function ServicesSection() {
   const services = [
@@ -12,11 +12,7 @@ export default function ServicesSection() {
       title: "Processing",
       description: "Expert extraction and infusion capabilities for edibles, beverages, and concentrates using cutting-edge technology.",
     },
-    {
-      icon: Coffee,
-      title: "Infused Beverages",
-      description: "Signature cannabis-infused beverages including our flagship Battle Brew Sweet Tea, crafted with regional pride.",
-    },
+
     {
       icon: Sofa,
       title: "Consumption Lounge",
