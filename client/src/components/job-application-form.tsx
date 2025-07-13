@@ -360,9 +360,8 @@ export default function JobApplicationForm() {
         <div className="flex justify-end space-x-4">
           <Button
             type="button"
-            variant="outline"
             onClick={() => setIsFormOpen(false)}
-            className="border-gray-700 text-white hover:bg-gray-800"
+            className="bg-gray-700 text-white border border-gray-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-600 transition-colors"
           >
             Cancel
           </Button>
