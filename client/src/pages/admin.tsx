@@ -5,13 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Navigation from "@/components/navigation";
 import { 
   Users, 
   Mail, 
   Calendar, 
   FileText, 
   Download,
-  RefreshCw
+  RefreshCw,
+  Briefcase
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -27,19 +29,19 @@ export default function AdminDashboard() {
   });
 
   const { data: contacts, isLoading: contactsLoading, refetch: refetchContacts, error: contactsError } = useQuery({
-    queryKey: ["/api/contact-submissions"],
+    queryKey: ["/api/contact/submissions"],
     enabled: isAuthenticated && isAdmin,
     retry: 1,
   });
 
   const { data: events, isLoading: eventsLoading, refetch: refetchEvents, error: eventsError } = useQuery({
-    queryKey: ["/api/event-bookings"],
+    queryKey: ["/api/event/bookings"],
     enabled: isAuthenticated && isAdmin,
     retry: 1,
   });
 
   const { data: applications, isLoading: applicationsLoading, refetch: refetchApplications, error: applicationsError } = useQuery({
-    queryKey: ["/api/job-applications"],
+    queryKey: ["/api/job/applications"],
     enabled: isAuthenticated && isAdmin,
     retry: 1,
   });
@@ -70,9 +72,11 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
+    <div className="min-h-screen bg-gray-50">
+      <Navigation />
+      <div className="pt-16 p-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-8">
           <h1 className="text-4xl font-playfair font-bold text-battles-black mb-2">
             Battles Budz <span className="text-battles-gold">Admin Portal</span>
           </h1>
@@ -425,6 +429,7 @@ export default function AdminDashboard() {
             </Card>
           </TabsContent>
         </Tabs>
+        </div>
       </div>
     </div>
   );
