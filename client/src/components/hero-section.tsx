@@ -16,8 +16,7 @@ export default function HeroSection() {
     >
       {/* Background video/image with overlay */}
       <div className="absolute inset-0">
-        {/* Replace with your video - upload your video file to attached_assets folder and uncomment: */}
-        {/* 
+        {/* Battles Budz cultivation video */}
         <video
           className="absolute inset-0 w-full h-full object-cover"
           autoPlay
@@ -25,17 +24,9 @@ export default function HeroSection() {
           loop
           playsInline
         >
-          <source src="/path-to-your-video.mp4" type="video/mp4" />
+          <source src="/attached_assets/received_749885827120964_1_1752390318079.mp4" type="video/mp4" />
         </video>
-        */}
-        
-        {/* Current background image - remove this when you add video */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1536924940846-227afb31e2a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')`,
-          }}
-        />
+
       </div>
       <div className="absolute inset-0 bg-black/30" />
 
