@@ -50,93 +50,37 @@ export default function AdminDashboard() {
     applications, applicationsError, applicationsLoading
   });
 
-  const downloadCSV = (data: any[], filename: string) => {
-    if (!data || data.length === 0) {
-      console.log('No data to export');
-      return;
-    }
-
+  const downloadCSV = (filename: string) => {
     try {
-      console.log('Exporting CSV with data:', data.length, 'rows');
-      const headers = Object.keys(data[0]);
-      const csvContent = [
-        headers.join(','),
-        ...data.map(row => headers.map(header => {
-          const value = row[header] || '';
-          // Escape quotes and handle special characters
-          return `"${String(value).replace(/"/g, '""')}"`;
-        }).join(','))
-      ].join('\n');
-
-      // Force download using data URL approach
-      const dataStr = "data:text/csv;charset=utf-8," + encodeURIComponent(csvContent);
-      const downloadAnchorNode = document.createElement('a');
-      downloadAnchorNode.setAttribute("href", dataStr);
-      downloadAnchorNode.setAttribute("download", `${filename}-${new Date().toISOString().split('T')[0]}.csv`);
-      downloadAnchorNode.click();
-      
-      console.log('CSV export completed');
+      console.log('Downloading CSV:', filename);
+      // Use server endpoint for reliable downloads
+      const link = document.createElement('a');
+      link.href = `/api/admin/download/${filename}`;
+      link.download = `${filename}.csv`;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      console.log('CSV download initiated');
     } catch (error) {
-      console.error('Error exporting CSV:', error);
+      console.error('Error downloading CSV:', error);
     }
   };
 
-  const downloadResume = (resumeData: string, filename: string) => {
-    if (!resumeData || !filename) {
-      console.error('Missing resume data or filename');
-      return;
-    }
-
+  const downloadResume = (applicationId: number, filename: string) => {
     try {
       console.log('Downloading resume:', filename);
-      console.log('Resume data preview:', resumeData.substring(0, 100));
-      
-      // Handle data URL format (data:mime/type;base64,data)
-      if (resumeData.startsWith('data:')) {
-        // Extract MIME type and base64 data
-        const [mimeInfo, base64Data] = resumeData.split(',');
-        const mimeType = mimeInfo.split(':')[1].split(';')[0];
-        
-        console.log('Detected MIME type:', mimeType);
-        console.log('Base64 data length:', base64Data?.length || 0);
-        
-        // Convert base64 to binary
-        const binaryString = atob(base64Data);
-        const bytes = new Uint8Array(binaryString.length);
-        for (let i = 0; i < binaryString.length; i++) {
-          bytes[i] = binaryString.charCodeAt(i);
-        }
-        
-        // Create blob with correct MIME type
-        const blob = new Blob([bytes], { type: mimeType });
-        const url = URL.createObjectURL(blob);
-        
-        const downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.href = url;
-        downloadAnchorNode.download = filename;
-        downloadAnchorNode.style.display = 'none';
-        
-        document.body.appendChild(downloadAnchorNode);
-        downloadAnchorNode.click();
-        document.body.removeChild(downloadAnchorNode);
-        
-        // Clean up
-        setTimeout(() => URL.revokeObjectURL(url), 100);
-        
-        console.log('Resume download completed');
-      } else {
-        // Direct download using data URL
-        const downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.href = resumeData;
-        downloadAnchorNode.download = filename;
-        downloadAnchorNode.click();
-        
-        console.log('Direct resume download completed');
-      }
+      // Use server endpoint for reliable downloads
+      const link = document.createElement('a');
+      link.href = `/api/admin/resume/${applicationId}`;
+      link.download = filename;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      console.log('Resume download initiated');
     } catch (error) {
       console.error('Error downloading resume:', error);
-      console.error('Resume data length:', resumeData?.length || 0);
-      console.error('Filename:', filename);
     }
   };
 
@@ -177,7 +121,7 @@ export default function AdminDashboard() {
                     Refresh
                   </Button>
                   <Button
-                    onClick={() => downloadCSV(subscribers, 'newsletter-subscribers')}
+                    onClick={() => downloadCSV('subscribers')}
                     variant="outline"
                     size="sm"
                     disabled={!subscribers || subscribers.length === 0}
@@ -244,7 +188,7 @@ export default function AdminDashboard() {
                     Refresh
                   </Button>
                   <Button
-                    onClick={() => downloadCSV(contacts, 'contact-submissions')}
+                    onClick={() => downloadCSV('contacts')}
                     variant="outline"
                     size="sm"
                     disabled={!contacts || contacts.length === 0}
@@ -315,7 +259,7 @@ export default function AdminDashboard() {
                     Refresh
                   </Button>
                   <Button
-                    onClick={() => downloadCSV(events, 'event-bookings')}
+                    onClick={() => downloadCSV('events')}
                     variant="outline"
                     size="sm"
                     disabled={!events || events.length === 0}
@@ -394,7 +338,7 @@ export default function AdminDashboard() {
                     Refresh
                   </Button>
                   <Button
-                    onClick={() => downloadCSV(applications, 'job-applications')}
+                    onClick={() => downloadCSV('applications')}
                     variant="outline"
                     size="sm"
                     disabled={!applications || applications.length === 0}
@@ -442,7 +386,7 @@ export default function AdminDashboard() {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => downloadResume(application.resumeFileData, application.resumeFileName)}
+                                  onClick={() => downloadResume(application.id, application.resumeFileName)}
                                   className="text-battles-gold hover:bg-battles-gold hover:text-black"
                                 >
                                   <Download className="h-3 w-3 mr-1" />
