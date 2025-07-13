@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertNewsletterSubscriberSchema, insertContactSubmissionSchema, insertEventBookingSchema } from "@shared/schema";
+import { insertNewsletterSubscriberSchema, insertContactSubmissionSchema, insertEventBookingSchema, insertJobApplicationSchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -98,6 +98,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ 
           message: "Invalid booking data",
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Job application endpoint
+  app.post("/api/job-applications", async (req, res) => {
+    try {
+      const validatedData = insertJobApplicationSchema.parse(req.body);
+      const application = await storage.createJobApplication(validatedData);
+      res.status(201).json({ 
+        message: "Job application submitted successfully",
+        application: { 
+          id: application.id, 
+          firstName: application.firstName,
+          lastName: application.lastName,
+          email: application.email,
+          position: application.position
+        }
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid application data",
           errors: error.errors 
         });
       }

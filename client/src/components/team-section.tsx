@@ -1,5 +1,6 @@
 import { Plus } from "lucide-react";
 import teamPhotoImg from "@assets/Screenshot_20250712_032136_Gallery_1752304907026.jpg";
+import JobApplicationForm from "./job-application-form";
 
 export default function TeamSection() {
   const scrollToSection = (sectionId: string) => {
@@ -75,12 +76,7 @@ export default function TeamSection() {
                 We're looking for passionate individuals who share our
                 commitment to quality and community service.
               </p>
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="bg-battles-gold text-battles-black px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
-              >
-                Get In Touch
-              </button>
+              <JobApplicationForm />
             </div>
           </div>
         </div>

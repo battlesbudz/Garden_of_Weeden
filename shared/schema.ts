@@ -34,6 +34,21 @@ export const eventBookings = pgTable("event_bookings", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const jobApplications = pgTable("job_applications", {
+  id: serial("id").primaryKey(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  position: text("position").notNull(),
+  experience: text("experience").notNull(),
+  availability: text("availability").notNull(),
+  coverLetter: text("cover_letter"),
+  resumeFileName: text("resume_file_name"),
+  resumeFileData: text("resume_file_data"), // Base64 encoded file data
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -59,6 +74,19 @@ export const insertEventBookingSchema = createInsertSchema(eventBookings).pick({
   message: true,
 });
 
+export const insertJobApplicationSchema = createInsertSchema(jobApplications).pick({
+  firstName: true,
+  lastName: true,
+  email: true,
+  phone: true,
+  position: true,
+  experience: true,
+  availability: true,
+  coverLetter: true,
+  resumeFileName: true,
+  resumeFileData: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertNewsletterSubscriber = z.infer<typeof insertNewsletterSubscriberSchema>;
@@ -67,3 +95,5 @@ export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSche
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type InsertEventBooking = z.infer<typeof insertEventBookingSchema>;
 export type EventBooking = typeof eventBookings.$inferSelect;
+export type InsertJobApplication = z.infer<typeof insertJobApplicationSchema>;
+export type JobApplication = typeof jobApplications.$inferSelect;

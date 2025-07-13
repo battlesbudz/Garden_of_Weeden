@@ -3,6 +3,7 @@ import {
   newsletterSubscribers, 
   contactSubmissions,
   eventBookings,
+  jobApplications,
   type User, 
   type InsertUser,
   type NewsletterSubscriber,
@@ -10,7 +11,9 @@ import {
   type ContactSubmission,
   type InsertContactSubmission,
   type EventBooking,
-  type InsertEventBooking
+  type InsertEventBooking,
+  type JobApplication,
+  type InsertJobApplication
 } from "@shared/schema";
 
 export interface IStorage {
@@ -30,6 +33,10 @@ export interface IStorage {
   // Event bookings
   createEventBooking(booking: InsertEventBooking): Promise<EventBooking>;
   getAllEventBookings(): Promise<EventBooking[]>;
+  
+  // Job applications
+  createJobApplication(application: InsertJobApplication): Promise<JobApplication>;
+  getAllJobApplications(): Promise<JobApplication[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -37,20 +44,24 @@ export class MemStorage implements IStorage {
   private newsletterSubscribers: Map<number, NewsletterSubscriber>;
   private contactSubmissions: Map<number, ContactSubmission>;
   private eventBookings: Map<number, EventBooking>;
+  private jobApplications: Map<number, JobApplication>;
   private currentUserId: number;
   private currentSubscriberId: number;
   private currentSubmissionId: number;
   private currentBookingId: number;
+  private currentApplicationId: number;
 
   constructor() {
     this.users = new Map();
     this.newsletterSubscribers = new Map();
     this.contactSubmissions = new Map();
     this.eventBookings = new Map();
+    this.jobApplications = new Map();
     this.currentUserId = 1;
     this.currentSubscriberId = 1;
     this.currentSubmissionId = 1;
     this.currentBookingId = 1;
+    this.currentApplicationId = 1;
   }
 
   async getUser(id: number): Promise<User | undefined> {
@@ -120,6 +131,21 @@ export class MemStorage implements IStorage {
 
   async getAllEventBookings(): Promise<EventBooking[]> {
     return Array.from(this.eventBookings.values());
+  }
+
+  async createJobApplication(insertApplication: InsertJobApplication): Promise<JobApplication> {
+    const id = this.currentApplicationId++;
+    const application: JobApplication = { 
+      ...insertApplication, 
+      id, 
+      createdAt: new Date() 
+    };
+    this.jobApplications.set(id, application);
+    return application;
+  }
+
+  async getAllJobApplications(): Promise<JobApplication[]> {
+    return Array.from(this.jobApplications.values());
   }
 }
 
