@@ -1,9 +1,29 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import session from 'express-session';
+import bcrypt from 'bcryptjs';
 import { storage } from "./storage";
-import { insertNewsletterSubscriberSchema, insertContactSubmissionSchema, insertEventBookingSchema, insertJobApplicationSchema } from "@shared/schema";
+import { 
+  insertNewsletterSubscriberSchema, 
+  insertContactSubmissionSchema, 
+  insertEventBookingSchema, 
+  insertJobApplicationSchema,
+  loginSchema,
+  registerSchema,
+  insertProductSchema,
+  insertOrderSchema,
+  type User
+} from "@shared/schema";
 import { z } from "zod";
 import { MailService } from '@sendgrid/mail';
+
+// Session type declaration
+declare module 'express-session' {
+  interface SessionData {
+    userId?: number;
+    user?: User;
+  }
+}
 
 // Initialize SendGrid (only if API key is available)
 let mailService: MailService | null = null;
@@ -132,8 +152,227 @@ async function sendWelcomeEmail(subscriberEmail: string) {
   }
 }
 
+// Authentication middleware
+const requireAuth = (req: any, res: any, next: any) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ message: "Authentication required" });
+  }
+  next();
+};
+
+const requireAdmin = (req: any, res: any, next: any) => {
+  if (!req.session.user || req.session.user.role !== 'admin') {
+    return res.status(403).json({ message: "Admin access required" });
+  }
+  next();
+};
+
 export async function registerRoutes(app: Express): Promise<Server> {
   
+  // Session middleware
+  app.use(session({
+    secret: process.env.SESSION_SECRET || 'fallback-secret-for-dev',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false, // Set to true in production with HTTPS
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
+  }));
+
+  // Authentication routes
+  app.post("/api/auth/register", async (req, res) => {
+    try {
+      const validatedData = registerSchema.parse(req.body);
+      
+      // Check if user already exists
+      const existingUser = await storage.getUserByUsername(validatedData.username);
+      if (existingUser) {
+        return res.status(400).json({ message: "Username already exists" });
+      }
+
+      const existingEmail = await storage.getUserByEmail(validatedData.email);
+      if (existingEmail) {
+        return res.status(400).json({ message: "Email already registered" });
+      }
+
+      // Hash password
+      const hashedPassword = await bcrypt.hash(validatedData.password, 10);
+      
+      // Create user
+      const user = await storage.createUser({
+        ...validatedData,
+        password: hashedPassword,
+        role: 'customer' // Default role
+      });
+
+      // Set session
+      req.session.userId = user.id;
+      req.session.user = user;
+
+      res.status(201).json({ 
+        message: "User registered successfully",
+        user: { 
+          id: user.id, 
+          username: user.username, 
+          email: user.email,
+          role: user.role 
+        }
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid registration data",
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const validatedData = loginSchema.parse(req.body);
+      
+      const user = await storage.getUserByUsername(validatedData.username);
+      if (!user) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+
+      const isValidPassword = await bcrypt.compare(validatedData.password, user.password);
+      if (!isValidPassword) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+
+      // Set session
+      req.session.userId = user.id;
+      req.session.user = user;
+
+      res.json({ 
+        message: "Login successful",
+        user: { 
+          id: user.id, 
+          username: user.username, 
+          email: user.email,
+          role: user.role 
+        }
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid login data",
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/auth/logout", (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Could not log out" });
+      }
+      res.json({ message: "Logout successful" });
+    });
+  });
+
+  app.get("/api/auth/me", (req, res) => {
+    if (!req.session.userId) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+    
+    res.json({ 
+      user: { 
+        id: req.session.user.id, 
+        username: req.session.user.username, 
+        email: req.session.user.email,
+        role: req.session.user.role 
+      }
+    });
+  });
+
+  // Product routes
+  app.get("/api/products", async (req, res) => {
+    try {
+      const products = await storage.getAllProducts();
+      res.json(products);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/products", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertProductSchema.parse(req.body);
+      const product = await storage.createProduct(validatedData);
+      res.status(201).json(product);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid product data",
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Order routes
+  app.post("/api/orders", async (req, res) => {
+    try {
+      const { items, customerInfo } = req.body;
+      
+      // Calculate total
+      let total = 0;
+      for (const item of items) {
+        const product = await storage.getProduct(item.productId);
+        if (product) {
+          total += parseFloat(product.price) * item.quantity;
+        }
+      }
+
+      // Create order
+      const order = await storage.createOrder({
+        userId: req.session.userId || null,
+        total: total.toString(),
+        customerEmail: customerInfo.email,
+        customerName: customerInfo.name,
+        shippingAddress: customerInfo.address,
+      });
+
+      // Create order items
+      for (const item of items) {
+        const product = await storage.getProduct(item.productId);
+        if (product) {
+          await storage.createOrderItem({
+            orderId: order.id,
+            productId: item.productId,
+            quantity: item.quantity,
+            price: product.price,
+          });
+        }
+      }
+
+      res.status(201).json({ 
+        message: "Order created successfully",
+        order: { id: order.id, total: order.total }
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/admin/orders", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const orders = await storage.getAllOrders();
+      res.json(orders);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   // Newsletter subscription endpoint
   app.post("/api/newsletter/subscribe", async (req, res) => {
     try {
@@ -194,8 +433,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all newsletter subscribers (admin endpoint)
-  app.get("/api/admin/newsletter/subscribers", async (req, res) => {
+  // Protected admin endpoints
+  app.get("/api/admin/newsletter/subscribers", requireAuth, requireAdmin, async (req, res) => {
     try {
       const subscribers = await storage.getAllNewsletterSubscribers();
       res.json(subscribers);
@@ -204,8 +443,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all contact submissions (admin endpoint)
-  app.get("/api/admin/contact/submissions", async (req, res) => {
+  app.get("/api/admin/contact/submissions", requireAuth, requireAdmin, async (req, res) => {
     try {
       const submissions = await storage.getAllContactSubmissions();
       res.json(submissions);
@@ -214,8 +452,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all event bookings (admin endpoint)
-  app.get("/api/admin/event/bookings", async (req, res) => {
+  app.get("/api/admin/event/bookings", requireAuth, requireAdmin, async (req, res) => {
     try {
       const bookings = await storage.getAllEventBookings();
       res.json(bookings);
@@ -224,8 +461,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all job applications (admin endpoint)
-  app.get("/api/admin/job/applications", async (req, res) => {
+  app.get("/api/admin/job/applications", requireAuth, requireAdmin, async (req, res) => {
     try {
       const applications = await storage.getAllJobApplications();
       res.json(applications);

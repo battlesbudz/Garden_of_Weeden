@@ -1,11 +1,20 @@
 import { 
   users, 
+  products,
+  orders,
+  orderItems,
   newsletterSubscribers, 
   contactSubmissions,
   eventBookings,
   jobApplications,
   type User, 
   type InsertUser,
+  type Product,
+  type InsertProduct,
+  type Order,
+  type InsertOrder,
+  type OrderItem,
+  type InsertOrderItem,
   type NewsletterSubscriber,
   type InsertNewsletterSubscriber,
   type ContactSubmission,
@@ -19,9 +28,26 @@ import { db } from "./db";
 import { eq } from "drizzle-orm";
 
 export interface IStorage {
+  // User authentication
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  validateUserCredentials(username: string, password: string): Promise<User | null>;
+  
+  // Products
+  getAllProducts(): Promise<Product[]>;
+  getProduct(id: number): Promise<Product | undefined>;
+  createProduct(product: InsertProduct): Promise<Product>;
+  updateProduct(id: number, product: Partial<InsertProduct>): Promise<Product>;
+  deleteProduct(id: number): Promise<void>;
+  
+  // Orders  
+  createOrder(order: InsertOrder): Promise<Order>;
+  createOrderItem(orderItem: InsertOrderItem): Promise<OrderItem>;
+  getAllOrders(): Promise<Order[]>;
+  getUserOrders(userId: number): Promise<Order[]>;
+  getOrder(id: number): Promise<Order | undefined>;
   
   // Newsletter subscribers
   createNewsletterSubscriber(subscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber>;
@@ -155,6 +181,7 @@ export class MemStorage implements IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
+  // User authentication methods
   async getUser(id: number): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user || undefined;
@@ -165,12 +192,90 @@ export class DatabaseStorage implements IStorage {
     return user || undefined;
   }
 
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user || undefined;
+  }
+
   async createUser(insertUser: InsertUser): Promise<User> {
     const [user] = await db
       .insert(users)
       .values(insertUser)
       .returning();
     return user;
+  }
+
+  async validateUserCredentials(username: string, password: string): Promise<User | null> {
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.username, username));
+    
+    if (user && user.password === password) {
+      return user;
+    }
+    return null;
+  }
+
+  // Product methods
+  async getAllProducts(): Promise<Product[]> {
+    return await db.select().from(products);
+  }
+
+  async getProduct(id: number): Promise<Product | undefined> {
+    const [product] = await db.select().from(products).where(eq(products.id, id));
+    return product || undefined;
+  }
+
+  async createProduct(insertProduct: InsertProduct): Promise<Product> {
+    const [product] = await db
+      .insert(products)
+      .values(insertProduct)
+      .returning();
+    return product;
+  }
+
+  async updateProduct(id: number, updateData: Partial<InsertProduct>): Promise<Product> {
+    const [product] = await db
+      .update(products)
+      .set(updateData)
+      .where(eq(products.id, id))
+      .returning();
+    return product;
+  }
+
+  async deleteProduct(id: number): Promise<void> {
+    await db.delete(products).where(eq(products.id, id));
+  }
+
+  // Order methods
+  async createOrder(insertOrder: InsertOrder): Promise<Order> {
+    const [order] = await db
+      .insert(orders)
+      .values(insertOrder)
+      .returning();
+    return order;
+  }
+
+  async createOrderItem(insertOrderItem: InsertOrderItem): Promise<OrderItem> {
+    const [orderItem] = await db
+      .insert(orderItems)
+      .values(insertOrderItem)
+      .returning();
+    return orderItem;
+  }
+
+  async getAllOrders(): Promise<Order[]> {
+    return await db.select().from(orders);
+  }
+
+  async getUserOrders(userId: number): Promise<Order[]> {
+    return await db.select().from(orders).where(eq(orders.userId, userId));
+  }
+
+  async getOrder(id: number): Promise<Order | undefined> {
+    const [order] = await db.select().from(orders).where(eq(orders.id, id));
+    return order || undefined;
   }
 
   async createNewsletterSubscriber(insertSubscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber> {
