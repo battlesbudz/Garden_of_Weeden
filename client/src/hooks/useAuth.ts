@@ -54,11 +54,14 @@ export function useAuth() {
     },
   });
 
+  // Extract nested user data
+  const actualUser = user?.user || user;
+  
   return {
-    user,
+    user: actualUser,
     isLoading,
     isAuthenticated: !!user,
-    isAdmin: user?.role === 'admin',
+    isAdmin: actualUser?.role === 'admin',
     login: loginMutation,
     register: registerMutation,
     logout: logoutMutation,
