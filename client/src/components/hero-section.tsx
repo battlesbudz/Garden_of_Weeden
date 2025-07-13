@@ -23,11 +23,11 @@ export default function HeroSection() {
       />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
+        <div className="mb-8 flex justify-center">
           <img
             src={logoPath}
             alt="Battles Budz Logo"
-            className="h-20 w-auto mx-auto mb-6 object-contain"
+            className="h-16 w-auto max-w-full object-contain"
           />
         </div>
 
