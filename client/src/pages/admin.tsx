@@ -51,23 +51,39 @@ export default function AdminDashboard() {
   });
 
   const downloadCSV = (data: any[], filename: string) => {
-    if (!data || data.length === 0) return;
+    if (!data || data.length === 0) {
+      console.log('No data to export');
+      return;
+    }
 
-    const headers = Object.keys(data[0]);
-    const csvContent = [
-      headers.join(','),
-      ...data.map(row => headers.map(header => `"${row[header] || ''}"`).join(','))
-    ].join('\n');
+    try {
+      console.log('Exporting CSV with data:', data.length, 'rows');
+      const headers = Object.keys(data[0]);
+      const csvContent = [
+        headers.join(','),
+        ...data.map(row => headers.map(header => {
+          const value = row[header] || '';
+          // Escape quotes and handle special characters
+          return `"${String(value).replace(/"/g, '""')}"`;
+        }).join(','))
+      ].join('\n');
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', `${filename}.csv`);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `${filename}-${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Clean up the URL object
+      setTimeout(() => URL.revokeObjectURL(url), 100);
+      console.log('CSV export completed');
+    } catch (error) {
+      console.error('Error exporting CSV:', error);
+    }
   };
 
   if (!isAuthenticated || !isAdmin) {
@@ -94,9 +110,9 @@ export default function AdminDashboard() {
         return (
           <Card>
             <CardHeader>
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <CardTitle>Newsletter Subscribers</CardTitle>
-                <div className="flex space-x-2">
+                <div className="flex flex-wrap gap-2">
                   <Button
                     onClick={() => refetchSubscribers()}
                     variant="outline"
@@ -161,9 +177,9 @@ export default function AdminDashboard() {
         return (
           <Card>
             <CardHeader>
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <CardTitle>Contact Submissions</CardTitle>
-                <div className="flex space-x-2">
+                <div className="flex flex-wrap gap-2">
                   <Button
                     onClick={() => refetchContacts()}
                     variant="outline"
@@ -232,9 +248,9 @@ export default function AdminDashboard() {
         return (
           <Card>
             <CardHeader>
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <CardTitle>Event Bookings</CardTitle>
-                <div className="flex space-x-2">
+                <div className="flex flex-wrap gap-2">
                   <Button
                     onClick={() => refetchEvents()}
                     variant="outline"
@@ -311,9 +327,9 @@ export default function AdminDashboard() {
         return (
           <Card>
             <CardHeader>
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <CardTitle>Job Applications</CardTitle>
-                <div className="flex space-x-2">
+                <div className="flex flex-wrap gap-2">
                   <Button
                     onClick={() => refetchApplications()}
                     variant="outline"
@@ -469,32 +485,32 @@ export default function AdminDashboard() {
           {/* Data Tables */}
           <Card className="bg-white shadow-lg">
             <CardHeader>
-              <div className="flex space-x-2 border-b pb-4">
+              <div className="flex flex-wrap gap-2 border-b pb-4">
                 <Button
                   variant={activeTab === "subscribers" ? "default" : "ghost"}
                   onClick={() => setActiveTab("subscribers")}
-                  className={activeTab === "subscribers" ? "bg-battles-gold text-black hover:bg-battles-gold/90" : ""}
+                  className={`${activeTab === "subscribers" ? "bg-battles-gold text-black hover:bg-battles-gold/90" : ""} text-xs sm:text-sm flex-shrink-0`}
                 >
                   Newsletter Subscribers
                 </Button>
                 <Button
                   variant={activeTab === "contacts" ? "default" : "ghost"}
                   onClick={() => setActiveTab("contacts")}
-                  className={activeTab === "contacts" ? "bg-battles-gold text-black hover:bg-battles-gold/90" : ""}
+                  className={`${activeTab === "contacts" ? "bg-battles-gold text-black hover:bg-battles-gold/90" : ""} text-xs sm:text-sm flex-shrink-0`}
                 >
                   Contact Submissions
                 </Button>
                 <Button
                   variant={activeTab === "events" ? "default" : "ghost"}
                   onClick={() => setActiveTab("events")}
-                  className={activeTab === "events" ? "bg-battles-gold text-black hover:bg-battles-gold/90" : ""}
+                  className={`${activeTab === "events" ? "bg-battles-gold text-black hover:bg-battles-gold/90" : ""} text-xs sm:text-sm flex-shrink-0`}
                 >
                   Event Bookings
                 </Button>
                 <Button
                   variant={activeTab === "applications" ? "default" : "ghost"}
                   onClick={() => setActiveTab("applications")}
-                  className={activeTab === "applications" ? "bg-battles-gold text-black hover:bg-battles-gold/90" : ""}
+                  className={`${activeTab === "applications" ? "bg-battles-gold text-black hover:bg-battles-gold/90" : ""} text-xs sm:text-sm flex-shrink-0`}
                 >
                   Job Applications
                 </Button>
