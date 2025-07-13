@@ -57,7 +57,7 @@ export default function RetailSection() {
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-64 object-cover"
+                className="w-full h-64 object-contain bg-gray-100"
               />
               <div className="p-6">
                 <h3 className="text-2xl font-bold text-battles-black mb-2">
