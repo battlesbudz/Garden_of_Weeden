@@ -20,12 +20,25 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsOpen(false);
+  const navigateToSection = (sectionId: string) => {
+    // If we're not on the homepage, navigate there first
+    if (location !== "/") {
+      setLocation("/");
+      // Wait for navigation to complete, then scroll
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    } else {
+      // We're already on homepage, just scroll
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
+    setIsOpen(false);
   };
 
   const handleLogout = () => {
@@ -44,33 +57,35 @@ export default function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <img
-              src={logoPath}
-              alt="Battles Budz Logo"
-              className="h-8 w-auto"
-            />
-            <span className="ml-3 text-battles-gold font-bold text-xl">
-              BATTLES BUDZ
-            </span>
-          </div>
+          <Link href="/">
+            <a className="flex items-center">
+              <img
+                src={logoPath}
+                alt="Battles Budz Logo"
+                className="h-8 w-auto"
+              />
+              <span className="ml-3 text-battles-gold font-bold text-xl">
+                BATTLES BUDZ
+              </span>
+            </a>
+          </Link>
 
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <button
-                onClick={() => scrollToSection("about")}
+                onClick={() => navigateToSection("about")}
                 className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
                 About
               </button>
               <button
-                onClick={() => scrollToSection("retail")}
+                onClick={() => navigateToSection("retail")}
                 className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
                 Products
               </button>
               <button
-                onClick={() => scrollToSection("events")}
+                onClick={() => navigateToSection("events")}
                 className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
                 Events
@@ -143,19 +158,19 @@ export default function Navigation() {
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 bg-battles-black border-t border-battles-gold">
             <button
-              onClick={() => scrollToSection("about")}
+              onClick={() => navigateToSection("about")}
               className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
             >
               About
             </button>
             <button
-              onClick={() => scrollToSection("retail")}
+              onClick={() => navigateToSection("retail")}
               className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
             >
               Products
             </button>
             <button
-              onClick={() => scrollToSection("events")}
+              onClick={() => navigateToSection("events")}
               className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
             >
               Events
