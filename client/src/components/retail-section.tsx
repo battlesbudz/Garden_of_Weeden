@@ -1,6 +1,6 @@
 import cosmicChewzImg from "@assets/20240228_223118_1752304447251.jpg";
 import freedomFogImg from "@assets/20240303_120951_1752304725882.jpg";
-import cannabisFlower1 from "@assets/Screenshot_20250713_025009_Gallery_1752389462131.jpg";
+import cannabisFlower1 from "@assets/Screenshot_20250713_025012_Gallery_1752391497264.jpg";
 import cannabisFlower2 from "@assets/Screenshot_20250713_025012_Gallery_1752389462115.jpg";
 
 export default function RetailSection() {
