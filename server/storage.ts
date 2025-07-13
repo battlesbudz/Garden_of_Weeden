@@ -138,7 +138,10 @@ export class MemStorage implements IStorage {
   async createJobApplication(insertApplication: InsertJobApplication): Promise<JobApplication> {
     const id = this.currentApplicationId++;
     const application: JobApplication = { 
-      ...insertApplication, 
+      ...insertApplication,
+      coverLetter: insertApplication.coverLetter || null,
+      resumeFileName: insertApplication.resumeFileName || null,
+      resumeFileData: insertApplication.resumeFileData || null,
       id, 
       createdAt: new Date() 
     };
