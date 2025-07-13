@@ -68,22 +68,12 @@ export default function AdminDashboard() {
         }).join(','))
       ].join('\n');
 
-      // Add BOM for better Excel compatibility
-      const BOM = '\uFEFF';
-      const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      
-      link.href = url;
-      link.download = `${filename}-${new Date().toISOString().split('T')[0]}.csv`;
-      link.style.display = 'none';
-      
-      document.body.appendChild(link);
-      link.click();
-      
-      // Clean up immediately
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      // Force download using data URL approach
+      const dataStr = "data:text/csv;charset=utf-8," + encodeURIComponent(csvContent);
+      const downloadAnchorNode = document.createElement('a');
+      downloadAnchorNode.setAttribute("href", dataStr);
+      downloadAnchorNode.setAttribute("download", `${filename}-${new Date().toISOString().split('T')[0]}.csv`);
+      downloadAnchorNode.click();
       
       console.log('CSV export completed');
     } catch (error) {
@@ -92,32 +82,61 @@ export default function AdminDashboard() {
   };
 
   const downloadResume = (resumeData: string, filename: string) => {
+    if (!resumeData || !filename) {
+      console.error('Missing resume data or filename');
+      return;
+    }
+
     try {
-      // Decode base64 data
-      const byteCharacters = atob(resumeData);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      console.log('Downloading resume:', filename);
+      console.log('Resume data preview:', resumeData.substring(0, 100));
+      
+      // Handle data URL format (data:mime/type;base64,data)
+      if (resumeData.startsWith('data:')) {
+        // Extract MIME type and base64 data
+        const [mimeInfo, base64Data] = resumeData.split(',');
+        const mimeType = mimeInfo.split(':')[1].split(';')[0];
+        
+        console.log('Detected MIME type:', mimeType);
+        console.log('Base64 data length:', base64Data?.length || 0);
+        
+        // Convert base64 to binary
+        const binaryString = atob(base64Data);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        
+        // Create blob with correct MIME type
+        const blob = new Blob([bytes], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.href = url;
+        downloadAnchorNode.download = filename;
+        downloadAnchorNode.style.display = 'none';
+        
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        document.body.removeChild(downloadAnchorNode);
+        
+        // Clean up
+        setTimeout(() => URL.revokeObjectURL(url), 100);
+        
+        console.log('Resume download completed');
+      } else {
+        // Direct download using data URL
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.href = resumeData;
+        downloadAnchorNode.download = filename;
+        downloadAnchorNode.click();
+        
+        console.log('Direct resume download completed');
       }
-      const byteArray = new Uint8Array(byteNumbers);
-      
-      const blob = new Blob([byteArray], { type: 'application/pdf' });
-      const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      
-      link.href = url;
-      link.download = filename;
-      link.style.display = 'none';
-      
-      document.body.appendChild(link);
-      link.click();
-      
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-      
-      console.log('Resume download completed');
     } catch (error) {
       console.error('Error downloading resume:', error);
+      console.error('Resume data length:', resumeData?.length || 0);
+      console.error('Filename:', filename);
     }
   };
 
