@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,22 +15,38 @@ import {
 } from "lucide-react";
 
 export default function AdminDashboard() {
+  const { user, isAuthenticated, isAdmin } = useAuth();
   const [activeTab, setActiveTab] = useState("subscribers");
 
-  const { data: subscribers, isLoading: subscribersLoading, refetch: refetchSubscribers } = useQuery({
+  console.log('Admin Dashboard - Auth State:', { user, isAuthenticated, isAdmin });
+
+  const { data: subscribers, isLoading: subscribersLoading, refetch: refetchSubscribers, error: subscribersError } = useQuery({
     queryKey: ["/api/newsletter/subscribers"],
+    enabled: isAuthenticated && isAdmin,
+    retry: 1,
   });
 
-  const { data: contacts, isLoading: contactsLoading, refetch: refetchContacts } = useQuery({
-    queryKey: ["/api/contact/submissions"],
+  const { data: contacts, isLoading: contactsLoading, refetch: refetchContacts, error: contactsError } = useQuery({
+    queryKey: ["/api/contact-submissions"],
+    enabled: isAuthenticated && isAdmin,
+    retry: 1,
   });
 
-  const { data: events, isLoading: eventsLoading, refetch: refetchEvents } = useQuery({
-    queryKey: ["/api/event/bookings"],
+  const { data: events, isLoading: eventsLoading, refetch: refetchEvents, error: eventsError } = useQuery({
+    queryKey: ["/api/event-bookings"],
+    enabled: isAuthenticated && isAdmin,
+    retry: 1,
   });
 
-  const { data: applications, isLoading: applicationsLoading, refetch: refetchApplications } = useQuery({
-    queryKey: ["/api/job/applications"],
+  const { data: applications, isLoading: applicationsLoading, refetch: refetchApplications, error: applicationsError } = useQuery({
+    queryKey: ["/api/job-applications"],
+    enabled: isAuthenticated && isAdmin,
+    retry: 1,
+  });
+
+  console.log('Admin Dashboard - Data State:', { 
+    subscribers, subscribersError, subscribersLoading,
+    applications, applicationsError, applicationsLoading
   });
 
   const downloadCSV = (data: any[], filename: string) => {
@@ -166,14 +183,22 @@ export default function AdminDashboard() {
                         </tr>
                       </thead>
                       <tbody>
-                        {subscribers?.map((subscriber: any) => (
-                          <tr key={subscriber.id} className="border-b hover:bg-gray-50">
-                            <td className="p-4">{subscriber.email}</td>
-                            <td className="p-4">
-                              {new Date(subscriber.createdAt).toLocaleDateString()}
+                        {subscribers && subscribers.length > 0 ? (
+                          subscribers.map((subscriber: any) => (
+                            <tr key={subscriber.id} className="border-b hover:bg-gray-50">
+                              <td className="p-4">{subscriber.email}</td>
+                              <td className="p-4">
+                                {new Date(subscriber.createdAt).toLocaleDateString()}
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={2} className="p-8 text-center text-gray-500">
+                              No newsletter subscribers yet
                             </td>
                           </tr>
-                        ))}
+                        )}
                       </tbody>
                     </table>
                   </div>
@@ -360,30 +385,38 @@ export default function AdminDashboard() {
                         </tr>
                       </thead>
                       <tbody>
-                        {applications?.map((application: any) => (
-                          <tr key={application.id} className="border-b hover:bg-gray-50">
-                            <td className="p-4">
-                              {application.firstName} {application.lastName}
-                            </td>
-                            <td className="p-4">{application.email}</td>
-                            <td className="p-4">
-                              <Badge variant="outline">{application.position}</Badge>
-                            </td>
-                            <td className="p-4">{application.experience}</td>
-                            <td className="p-4">
-                              {application.resumeFileName ? (
-                                <Badge variant="secondary">
-                                  {application.resumeFileName}
-                                </Badge>
-                              ) : (
-                                <span className="text-gray-400">No resume</span>
-                              )}
-                            </td>
-                            <td className="p-4">
-                              {new Date(application.createdAt).toLocaleDateString()}
+                        {applications && applications.length > 0 ? (
+                          applications.map((application: any) => (
+                            <tr key={application.id} className="border-b hover:bg-gray-50">
+                              <td className="p-4">
+                                {application.firstName} {application.lastName}
+                              </td>
+                              <td className="p-4">{application.email}</td>
+                              <td className="p-4">
+                                <Badge variant="outline">{application.position}</Badge>
+                              </td>
+                              <td className="p-4">{application.experience}</td>
+                              <td className="p-4">
+                                {application.resumeFileName ? (
+                                  <Badge variant="secondary">
+                                    {application.resumeFileName}
+                                  </Badge>
+                                ) : (
+                                  <span className="text-gray-400">No resume</span>
+                                )}
+                              </td>
+                              <td className="p-4">
+                                {new Date(application.createdAt).toLocaleDateString()}
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={6} className="p-8 text-center text-gray-500">
+                              No job applications yet
                             </td>
                           </tr>
-                        ))}
+                        )}
                       </tbody>
                     </table>
                   </div>
