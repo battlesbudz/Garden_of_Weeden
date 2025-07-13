@@ -70,10 +70,8 @@ export default function Navigation() {
 
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <Link href="/">
-                <a className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                  Home
-                </a>
+              <Link href="/" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Home
               </Link>
               <button
                 onClick={() => navigateToSection("about")}
