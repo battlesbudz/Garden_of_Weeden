@@ -137,15 +137,25 @@ export default function AdminDashboard() {
         </div>
 
         {/* Data Tables */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="subscribers">Newsletter Subscribers</TabsTrigger>
-            <TabsTrigger value="contacts">Contact Submissions</TabsTrigger>
-            <TabsTrigger value="events">Event Bookings</TabsTrigger>
-            <TabsTrigger value="applications">Job Applications</TabsTrigger>
-          </TabsList>
+        <div className="bg-white rounded-lg shadow-lg">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-4 h-12">
+              <TabsTrigger value="subscribers" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+                Newsletter Subscribers
+              </TabsTrigger>
+              <TabsTrigger value="contacts" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+                Contact Submissions
+              </TabsTrigger>
+              <TabsTrigger value="events" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+                Event Bookings
+              </TabsTrigger>
+              <TabsTrigger value="applications" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+                Job Applications
+              </TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="subscribers" className="space-y-4">
+            <div className="p-6">
+              <TabsContent value="subscribers" className="mt-0 space-y-4">
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
@@ -211,7 +221,7 @@ export default function AdminDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="contacts" className="space-y-4">
+              <TabsContent value="contacts" className="mt-0 space-y-4">
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
@@ -275,7 +285,7 @@ export default function AdminDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="events" className="space-y-4">
+              <TabsContent value="events" className="mt-0 space-y-4">
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
@@ -343,7 +353,7 @@ export default function AdminDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="applications" className="space-y-4">
+              <TabsContent value="applications" className="mt-0 space-y-4">
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
@@ -427,8 +437,10 @@ export default function AdminDashboard() {
                 )}
               </CardContent>
             </Card>
-          </TabsContent>
-        </Tabs>
+              </TabsContent>
+            </div>
+          </Tabs>
+        </div>
         </div>
       </div>
     </div>
