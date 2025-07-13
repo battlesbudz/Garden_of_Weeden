@@ -57,17 +57,15 @@ export default function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/">
-            <a className="flex items-center hover:opacity-80 transition-opacity">
-              <img
-                src={logoPath}
-                alt="Battles Budz Logo"
-                className="h-8 w-auto"
-              />
-              <span className="ml-3 text-battles-gold font-bold text-xl">
-                BATTLES BUDZ
-              </span>
-            </a>
+          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+            <img
+              src={logoPath}
+              alt="Battles Budz Logo"
+              className="h-8 w-auto"
+            />
+            <span className="ml-3 text-battles-gold font-bold text-xl">
+              BATTLES BUDZ
+            </span>
           </Link>
 
           <div className="hidden md:block">
@@ -95,16 +93,12 @@ export default function Navigation() {
               >
                 Events
               </button>
-              <Link href="/shop">
-                <a className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
-                  <ShoppingBag className="h-4 w-4 mr-1" />
-                  Shop
-                </a>
+              <Link href="/shop" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                <ShoppingBag className="h-4 w-4 mr-1" />
+                Shop
               </Link>
-              <Link href="/investors">
-                <a className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                  Investors
-                </a>
+              <Link href="/investors" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Investors
               </Link>
 
               {/* Authentication Links */}
@@ -120,11 +114,9 @@ export default function Navigation() {
                     {isAdmin && (
                       <>
                         <DropdownMenuItem asChild>
-                          <Link href="/dashboard">
-                            <a className="flex items-center text-white hover:text-battles-gold">
-                              <Settings className="h-4 w-4 mr-2" />
-                              Admin Dashboard
-                            </a>
+                          <Link href="/dashboard" className="flex items-center text-white hover:text-battles-gold">
+                            <Settings className="h-4 w-4 mr-2" />
+                            Admin Dashboard
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator className="bg-battles-gold/30" />
@@ -137,10 +129,8 @@ export default function Navigation() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <Link href="/login">
-                  <a className="bg-battles-gold hover:bg-battles-gold/90 text-black px-4 py-2 rounded-md text-sm font-semibold transition-colors">
-                    Sign In
-                  </a>
+                <Link href="/login" className="bg-battles-gold hover:bg-battles-gold/90 text-black px-4 py-2 rounded-md text-sm font-semibold transition-colors">
+                  Sign In
                 </Link>
               )}
             </div>
@@ -162,10 +152,8 @@ export default function Navigation() {
       {isOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 bg-battles-black border-t border-battles-gold">
-            <Link href="/">
-              <a className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
-                Home
-              </a>
+            <Link href="/" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
+              Home
             </Link>
             <button
               onClick={() => navigateToSection("about")}
@@ -185,27 +173,21 @@ export default function Navigation() {
             >
               Events
             </button>
-            <Link href="/shop">
-              <a className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
-                <ShoppingBag className="h-4 w-4 mr-2" />
-                Shop
-              </a>
+            <Link href="/shop" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+              <ShoppingBag className="h-4 w-4 mr-2" />
+              Shop
             </Link>
-            <Link href="/investors">
-              <a className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
-                Investors
-              </a>
+            <Link href="/investors" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
+              Investors
             </Link>
             
             {/* Mobile Auth */}
             {isAuthenticated ? (
               <>
                 {isAdmin && (
-                  <Link href="/dashboard">
-                    <a className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
-                      <Settings className="h-4 w-4 mr-2" />
-                      Admin Dashboard
-                    </a>
+                  <Link href="/dashboard" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+                    <Settings className="h-4 w-4 mr-2" />
+                    Admin Dashboard
                   </Link>
                 )}
                 <button
@@ -217,10 +199,8 @@ export default function Navigation() {
                 </button>
               </>
             ) : (
-              <Link href="/login">
-                <a className="block bg-battles-gold hover:bg-battles-gold/90 text-black px-3 py-2 text-base font-semibold w-full text-center rounded">
-                  Sign In
-                </a>
+              <Link href="/login" className="block bg-battles-gold hover:bg-battles-gold/90 text-black px-3 py-2 text-base font-semibold w-full text-center rounded">
+                Sign In
               </Link>
             )}
           </div>
