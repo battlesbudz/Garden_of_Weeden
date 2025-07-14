@@ -362,7 +362,7 @@ export default function EnhancedCommunityPage() {
                 className="text-battles-gold hover:text-battles-gold/80"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Home
+                <span className="text-battles-gold">Back to Home</span>
               </Button>
               <div className="flex items-center gap-2">
                 <Users className="h-6 w-6 text-battles-gold" />
@@ -377,7 +377,7 @@ export default function EnhancedCommunityPage() {
                     className="bg-battles-gold text-black hover:bg-battles-gold/90"
                   >
                     <Plus className="h-4 w-4 mr-2" />
-                    New Post
+                    <span className="text-black">New Post</span>
                   </Button>
                   <Button 
                     onClick={() => setShowCalendar(true)}
@@ -385,7 +385,7 @@ export default function EnhancedCommunityPage() {
                     className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
                   >
                     <Calendar className="h-4 w-4 mr-2" />
-                    Schedule Call
+                    <span className="text-battles-gold hover:text-black">Schedule Call</span>
                   </Button>
                 </>
               ) : (
@@ -396,7 +396,7 @@ export default function EnhancedCommunityPage() {
                   }}
                   className="bg-battles-gold text-black hover:bg-battles-gold/90"
                 >
-                  Login to Participate
+                  <span className="text-black">Login to Participate</span>
                 </Button>
               )}
             </div>
