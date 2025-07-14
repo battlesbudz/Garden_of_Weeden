@@ -127,13 +127,9 @@ export default function EnhancedCommunityPage() {
   const createPostMutation = useMutation({
     mutationFn: async (postData: any) => {
       console.log("Sending post data:", postData);
-      const response = await apiRequest('/api/forum/posts', {
-        method: 'POST',
-        body: JSON.stringify(postData),
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const response = await apiRequest('POST', '/api/forum/posts', postData);
       console.log("Post creation response:", response);
-      return response;
+      return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/forum/posts'] });
@@ -150,11 +146,8 @@ export default function EnhancedCommunityPage() {
 
   const requestMeetingMutation = useMutation({
     mutationFn: async (requestData: any) => {
-      return apiRequest('/api/calendar/request', {
-        method: 'POST',
-        body: JSON.stringify(requestData),
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const response = await apiRequest('POST', '/api/calendar/request', requestData);
+      return response.json();
     },
     onSuccess: () => {
       setMeetingRequest({ name: "", email: "", preferredDate: "", duration: 30, topic: "" });
