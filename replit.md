@@ -6,6 +6,18 @@ This is a full-stack web application for Battles Budz, a veteran-owned cannabis 
 
 ## Recent Changes (July 14, 2025)
 
+- ✓ **COMPLETED: Interactive User Guide & Age Verification System**
+  - Implemented simple 21+ age verification popup (NY law compliance) with yes/no buttons
+  - Created comprehensive quick start modal with scrollable content and proper navigation
+  - Added interactive tour system with step-by-step highlights of key features
+  - Integrated persistent help button for ongoing user support and guide access
+  - Fixed navigation issues: quick start properly closes, "Book Experience" scrolls to events section
+  - Age verification goes directly to homepage instead of forcing quick start
+- ✓ **COMPLETED: Gamified User Engagement System**
+  - Built complete points and achievements system with database backend
+  - Created interactive UI components for user stats, achievements panel, and leaderboards
+  - Added "Rewards" tab to community page with full gamification features
+  - Integrated automatic point rewards for forum participation (posts, comments, likes)
 - ✓ Fixed CSV export and resume download functionality in admin portal using server-side endpoints
 - ✓ Resolved browser security restrictions that were blocking client-side downloads  
 - ✓ Cleaned database of test data while preserving legitimate business data

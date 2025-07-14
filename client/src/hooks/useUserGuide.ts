@@ -32,7 +32,7 @@ export function useUserGuide() {
 
     setGuideState({
       showAgeVerification: !isAgeVerificationValid,
-      showQuickStart: isAgeVerificationValid && isFirstVisit && !tourCompleted,
+      showQuickStart: false, // Only show when explicitly requested
       showTour: false,
       isFirstVisit,
     });
@@ -47,7 +47,7 @@ export function useUserGuide() {
     setGuideState(prev => ({
       ...prev,
       showAgeVerification: false,
-      showQuickStart: prev.isFirstVisit && !localStorage.getItem('tourCompleted'),
+      showQuickStart: false, // Go directly to homepage instead
     }));
   };
 
