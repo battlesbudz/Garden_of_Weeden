@@ -170,6 +170,107 @@ async function sendMeetingRequestNotification(request: MeetingRequest) {
   }
 }
 
+// Experience booking email functions
+async function sendExperienceBookingConfirmation(booking: any) {
+  if (!mailService) {
+    console.log('SendGrid not configured - skipping email confirmation');
+    return;
+  }
+
+  try {
+    // Send confirmation to customer
+    await mailService.send({
+      to: booking.email,
+      from: 'Battlesbudz@gmail.com',
+      subject: 'Experience Booking Confirmed - Battles Budz',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
+            🌿 Thank You for Your Booking!
+          </h2>
+          <div style="padding: 20px; background-color: #f9f9f9;">
+            <p>Hi ${booking.name},</p>
+            <p>Thank you for booking an experience with Battles Budz! We've received your request and will contact you within 24 hours to confirm availability and finalize the details.</p>
+            
+            <h3 style="color: #FFD700;">Your Booking Details:</h3>
+            <div style="background-color: white; padding: 15px; border-left: 3px solid #FFD700; margin: 15px 0;">
+              <p><strong>Experience Type:</strong> ${booking.eventType}</p>
+              <p><strong>Preferred Date:</strong> ${booking.preferredDate}</p>
+              <p><strong>Number of Guests:</strong> ${booking.guestCount}</p>
+              <p><strong>Contact Phone:</strong> ${booking.phone}</p>
+              ${booking.message ? `<p><strong>Special Requests:</strong> ${booking.message}</p>` : ''}
+            </div>
+            
+            <p>We're excited to provide you with an exceptional cannabis tourism experience in New York's beautiful Mohawk Valley region!</p>
+            
+            <p><strong>Next Steps:</strong></p>
+            <ul>
+              <li>We'll call you within 24 hours to confirm availability</li>
+              <li>Final pricing and scheduling will be discussed</li>
+              <li>Payment details will be provided upon confirmation</li>
+            </ul>
+          </div>
+          <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
+            <p><strong>Battles Budz</strong></p>
+            <p>📞 904-415-7635 | 📧 Battlesbudz@gmail.com</p>
+            <p>Premium Cannabis Tourism • Gloversville, NY</p>
+          </div>
+        </div>
+      `
+    });
+    console.log('Experience booking confirmation sent to:', booking.email);
+  } catch (error) {
+    console.error('Failed to send experience booking confirmation:', error);
+  }
+}
+
+async function sendExperienceBookingNotification(booking: any) {
+  if (!mailService) {
+    console.log('SendGrid not configured - skipping admin notification');
+    return;
+  }
+
+  try {
+    // Send notification to admin
+    await mailService.send({
+      to: 'Battlesbudz@gmail.com',
+      from: 'Battlesbudz@gmail.com',
+      subject: 'New Experience Booking - Battles Budz',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
+            🎯 New Experience Booking Request
+          </h2>
+          <div style="padding: 20px; background-color: #f9f9f9;">
+            <h3>Customer Information:</h3>
+            <p><strong>Name:</strong> ${booking.name}</p>
+            <p><strong>Email:</strong> ${booking.email}</p>
+            <p><strong>Phone:</strong> ${booking.phone}</p>
+            
+            <h3>Booking Details:</h3>
+            <div style="background-color: white; padding: 15px; border-left: 3px solid #FFD700; margin: 15px 0;">
+              <p><strong>Experience Type:</strong> ${booking.eventType}</p>
+              <p><strong>Preferred Date:</strong> ${booking.preferredDate}</p>
+              <p><strong>Number of Guests:</strong> ${booking.guestCount}</p>
+              <p><strong>Submitted:</strong> ${new Date().toLocaleDateString()}</p>
+              ${booking.message ? `<p><strong>Special Requests:</strong><br>${booking.message}</p>` : ''}
+            </div>
+            
+            <p><strong>⏰ Action Required:</strong> Contact customer within 24 hours to confirm availability and pricing.</p>
+          </div>
+          <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
+            <p><strong>Battles Budz Admin Dashboard</strong></p>
+            <p>📞 904-415-7635 | 📧 Battlesbudz@gmail.com</p>
+          </div>
+        </div>
+      `
+    });
+    console.log('Experience booking admin notification sent');
+  } catch (error) {
+    console.error('Failed to send experience booking admin notification:', error);
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   
   // Auth middleware
@@ -299,6 +400,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       console.error("Event booking error:", error);
       res.status(500).json({ message: "Failed to submit event booking" });
+    }
+  });
+
+  // Experience booking endpoint (with email confirmation)
+  app.post("/api/events/book", async (req, res) => {
+    try {
+      const validatedData = insertEventBookingSchema.parse(req.body);
+      const booking = await storage.createEventBooking(validatedData);
+      
+      // Send confirmation and notification emails
+      await Promise.all([
+        sendExperienceBookingConfirmation(booking),
+        sendExperienceBookingNotification(booking)
+      ]);
+      
+      res.status(201).json({ 
+        message: "Experience booking submitted successfully! Check your email for confirmation.",
+        booking: { id: booking.id }
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid booking data",
+          errors: error.errors 
+        });
+      }
+      console.error("Experience booking error:", error);
+      res.status(500).json({ message: "Failed to submit booking request" });
     }
   });
 
