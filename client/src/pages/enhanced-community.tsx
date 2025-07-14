@@ -262,6 +262,27 @@ export default function EnhancedCommunityPage() {
     });
   };
 
+  // Like post mutation
+  const likePostMutation = useMutation({
+    mutationFn: (postId: number) => apiRequest('POST', `/api/forum/posts/${postId}/like`, {}),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/forum/posts'] });
+      toast({ description: "Post liked!" });
+    },
+    onError: () => {
+      toast({ description: "Failed to like post", variant: "destructive" });
+    }
+  });
+
+  const handleLikePost = (postId: number) => {
+    if (!isAuthenticated) {
+      sessionStorage.setItem('redirectAfterLogin', '/community');
+      setLocation('/login');
+      return;
+    }
+    likePostMutation.mutate(postId);
+  };
+
   // Education guides data
   const educationGuides: EducationGuide[] = [
     {
@@ -542,10 +563,13 @@ export default function EnhancedCommunityPage() {
                         
                         {/* Post Actions */}
                         <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
-                          <div className="flex items-center gap-1">
+                          <button 
+                            onClick={() => handleLikePost(post.id)}
+                            className="flex items-center gap-1 hover:text-red-500 transition-colors"
+                          >
                             <Heart className="h-4 w-4" />
                             <span>{post.likeCount}</span>
-                          </div>
+                          </button>
                           <button 
                             onClick={() => toggleComments(post.id)}
                             className="flex items-center gap-1 hover:text-yellow-500 transition-colors"

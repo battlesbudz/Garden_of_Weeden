@@ -539,7 +539,7 @@ export class DatabaseStorage implements IStorage {
     return category;
   }
 
-  async getAllForumPosts(): Promise<(ForumPost & { author: User; category?: ForumCategory })[]> {
+  async getAllForumPosts(): Promise<(ForumPost & { author: User; category?: ForumCategory; comments?: any[] })[]> {
     const posts = await db
       .select({
         post: forumPosts,
@@ -551,11 +551,20 @@ export class DatabaseStorage implements IStorage {
       .leftJoin(forumCategories, eq(forumPosts.categoryId, forumCategories.id))
       .orderBy(desc(forumPosts.lastActivityAt));
 
-    return posts.map(row => ({
-      ...row.post,
-      author: row.author!,
-      category: row.category || undefined,
-    }));
+    // Fetch comments for each post
+    const postsWithComments = await Promise.all(
+      posts.map(async (row) => {
+        const comments = await this.getPostComments(row.post.id);
+        return {
+          ...row.post,
+          author: row.author!,
+          category: row.category || undefined,
+          comments,
+        };
+      })
+    );
+
+    return postsWithComments;
   }
 
   async getForumPost(id: number): Promise<(ForumPost & { author: User; category?: ForumCategory }) | undefined> {
