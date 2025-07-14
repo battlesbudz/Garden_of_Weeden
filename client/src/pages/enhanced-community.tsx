@@ -435,7 +435,7 @@ export default function EnhancedCommunityPage() {
               </Button>
             </Link>
           </div>
-          <h1 className="text-4xl font-bold mb-2">Community Hub</h1>
+          <h1 className="text-4xl font-bold mb-2 text-battles-black">Community Hub</h1>
           <p className="text-battles-black/80 text-lg">Connect, learn, and grow with the cannabis community</p>
         </div>
       </div>
