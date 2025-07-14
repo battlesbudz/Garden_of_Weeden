@@ -14,6 +14,7 @@ import {
   forumPosts,
   forumComments,
   forumLikes,
+  meetingRequests,
   type User, 
   type UpsertUser,
   type Product,
@@ -43,7 +44,9 @@ import {
   type ForumComment,
   type InsertForumComment,
   type ForumLike,
-  type InsertForumLike
+  type InsertForumLike,
+  type MeetingRequest,
+  type InsertMeetingRequest
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, sql } from "drizzle-orm";
@@ -119,6 +122,10 @@ export interface IStorage {
   
   togglePostLike(userId: string, postId: number): Promise<{ liked: boolean; likeCount: number }>;
   toggleCommentLike(userId: string, commentId: number): Promise<{ liked: boolean; likeCount: number }>;
+  
+  // Meeting requests
+  createMeetingRequest(request: InsertMeetingRequest): Promise<MeetingRequest>;
+  getAllMeetingRequests(): Promise<MeetingRequest[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -232,6 +239,47 @@ export class MemStorage implements IStorage {
   async getAllJobApplications(): Promise<JobApplication[]> {
     return Array.from(this.jobApplications.values());
   }
+
+  // Stub implementations for interface compliance - MemStorage doesn't implement these
+  async getAllProducts(): Promise<Product[]> { return []; }
+  async getProduct(id: number): Promise<Product | undefined> { return undefined; }
+  async createProduct(product: InsertProduct): Promise<Product> { throw new Error("Not implemented in MemStorage"); }
+  async updateProduct(id: number, product: Partial<InsertProduct>): Promise<Product> { throw new Error("Not implemented in MemStorage"); }
+  async deleteProduct(id: number): Promise<void> { throw new Error("Not implemented in MemStorage"); }
+  async createOrder(order: InsertOrder): Promise<Order> { throw new Error("Not implemented in MemStorage"); }
+  async createOrderItem(orderItem: InsertOrderItem): Promise<OrderItem> { throw new Error("Not implemented in MemStorage"); }
+  async getAllOrders(): Promise<Order[]> { return []; }
+  async getUserOrders(userId: number): Promise<Order[]> { return []; }
+  async getOrder(id: number): Promise<Order | undefined> { return undefined; }
+  async getAllInvestorUpdates(): Promise<InvestorUpdate[]> { return []; }
+  async getPublishedInvestorUpdates(): Promise<InvestorUpdate[]> { return []; }
+  async createInvestorUpdate(update: InsertInvestorUpdate): Promise<InvestorUpdate> { throw new Error("Not implemented in MemStorage"); }
+  async updateInvestorUpdate(id: number, update: Partial<InsertInvestorUpdate>): Promise<InvestorUpdate> { throw new Error("Not implemented in MemStorage"); }
+  async deleteInvestorUpdate(id: number): Promise<void> { throw new Error("Not implemented in MemStorage"); }
+  async getAllInvestorDocuments(): Promise<InvestorDocument[]> { return []; }
+  async getPublicInvestorDocuments(): Promise<InvestorDocument[]> { return []; }
+  async createInvestorDocument(document: InsertInvestorDocument): Promise<InvestorDocument> { throw new Error("Not implemented in MemStorage"); }
+  async updateInvestorDocument(id: number, document: Partial<InsertInvestorDocument>): Promise<InvestorDocument> { throw new Error("Not implemented in MemStorage"); }
+  async deleteInvestorDocument(id: number): Promise<void> { throw new Error("Not implemented in MemStorage"); }
+  async getAllInvestorAccess(): Promise<InvestorAccess[]> { return []; }
+  async getInvestorAccessByUserId(userId: number): Promise<InvestorAccess | undefined> { return undefined; }
+  async createInvestorAccess(access: InsertInvestorAccess): Promise<InvestorAccess> { throw new Error("Not implemented in MemStorage"); }
+  async updateInvestorAccess(id: number, access: Partial<InsertInvestorAccess>): Promise<InvestorAccess> { throw new Error("Not implemented in MemStorage"); }
+  async getAllForumCategories(): Promise<ForumCategory[]> { return []; }
+  async getActiveForumCategories(): Promise<ForumCategory[]> { return []; }
+  async createForumCategory(category: InsertForumCategory): Promise<ForumCategory> { throw new Error("Not implemented in MemStorage"); }
+  async getAllForumPosts(): Promise<(ForumPost & { author: User; category?: ForumCategory })[]> { return []; }
+  async getForumPost(id: number): Promise<(ForumPost & { author: User; category?: ForumCategory }) | undefined> { return undefined; }
+  async getPostsByCategory(categoryId: number): Promise<(ForumPost & { author: User; category?: ForumCategory })[]> { return []; }
+  async createForumPost(post: InsertForumPost): Promise<ForumPost> { throw new Error("Not implemented in MemStorage"); }
+  async updateForumPost(id: number, post: Partial<InsertForumPost>): Promise<ForumPost> { throw new Error("Not implemented in MemStorage"); }
+  async incrementPostViews(id: number): Promise<void> { throw new Error("Not implemented in MemStorage"); }
+  async getPostComments(postId: number): Promise<(ForumComment & { author: User })[]> { return []; }
+  async createForumComment(comment: InsertForumComment): Promise<ForumComment> { throw new Error("Not implemented in MemStorage"); }
+  async togglePostLike(userId: string, postId: number): Promise<{ liked: boolean; likeCount: number }> { throw new Error("Not implemented in MemStorage"); }
+  async toggleCommentLike(userId: string, commentId: number): Promise<{ liked: boolean; likeCount: number }> { throw new Error("Not implemented in MemStorage"); }
+  async createMeetingRequest(request: InsertMeetingRequest): Promise<MeetingRequest> { throw new Error("Not implemented in MemStorage"); }
+  async getAllMeetingRequests(): Promise<MeetingRequest[]> { return []; }
 }
 
 export class DatabaseStorage implements IStorage {
@@ -682,6 +730,21 @@ export class DatabaseStorage implements IStorage {
       const [comment] = await db.select({ likeCount: forumComments.likeCount }).from(forumComments).where(eq(forumComments.id, commentId));
       return { liked: true, likeCount: comment.likeCount };
     }
+  }
+
+  async createMeetingRequest(insertRequest: InsertMeetingRequest): Promise<MeetingRequest> {
+    const [request] = await db
+      .insert(meetingRequests)
+      .values(insertRequest)
+      .returning();
+    return request;
+  }
+
+  async getAllMeetingRequests(): Promise<MeetingRequest[]> {
+    return db
+      .select()
+      .from(meetingRequests)
+      .orderBy(desc(meetingRequests.createdAt));
   }
 }
 

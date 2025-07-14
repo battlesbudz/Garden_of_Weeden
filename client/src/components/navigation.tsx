@@ -90,9 +90,6 @@ export default function Navigation() {
               >
                 Events
               </button>
-              <Link href="/education" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Education
-              </Link>
               <Link href="/community" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Community
               </Link>
@@ -176,9 +173,6 @@ export default function Navigation() {
             >
               Events
             </button>
-            <Link href="/education" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
-              Education
-            </Link>
             <Link href="/community" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
               Community
             </Link>

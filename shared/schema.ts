@@ -153,6 +153,7 @@ export const forumPosts = pgTable("forum_posts", {
   content: text("content").notNull(),
   authorId: varchar("author_id").references(() => users.id).notNull(),
   categoryId: integer("category_id").references(() => forumCategories.id),
+  videoUrl: text("video_url"), // YouTube or other video URLs
   isPinned: boolean("is_pinned").default(false),
   isLocked: boolean("is_locked").default(false),
   viewCount: integer("view_count").default(0),
@@ -179,6 +180,18 @@ export const forumLikes = pgTable("forum_likes", {
   userId: varchar("user_id").references(() => users.id).notNull(),
   postId: integer("post_id").references(() => forumPosts.id),
   commentId: integer("comment_id").references(() => forumComments.id),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Calendar and meeting requests
+export const meetingRequests = pgTable("meeting_requests", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  topic: text("topic").notNull(),
+  preferredDate: varchar("preferred_date", { length: 255 }).notNull(),
+  duration: varchar("duration", { length: 10 }).notNull(), // "30", "45", "60" minutes
+  status: varchar("status", { length: 20 }).default("pending"), // "pending", "scheduled", "completed", "cancelled"
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -291,6 +304,7 @@ export const insertForumPostSchema = createInsertSchema(forumPosts).pick({
   content: true,
   authorId: true,
   categoryId: true,
+  videoUrl: true,
   isPinned: true,
   isLocked: true,
 });
@@ -306,6 +320,14 @@ export const insertForumLikeSchema = createInsertSchema(forumLikes).pick({
   userId: true,
   postId: true,
   commentId: true,
+});
+
+export const insertMeetingRequestSchema = createInsertSchema(meetingRequests).pick({
+  name: true,
+  email: true,
+  topic: true,
+  preferredDate: true,
+  duration: true,
 });
 
 export type UpsertUser = z.infer<typeof upsertUserSchema>;
@@ -340,3 +362,5 @@ export type InsertForumComment = z.infer<typeof insertForumCommentSchema>;
 export type ForumComment = typeof forumComments.$inferSelect;
 export type InsertForumLike = z.infer<typeof insertForumLikeSchema>;
 export type ForumLike = typeof forumLikes.$inferSelect;
+export type InsertMeetingRequest = z.infer<typeof insertMeetingRequestSchema>;
+export type MeetingRequest = typeof meetingRequests.$inferSelect;

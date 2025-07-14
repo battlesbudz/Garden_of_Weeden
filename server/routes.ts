@@ -10,7 +10,9 @@ import {
   insertForumCategorySchema,
   insertForumPostSchema,
   insertForumCommentSchema,
-  type User
+  insertMeetingRequestSchema,
+  type User,
+  type MeetingRequest
 } from "@shared/schema";
 import { z } from "zod";
 import { MailService } from '@sendgrid/mail';
@@ -129,6 +131,42 @@ async function sendWelcomeEmail(subscriberEmail: string) {
     console.log('Welcome email sent successfully to:', subscriberEmail);
   } catch (error) {
     console.error('Failed to send welcome email:', error);
+  }
+}
+
+async function sendMeetingRequestNotification(request: MeetingRequest) {
+  if (!mailService) {
+    console.log('SendGrid not configured - skipping email notification');
+    return;
+  }
+
+  try {
+    await mailService.send({
+      to: 'Battlesbudz@gmail.com',
+      from: 'Battlesbudz@gmail.com',
+      subject: 'New Expert Session Request - Battles Budz',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
+            📅 New Expert Session Request
+          </h2>
+          <div style="padding: 20px; background-color: #f9f9f9;">
+            <p><strong>Name:</strong> ${request.name}</p>
+            <p><strong>Email:</strong> ${request.email}</p>
+            <p><strong>Preferred Date:</strong> ${request.preferredDate}</p>
+            <p><strong>Duration:</strong> ${request.duration} minutes</p>
+            <p><strong>Submitted:</strong> ${new Date().toLocaleDateString()}</p>
+            <br>
+            <h3>Topic/Discussion:</h3>
+            <p style="background-color: white; padding: 15px; border-left: 3px solid #FFD700;">
+              ${request.topic}
+            </p>
+          </div>
+        </div>
+      `,
+    });
+  } catch (error) {
+    console.error('Failed to send meeting request notification:', error);
   }
 }
 
@@ -590,6 +628,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error toggling comment like:", error);
       res.status(500).json({ message: "Failed to toggle like" });
+    }
+  });
+
+  // Calendar/Meeting request endpoint
+  app.post("/api/calendar/request", async (req, res) => {
+    try {
+      const validatedData = insertMeetingRequestSchema.parse(req.body);
+      const request = await storage.createMeetingRequest(validatedData);
+      
+      // Send notification email (optional)
+      try {
+        await sendMeetingRequestNotification(request);
+      } catch (emailError) {
+        console.warn("Failed to send meeting request notification:", emailError);
+      }
+      
+      res.status(201).json({ message: "Meeting request submitted successfully" });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid request data",
+          errors: error.errors 
+        });
+      }
+      console.error("Error creating meeting request:", error);
+      res.status(500).json({ message: "Failed to submit meeting request" });
     }
   });
 
