@@ -31,7 +31,8 @@ import {
   Clock,
   Zap,
   Home,
-  Heart
+  Heart,
+  ChevronDown
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -103,6 +104,7 @@ export default function EnhancedCommunityPage() {
   const [newComment, setNewComment] = useState("");
   const [showComments, setShowComments] = useState<{ [key: number]: boolean }>({});
   const [selectedGuide, setSelectedGuide] = useState<EducationGuide | null>(null);
+  const [collapsedCategories, setCollapsedCategories] = useState<{ [key: number]: boolean }>({});
   const [currentStep, setCurrentStep] = useState(0);
   const [meetingRequest, setMeetingRequest] = useState({ 
     name: "", 
@@ -198,6 +200,13 @@ export default function EnhancedCommunityPage() {
     setShowComments(prev => ({
       ...prev,
       [postId]: !prev[postId]
+    }));
+  };
+
+  const toggleCategory = (categoryId: number) => {
+    setCollapsedCategories(prev => ({
+      ...prev,
+      [categoryId]: !prev[categoryId]
     }));
   };
 
@@ -533,8 +542,8 @@ export default function EnhancedCommunityPage() {
                 
                 return (
                   <div key={category.id} className="space-y-4">
-                    <Card className="bg-gray-900 border-yellow-500/20">
-                      <CardContent className="p-4">
+                    <Card className="bg-gray-900 border-yellow-500/20 cursor-pointer hover:border-yellow-500/40 transition-colors">
+                      <CardContent className="p-4" onClick={() => toggleCategory(category.id)}>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
                             <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -543,15 +552,18 @@ export default function EnhancedCommunityPage() {
                               <p className="text-sm text-gray-400">{category.description}</p>
                             </div>
                           </div>
-                          <Badge className="bg-yellow-500 text-black">
-                            {categoryPosts.length} posts
-                          </Badge>
+                          <div className="flex items-center gap-2">
+                            <Badge className="bg-yellow-500 text-black">
+                              {categoryPosts.length} posts
+                            </Badge>
+                            <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform ${collapsedCategories[category.id] ? 'rotate-180' : ''}`} />
+                          </div>
                         </div>
                       </CardContent>
                     </Card>
                     
                     {/* Posts in this category */}
-                    {categoryPosts.length > 0 && (
+                    {categoryPosts.length > 0 && !collapsedCategories[category.id] && (
                       <div className="ml-6 space-y-4">
                         {categoryPosts.map((post: ForumPost) => (
                           <Card key={post.id} className="bg-gray-800 border-gray-700 hover:border-yellow-500/40 transition-colors">
@@ -708,8 +720,8 @@ export default function EnhancedCommunityPage() {
                 const uncategorizedPosts = posts.filter((post: ForumPost) => !post.categoryId);
                 return uncategorizedPosts.length > 0 && (
                   <div className="space-y-4">
-                    <Card className="bg-gray-900 border-yellow-500/20">
-                      <CardContent className="p-4">
+                    <Card className="bg-gray-900 border-yellow-500/20 cursor-pointer hover:border-yellow-500/40 transition-colors">
+                      <CardContent className="p-4" onClick={() => toggleCategory(0)}>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
                             <div className="w-3 h-3 rounded-full bg-gray-500"></div>
@@ -718,15 +730,19 @@ export default function EnhancedCommunityPage() {
                               <p className="text-sm text-gray-400">Posts without a specific category</p>
                             </div>
                           </div>
-                          <Badge className="bg-gray-500 text-white">
-                            {uncategorizedPosts.length} posts
-                          </Badge>
+                          <div className="flex items-center gap-2">
+                            <Badge className="bg-gray-500 text-white">
+                              {uncategorizedPosts.length} posts
+                            </Badge>
+                            <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform ${collapsedCategories[0] ? 'rotate-180' : ''}`} />
+                          </div>
                         </div>
                       </CardContent>
                     </Card>
                     
-                    <div className="ml-6 space-y-4">
-                      {uncategorizedPosts.map((post: ForumPost) => (
+                    {!collapsedCategories[0] && (
+                      <div className="ml-6 space-y-4">
+                        {uncategorizedPosts.map((post: ForumPost) => (
                         <Card key={post.id} className="bg-gray-800 border-gray-700 hover:border-yellow-500/40 transition-colors">
                           <CardContent className="p-6">
                             {/* Same post structure as categorized posts but without category badge */}
@@ -771,8 +787,9 @@ export default function EnhancedCommunityPage() {
                             </div>
                           </CardContent>
                         </Card>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 );
               })()}
@@ -837,72 +854,166 @@ export default function EnhancedCommunityPage() {
           {/* Calendar Tab */}
           <TabsContent value="calendar" className="mt-6 space-y-6">
             <div className="text-center space-y-4">
-              <h2 className="text-3xl font-bold text-yellow-500">Expert Sessions</h2>
+              <h2 className="text-3xl font-bold text-yellow-500">Community Events</h2>
               <p className="text-gray-300 max-w-2xl mx-auto">
-                Schedule one-on-one sessions with cannabis industry experts for personalized guidance 
-                on products, consumption, or business opportunities.
+                Join our upcoming community workshops, Q&A sessions, and educational events. 
+                All events are hosted via Zoom to connect our cannabis community.
               </p>
             </div>
 
-            <Card className="bg-gray-900 border-yellow-500/20 max-w-2xl mx-auto">
-              <CardHeader>
-                <CardTitle className="text-yellow-500">Request Expert Session</CardTitle>
-                <CardDescription className="text-gray-400">
-                  Fill out the form below to request a personalized consultation session.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Input
-                    placeholder="Your name"
-                    value={meetingRequest.name}
-                    onChange={(e) => setMeetingRequest({ ...meetingRequest, name: e.target.value })}
-                    className="bg-black border-gray-700 text-white"
-                  />
-                  <Input
-                    type="email"
-                    placeholder="Your email"
-                    value={meetingRequest.email}
-                    onChange={(e) => setMeetingRequest({ ...meetingRequest, email: e.target.value })}
-                    className="bg-black border-gray-700 text-white"
-                  />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Input
-                    type="date"
-                    value={meetingRequest.preferredDate}
-                    onChange={(e) => setMeetingRequest({ ...meetingRequest, preferredDate: e.target.value })}
-                    className="bg-black border-gray-700 text-white"
-                  />
-                  <Select 
-                    value={meetingRequest.duration.toString()} 
-                    onValueChange={(value) => setMeetingRequest({ ...meetingRequest, duration: parseInt(value) })}
-                  >
-                    <SelectTrigger className="bg-black border-gray-700 text-white">
-                      <SelectValue placeholder="Duration" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-gray-900 border-gray-700">
-                      <SelectItem value="30" className="text-white">30 minutes</SelectItem>
-                      <SelectItem value="60" className="text-white">1 hour</SelectItem>
-                      <SelectItem value="90" className="text-white">1.5 hours</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <Textarea
-                  placeholder="What would you like to discuss? (e.g., product recommendations, consumption methods, business opportunities)"
-                  value={meetingRequest.topic}
-                  onChange={(e) => setMeetingRequest({ ...meetingRequest, topic: e.target.value })}
-                  className="bg-black border-gray-700 text-white min-h-[100px]"
-                />
-                <Button 
-                  onClick={handleRequestMeeting}
-                  disabled={requestMeetingMutation.isPending}
-                  className="w-full bg-yellow-500 text-black hover:bg-yellow-600"
-                >
-                  {requestMeetingMutation.isPending ? "Submitting..." : "Request Session"}
-                </Button>
-              </CardContent>
-            </Card>
+            {/* Upcoming Events */}
+            <div className="space-y-6">
+              <Card className="bg-gray-900 border-yellow-500/20">
+                <CardHeader>
+                  <CardTitle className="text-yellow-500 flex items-center gap-2">
+                    <Calendar className="h-5 w-5" />
+                    Upcoming Events
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+                          <GraduationCap className="h-6 w-6 text-yellow-500" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-white">Cannabis 101 Workshop</h4>
+                          <p className="text-sm text-gray-400">Learn the basics of cannabis consumption, safety, and legal guidelines</p>
+                        </div>
+                      </div>
+                      <Badge className="bg-yellow-500 text-black">Live</Badge>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        Saturday, July 19th - 2:00 PM - 4:00 PM EST
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="h-4 w-4" />
+                        15 spots available
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Video className="h-4 w-4" />
+                        Zoom Meeting
+                      </div>
+                    </div>
+                    <div className="mt-3">
+                      <Button 
+                        onClick={() => window.open('mailto:battlesbudz@gmail.com?subject=Cannabis%20101%20Workshop%20Registration&body=I%20would%20like%20to%20register%20for%20the%20Cannabis%20101%20Workshop%20on%20July%2019th.', '_blank')}
+                        className="bg-yellow-500 text-black hover:bg-yellow-600"
+                      >
+                        Register Now
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+                          <Users className="h-6 w-6 text-yellow-500" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-white">Community Q&A Session</h4>
+                          <p className="text-sm text-gray-400">Ask questions and connect with other community members</p>
+                        </div>
+                      </div>
+                      <Badge variant="outline" className="border-gray-600 text-gray-300">Weekly</Badge>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        Every Tuesday - 7:00 PM - 8:00 PM EST
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="h-4 w-4" />
+                        Open to all
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Video className="h-4 w-4" />
+                        Zoom Meeting
+                      </div>
+                    </div>
+                    <div className="mt-3">
+                      <Button 
+                        onClick={() => window.open('mailto:battlesbudz@gmail.com?subject=Weekly%20Q&A%20Session%20Access&body=I%20would%20like%20to%20join%20the%20weekly%20Q&A%20sessions.', '_blank')}
+                        variant="outline"
+                        className="border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black"
+                      >
+                        Get Zoom Link
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+                          <Leaf className="h-6 w-6 text-yellow-500" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-white">Product Deep Dive: Edibles</h4>
+                          <p className="text-sm text-gray-400">Expert discussion on cannabis edibles, dosing, and effects</p>
+                        </div>
+                      </div>
+                      <Badge className="bg-blue-500 text-white">Coming Soon</Badge>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        Friday, July 25th - 6:00 PM - 7:30 PM EST
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="h-4 w-4" />
+                        20 spots available
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Video className="h-4 w-4" />
+                        Zoom Meeting
+                      </div>
+                    </div>
+                    <div className="mt-3">
+                      <Button 
+                        onClick={() => window.open('mailto:battlesbudz@gmail.com?subject=Edibles%20Deep%20Dive%20Registration&body=I%20would%20like%20to%20register%20for%20the%20Edibles%20Deep%20Dive%20workshop%20on%20July%2025th.', '_blank')}
+                        variant="outline"
+                        className="border-gray-600 text-gray-300 hover:bg-gray-700"
+                      >
+                        Notify Me
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Event Guidelines */}
+              <Card className="bg-gray-900 border-yellow-500/20">
+                <CardHeader>
+                  <CardTitle className="text-yellow-500 flex items-center gap-2">
+                    <Shield className="h-5 w-5" />
+                    Event Guidelines
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
+                    <p className="text-gray-300 text-sm">All participants must be 21+ and in a legal cannabis state/country</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
+                    <p className="text-gray-300 text-sm">Events are educational and informational only</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
+                    <p className="text-gray-300 text-sm">Zoom links will be provided 24 hours before each event</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
+                    <p className="text-gray-300 text-sm">Recording may be available for registered participants</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               <Card className="bg-gray-900 border-yellow-500/20">
