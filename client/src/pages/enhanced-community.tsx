@@ -424,10 +424,15 @@ export default function EnhancedCommunityPage() {
 
   return (
     <div className="bg-black text-white">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-battles-gold to-yellow-500 text-battles-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center gap-4 mb-4">
+      {/* Main Content with Integrated Header */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        {/* Integrated Header and Navigation */}
+        <div className="bg-gradient-to-r from-battles-gold to-yellow-500 text-battles-black rounded-t-lg p-6 mb-0">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-3xl font-bold text-battles-black">Community Hub</h1>
+              <p className="text-battles-black/80">Connect, learn, and grow with the cannabis community</p>
+            </div>
             <Link href="/">
               <Button variant="outline" size="sm" className="text-battles-black border-battles-black hover:bg-battles-black/10 hover:text-white">
                 <Home className="h-4 w-4 mr-2" />
@@ -435,15 +440,10 @@ export default function EnhancedCommunityPage() {
               </Button>
             </Link>
           </div>
-          <h1 className="text-4xl font-bold mb-2 text-battles-black">Community Hub</h1>
-          <p className="text-battles-black/80 text-lg">Connect, learn, and grow with the cannabis community</p>
         </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-battles-black border border-battles-gold/20">
+          <TabsList className="grid w-full grid-cols-4 bg-battles-black border border-battles-gold/20 rounded-t-none border-t-0">
             <TabsTrigger value="forum" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
               <MessageSquare className="h-4 w-4 mr-2" />
               Forum
