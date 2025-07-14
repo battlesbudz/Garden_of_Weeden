@@ -50,9 +50,8 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-battles-black bg-opacity-95" : "bg-battles-black"
-      }`}
+      className="fixed w-full top-0 z-50 bg-black border-b border-yellow-500/20"
+      style={{ backgroundColor: '#000000' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -67,8 +66,8 @@ export default function Navigation() {
             </span>
           </Link>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile menu button - Always visible for testing */}
+          <div className="block">
             <Button
               variant="ghost"
               size="sm"
@@ -79,7 +78,7 @@ export default function Navigation() {
             </Button>
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <Link href="/" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Home
@@ -154,7 +153,7 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden">
+        <div className="block">
           <div className="px-2 pt-2 pb-3 space-y-1 bg-battles-black border-t border-battles-gold">
             <Link href="/" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
               Home
