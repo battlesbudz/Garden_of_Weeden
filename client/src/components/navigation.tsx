@@ -180,9 +180,6 @@ export default function Navigation() {
             >
               Events
             </button>
-            <Link href="/community" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
-              Community
-            </Link>
             <Link href="/shop" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
               <ShoppingBag className="h-4 w-4 mr-2" />
               Shop
