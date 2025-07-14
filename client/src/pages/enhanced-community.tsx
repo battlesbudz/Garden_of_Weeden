@@ -429,7 +429,7 @@ export default function EnhancedCommunityPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center gap-4 mb-4">
             <Link href="/">
-              <Button variant="ghost" size="sm" className="text-battles-black hover:bg-battles-black/10">
+              <Button variant="outline" size="sm" className="text-battles-black border-battles-black hover:bg-battles-black/10 hover:text-white">
                 <Home className="h-4 w-4 mr-2" />
                 Home
               </Button>
