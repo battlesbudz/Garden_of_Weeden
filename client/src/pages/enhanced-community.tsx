@@ -283,6 +283,27 @@ export default function EnhancedCommunityPage() {
     likePostMutation.mutate(postId);
   };
 
+  // Like comment mutation
+  const likeCommentMutation = useMutation({
+    mutationFn: (commentId: number) => apiRequest('POST', `/api/forum/comments/${commentId}/like`, {}),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/forum/posts'] });
+      toast({ description: "Comment liked!" });
+    },
+    onError: () => {
+      toast({ description: "Failed to like comment", variant: "destructive" });
+    }
+  });
+
+  const handleLikeComment = (commentId: number) => {
+    if (!isAuthenticated) {
+      sessionStorage.setItem('redirectAfterLogin', '/community');
+      setLocation('/login');
+      return;
+    }
+    likeCommentMutation.mutate(commentId);
+  };
+
   // Education guides data
   const educationGuides: EducationGuide[] = [
     {
@@ -505,172 +526,259 @@ export default function EnhancedCommunityPage() {
               </Card>
             )}
 
-            {/* Forum Categories */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {categories.map((category: ForumCategory) => (
-                <Card key={category.id} className="bg-gray-900 border-yellow-500/20 hover:border-yellow-500/40 transition-colors">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                      <div>
-                        <h3 className="font-semibold text-white">{category.name}</h3>
-                        <p className="text-sm text-gray-400">{category.description}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            {/* Forum Posts */}
-            <div className="space-y-4">
-              {posts.map((post: ForumPost) => (
-                <Card key={post.id} className="bg-gray-900 border-yellow-500/20 hover:border-yellow-500/40 transition-colors">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <Avatar>
-                        <AvatarFallback className="bg-yellow-500 text-black">
-                          {getInitials(post.author.firstName, post.author.lastName)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="font-semibold text-white">{post.title}</h3>
-                          {post.isPinned && <Badge className="bg-yellow-500 text-black">Pinned</Badge>}
-                          {post.category && (
-                            <Badge variant="outline" className="border-gray-600 text-gray-300">
-                              {post.category.name}
-                            </Badge>
-                          )}
-                        </div>
-                        <p className="text-gray-300 mb-3">{post.content}</p>
-                        
-                        {/* Video Embed */}
-                        {post.videoUrl && extractYouTubeVideoId(post.videoUrl) && (
-                          <div className="mb-4">
-                            <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden">
-                              <iframe
-                                src={`https://www.youtube.com/embed/${extractYouTubeVideoId(post.videoUrl)}`}
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                className="w-full h-full"
-                              ></iframe>
+            {/* Forum Categories with Posts */}
+            <div className="space-y-6">
+              {categories.map((category: ForumCategory) => {
+                const categoryPosts = posts.filter((post: ForumPost) => post.categoryId === category.id);
+                
+                return (
+                  <div key={category.id} className="space-y-4">
+                    <Card className="bg-gray-900 border-yellow-500/20">
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div>
+                              <h3 className="font-semibold text-white text-lg">{category.name}</h3>
+                              <p className="text-sm text-gray-400">{category.description}</p>
                             </div>
                           </div>
-                        )}
-                        
-                        {/* Post Actions */}
-                        <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
-                          <button 
-                            onClick={() => handleLikePost(post.id)}
-                            className="flex items-center gap-1 hover:text-red-500 transition-colors"
-                          >
-                            <Heart className="h-4 w-4" />
-                            <span>{post.likeCount}</span>
-                          </button>
-                          <button 
-                            onClick={() => toggleComments(post.id)}
-                            className="flex items-center gap-1 hover:text-yellow-500 transition-colors"
-                          >
-                            <MessageSquare className="h-4 w-4" />
-                            <span>{post.replyCount} comments</span>
-                          </button>
-                          <div className="flex items-center gap-1">
-                            <Eye className="h-4 w-4" />
-                            <span>{post.viewCount}</span>
-                          </div>
-                          <span className="ml-auto">
-                            {new Date(post.createdAt).toLocaleDateString()}
-                          </span>
+                          <Badge className="bg-yellow-500 text-black">
+                            {categoryPosts.length} posts
+                          </Badge>
                         </div>
-
-                        {/* Comments Section */}
-                        {showComments[post.id] && (
-                          <div className="mt-4 pt-4 border-t border-gray-700">
-                            <div className="space-y-3">
-                              {/* Add comment form */}
-                              <div className="flex gap-3">
-                                <Avatar className="w-8 h-8">
-                                  <AvatarFallback className="bg-yellow-500 text-black text-xs">
-                                    {user && getInitials(user.firstName, user.lastName)}
+                      </CardContent>
+                    </Card>
+                    
+                    {/* Posts in this category */}
+                    {categoryPosts.length > 0 && (
+                      <div className="ml-6 space-y-4">
+                        {categoryPosts.map((post: ForumPost) => (
+                          <Card key={post.id} className="bg-gray-800 border-gray-700 hover:border-yellow-500/40 transition-colors">
+                            <CardContent className="p-6">
+                              <div className="flex items-start gap-4">
+                                <Avatar>
+                                  <AvatarFallback className="bg-yellow-500 text-black">
+                                    {getInitials(post.author.firstName, post.author.lastName)}
                                   </AvatarFallback>
                                 </Avatar>
                                 <div className="flex-1">
-                                  <Textarea
-                                    placeholder="Write a comment..."
-                                    value={newComment}
-                                    onChange={(e) => setNewComment(e.target.value)}
-                                    className="bg-gray-800 border-gray-600 text-white text-sm min-h-[60px]"
-                                  />
-                                  <div className="flex gap-2 mt-2">
-                                    <Button 
-                                      size="sm" 
-                                      onClick={() => handleCreateComment(post.id)}
-                                      disabled={createCommentMutation.isPending}
-                                      className="bg-yellow-500 text-black hover:bg-yellow-600"
-                                    >
-                                      {createCommentMutation.isPending ? "Posting..." : "Comment"}
-                                    </Button>
-                                    <Button 
-                                      size="sm" 
-                                      variant="ghost" 
-                                      onClick={() => setNewComment("")}
-                                      className="text-gray-400 hover:text-white"
-                                    >
-                                      Cancel
-                                    </Button>
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <h3 className="font-semibold text-white">{post.title}</h3>
+                                    {post.isPinned && <Badge className="bg-yellow-500 text-black">Pinned</Badge>}
                                   </div>
-                                </div>
-                              </div>
-                              
-                              {/* Actual Comments Display */}
-                              {post.comments && post.comments.length > 0 ? (
-                                <div className="space-y-3">
-                                  {post.comments.map((comment: any) => (
-                                    <div key={comment.id} className="flex gap-3 p-3 bg-gray-800 rounded-lg">
-                                      <Avatar className="w-8 h-8">
-                                        <AvatarFallback className="bg-yellow-500 text-black text-xs">
-                                          {getInitials(comment.author.firstName, comment.author.lastName)}
-                                        </AvatarFallback>
-                                      </Avatar>
-                                      <div className="flex-1">
-                                        <div className="flex items-center gap-2 mb-1">
-                                          <span className="font-semibold text-white text-sm">
-                                            {comment.author.firstName} {comment.author.lastName}
-                                          </span>
-                                          <span className="text-gray-500 text-xs">
-                                            {new Date(comment.createdAt).toLocaleDateString()}
-                                          </span>
-                                        </div>
-                                        <p className="text-gray-300 text-sm whitespace-pre-wrap">
-                                          {comment.content}
-                                        </p>
-                                        <div className="flex items-center gap-2 mt-2">
-                                          <button className="flex items-center gap-1 text-gray-400 hover:text-yellow-500 text-xs">
-                                            <Heart className="h-3 w-3" />
-                                            <span>{comment.likeCount || 0}</span>
-                                          </button>
-                                        </div>
+                                  <p className="text-gray-300 mb-3">{post.content}</p>
+                                  
+                                  {/* Video Embed */}
+                                  {post.videoUrl && extractYouTubeVideoId(post.videoUrl) && (
+                                    <div className="mb-4">
+                                      <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                                        <iframe
+                                          src={`https://www.youtube.com/embed/${extractYouTubeVideoId(post.videoUrl)}`}
+                                          title="YouTube video player"
+                                          frameBorder="0"
+                                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                          allowFullScreen
+                                          className="w-full h-full"
+                                        ></iframe>
                                       </div>
                                     </div>
-                                  ))}
+                                  )}
+                                  
+                                  {/* Post Actions */}
+                                  <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                                    <button 
+                                      onClick={() => handleLikePost(post.id)}
+                                      className="flex items-center gap-1 hover:text-red-500 transition-colors"
+                                    >
+                                      <Heart className="h-4 w-4" />
+                                      <span>{post.likeCount}</span>
+                                    </button>
+                                    <button 
+                                      onClick={() => toggleComments(post.id)}
+                                      className="flex items-center gap-1 hover:text-yellow-500 transition-colors"
+                                    >
+                                      <MessageSquare className="h-4 w-4" />
+                                      <span>{post.replyCount} comments</span>
+                                    </button>
+                                    <div className="flex items-center gap-1">
+                                      <Eye className="h-4 w-4" />
+                                      <span>{post.viewCount}</span>
+                                    </div>
+                                    <span className="ml-auto">
+                                      {new Date(post.createdAt).toLocaleDateString()}
+                                    </span>
+                                  </div>
+
+                                  {/* Comments Section */}
+                                  {showComments[post.id] && (
+                                    <div className="mt-4 pt-4 border-t border-gray-700">
+                                      <div className="space-y-3">
+                                        {/* Add comment form */}
+                                        <div className="flex gap-3">
+                                          <Avatar className="w-8 h-8">
+                                            <AvatarFallback className="bg-yellow-500 text-black text-xs">
+                                              {user && getInitials(user.firstName, user.lastName)}
+                                            </AvatarFallback>
+                                          </Avatar>
+                                          <div className="flex-1">
+                                            <Textarea
+                                              placeholder="Write a comment..."
+                                              value={newComment}
+                                              onChange={(e) => setNewComment(e.target.value)}
+                                              className="bg-gray-800 border-gray-600 text-white text-sm min-h-[60px]"
+                                            />
+                                            <div className="flex gap-2 mt-2">
+                                              <Button 
+                                                size="sm" 
+                                                onClick={() => handleCreateComment(post.id)}
+                                                disabled={createCommentMutation.isPending}
+                                                className="bg-yellow-500 text-black hover:bg-yellow-600"
+                                              >
+                                                {createCommentMutation.isPending ? "Posting..." : "Comment"}
+                                              </Button>
+                                              <Button 
+                                                size="sm" 
+                                                variant="ghost" 
+                                                onClick={() => setNewComment("")}
+                                                className="text-gray-400 hover:text-white"
+                                              >
+                                                Cancel
+                                              </Button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        
+                                        {/* Actual Comments Display */}
+                                        {post.comments && post.comments.length > 0 ? (
+                                          <div className="space-y-3">
+                                            {post.comments.map((comment: any) => (
+                                              <div key={comment.id} className="flex gap-3 p-3 bg-gray-800 rounded-lg">
+                                                <Avatar className="w-8 h-8">
+                                                  <AvatarFallback className="bg-yellow-500 text-black text-xs">
+                                                    {getInitials(comment.author.firstName, comment.author.lastName)}
+                                                  </AvatarFallback>
+                                                </Avatar>
+                                                <div className="flex-1">
+                                                  <div className="flex items-center gap-2 mb-1">
+                                                    <span className="font-semibold text-white text-sm">
+                                                      {comment.author.firstName} {comment.author.lastName}
+                                                    </span>
+                                                    <span className="text-gray-500 text-xs">
+                                                      {new Date(comment.createdAt).toLocaleDateString()}
+                                                    </span>
+                                                  </div>
+                                                  <p className="text-gray-300 text-sm whitespace-pre-wrap">
+                                                    {comment.content}
+                                                  </p>
+                                                  <div className="flex items-center gap-2 mt-2">
+                                                    <button 
+                                                      onClick={() => handleLikeComment(comment.id)}
+                                                      className="flex items-center gap-1 text-gray-400 hover:text-red-500 text-xs transition-colors"
+                                                    >
+                                                      <Heart className="h-3 w-3" />
+                                                      <span>{comment.likeCount || 0}</span>
+                                                    </button>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            ))}
+                                          </div>
+                                        ) : (
+                                          <div className="text-center text-gray-500 py-4">
+                                            No comments yet. Be the first to comment!
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+                                  )}
                                 </div>
-                              ) : (
-                                <div className="text-center text-gray-500 py-4">
-                                  No comments yet. Be the first to comment!
-                                </div>
-                              )}
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+              
+              {/* Uncategorized Posts */}
+              {(() => {
+                const uncategorizedPosts = posts.filter((post: ForumPost) => !post.categoryId);
+                return uncategorizedPosts.length > 0 && (
+                  <div className="space-y-4">
+                    <Card className="bg-gray-900 border-yellow-500/20">
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-3 h-3 rounded-full bg-gray-500"></div>
+                            <div>
+                              <h3 className="font-semibold text-white text-lg">Uncategorized</h3>
+                              <p className="text-sm text-gray-400">Posts without a specific category</p>
                             </div>
                           </div>
-                        )}
-                      </div>
+                          <Badge className="bg-gray-500 text-white">
+                            {uncategorizedPosts.length} posts
+                          </Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    
+                    <div className="ml-6 space-y-4">
+                      {uncategorizedPosts.map((post: ForumPost) => (
+                        <Card key={post.id} className="bg-gray-800 border-gray-700 hover:border-yellow-500/40 transition-colors">
+                          <CardContent className="p-6">
+                            {/* Same post structure as categorized posts but without category badge */}
+                            <div className="flex items-start gap-4">
+                              <Avatar>
+                                <AvatarFallback className="bg-yellow-500 text-black">
+                                  {getInitials(post.author.firstName, post.author.lastName)}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <h3 className="font-semibold text-white">{post.title}</h3>
+                                  {post.isPinned && <Badge className="bg-yellow-500 text-black">Pinned</Badge>}
+                                </div>
+                                <p className="text-gray-300 mb-3">{post.content}</p>
+                                
+                                {/* Post actions and comments sections would be the same */}
+                                <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                                  <button 
+                                    onClick={() => handleLikePost(post.id)}
+                                    className="flex items-center gap-1 hover:text-red-500 transition-colors"
+                                  >
+                                    <Heart className="h-4 w-4" />
+                                    <span>{post.likeCount}</span>
+                                  </button>
+                                  <button 
+                                    onClick={() => toggleComments(post.id)}
+                                    className="flex items-center gap-1 hover:text-yellow-500 transition-colors"
+                                  >
+                                    <MessageSquare className="h-4 w-4" />
+                                    <span>{post.replyCount} comments</span>
+                                  </button>
+                                  <div className="flex items-center gap-1">
+                                    <Eye className="h-4 w-4" />
+                                    <span>{post.viewCount}</span>
+                                  </div>
+                                  <span className="ml-auto">
+                                    {new Date(post.createdAt).toLocaleDateString()}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
+                  </div>
+                );
+              })()}
             </div>
+
+
           </TabsContent>
 
           {/* Education Tab */}
