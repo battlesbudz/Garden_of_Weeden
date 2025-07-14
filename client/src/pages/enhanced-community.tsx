@@ -201,6 +201,10 @@ export default function EnhancedCommunityPage() {
     }));
   };
 
+  const getInitials = (firstName: string, lastName: string) => {
+    return `${firstName?.charAt(0) || ''}${lastName?.charAt(0) || ''}`.toUpperCase();
+  };
+
 
 
   // Handler functions
@@ -256,12 +260,6 @@ export default function EnhancedCommunityPage() {
       content: newComment.trim(),
       postId: postId,
     });
-  };
-
-
-
-  const getInitials = (firstName: string, lastName: string) => {
-    return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`.toUpperCase();
   };
 
   // Education guides data
@@ -603,10 +601,43 @@ export default function EnhancedCommunityPage() {
                                 </div>
                               </div>
                               
-                              {/* Comment placeholder */}
-                              <div className="text-center text-gray-500 py-4">
-                                No comments yet. Be the first to comment!
-                              </div>
+                              {/* Actual Comments Display */}
+                              {post.comments && post.comments.length > 0 ? (
+                                <div className="space-y-3">
+                                  {post.comments.map((comment: any) => (
+                                    <div key={comment.id} className="flex gap-3 p-3 bg-gray-800 rounded-lg">
+                                      <Avatar className="w-8 h-8">
+                                        <AvatarFallback className="bg-yellow-500 text-black text-xs">
+                                          {getInitials(comment.author.firstName, comment.author.lastName)}
+                                        </AvatarFallback>
+                                      </Avatar>
+                                      <div className="flex-1">
+                                        <div className="flex items-center gap-2 mb-1">
+                                          <span className="font-semibold text-white text-sm">
+                                            {comment.author.firstName} {comment.author.lastName}
+                                          </span>
+                                          <span className="text-gray-500 text-xs">
+                                            {new Date(comment.createdAt).toLocaleDateString()}
+                                          </span>
+                                        </div>
+                                        <p className="text-gray-300 text-sm whitespace-pre-wrap">
+                                          {comment.content}
+                                        </p>
+                                        <div className="flex items-center gap-2 mt-2">
+                                          <button className="flex items-center gap-1 text-gray-400 hover:text-yellow-500 text-xs">
+                                            <Heart className="h-3 w-3" />
+                                            <span>{comment.likeCount || 0}</span>
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              ) : (
+                                <div className="text-center text-gray-500 py-4">
+                                  No comments yet. Be the first to comment!
+                                </div>
+                              )}
                             </div>
                           </div>
                         )}
