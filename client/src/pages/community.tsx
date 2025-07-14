@@ -407,15 +407,15 @@ export default function EnhancedCommunityPage() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3 bg-gray-900 border-gray-700">
-            <TabsTrigger value="forum" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-battles-gold hover:text-battles-gold/80">
+            <TabsTrigger value="forum" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-battles-gold hover:bg-battles-gold/10">
               <MessageSquare className="h-4 w-4 mr-2" />
               Forum
             </TabsTrigger>
-            <TabsTrigger value="education" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-battles-gold hover:text-battles-gold/80">
+            <TabsTrigger value="education" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-battles-gold hover:bg-battles-gold/10">
               <GraduationCap className="h-4 w-4 mr-2" />
               Education
             </TabsTrigger>
-            <TabsTrigger value="calendar" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-battles-gold hover:text-battles-gold/80">
+            <TabsTrigger value="calendar" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-battles-gold hover:bg-battles-gold/10">
               <Calendar className="h-4 w-4 mr-2" />
               Expert Sessions
             </TabsTrigger>
