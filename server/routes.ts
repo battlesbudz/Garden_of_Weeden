@@ -11,8 +11,16 @@ import {
   insertForumPostSchema,
   insertForumCommentSchema,
   insertMeetingRequestSchema,
+  insertUserPointsSchema,
+  insertPointTransactionSchema,
+  insertAchievementSchema,
+  insertUserAchievementSchema,
   type User,
-  type MeetingRequest
+  type MeetingRequest,
+  type UserPoints,
+  type PointTransaction,
+  type Achievement,
+  type UserAchievement
 } from "@shared/schema";
 import { z } from "zod";
 import { MailService } from '@sendgrid/mail';
@@ -694,6 +702,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("Validated data:", validatedData);
       const post = await storage.createForumPost(validatedData);
       
+      // Award points for creating a post
+      try {
+        await storage.addPointsToUser(userId, 20, 'post_created', post.id, 'post', 'Created a forum post');
+        await storage.checkAndUnlockAchievements(userId);
+      } catch (pointsError) {
+        console.warn("Failed to award points for post creation:", pointsError);
+      }
+      
       res.status(201).json(post);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -718,6 +734,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
       
       const comment = await storage.createForumComment(validatedData);
+      
+      // Award points for creating a comment
+      try {
+        await storage.addPointsToUser(userId, 10, 'comment_created', comment.id, 'comment', 'Added a comment');
+        await storage.checkAndUnlockAchievements(userId);
+      } catch (pointsError) {
+        console.warn("Failed to award points for comment creation:", pointsError);
+      }
+      
       res.status(201).json(comment);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -742,6 +767,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const result = await storage.togglePostLike(userId, postId);
+      
+      // Award points for liking (only when actually liking, not unliking)
+      if (result.liked) {
+        try {
+          await storage.addPointsToUser(userId, 5, 'like_given', postId, 'post', 'Liked a post');
+          await storage.checkAndUnlockAchievements(userId);
+        } catch (pointsError) {
+          console.warn("Failed to award points for like:", pointsError);
+        }
+      }
+      
       res.json(result);
     } catch (error) {
       console.error("Error toggling post like:", error);
@@ -760,6 +796,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const result = await storage.toggleCommentLike(userId, commentId);
+      
+      // Award points for liking (only when actually liking, not unliking)
+      if (result.liked) {
+        try {
+          await storage.addPointsToUser(userId, 5, 'like_given', commentId, 'comment', 'Liked a comment');
+          await storage.checkAndUnlockAchievements(userId);
+        } catch (pointsError) {
+          console.warn("Failed to award points for like:", pointsError);
+        }
+      }
+      
       res.json(result);
     } catch (error) {
       console.error("Error toggling comment like:", error);
@@ -790,6 +837,105 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       console.error("Error creating meeting request:", error);
       res.status(500).json({ message: "Failed to submit meeting request" });
+    }
+  });
+
+  // Gamification API endpoints
+  
+  // Get user points and stats (authenticated users only)
+  app.get("/api/gamification/points", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      
+      // Update user activity for daily login tracking
+      await storage.updateUserActivity(userId);
+      
+      const userPoints = await storage.getUserPoints(userId);
+      if (!userPoints) {
+        return res.status(404).json({ message: "User points not found" });
+      }
+      
+      res.json(userPoints);
+    } catch (error) {
+      console.error("Error fetching user points:", error);
+      res.status(500).json({ message: "Failed to fetch user points" });
+    }
+  });
+
+  // Get user point transactions history (authenticated users only)
+  app.get("/api/gamification/transactions", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const transactions = await storage.getUserPointTransactions(userId);
+      res.json(transactions);
+    } catch (error) {
+      console.error("Error fetching point transactions:", error);
+      res.status(500).json({ message: "Failed to fetch point transactions" });
+    }
+  });
+
+  // Get all achievements
+  app.get("/api/gamification/achievements", async (req, res) => {
+    try {
+      const achievements = await storage.getAllAchievements();
+      res.json(achievements);
+    } catch (error) {
+      console.error("Error fetching achievements:", error);
+      res.status(500).json({ message: "Failed to fetch achievements" });
+    }
+  });
+
+  // Get user achievements (authenticated users only)
+  app.get("/api/gamification/user-achievements", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const userAchievements = await storage.getUserAchievements(userId);
+      res.json(userAchievements);
+    } catch (error) {
+      console.error("Error fetching user achievements:", error);
+      res.status(500).json({ message: "Failed to fetch user achievements" });
+    }
+  });
+
+  // Check and unlock achievements (authenticated users only)
+  app.post("/api/gamification/check-achievements", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const unlockedAchievements = await storage.checkAndUnlockAchievements(userId);
+      res.json({ unlockedAchievements });
+    } catch (error) {
+      console.error("Error checking achievements:", error);
+      res.status(500).json({ message: "Failed to check achievements" });
+    }
+  });
+
+  // Get leaderboard
+  app.get("/api/gamification/leaderboard", async (req, res) => {
+    try {
+      const timeframe = req.query.timeframe as 'weekly' | 'monthly' | 'allTime' || 'allTime';
+      const leaderboard = await storage.getLeaderboard(timeframe);
+      res.json(leaderboard);
+    } catch (error) {
+      console.error("Error fetching leaderboard:", error);
+      res.status(500).json({ message: "Failed to fetch leaderboard" });
+    }
+  });
+
+  // Initialize default achievements (admin only)
+  app.post("/api/gamification/init-achievements", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || user.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      await storage.initializeDefaultAchievements();
+      res.json({ message: "Default achievements initialized successfully" });
+    } catch (error) {
+      console.error("Error initializing achievements:", error);
+      res.status(500).json({ message: "Failed to initialize achievements" });
     }
   });
 

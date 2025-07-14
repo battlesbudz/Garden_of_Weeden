@@ -39,6 +39,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { apiRequest } from "@/lib/queryClient";
 import cultivationImage from "@assets/360_F_499206936_DTB3BAfocgPpunIz14tRTBZwwy5PC1Oi_1752425020338.jpg";
+import { GamificationWidget } from '../components/gamification/gamification-widget';
 
 // Interfaces
 interface ForumCategory {
@@ -433,7 +434,7 @@ export default function EnhancedCommunityPage() {
         </div>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5 bg-battles-black border border-battles-gold/20">
+          <TabsList className="grid w-full grid-cols-6 bg-battles-black border border-battles-gold/20">
             <TabsTrigger asChild value="home">
               <Link href="/" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white hover:bg-battles-gold/20 flex items-center justify-center">
                 <Home className="h-4 w-4 mr-2" />
@@ -455,6 +456,10 @@ export default function EnhancedCommunityPage() {
             <TabsTrigger value="guides" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
               <BookOpen className="h-4 w-4 mr-2" />
               Guides
+            </TabsTrigger>
+            <TabsTrigger value="rewards" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
+              <Award className="h-4 w-4 mr-2" />
+              Rewards
             </TabsTrigger>
           </TabsList>
 
@@ -1115,6 +1120,18 @@ export default function EnhancedCommunityPage() {
                   ))}
                 </div>
               </div>
+            </div>
+          </TabsContent>
+
+          {/* Rewards Tab */}
+          <TabsContent value="rewards" className="mt-6">
+            <div className="space-y-6">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-battles-gold mb-2">Rewards & Achievements</h2>
+                <p className="text-white/80">Earn points, unlock achievements, and compete with the community!</p>
+              </div>
+              
+              <GamificationWidget />
             </div>
           </TabsContent>
         </Tabs>

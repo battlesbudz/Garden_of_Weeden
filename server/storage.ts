@@ -15,6 +15,11 @@ import {
   forumComments,
   forumLikes,
   meetingRequests,
+  userPoints,
+  pointTransactions,
+  achievements,
+  userAchievements,
+  leaderboard,
   type User, 
   type UpsertUser,
   type Product,
@@ -46,7 +51,16 @@ import {
   type ForumLike,
   type InsertForumLike,
   type MeetingRequest,
-  type InsertMeetingRequest
+  type InsertMeetingRequest,
+  type UserPoints,
+  type InsertUserPoints,
+  type PointTransaction,
+  type InsertPointTransaction,
+  type Achievement,
+  type InsertAchievement,
+  type UserAchievement,
+  type InsertUserAchievement,
+  type Leaderboard
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, sql } from "drizzle-orm";
@@ -126,6 +140,20 @@ export interface IStorage {
   // Meeting requests
   createMeetingRequest(request: InsertMeetingRequest): Promise<MeetingRequest>;
   getAllMeetingRequests(): Promise<MeetingRequest[]>;
+  
+  // Gamification system
+  getUserPoints(userId: string): Promise<UserPoints | undefined>;
+  createUserPoints(userPoints: InsertUserPoints): Promise<UserPoints>;
+  updateUserPoints(userId: string, updates: Partial<InsertUserPoints>): Promise<UserPoints>;
+  addPointsToUser(userId: string, points: number, action: string, relatedId?: number, relatedType?: string, description?: string): Promise<{ userPoints: UserPoints; transaction: PointTransaction }>;
+  getUserPointTransactions(userId: string): Promise<PointTransaction[]>;
+  getAllAchievements(): Promise<Achievement[]>;
+  getUserAchievements(userId: string): Promise<(UserAchievement & { achievement: Achievement })[]>;
+  unlockAchievement(userId: string, achievementId: number): Promise<UserAchievement>;
+  checkAndUnlockAchievements(userId: string): Promise<UserAchievement[]>;
+  getLeaderboard(timeframe: 'weekly' | 'monthly' | 'allTime'): Promise<(Leaderboard & { user: User })[]>;
+  updateUserActivity(userId: string): Promise<UserPoints>;
+  initializeDefaultAchievements(): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -754,6 +782,410 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(meetingRequests)
       .orderBy(desc(meetingRequests.createdAt));
+  }
+
+  // Gamification system implementation
+  async getUserPoints(userId: string): Promise<UserPoints | undefined> {
+    const result = await db.select().from(userPoints).where(eq(userPoints.userId, userId));
+    return result[0];
+  }
+
+  async createUserPoints(insertUserPoints: InsertUserPoints): Promise<UserPoints> {
+    const result = await db.insert(userPoints).values(insertUserPoints).returning();
+    return result[0];
+  }
+
+  async updateUserPoints(userId: string, updates: Partial<InsertUserPoints>): Promise<UserPoints> {
+    const result = await db.update(userPoints)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(userPoints.userId, userId))
+      .returning();
+    return result[0];
+  }
+
+  async addPointsToUser(
+    userId: string, 
+    points: number, 
+    action: string, 
+    relatedId?: number, 
+    relatedType?: string, 
+    description?: string
+  ): Promise<{ userPoints: UserPoints; transaction: PointTransaction }> {
+    // Get or create user points
+    let userPointsData = await this.getUserPoints(userId);
+    if (!userPointsData) {
+      userPointsData = await this.createUserPoints({
+        userId,
+        totalPoints: 0,
+        currentLevel: 1,
+        pointsToNextLevel: 100,
+        weeklyPoints: 0,
+        monthlyPoints: 0,
+        streak: 0,
+        lastActivityDate: new Date(),
+      });
+    }
+
+    // Calculate new totals
+    const newTotalPoints = userPointsData.totalPoints + points;
+    const newWeeklyPoints = userPointsData.weeklyPoints + points;
+    const newMonthlyPoints = userPointsData.monthlyPoints + points;
+    
+    // Calculate level progression
+    let newLevel = userPointsData.currentLevel;
+    let pointsToNext = userPointsData.pointsToNextLevel - points;
+    
+    while (pointsToNext <= 0 && newLevel < 50) { // Cap at level 50
+      newLevel++;
+      pointsToNext += 100 + (newLevel * 25); // Increasing difficulty
+    }
+
+    // Update user points
+    const updatedUserPoints = await this.updateUserPoints(userId, {
+      totalPoints: newTotalPoints,
+      currentLevel: newLevel,
+      pointsToNextLevel: Math.max(pointsToNext, 0),
+      weeklyPoints: newWeeklyPoints,
+      monthlyPoints: newMonthlyPoints,
+      lastActivityDate: new Date(),
+    });
+
+    // Create transaction record
+    const transaction = await db.insert(pointTransactions).values({
+      userId,
+      points,
+      action,
+      relatedId,
+      relatedType,
+      description,
+    }).returning();
+
+    return { userPoints: updatedUserPoints, transaction: transaction[0] };
+  }
+
+  async getUserPointTransactions(userId: string): Promise<PointTransaction[]> {
+    return await db.select().from(pointTransactions)
+      .where(eq(pointTransactions.userId, userId))
+      .orderBy(desc(pointTransactions.createdAt));
+  }
+
+  async getAllAchievements(): Promise<Achievement[]> {
+    return await db.select().from(achievements).where(eq(achievements.isActive, true));
+  }
+
+  async getUserAchievements(userId: string): Promise<(UserAchievement & { achievement: Achievement })[]> {
+    return await db.select({
+      id: userAchievements.id,
+      userId: userAchievements.userId,
+      achievementId: userAchievements.achievementId,
+      unlockedAt: userAchievements.unlockedAt,
+      achievement: achievements,
+    })
+    .from(userAchievements)
+    .innerJoin(achievements, eq(userAchievements.achievementId, achievements.id))
+    .where(eq(userAchievements.userId, userId))
+    .orderBy(desc(userAchievements.unlockedAt));
+  }
+
+  async unlockAchievement(userId: string, achievementId: number): Promise<UserAchievement> {
+    // Check if already unlocked
+    const existing = await db.select().from(userAchievements)
+      .where(and(
+        eq(userAchievements.userId, userId),
+        eq(userAchievements.achievementId, achievementId)
+      ));
+    
+    if (existing.length > 0) {
+      return existing[0];
+    }
+
+    // Get achievement details for points reward
+    const achievement = await db.select().from(achievements)
+      .where(eq(achievements.id, achievementId));
+    
+    if (achievement.length === 0) {
+      throw new Error('Achievement not found');
+    }
+
+    // Award points for the achievement
+    if (achievement[0].pointsReward > 0) {
+      await this.addPointsToUser(
+        userId, 
+        achievement[0].pointsReward, 
+        'achievement_unlocked', 
+        achievementId, 
+        'achievement',
+        `Unlocked: ${achievement[0].name}`
+      );
+    }
+
+    // Create user achievement record
+    const result = await db.insert(userAchievements).values({
+      userId,
+      achievementId,
+    }).returning();
+
+    return result[0];
+  }
+
+  async checkAndUnlockAchievements(userId: string): Promise<UserAchievement[]> {
+    const unlockedAchievements: UserAchievement[] = [];
+    
+    // Get user stats
+    const userPointsData = await this.getUserPoints(userId);
+    if (!userPointsData) return unlockedAchievements;
+
+    // Get user's forum activity
+    const userPosts = await db.select().from(forumPosts).where(eq(forumPosts.authorId, userId));
+    const userComments = await db.select().from(forumComments).where(eq(forumComments.authorId, userId));
+    const userLikes = await db.select().from(forumLikes).where(eq(forumLikes.userId, userId));
+
+    // Get all achievements and check requirements
+    const allAchievements = await this.getAllAchievements();
+    const existingAchievements = await this.getUserAchievements(userId);
+    const unlockedIds = existingAchievements.map(ua => ua.achievementId);
+
+    for (const achievement of allAchievements) {
+      if (unlockedIds.includes(achievement.id)) continue;
+
+      const requirement = achievement.requirement as any;
+      let shouldUnlock = false;
+
+      switch (requirement.type) {
+        case 'posts':
+          shouldUnlock = userPosts.length >= requirement.count;
+          break;
+        case 'comments':
+          shouldUnlock = userComments.length >= requirement.count;
+          break;
+        case 'likes':
+          shouldUnlock = userLikes.length >= requirement.count;
+          break;
+        case 'points':
+          shouldUnlock = userPointsData.totalPoints >= requirement.count;
+          break;
+        case 'level':
+          shouldUnlock = userPointsData.currentLevel >= requirement.count;
+          break;
+        case 'streak':
+          shouldUnlock = userPointsData.streak >= requirement.count;
+          break;
+      }
+
+      if (shouldUnlock) {
+        const newAchievement = await this.unlockAchievement(userId, achievement.id);
+        unlockedAchievements.push(newAchievement);
+      }
+    }
+
+    return unlockedAchievements;
+  }
+
+  async getLeaderboard(timeframe: 'weekly' | 'monthly' | 'allTime'): Promise<(Leaderboard & { user: User })[]> {
+    // For now, return user points as leaderboard since leaderboard table needs to be populated
+    let orderBy;
+    let selectFields;
+    
+    switch (timeframe) {
+      case 'weekly':
+        orderBy = desc(userPoints.weeklyPoints);
+        selectFields = {
+          id: userPoints.id,
+          userId: userPoints.userId,
+          weeklyRank: sql<number>`ROW_NUMBER() OVER (ORDER BY ${userPoints.weeklyPoints} DESC)`,
+          monthlyRank: sql<number>`0`,
+          allTimeRank: sql<number>`0`,
+          weeklyPoints: userPoints.weeklyPoints,
+          monthlyPoints: userPoints.monthlyPoints,
+          allTimePoints: userPoints.totalPoints,
+          lastUpdated: userPoints.updatedAt,
+          user: users,
+        };
+        break;
+      case 'monthly':
+        orderBy = desc(userPoints.monthlyPoints);
+        selectFields = {
+          id: userPoints.id,
+          userId: userPoints.userId,
+          weeklyRank: sql<number>`0`,
+          monthlyRank: sql<number>`ROW_NUMBER() OVER (ORDER BY ${userPoints.monthlyPoints} DESC)`,
+          allTimeRank: sql<number>`0`,
+          weeklyPoints: userPoints.weeklyPoints,
+          monthlyPoints: userPoints.monthlyPoints,
+          allTimePoints: userPoints.totalPoints,
+          lastUpdated: userPoints.updatedAt,
+          user: users,
+        };
+        break;
+      default:
+        orderBy = desc(userPoints.totalPoints);
+        selectFields = {
+          id: userPoints.id,
+          userId: userPoints.userId,
+          weeklyRank: sql<number>`0`,
+          monthlyRank: sql<number>`0`,
+          allTimeRank: sql<number>`ROW_NUMBER() OVER (ORDER BY ${userPoints.totalPoints} DESC)`,
+          weeklyPoints: userPoints.weeklyPoints,
+          monthlyPoints: userPoints.monthlyPoints,
+          allTimePoints: userPoints.totalPoints,
+          lastUpdated: userPoints.updatedAt,
+          user: users,
+        };
+    }
+
+    return await db.select(selectFields)
+      .from(userPoints)
+      .innerJoin(users, eq(userPoints.userId, users.id))
+      .orderBy(orderBy)
+      .limit(50);
+  }
+
+  async updateUserActivity(userId: string): Promise<UserPoints> {
+    const userPointsData = await this.getUserPoints(userId);
+    const today = new Date();
+
+    if (!userPointsData) {
+      // First time user - create points record and award daily login
+      const newUserPoints = await this.createUserPoints({
+        userId,
+        totalPoints: 5,
+        currentLevel: 1,
+        pointsToNextLevel: 95,
+        weeklyPoints: 5,
+        monthlyPoints: 5,
+        streak: 1,
+        lastActivityDate: today,
+      });
+
+      await db.insert(pointTransactions).values({
+        userId,
+        points: 5,
+        action: 'daily_login',
+        description: 'Daily login bonus',
+      });
+
+      return newUserPoints;
+    }
+
+    let newStreak = userPointsData.streak;
+    let shouldAwardDaily = false;
+
+    if (userPointsData.lastActivityDate) {
+      const lastActivity = new Date(userPointsData.lastActivityDate);
+      const daysSinceLastActivity = Math.floor((today.getTime() - lastActivity.getTime()) / (1000 * 60 * 60 * 24));
+
+      if (daysSinceLastActivity === 1) {
+        // Consecutive day - maintain streak
+        newStreak++;
+        shouldAwardDaily = true;
+      } else if (daysSinceLastActivity === 0) {
+        // Same day - no change
+        return userPointsData;
+      } else {
+        // Broke streak
+        newStreak = 1;
+        shouldAwardDaily = true;
+      }
+    } else {
+      shouldAwardDaily = true;
+      newStreak = 1;
+    }
+
+    // Award daily login points if applicable
+    if (shouldAwardDaily) {
+      const dailyPoints = 5 + Math.min(newStreak, 7); // Bonus for streak, max 12 points
+      await this.addPointsToUser(userId, dailyPoints, 'daily_login', undefined, undefined, `Daily login bonus (${newStreak} day streak)`);
+    }
+
+    return await this.updateUserPoints(userId, {
+      streak: newStreak,
+      lastActivityDate: today,
+    });
+  }
+
+  async initializeDefaultAchievements(): Promise<void> {
+    const defaultAchievements = [
+      {
+        name: "First Steps",
+        description: "Create your first forum post",
+        badgeIcon: "Trophy",
+        badgeColor: "battles-gold",
+        category: "participation",
+        requirement: { type: "posts", count: 1 },
+        pointsReward: 50,
+        isActive: true,
+      },
+      {
+        name: "Getting Social",
+        description: "Add your first comment to a discussion",
+        badgeIcon: "MessageCircle",
+        badgeColor: "battles-gold",
+        category: "participation",
+        requirement: { type: "comments", count: 1 },
+        pointsReward: 25,
+        isActive: true,
+      },
+      {
+        name: "Active Contributor",
+        description: "Create 10 forum posts",
+        badgeIcon: "Edit",
+        badgeColor: "battles-gold",
+        category: "participation",
+        requirement: { type: "posts", count: 10 },
+        pointsReward: 200,
+        isActive: true,
+      },
+      {
+        name: "Community Builder",
+        description: "Leave 25 helpful comments",
+        badgeIcon: "Users",
+        badgeColor: "battles-gold",
+        category: "community",
+        requirement: { type: "comments", count: 25 },
+        pointsReward: 150,
+        isActive: true,
+      },
+      {
+        name: "Cannabis Enthusiast",
+        description: "Reach 500 total points",
+        badgeIcon: "Star",
+        badgeColor: "battles-gold",
+        category: "milestone",
+        requirement: { type: "points", count: 500 },
+        pointsReward: 100,
+        isActive: true,
+      },
+      {
+        name: "Level Up",
+        description: "Reach level 5",
+        badgeIcon: "TrendingUp",
+        badgeColor: "battles-gold",
+        category: "milestone",
+        requirement: { type: "level", count: 5 },
+        pointsReward: 250,
+        isActive: true,
+      },
+      {
+        name: "Dedication",
+        description: "Maintain a 7-day activity streak",
+        badgeIcon: "Calendar",
+        badgeColor: "battles-gold",
+        category: "participation",
+        requirement: { type: "streak", count: 7 },
+        pointsReward: 300,
+        isActive: true,
+      },
+    ];
+
+    for (const achievement of defaultAchievements) {
+      // Check if achievement already exists
+      const existing = await db.select().from(achievements)
+        .where(eq(achievements.name, achievement.name));
+      
+      if (existing.length === 0) {
+        await db.insert(achievements).values(achievement);
+      }
+    }
   }
 }
 
