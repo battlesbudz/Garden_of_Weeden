@@ -126,11 +126,14 @@ export default function EnhancedCommunityPage() {
   // Mutations
   const createPostMutation = useMutation({
     mutationFn: async (postData: any) => {
-      return apiRequest('/api/forum/posts', {
+      console.log("Sending post data:", postData);
+      const response = await apiRequest('/api/forum/posts', {
         method: 'POST',
         body: JSON.stringify(postData),
         headers: { 'Content-Type': 'application/json' },
       });
+      console.log("Post creation response:", response);
+      return response;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/forum/posts'] });
@@ -138,8 +141,10 @@ export default function EnhancedCommunityPage() {
       setShowCreatePost(false);
       toast({ description: "Post created successfully!" });
     },
-    onError: () => {
-      toast({ description: "Failed to create post", variant: "destructive" });
+    onError: (error: any) => {
+      console.error("Post creation error:", error);
+      const errorMessage = error?.message || error?.errors?.[0]?.message || "Failed to create post";
+      toast({ description: errorMessage, variant: "destructive" });
     }
   });
 
@@ -173,12 +178,18 @@ export default function EnhancedCommunityPage() {
       return;
     }
 
-    createPostMutation.mutate({
-      title: newPost.title,
-      content: newPost.content,
+    console.log("Creating post with user authenticated:", user);
+    console.log("Post data:", newPost);
+
+    const postData = {
+      title: newPost.title.trim(),
+      content: newPost.content.trim(),
       categoryId: newPost.categoryId ? parseInt(newPost.categoryId) : null,
-      videoUrl: newPost.videoUrl || null,
-    });
+      videoUrl: newPost.videoUrl?.trim() || null,
+    };
+
+    console.log("Processed post data:", postData);
+    createPostMutation.mutate(postData);
   };
 
   const extractVideoId = (url: string) => {
