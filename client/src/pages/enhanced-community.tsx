@@ -425,38 +425,38 @@ export default function EnhancedCommunityPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-yellow-600 to-yellow-500 text-black">
+      <div className="bg-gradient-to-r from-battles-gold to-yellow-500 text-battles-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center gap-4 mb-4">
             <Link href="/">
-              <Button variant="ghost" size="sm" className="text-black hover:bg-black/10">
+              <Button variant="ghost" size="sm" className="text-battles-black hover:bg-battles-black/10">
                 <Home className="h-4 w-4 mr-2" />
                 Home
               </Button>
             </Link>
           </div>
           <h1 className="text-4xl font-bold mb-2">Community Hub</h1>
-          <p className="text-black/80 text-lg">Connect, learn, and grow with the cannabis community</p>
+          <p className="text-battles-black/80 text-lg">Connect, learn, and grow with the cannabis community</p>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-gray-900 border border-yellow-500/20">
-            <TabsTrigger value="forum" className="data-[state=active]:bg-yellow-500 data-[state=active]:text-black">
+          <TabsList className="grid w-full grid-cols-4 bg-battles-black border border-battles-gold/20">
+            <TabsTrigger value="forum" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
               <MessageSquare className="h-4 w-4 mr-2" />
               Forum
             </TabsTrigger>
-            <TabsTrigger value="education" className="data-[state=active]:bg-yellow-500 data-[state=active]:text-black">
+            <TabsTrigger value="education" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
               <GraduationCap className="h-4 w-4 mr-2" />
               Education
             </TabsTrigger>
-            <TabsTrigger value="calendar" className="data-[state=active]:bg-yellow-500 data-[state=active]:text-black">
+            <TabsTrigger value="calendar" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
               <Calendar className="h-4 w-4 mr-2" />
               Calendar
             </TabsTrigger>
-            <TabsTrigger value="guides" className="data-[state=active]:bg-yellow-500 data-[state=active]:text-black">
+            <TabsTrigger value="guides" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
               <BookOpen className="h-4 w-4 mr-2" />
               Guides
             </TabsTrigger>
@@ -465,10 +465,10 @@ export default function EnhancedCommunityPage() {
           {/* Forum Tab */}
           <TabsContent value="forum" className="mt-6 space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-yellow-500">Community Discussions</h2>
+              <h2 className="text-2xl font-bold text-battles-gold">Community Discussions</h2>
               <Button 
                 onClick={() => setShowCreatePost(!showCreatePost)}
-                className="bg-yellow-500 text-black hover:bg-yellow-600"
+                className="bg-battles-gold text-battles-black hover:bg-yellow-600"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 New Post
@@ -477,9 +477,9 @@ export default function EnhancedCommunityPage() {
 
             {/* Create Post Form */}
             {showCreatePost && (
-              <Card className="bg-gray-900 border-yellow-500/20">
+              <Card className="bg-battles-black border-battles-gold/20">
                 <CardHeader>
-                  <CardTitle className="text-yellow-500">Create New Post</CardTitle>
+                  <CardTitle className="text-battles-gold">Create New Post</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <Input
@@ -495,7 +495,7 @@ export default function EnhancedCommunityPage() {
                     <SelectTrigger className="bg-black border-gray-700 text-white">
                       <SelectValue placeholder="Select category (optional)" />
                     </SelectTrigger>
-                    <SelectContent className="bg-gray-900 border-gray-700">
+                    <SelectContent className="bg-battles-black border-gray-700">
                       {categories.map((category: ForumCategory) => (
                         <SelectItem key={category.id} value={category.id.toString()} className="text-white">
                           {category.name}
@@ -519,14 +519,14 @@ export default function EnhancedCommunityPage() {
                     <Button 
                       onClick={handleCreatePost}
                       disabled={createPostMutation.isPending}
-                      className="bg-yellow-500 text-black hover:bg-yellow-600"
+                      className="bg-battles-gold text-battles-black hover:bg-yellow-600"
                     >
                       {createPostMutation.isPending ? "Posting..." : "Post"}
                     </Button>
                     <Button 
                       variant="outline" 
                       onClick={() => setShowCreatePost(false)}
-                      className="border-gray-700 text-white hover:bg-gray-800"
+                      className="border-gray-700 text-white hover:bg-gray-900"
                     >
                       Cancel
                     </Button>
@@ -542,18 +542,18 @@ export default function EnhancedCommunityPage() {
                 
                 return (
                   <div key={category.id} className="space-y-4">
-                    <Card className="bg-gray-900 border-yellow-500/20 cursor-pointer hover:border-yellow-500/40 transition-colors">
+                    <Card className="bg-battles-black border-battles-gold/20 cursor-pointer hover:border-battles-gold/40 transition-colors">
                       <CardContent className="p-4" onClick={() => toggleCategory(category.id)}>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div className="w-3 h-3 rounded-full bg-battles-gold"></div>
                             <div>
                               <h3 className="font-semibold text-white text-lg">{category.name}</h3>
                               <p className="text-sm text-gray-400">{category.description}</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Badge className="bg-yellow-500 text-black">
+                            <Badge className="bg-battles-gold text-black">
                               {categoryPosts.length} posts
                             </Badge>
                             <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform ${collapsedCategories[category.id] ? 'rotate-180' : ''}`} />
@@ -566,25 +566,25 @@ export default function EnhancedCommunityPage() {
                     {categoryPosts.length > 0 && !collapsedCategories[category.id] && (
                       <div className="ml-6 space-y-4">
                         {categoryPosts.map((post: ForumPost) => (
-                          <Card key={post.id} className="bg-gray-800 border-gray-700 hover:border-yellow-500/40 transition-colors">
+                          <Card key={post.id} className="bg-gray-900 border-gray-700 hover:border-battles-gold/40 transition-colors">
                             <CardContent className="p-6">
                               <div className="flex items-start gap-4">
                                 <Avatar>
-                                  <AvatarFallback className="bg-yellow-500 text-black">
+                                  <AvatarFallback className="bg-battles-gold text-black">
                                     {getInitials(post.author.firstName, post.author.lastName)}
                                   </AvatarFallback>
                                 </Avatar>
                                 <div className="flex-1">
                                   <div className="flex items-center gap-2 mb-2">
                                     <h3 className="font-semibold text-white">{post.title}</h3>
-                                    {post.isPinned && <Badge className="bg-yellow-500 text-black">Pinned</Badge>}
+                                    {post.isPinned && <Badge className="bg-battles-gold text-black">Pinned</Badge>}
                                   </div>
                                   <p className="text-gray-300 mb-3">{post.content}</p>
                                   
                                   {/* Video Embed */}
                                   {post.videoUrl && extractYouTubeVideoId(post.videoUrl) && (
                                     <div className="mb-4">
-                                      <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                                      <div className="aspect-video bg-gray-900 rounded-lg overflow-hidden">
                                         <iframe
                                           src={`https://www.youtube.com/embed/${extractYouTubeVideoId(post.videoUrl)}`}
                                           title="YouTube video player"
@@ -608,7 +608,7 @@ export default function EnhancedCommunityPage() {
                                     </button>
                                     <button 
                                       onClick={() => toggleComments(post.id)}
-                                      className="flex items-center gap-1 hover:text-yellow-500 transition-colors"
+                                      className="flex items-center gap-1 hover:text-yellow-400 transition-colors"
                                     >
                                       <MessageSquare className="h-4 w-4" />
                                       <span>{post.replyCount} comments</span>
@@ -629,7 +629,7 @@ export default function EnhancedCommunityPage() {
                                         {/* Add comment form */}
                                         <div className="flex gap-3">
                                           <Avatar className="w-8 h-8">
-                                            <AvatarFallback className="bg-yellow-500 text-black text-xs">
+                                            <AvatarFallback className="bg-battles-gold text-black text-xs">
                                               {user && getInitials(user.firstName, user.lastName)}
                                             </AvatarFallback>
                                           </Avatar>
@@ -638,14 +638,14 @@ export default function EnhancedCommunityPage() {
                                               placeholder="Write a comment..."
                                               value={newComment}
                                               onChange={(e) => setNewComment(e.target.value)}
-                                              className="bg-gray-800 border-gray-600 text-white text-sm min-h-[60px]"
+                                              className="bg-gray-900 border-gray-600 text-white text-sm min-h-[60px]"
                                             />
                                             <div className="flex gap-2 mt-2">
                                               <Button 
                                                 size="sm" 
                                                 onClick={() => handleCreateComment(post.id)}
                                                 disabled={createCommentMutation.isPending}
-                                                className="bg-yellow-500 text-black hover:bg-yellow-600"
+                                                className="bg-battles-gold text-battles-black hover:bg-yellow-600"
                                               >
                                                 {createCommentMutation.isPending ? "Posting..." : "Comment"}
                                               </Button>
@@ -665,9 +665,9 @@ export default function EnhancedCommunityPage() {
                                         {post.comments && post.comments.length > 0 ? (
                                           <div className="space-y-3">
                                             {post.comments.map((comment: any) => (
-                                              <div key={comment.id} className="flex gap-3 p-3 bg-gray-800 rounded-lg">
+                                              <div key={comment.id} className="flex gap-3 p-3 bg-gray-900 rounded-lg">
                                                 <Avatar className="w-8 h-8">
-                                                  <AvatarFallback className="bg-yellow-500 text-black text-xs">
+                                                  <AvatarFallback className="bg-battles-gold text-black text-xs">
                                                     {getInitials(comment.author.firstName, comment.author.lastName)}
                                                   </AvatarFallback>
                                                 </Avatar>
@@ -720,7 +720,7 @@ export default function EnhancedCommunityPage() {
                 const uncategorizedPosts = posts.filter((post: ForumPost) => !post.categoryId);
                 return uncategorizedPosts.length > 0 && (
                   <div className="space-y-4">
-                    <Card className="bg-gray-900 border-yellow-500/20 cursor-pointer hover:border-yellow-500/40 transition-colors">
+                    <Card className="bg-battles-black border-battles-gold/20 cursor-pointer hover:border-battles-gold/40 transition-colors">
                       <CardContent className="p-4" onClick={() => toggleCategory(0)}>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
@@ -743,19 +743,19 @@ export default function EnhancedCommunityPage() {
                     {!collapsedCategories[0] && (
                       <div className="ml-6 space-y-4">
                         {uncategorizedPosts.map((post: ForumPost) => (
-                        <Card key={post.id} className="bg-gray-800 border-gray-700 hover:border-yellow-500/40 transition-colors">
+                        <Card key={post.id} className="bg-gray-900 border-gray-700 hover:border-battles-gold/40 transition-colors">
                           <CardContent className="p-6">
                             {/* Same post structure as categorized posts but without category badge */}
                             <div className="flex items-start gap-4">
                               <Avatar>
-                                <AvatarFallback className="bg-yellow-500 text-black">
+                                <AvatarFallback className="bg-battles-gold text-black">
                                   {getInitials(post.author.firstName, post.author.lastName)}
                                 </AvatarFallback>
                               </Avatar>
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
                                   <h3 className="font-semibold text-white">{post.title}</h3>
-                                  {post.isPinned && <Badge className="bg-yellow-500 text-black">Pinned</Badge>}
+                                  {post.isPinned && <Badge className="bg-battles-gold text-black">Pinned</Badge>}
                                 </div>
                                 <p className="text-gray-300 mb-3">{post.content}</p>
                                 
@@ -770,7 +770,7 @@ export default function EnhancedCommunityPage() {
                                   </button>
                                   <button 
                                     onClick={() => toggleComments(post.id)}
-                                    className="flex items-center gap-1 hover:text-yellow-500 transition-colors"
+                                    className="flex items-center gap-1 hover:text-yellow-400 transition-colors"
                                   >
                                     <MessageSquare className="h-4 w-4" />
                                     <span>{post.replyCount} comments</span>
@@ -801,7 +801,7 @@ export default function EnhancedCommunityPage() {
           {/* Education Tab */}
           <TabsContent value="education" className="mt-6 space-y-6">
             <div className="text-center space-y-4">
-              <h2 className="text-3xl font-bold text-yellow-500">Cannabis Education Center</h2>
+              <h2 className="text-3xl font-bold text-battles-gold">Cannabis Education Center</h2>
               <p className="text-gray-300 max-w-2xl mx-auto">
                 Learn about cannabis tourism, legal consumption, strain selection, and industry best practices 
                 from experienced professionals.
@@ -809,9 +809,9 @@ export default function EnhancedCommunityPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="bg-gray-900 border-yellow-500/20">
+              <Card className="bg-battles-black border-battles-gold/20">
                 <CardContent className="p-6 text-center">
-                  <Shield className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+                  <Shield className="h-12 w-12 text-battles-gold mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-white mb-2">Legal Guidelines</h3>
                   <p className="text-gray-400 text-sm">
                     Understanding New York cannabis laws, regulations, and compliance requirements.
@@ -819,9 +819,9 @@ export default function EnhancedCommunityPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gray-900 border-yellow-500/20">
+              <Card className="bg-battles-black border-battles-gold/20">
                 <CardContent className="p-6 text-center">
-                  <Leaf className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+                  <Leaf className="h-12 w-12 text-battles-gold mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-white mb-2">Product Education</h3>
                   <p className="text-gray-400 text-sm">
                     Learn about different cannabis products, effects, and consumption methods.
@@ -829,9 +829,9 @@ export default function EnhancedCommunityPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gray-900 border-yellow-500/20">
+              <Card className="bg-battles-black border-battles-gold/20">
                 <CardContent className="p-6 text-center">
-                  <Users className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+                  <Users className="h-12 w-12 text-battles-gold mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-white mb-2">Social Consumption</h3>
                   <p className="text-gray-400 text-sm">
                     Etiquette and best practices for consumption lounges and social experiences.
@@ -843,7 +843,7 @@ export default function EnhancedCommunityPage() {
             <div className="text-center">
               <Button 
                 onClick={() => setActiveTab("guides")}
-                className="bg-yellow-500 text-black hover:bg-yellow-600"
+                className="bg-battles-gold text-battles-black hover:bg-yellow-600"
               >
                 <BookOpen className="h-4 w-4 mr-2" />
                 Browse Education Guides
@@ -854,7 +854,7 @@ export default function EnhancedCommunityPage() {
           {/* Calendar Tab */}
           <TabsContent value="calendar" className="mt-6 space-y-6">
             <div className="text-center space-y-4">
-              <h2 className="text-3xl font-bold text-yellow-500">Community Events</h2>
+              <h2 className="text-3xl font-bold text-battles-gold">Community Events</h2>
               <p className="text-gray-300 max-w-2xl mx-auto">
                 Join our upcoming community workshops, Q&A sessions, and educational events. 
                 All events are hosted via Zoom to connect our cannabis community.
@@ -863,26 +863,26 @@ export default function EnhancedCommunityPage() {
 
             {/* Upcoming Events */}
             <div className="space-y-6">
-              <Card className="bg-gray-900 border-yellow-500/20">
+              <Card className="bg-battles-black border-battles-gold/20">
                 <CardHeader>
-                  <CardTitle className="text-yellow-500 flex items-center gap-2">
+                  <CardTitle className="text-battles-gold flex items-center gap-2">
                     <Calendar className="h-5 w-5" />
                     Upcoming Events
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
+                  <div className="p-4 bg-gray-900 rounded-lg border border-gray-700">
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
-                          <GraduationCap className="h-6 w-6 text-yellow-500" />
+                        <div className="w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
+                          <GraduationCap className="h-6 w-6 text-battles-gold" />
                         </div>
                         <div>
                           <h4 className="font-semibold text-white">Cannabis 101 Workshop</h4>
                           <p className="text-sm text-gray-400">Learn the basics of cannabis consumption, safety, and legal guidelines</p>
                         </div>
                       </div>
-                      <Badge className="bg-yellow-500 text-black">Live</Badge>
+                      <Badge className="bg-battles-gold text-black">Live</Badge>
                     </div>
                     <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
                       <div className="flex items-center gap-1">
@@ -901,18 +901,18 @@ export default function EnhancedCommunityPage() {
                     <div className="mt-3">
                       <Button 
                         onClick={() => window.open('mailto:battlesbudz@gmail.com?subject=Cannabis%20101%20Workshop%20Registration&body=I%20would%20like%20to%20register%20for%20the%20Cannabis%20101%20Workshop%20on%20July%2019th.', '_blank')}
-                        className="bg-yellow-500 text-black hover:bg-yellow-600"
+                        className="bg-battles-gold text-battles-black hover:bg-yellow-600"
                       >
                         Register Now
                       </Button>
                     </div>
                   </div>
 
-                  <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
+                  <div className="p-4 bg-gray-900 rounded-lg border border-gray-700">
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
-                          <Users className="h-6 w-6 text-yellow-500" />
+                        <div className="w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
+                          <Users className="h-6 w-6 text-battles-gold" />
                         </div>
                         <div>
                           <h4 className="font-semibold text-white">Community Q&A Session</h4>
@@ -939,18 +939,18 @@ export default function EnhancedCommunityPage() {
                       <Button 
                         onClick={() => window.open('mailto:battlesbudz@gmail.com?subject=Weekly%20Q&A%20Session%20Access&body=I%20would%20like%20to%20join%20the%20weekly%20Q&A%20sessions.', '_blank')}
                         variant="outline"
-                        className="border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black"
+                        className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
                       >
                         Get Zoom Link
                       </Button>
                     </div>
                   </div>
 
-                  <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
+                  <div className="p-4 bg-gray-900 rounded-lg border border-gray-700">
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
-                          <Leaf className="h-6 w-6 text-yellow-500" />
+                        <div className="w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
+                          <Leaf className="h-6 w-6 text-battles-gold" />
                         </div>
                         <div>
                           <h4 className="font-semibold text-white">Product Deep Dive: Edibles</h4>
@@ -987,28 +987,28 @@ export default function EnhancedCommunityPage() {
               </Card>
 
               {/* Event Guidelines */}
-              <Card className="bg-gray-900 border-yellow-500/20">
+              <Card className="bg-battles-black border-battles-gold/20">
                 <CardHeader>
-                  <CardTitle className="text-yellow-500 flex items-center gap-2">
+                  <CardTitle className="text-battles-gold flex items-center gap-2">
                     <Shield className="h-5 w-5" />
                     Event Guidelines
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
+                    <div className="w-2 h-2 bg-battles-gold rounded-full mt-2"></div>
                     <p className="text-gray-300 text-sm">All participants must be 21+ and in a legal cannabis state/country</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
+                    <div className="w-2 h-2 bg-battles-gold rounded-full mt-2"></div>
                     <p className="text-gray-300 text-sm">Events are educational and informational only</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
+                    <div className="w-2 h-2 bg-battles-gold rounded-full mt-2"></div>
                     <p className="text-gray-300 text-sm">Zoom links will be provided 24 hours before each event</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
+                    <div className="w-2 h-2 bg-battles-gold rounded-full mt-2"></div>
                     <p className="text-gray-300 text-sm">Recording may be available for registered participants</p>
                   </div>
                 </CardContent>
@@ -1016,9 +1016,9 @@ export default function EnhancedCommunityPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <Card className="bg-gray-900 border-yellow-500/20">
+              <Card className="bg-battles-black border-battles-gold/20">
                 <CardContent className="p-6 text-center">
-                  <GraduationCap className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+                  <GraduationCap className="h-12 w-12 text-battles-gold mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-white mb-2">Educational Consultations</h3>
                   <p className="text-gray-400 text-sm">
                     Learn about cannabis fundamentals, legal requirements, and best practices.
@@ -1026,9 +1026,9 @@ export default function EnhancedCommunityPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gray-900 border-yellow-500/20">
+              <Card className="bg-battles-black border-battles-gold/20">
                 <CardContent className="p-6 text-center">
-                  <Leaf className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+                  <Leaf className="h-12 w-12 text-battles-gold mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-white mb-2">Product Guidance</h3>
                   <p className="text-gray-400 text-sm">
                     Get personalized recommendations for strains, products, and consumption methods.
@@ -1036,9 +1036,9 @@ export default function EnhancedCommunityPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gray-900 border-yellow-500/20">
+              <Card className="bg-battles-black border-battles-gold/20">
                 <CardContent className="p-6 text-center">
-                  <Zap className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+                  <Zap className="h-12 w-12 text-battles-gold mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-white mb-2">Business Opportunities</h3>
                   <p className="text-gray-400 text-sm">
                     Explore investment and partnership opportunities in the cannabis industry.
@@ -1054,7 +1054,7 @@ export default function EnhancedCommunityPage() {
               {/* Search and Filters */}
               <div className="lg:w-1/4 space-y-4">
                 <div className="space-y-2">
-                  <h3 className="text-lg font-semibold text-yellow-500">Search Guides</h3>
+                  <h3 className="text-lg font-semibold text-battles-gold">Search Guides</h3>
                   <div className="relative">
                     <Search className="h-4 w-4 absolute left-3 top-3 text-gray-400" />
                     <Input
@@ -1067,12 +1067,12 @@ export default function EnhancedCommunityPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-lg font-semibold text-yellow-500">Category</h3>
+                  <h3 className="text-lg font-semibold text-battles-gold">Category</h3>
                   <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                     <SelectTrigger className="bg-black border-gray-700 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-gray-900 border-gray-700">
+                    <SelectContent className="bg-battles-black border-gray-700">
                       <SelectItem value="all" className="text-white">All Categories</SelectItem>
                       <SelectItem value="legal" className="text-white">Legal</SelectItem>
                       <SelectItem value="culture" className="text-white">Culture</SelectItem>
@@ -1086,9 +1086,9 @@ export default function EnhancedCommunityPage() {
               <div className="lg:w-3/4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {filteredGuides.map((guide) => (
-                    <Card key={guide.id} className="bg-gray-900 border-yellow-500/20 hover:border-yellow-500/40 transition-colors cursor-pointer"
+                    <Card key={guide.id} className="bg-battles-black border-battles-gold/20 hover:border-battles-gold/40 transition-colors cursor-pointer"
                           onClick={() => setSelectedGuide(guide)}>
-                      <div className="aspect-video bg-gray-800 rounded-t-lg overflow-hidden">
+                      <div className="aspect-video bg-gray-900 rounded-t-lg overflow-hidden">
                         <img 
                           src={guide.thumbnail} 
                           alt={guide.title}
@@ -1097,7 +1097,7 @@ export default function EnhancedCommunityPage() {
                       </div>
                       <CardContent className="p-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <Badge className="bg-yellow-500/20 text-yellow-500 border-yellow-500/30">
+                          <Badge className="bg-battles-gold/20 text-battles-gold border-battles-gold/30">
                             {guide.difficulty}
                           </Badge>
                           <span className="flex items-center gap-1 text-sm text-gray-400">
@@ -1126,11 +1126,11 @@ export default function EnhancedCommunityPage() {
 
       {/* Guide Modal */}
       <Dialog open={!!selectedGuide} onOpenChange={() => setSelectedGuide(null)}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900 border-yellow-500/20">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-battles-black border-battles-gold/20">
           {selectedGuide && (
             <>
               <DialogHeader>
-                <DialogTitle className="text-yellow-500 text-xl">{selectedGuide.title}</DialogTitle>
+                <DialogTitle className="text-battles-gold text-xl">{selectedGuide.title}</DialogTitle>
                 <DialogDescription className="text-gray-400">
                   {selectedGuide.description}
                 </DialogDescription>
@@ -1138,7 +1138,7 @@ export default function EnhancedCommunityPage() {
               
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
-                  <Badge className="bg-yellow-500/20 text-yellow-500 border-yellow-500/30">
+                  <Badge className="bg-battles-gold/20 text-battles-gold border-battles-gold/30">
                     {selectedGuide.difficulty}
                   </Badge>
                   <span className="flex items-center gap-1 text-sm text-gray-400">
@@ -1160,8 +1160,8 @@ export default function EnhancedCommunityPage() {
                   </p>
                   
                   {selectedGuide.steps[currentStep]?.tips && (
-                    <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-                      <h4 className="text-yellow-500 font-semibold mb-2">💡 Pro Tip</h4>
+                    <div className="bg-battles-gold/10 border border-battles-gold/20 rounded-lg p-4">
+                      <h4 className="text-battles-gold font-semibold mb-2">💡 Pro Tip</h4>
                       <p className="text-gray-300">{selectedGuide.steps[currentStep].tips}</p>
                     </div>
                   )}
@@ -1180,7 +1180,7 @@ export default function EnhancedCommunityPage() {
                     variant="outline"
                     onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
                     disabled={currentStep === 0}
-                    className="border-gray-700 text-white hover:bg-gray-800"
+                    className="border-gray-700 text-white hover:bg-gray-900"
                   >
                     Previous
                   </Button>
@@ -1190,7 +1190,7 @@ export default function EnhancedCommunityPage() {
                       <div
                         key={index}
                         className={`w-2 h-2 rounded-full ${
-                          index === currentStep ? 'bg-yellow-500' : 'bg-gray-600'
+                          index === currentStep ? 'bg-battles-gold' : 'bg-gray-600'
                         }`}
                       />
                     ))}
@@ -1199,7 +1199,7 @@ export default function EnhancedCommunityPage() {
                   <Button
                     onClick={() => setCurrentStep(Math.min(selectedGuide.steps.length - 1, currentStep + 1))}
                     disabled={currentStep === selectedGuide.steps.length - 1}
-                    className="bg-yellow-500 text-black hover:bg-yellow-600"
+                    className="bg-battles-gold text-battles-black hover:bg-yellow-600"
                   >
                     Next
                   </Button>
@@ -1207,8 +1207,8 @@ export default function EnhancedCommunityPage() {
 
                 {/* Contact CTA */}
                 {currentStep === selectedGuide.steps.length - 1 && (
-                  <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-6 text-center">
-                    <h4 className="text-yellow-500 font-semibold mb-2">Need More Help?</h4>
+                  <div className="bg-battles-gold/10 border border-battles-gold/20 rounded-lg p-6 text-center">
+                    <h4 className="text-battles-gold font-semibold mb-2">Need More Help?</h4>
                     <p className="text-gray-300 mb-4">
                       Get personalized guidance from our cannabis experts through a one-on-one session.
                     </p>
@@ -1217,7 +1217,7 @@ export default function EnhancedCommunityPage() {
                         setSelectedGuide(null);
                         setActiveTab("calendar");
                       }}
-                      className="bg-yellow-500 text-black hover:bg-yellow-600"
+                      className="bg-battles-gold text-battles-black hover:bg-yellow-600"
                     >
                       Schedule Expert Session
                     </Button>
