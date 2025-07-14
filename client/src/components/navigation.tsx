@@ -67,10 +67,25 @@ export default function Navigation() {
             </span>
           </Link>
 
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-battles-white hover:text-battles-gold"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          </div>
+
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <Link href="/" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Home
+              </Link>
+              <Link href="/community" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Community
               </Link>
               <button
                 onClick={() => navigateToSection("about")}
@@ -90,9 +105,6 @@ export default function Navigation() {
               >
                 Events
               </button>
-              <Link href="/community" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Community
-              </Link>
               <Link href="/shop" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
                 <ShoppingBag className="h-4 w-4 mr-1" />
                 Shop
@@ -136,15 +148,7 @@ export default function Navigation() {
             </div>
           </div>
 
-          <div className="md:hidden">
-            <button
-              type="button"
-              className="text-white hover:text-battles-gold"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
+
         </div>
       </div>
 
@@ -152,8 +156,11 @@ export default function Navigation() {
       {isOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 bg-battles-black border-t border-battles-gold">
-            <Link href="/" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
+            <Link href="/" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
               Home
+            </Link>
+            <Link href="/community" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
+              Community
             </Link>
             <button
               onClick={() => navigateToSection("about")}

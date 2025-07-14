@@ -30,7 +30,8 @@ import {
   ExternalLink,
   Clock,
   Zap,
-  Home
+  Home,
+  Heart
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -98,6 +99,9 @@ export default function EnhancedCommunityPage() {
   const [activeTab, setActiveTab] = useState("forum");
   const [newPost, setNewPost] = useState({ title: "", content: "", categoryId: "", videoUrl: "" });
   const [showCreatePost, setShowCreatePost] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<any>(null);
+  const [newComment, setNewComment] = useState("");
+  const [showComments, setShowComments] = useState<{ [key: number]: boolean }>({});
   const [selectedGuide, setSelectedGuide] = useState<EducationGuide | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [meetingRequest, setMeetingRequest] = useState({ 
@@ -158,6 +162,30 @@ export default function EnhancedCommunityPage() {
     }
   });
 
+  // Utility functions
+  const extractYouTubeVideoId = (url: string) => {
+    const patterns = [
+      /youtube\.com\/watch\?v=([^&]+)/,
+      /youtu\.be\/([^?]+)/,
+      /youtube\.com\/embed\/([^?]+)/
+    ];
+    
+    for (const pattern of patterns) {
+      const match = url.match(pattern);
+      if (match) return match[1];
+    }
+    return null;
+  };
+
+  const toggleComments = (postId: number) => {
+    setShowComments(prev => ({
+      ...prev,
+      [postId]: !prev[postId]
+    }));
+  };
+
+
+
   // Handler functions
   const handleCreatePost = () => {
     if (!isAuthenticated) {
@@ -185,11 +213,7 @@ export default function EnhancedCommunityPage() {
     createPostMutation.mutate(postData);
   };
 
-  const extractVideoId = (url: string) => {
-    const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/;
-    const match = url.match(youtubeRegex);
-    return match ? match[1] : null;
-  };
+
 
   const handleRequestMeeting = () => {
     if (!meetingRequest.name || !meetingRequest.email || !meetingRequest.topic) {
@@ -199,13 +223,7 @@ export default function EnhancedCommunityPage() {
     requestMeetingMutation.mutate(meetingRequest);
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  };
+
 
   const getInitials = (firstName: string, lastName: string) => {
     return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`.toUpperCase();
@@ -474,38 +492,84 @@ export default function EnhancedCommunityPage() {
                         <p className="text-gray-300 mb-3">{post.content}</p>
                         
                         {/* Video Embed */}
-                        {post.videoUrl && extractVideoId(post.videoUrl) && (
+                        {post.videoUrl && extractYouTubeVideoId(post.videoUrl) && (
                           <div className="mb-4">
                             <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden">
                               <iframe
-                                src={`https://www.youtube.com/embed/${extractVideoId(post.videoUrl)}`}
-                                className="w-full h-full"
+                                src={`https://www.youtube.com/embed/${extractYouTubeVideoId(post.videoUrl)}`}
+                                title="YouTube video player"
+                                frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
-                              />
+                                className="w-full h-full"
+                              ></iframe>
                             </div>
                           </div>
                         )}
-
-                        <div className="flex items-center gap-6 text-sm text-gray-400">
-                          <span className="flex items-center gap-1">
-                            <User className="h-4 w-4" />
-                            {post.author.firstName} {post.author.lastName}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Eye className="h-4 w-4" />
-                            {post.viewCount}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <ThumbsUp className="h-4 w-4" />
-                            {post.likeCount}
-                          </span>
-                          <span className="flex items-center gap-1">
+                        
+                        {/* Post Actions */}
+                        <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                          <div className="flex items-center gap-1">
+                            <Heart className="h-4 w-4" />
+                            <span>{post.likeCount}</span>
+                          </div>
+                          <button 
+                            onClick={() => toggleComments(post.id)}
+                            className="flex items-center gap-1 hover:text-yellow-500 transition-colors"
+                          >
                             <MessageSquare className="h-4 w-4" />
-                            {post.replyCount}
+                            <span>{post.replyCount} comments</span>
+                          </button>
+                          <div className="flex items-center gap-1">
+                            <Eye className="h-4 w-4" />
+                            <span>{post.viewCount}</span>
+                          </div>
+                          <span className="ml-auto">
+                            {new Date(post.createdAt).toLocaleDateString()}
                           </span>
-                          <span>{formatDate(post.createdAt)}</span>
                         </div>
+
+                        {/* Comments Section */}
+                        {showComments[post.id] && (
+                          <div className="mt-4 pt-4 border-t border-gray-700">
+                            <div className="space-y-3">
+                              {/* Add comment form */}
+                              <div className="flex gap-3">
+                                <Avatar className="w-8 h-8">
+                                  <AvatarFallback className="bg-yellow-500 text-black text-xs">
+                                    {user && getInitials(user.firstName, user.lastName)}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <div className="flex-1">
+                                  <Textarea
+                                    placeholder="Write a comment..."
+                                    value={newComment}
+                                    onChange={(e) => setNewComment(e.target.value)}
+                                    className="bg-gray-800 border-gray-600 text-white text-sm min-h-[60px]"
+                                  />
+                                  <div className="flex gap-2 mt-2">
+                                    <Button size="sm" className="bg-yellow-500 text-black hover:bg-yellow-600">
+                                      Comment
+                                    </Button>
+                                    <Button 
+                                      size="sm" 
+                                      variant="ghost" 
+                                      onClick={() => setNewComment("")}
+                                      className="text-gray-400 hover:text-white"
+                                    >
+                                      Cancel
+                                    </Button>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {/* Comment placeholder */}
+                              <div className="text-center text-gray-500 py-4">
+                                No comments yet. Be the first to comment!
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </CardContent>
