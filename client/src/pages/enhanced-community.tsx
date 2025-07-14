@@ -423,10 +423,10 @@ export default function EnhancedCommunityPage() {
   });
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="bg-black text-white">
       {/* Header */}
       <div className="bg-gradient-to-r from-battles-gold to-yellow-500 text-battles-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center gap-4 mb-4">
             <Link href="/">
               <Button variant="outline" size="sm" className="text-battles-black border-battles-black hover:bg-battles-black/10 hover:text-white">
@@ -441,7 +441,7 @@ export default function EnhancedCommunityPage() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-4 bg-battles-black border border-battles-gold/20">
             <TabsTrigger value="forum" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
