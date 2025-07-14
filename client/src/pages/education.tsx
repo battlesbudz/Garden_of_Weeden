@@ -263,11 +263,11 @@ export default function Education() {
               for a safe, legal, and memorable cannabis experience.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/events">
+              <a href="/#events">
                 <Button className="bg-battles-gold text-battles-black hover:bg-yellow-600 font-bold px-8 py-3">
                   Book Lounge Experience
                 </Button>
-              </Link>
+              </a>
               <Button variant="outline" className="border-white text-white hover:bg-white hover:text-battles-black px-8 py-3">
                 Download Tourism Guide
               </Button>
@@ -355,9 +355,11 @@ export default function Education() {
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <Button className="w-full bg-battles-gold text-battles-black hover:bg-yellow-600">
-                        Read Full Guide
-                      </Button>
+                      <a href={`mailto:battlesbudz@gmail.com?subject=Request for ${guide.title}&body=Hi, I would like to read the full guide: ${guide.title}`}>
+                        <Button className="w-full bg-battles-gold text-battles-black hover:bg-yellow-600">
+                          Request Full Guide
+                        </Button>
+                      </a>
                     </CardContent>
                   </Card>
                 ))}
@@ -399,9 +401,11 @@ export default function Education() {
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <Button className="w-full bg-battles-gold text-battles-black hover:bg-yellow-600">
-                        Read Full Guide
-                      </Button>
+                      <a href={`mailto:battlesbudz@gmail.com?subject=Request for ${guide.title}&body=Hi, I would like to read the full guide: ${guide.title}`}>
+                        <Button className="w-full bg-battles-gold text-battles-black hover:bg-yellow-600">
+                          Request Full Guide
+                        </Button>
+                      </a>
                     </CardContent>
                   </Card>
                 ))}
@@ -422,16 +426,16 @@ export default function Education() {
             Book your guided tasting or educational workshop today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/events">
+            <a href="/#events">
               <Button className="bg-battles-gold text-battles-black hover:bg-yellow-600 font-bold px-8 py-3">
                 Book Your Experience
               </Button>
-            </Link>
-            <Link href="/#contact">
+            </a>
+            <a href="/#contact">
               <Button variant="outline" className="border-white text-white hover:bg-white hover:text-battles-black px-8 py-3">
                 Contact Us
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </section>

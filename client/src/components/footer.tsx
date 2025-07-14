@@ -36,11 +36,11 @@ export default function Footer() {
               </p>
               <p className="flex items-center">
                 <Mail className="text-battles-gold mr-2 h-4 w-4" />
-                info@battlesbudz.com
+                battlesbudz@gmail.com
               </p>
               <p className="flex items-center">
                 <Phone className="text-battles-gold mr-2 h-4 w-4" />
-                (518) 555-BUDZ
+                (904) 415-7635
               </p>
             </div>
           </div>
