@@ -93,6 +93,9 @@ export default function Navigation() {
               <Link href="/education" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Education
               </Link>
+              <Link href="/community" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Community
+              </Link>
               <Link href="/shop" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
                 <ShoppingBag className="h-4 w-4 mr-1" />
                 Shop
@@ -175,6 +178,9 @@ export default function Navigation() {
             </button>
             <Link href="/education" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
               Education
+            </Link>
+            <Link href="/community" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
+              Community
             </Link>
             <Link href="/shop" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
               <ShoppingBag className="h-4 w-4 mr-2" />

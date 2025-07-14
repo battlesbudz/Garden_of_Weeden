@@ -10,6 +10,10 @@ import {
   investorUpdates,
   investorDocuments,
   investorAccess,
+  forumCategories,
+  forumPosts,
+  forumComments,
+  forumLikes,
   type User, 
   type UpsertUser,
   type Product,
@@ -31,10 +35,18 @@ import {
   type InvestorDocument,
   type InsertInvestorDocument,
   type InvestorAccess,
-  type InsertInvestorAccess
+  type InsertInvestorAccess,
+  type ForumCategory,
+  type InsertForumCategory,
+  type ForumPost,
+  type InsertForumPost,
+  type ForumComment,
+  type InsertForumComment,
+  type ForumLike,
+  type InsertForumLike
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and, sql } from "drizzle-orm";
 
 export interface IStorage {
   // User operations (IMPORTANT) these user operations are mandatory for Replit Auth.
@@ -89,6 +101,24 @@ export interface IStorage {
   getInvestorAccessByUserId(userId: number): Promise<InvestorAccess | undefined>;
   createInvestorAccess(access: InsertInvestorAccess): Promise<InvestorAccess>;
   updateInvestorAccess(id: number, access: Partial<InsertInvestorAccess>): Promise<InvestorAccess>;
+  
+  // Forum operations
+  getAllForumCategories(): Promise<ForumCategory[]>;
+  getActiveForumCategories(): Promise<ForumCategory[]>;
+  createForumCategory(category: InsertForumCategory): Promise<ForumCategory>;
+  
+  getAllForumPosts(): Promise<(ForumPost & { author: User; category?: ForumCategory })[]>;
+  getForumPost(id: number): Promise<(ForumPost & { author: User; category?: ForumCategory }) | undefined>;
+  getPostsByCategory(categoryId: number): Promise<(ForumPost & { author: User; category?: ForumCategory })[]>;
+  createForumPost(post: InsertForumPost): Promise<ForumPost>;
+  updateForumPost(id: number, post: Partial<InsertForumPost>): Promise<ForumPost>;
+  incrementPostViews(id: number): Promise<void>;
+  
+  getPostComments(postId: number): Promise<(ForumComment & { author: User })[]>;
+  createForumComment(comment: InsertForumComment): Promise<ForumComment>;
+  
+  togglePostLike(userId: string, postId: number): Promise<{ liked: boolean; likeCount: number }>;
+  toggleCommentLike(userId: string, commentId: number): Promise<{ liked: boolean; likeCount: number }>;
 }
 
 export class MemStorage implements IStorage {
@@ -438,6 +468,220 @@ export class DatabaseStorage implements IStorage {
       .where(eq(investorAccess.id, id))
       .returning();
     return access;
+  }
+
+  // Forum methods
+  async getAllForumCategories(): Promise<ForumCategory[]> {
+    return await db.select().from(forumCategories).orderBy(forumCategories.sortOrder);
+  }
+
+  async getActiveForumCategories(): Promise<ForumCategory[]> {
+    return await db
+      .select()
+      .from(forumCategories)
+      .where(eq(forumCategories.isActive, true))
+      .orderBy(forumCategories.sortOrder);
+  }
+
+  async createForumCategory(insertCategory: InsertForumCategory): Promise<ForumCategory> {
+    const [category] = await db
+      .insert(forumCategories)
+      .values(insertCategory)
+      .returning();
+    return category;
+  }
+
+  async getAllForumPosts(): Promise<(ForumPost & { author: User; category?: ForumCategory })[]> {
+    const posts = await db
+      .select({
+        post: forumPosts,
+        author: users,
+        category: forumCategories,
+      })
+      .from(forumPosts)
+      .leftJoin(users, eq(forumPosts.authorId, users.id))
+      .leftJoin(forumCategories, eq(forumPosts.categoryId, forumCategories.id))
+      .orderBy(desc(forumPosts.lastActivityAt));
+
+    return posts.map(row => ({
+      ...row.post,
+      author: row.author!,
+      category: row.category || undefined,
+    }));
+  }
+
+  async getForumPost(id: number): Promise<(ForumPost & { author: User; category?: ForumCategory }) | undefined> {
+    const [result] = await db
+      .select({
+        post: forumPosts,
+        author: users,
+        category: forumCategories,
+      })
+      .from(forumPosts)
+      .leftJoin(users, eq(forumPosts.authorId, users.id))
+      .leftJoin(forumCategories, eq(forumPosts.categoryId, forumCategories.id))
+      .where(eq(forumPosts.id, id));
+
+    if (!result) return undefined;
+
+    return {
+      ...result.post,
+      author: result.author!,
+      category: result.category || undefined,
+    };
+  }
+
+  async getPostsByCategory(categoryId: number): Promise<(ForumPost & { author: User; category?: ForumCategory })[]> {
+    const posts = await db
+      .select({
+        post: forumPosts,
+        author: users,
+        category: forumCategories,
+      })
+      .from(forumPosts)
+      .leftJoin(users, eq(forumPosts.authorId, users.id))
+      .leftJoin(forumCategories, eq(forumPosts.categoryId, forumCategories.id))
+      .where(eq(forumPosts.categoryId, categoryId))
+      .orderBy(desc(forumPosts.lastActivityAt));
+
+    return posts.map(row => ({
+      ...row.post,
+      author: row.author!,
+      category: row.category || undefined,
+    }));
+  }
+
+  async createForumPost(insertPost: InsertForumPost): Promise<ForumPost> {
+    const [post] = await db
+      .insert(forumPosts)
+      .values(insertPost)
+      .returning();
+    return post;
+  }
+
+  async updateForumPost(id: number, updateData: Partial<InsertForumPost>): Promise<ForumPost> {
+    const [post] = await db
+      .update(forumPosts)
+      .set({ ...updateData, updatedAt: new Date() })
+      .where(eq(forumPosts.id, id))
+      .returning();
+    return post;
+  }
+
+  async incrementPostViews(id: number): Promise<void> {
+    await db
+      .update(forumPosts)
+      .set({ 
+        viewCount: sql`${forumPosts.viewCount} + 1`
+      })
+      .where(eq(forumPosts.id, id));
+  }
+
+  async getPostComments(postId: number): Promise<(ForumComment & { author: User })[]> {
+    const comments = await db
+      .select({
+        comment: forumComments,
+        author: users,
+      })
+      .from(forumComments)
+      .leftJoin(users, eq(forumComments.authorId, users.id))
+      .where(eq(forumComments.postId, postId))
+      .orderBy(forumComments.createdAt);
+
+    return comments.map(row => ({
+      ...row.comment,
+      author: row.author!,
+    }));
+  }
+
+  async createForumComment(insertComment: InsertForumComment): Promise<ForumComment> {
+    const [comment] = await db
+      .insert(forumComments)
+      .values(insertComment)
+      .returning();
+
+    // Update post reply count and last activity
+    await db
+      .update(forumPosts)
+      .set({ 
+        replyCount: sql`${forumPosts.replyCount} + 1`,
+        lastActivityAt: new Date()
+      })
+      .where(eq(forumPosts.id, insertComment.postId));
+
+    return comment;
+  }
+
+  async togglePostLike(userId: string, postId: number): Promise<{ liked: boolean; likeCount: number }> {
+    // Check if like exists
+    const [existingLike] = await db
+      .select()
+      .from(forumLikes)
+      .where(and(eq(forumLikes.userId, userId), eq(forumLikes.postId, postId)));
+
+    if (existingLike) {
+      // Remove like
+      await db
+        .delete(forumLikes)
+        .where(and(eq(forumLikes.userId, userId), eq(forumLikes.postId, postId)));
+      
+      await db
+        .update(forumPosts)
+        .set({ likeCount: sql`${forumPosts.likeCount} - 1` })
+        .where(eq(forumPosts.id, postId));
+
+      const [post] = await db.select({ likeCount: forumPosts.likeCount }).from(forumPosts).where(eq(forumPosts.id, postId));
+      return { liked: false, likeCount: post.likeCount };
+    } else {
+      // Add like
+      await db
+        .insert(forumLikes)
+        .values({ userId, postId });
+      
+      await db
+        .update(forumPosts)
+        .set({ likeCount: sql`${forumPosts.likeCount} + 1` })
+        .where(eq(forumPosts.id, postId));
+
+      const [post] = await db.select({ likeCount: forumPosts.likeCount }).from(forumPosts).where(eq(forumPosts.id, postId));
+      return { liked: true, likeCount: post.likeCount };
+    }
+  }
+
+  async toggleCommentLike(userId: string, commentId: number): Promise<{ liked: boolean; likeCount: number }> {
+    // Check if like exists
+    const [existingLike] = await db
+      .select()
+      .from(forumLikes)
+      .where(and(eq(forumLikes.userId, userId), eq(forumLikes.commentId, commentId)));
+
+    if (existingLike) {
+      // Remove like
+      await db
+        .delete(forumLikes)
+        .where(and(eq(forumLikes.userId, userId), eq(forumLikes.commentId, commentId)));
+      
+      await db
+        .update(forumComments)
+        .set({ likeCount: sql`${forumComments.likeCount} - 1` })
+        .where(eq(forumComments.id, commentId));
+
+      const [comment] = await db.select({ likeCount: forumComments.likeCount }).from(forumComments).where(eq(forumComments.id, commentId));
+      return { liked: false, likeCount: comment.likeCount };
+    } else {
+      // Add like
+      await db
+        .insert(forumLikes)
+        .values({ userId, commentId });
+      
+      await db
+        .update(forumComments)
+        .set({ likeCount: sql`${forumComments.likeCount} + 1` })
+        .where(eq(forumComments.id, commentId));
+
+      const [comment] = await db.select({ likeCount: forumComments.likeCount }).from(forumComments).where(eq(forumComments.id, commentId));
+      return { liked: true, likeCount: comment.likeCount };
+    }
   }
 }
 

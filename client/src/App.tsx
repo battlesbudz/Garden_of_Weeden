@@ -10,6 +10,8 @@ import Dashboard from "@/pages/dashboard";
 import Shop from "@/pages/shop";
 import InvestorsPage from "@/pages/investors";
 import Education from "@/pages/education";
+import CommunityPage from "@/pages/community";
+import ForumPostPage from "@/pages/forum-post";
 import NotFound from "@/pages/not-found";
 
 function ScrollToTop() {
@@ -33,6 +35,8 @@ function Router() {
         <Route path="/shop" component={Shop} />
         <Route path="/investors" component={InvestorsPage} />
         <Route path="/education" component={Education} />
+        <Route path="/community" component={CommunityPage} />
+        <Route path="/community/posts/:id" component={ForumPostPage} />
         <Route component={NotFound} />
       </Switch>
     </>

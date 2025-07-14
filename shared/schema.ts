@@ -136,6 +136,52 @@ export const investorAccess = pgTable("investor_access", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Community forum tables
+export const forumCategories = pgTable("forum_categories", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  color: varchar("color", { length: 7 }).default("#FFD700"), // Hex color for category badge
+  sortOrder: integer("sort_order").default(0),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const forumPosts = pgTable("forum_posts", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 500 }).notNull(),
+  content: text("content").notNull(),
+  authorId: varchar("author_id").references(() => users.id).notNull(),
+  categoryId: integer("category_id").references(() => forumCategories.id),
+  isPinned: boolean("is_pinned").default(false),
+  isLocked: boolean("is_locked").default(false),
+  viewCount: integer("view_count").default(0),
+  likeCount: integer("like_count").default(0),
+  replyCount: integer("reply_count").default(0),
+  lastActivityAt: timestamp("last_activity_at").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const forumComments = pgTable("forum_comments", {
+  id: serial("id").primaryKey(),
+  content: text("content").notNull(),
+  postId: integer("post_id").references(() => forumPosts.id).notNull(),
+  authorId: varchar("author_id").references(() => users.id).notNull(),
+  parentId: integer("parent_id").references(() => forumComments.id), // For nested replies
+  likeCount: integer("like_count").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const forumLikes = pgTable("forum_likes", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  postId: integer("post_id").references(() => forumPosts.id),
+  commentId: integer("comment_id").references(() => forumComments.id),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const upsertUserSchema = createInsertSchema(users).pick({
   id: true,
   email: true,
@@ -231,6 +277,37 @@ export const insertInvestorAccessSchema = createInsertSchema(investorAccess).pic
   isActive: true,
 });
 
+// Forum insert schemas
+export const insertForumCategorySchema = createInsertSchema(forumCategories).pick({
+  name: true,
+  description: true,
+  color: true,
+  sortOrder: true,
+  isActive: true,
+});
+
+export const insertForumPostSchema = createInsertSchema(forumPosts).pick({
+  title: true,
+  content: true,
+  authorId: true,
+  categoryId: true,
+  isPinned: true,
+  isLocked: true,
+});
+
+export const insertForumCommentSchema = createInsertSchema(forumComments).pick({
+  content: true,
+  postId: true,
+  authorId: true,
+  parentId: true,
+});
+
+export const insertForumLikeSchema = createInsertSchema(forumLikes).pick({
+  userId: true,
+  postId: true,
+  commentId: true,
+});
+
 export type UpsertUser = z.infer<typeof upsertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertNewsletterSubscriber = z.infer<typeof insertNewsletterSubscriberSchema>;
@@ -253,3 +330,13 @@ export type InsertInvestorDocument = z.infer<typeof insertInvestorDocumentSchema
 export type InvestorDocument = typeof investorDocuments.$inferSelect;
 export type InsertInvestorAccess = z.infer<typeof insertInvestorAccessSchema>;
 export type InvestorAccess = typeof investorAccess.$inferSelect;
+
+// Forum types
+export type InsertForumCategory = z.infer<typeof insertForumCategorySchema>;
+export type ForumCategory = typeof forumCategories.$inferSelect;
+export type InsertForumPost = z.infer<typeof insertForumPostSchema>;
+export type ForumPost = typeof forumPosts.$inferSelect;
+export type InsertForumComment = z.infer<typeof insertForumCommentSchema>;
+export type ForumComment = typeof forumComments.$inferSelect;
+export type InsertForumLike = z.infer<typeof insertForumLikeSchema>;
+export type ForumLike = typeof forumLikes.$inferSelect;

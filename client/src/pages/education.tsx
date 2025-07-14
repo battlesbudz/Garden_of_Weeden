@@ -415,6 +415,74 @@ export default function Education() {
         </div>
       </section>
 
+      {/* Community Integration Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-playfair font-bold text-battles-black mb-4">
+              Join Our <span className="text-battles-gold">Learning Community</span>
+            </h2>
+            <p className="text-xl text-battles-gray max-w-3xl mx-auto">
+              Connect with fellow cannabis tourists, share experiences, and continue learning in our 
+              dedicated community forum.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <Users className="h-12 w-12 text-battles-gold mx-auto mb-4" />
+                <CardTitle className="text-battles-black">Share Experiences</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-battles-gray mb-4">
+                  Share your cannabis tourism experiences, tips, and recommendations with the community.
+                </p>
+                <Link href="/community">
+                  <Button variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-battles-black">
+                    Join Discussion
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+            
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <BookOpen className="h-12 w-12 text-battles-gold mx-auto mb-4" />
+                <CardTitle className="text-battles-black">Ask Questions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-battles-gray mb-4">
+                  Get your cannabis tourism questions answered by experts and experienced travelers.
+                </p>
+                <Link href="/community">
+                  <Button variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-battles-black">
+                    Ask Community
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+            
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <Award className="h-12 w-12 text-battles-gold mx-auto mb-4" />
+                <CardTitle className="text-battles-black">Expert Guidance</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-battles-gray mb-4">
+                  Learn from industry professionals and experienced cannabis tourism guides.
+                </p>
+                <Link href="/community">
+                  <Button variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-battles-black">
+                    Learn More
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 bg-battles-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
