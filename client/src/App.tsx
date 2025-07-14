@@ -13,6 +13,11 @@ import Education from "@/pages/education";
 import EnhancedCommunityPage from "@/pages/enhanced-community";
 import ForumPostPage from "@/pages/forum-post";
 import NotFound from "@/pages/not-found";
+import { AgeVerificationModal } from "@/components/user-guide/age-verification-modal";
+import { QuickStartModal } from "@/components/user-guide/quick-start-modal";
+import { UserGuideOverlay } from "@/components/user-guide/user-guide-overlay";
+import { HelpButton } from "@/components/user-guide/help-button";
+import { useUserGuide } from "@/hooks/useUserGuide";
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -44,11 +49,38 @@ function Router() {
 }
 
 function App() {
+  const userGuide = useUserGuide();
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Router />
+        
+        {/* User Guide System */}
+        <AgeVerificationModal
+          isOpen={userGuide.showAgeVerification}
+          onVerified={userGuide.handleAgeVerified}
+          onDenied={userGuide.handleAgeDenied}
+        />
+        
+        <QuickStartModal
+          isOpen={userGuide.showQuickStart}
+          onClose={userGuide.handleQuickStartClose}
+          onStartTour={userGuide.handleStartTour}
+          onOptionSelect={userGuide.handleOptionSelect}
+        />
+        
+        <UserGuideOverlay
+          isOpen={userGuide.showTour}
+          onClose={userGuide.handleTourClose}
+          onComplete={userGuide.handleTourComplete}
+        />
+        
+        <HelpButton
+          onStartTour={userGuide.handleShowTour}
+          onShowGuide={userGuide.handleShowQuickStart}
+        />
       </TooltipProvider>
     </QueryClientProvider>
   );
