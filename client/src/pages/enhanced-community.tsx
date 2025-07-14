@@ -162,6 +162,23 @@ export default function EnhancedCommunityPage() {
     }
   });
 
+  // Add comment mutation
+  const createCommentMutation = useMutation({
+    mutationFn: async (commentData: { content: string; postId: number }) => {
+      const response = await apiRequest('POST', '/api/forum/comments', commentData);
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/forum/posts'] });
+      setNewComment("");
+      toast({ description: "Comment posted successfully!" });
+    },
+    onError: (error: any) => {
+      console.error("Comment creation error:", error);
+      toast({ description: "Failed to post comment", variant: "destructive" });
+    }
+  });
+
   // Utility functions
   const extractYouTubeVideoId = (url: string) => {
     const patterns = [
@@ -221,6 +238,24 @@ export default function EnhancedCommunityPage() {
       return;
     }
     requestMeetingMutation.mutate(meetingRequest);
+  };
+
+  const handleCreateComment = (postId: number) => {
+    if (!isAuthenticated) {
+      sessionStorage.setItem('redirectAfterLogin', '/community');
+      setLocation('/login');
+      return;
+    }
+
+    if (!newComment.trim()) {
+      toast({ description: "Please enter a comment", variant: "destructive" });
+      return;
+    }
+
+    createCommentMutation.mutate({
+      content: newComment.trim(),
+      postId: postId,
+    });
   };
 
 
@@ -548,8 +583,13 @@ export default function EnhancedCommunityPage() {
                                     className="bg-gray-800 border-gray-600 text-white text-sm min-h-[60px]"
                                   />
                                   <div className="flex gap-2 mt-2">
-                                    <Button size="sm" className="bg-yellow-500 text-black hover:bg-yellow-600">
-                                      Comment
+                                    <Button 
+                                      size="sm" 
+                                      onClick={() => handleCreateComment(post.id)}
+                                      disabled={createCommentMutation.isPending}
+                                      className="bg-yellow-500 text-black hover:bg-yellow-600"
+                                    >
+                                      {createCommentMutation.isPending ? "Posting..." : "Comment"}
                                     </Button>
                                     <Button 
                                       size="sm" 

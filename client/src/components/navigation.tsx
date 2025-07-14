@@ -66,13 +66,13 @@ export default function Navigation() {
             </span>
           </Link>
 
-          {/* Mobile menu button - Always visible for testing */}
+          {/* Mobile menu button - Always visible with yellow styling */}
           <div className="block">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
-              className="text-battles-white hover:text-battles-gold"
+              className="text-yellow-400 hover:text-yellow-300 border border-yellow-400 hover:border-yellow-300"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
