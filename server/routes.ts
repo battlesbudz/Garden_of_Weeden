@@ -553,15 +553,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/forum/posts", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
+      console.log("Creating post with data:", { ...req.body, authorId: userId });
+      
       const validatedData = insertForumPostSchema.parse({
         ...req.body,
-        authorId: userId
+        authorId: userId,
+        isPinned: req.body.isPinned || false,
+        isLocked: req.body.isLocked || false
       });
       
+      console.log("Validated data:", validatedData);
       const post = await storage.createForumPost(validatedData);
+      
       res.status(201).json(post);
     } catch (error) {
       if (error instanceof z.ZodError) {
+        console.error("Validation error:", error.errors);
         return res.status(400).json({ 
           message: "Invalid post data",
           errors: error.errors 
