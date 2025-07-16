@@ -181,12 +181,17 @@ export default function InvestorPortal() {
       {/* Main Content - starts right after navigation */}
       <div className="container mx-auto px-4 pt-20 pb-8">
         {/* Investor Access Section */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 relative">
+          {/* Large background logo */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+            <img src={battlesLogo} alt="Battles Budz Logo" className="h-64 w-64 object-contain" />
+          </div>
+          
           {isAuthenticated ? (
-            <div className="space-y-4">
-              <div className="flex items-center justify-center space-x-4 mb-4">
-                <img src={battlesLogo} alt="Battles Budz Logo" className="h-16 w-16 object-contain" />
-                <h1 className="text-4xl font-bold text-battles-gold">Battles Budz Investor Portal</h1>
+            <div className="space-y-6 relative z-10">
+              <div className="flex flex-col items-center space-y-4">
+                <img src={battlesLogo} alt="Battles Budz Logo" className="h-24 w-24 object-contain drop-shadow-2xl" />
+                <h1 className="text-4xl md:text-5xl font-bold text-battles-gold">Battles Budz Investor Portal</h1>
               </div>
               <p className="text-lg text-gray-300">Licensed NY Cannabis Microbusiness</p>
               <Badge className="bg-battles-gold text-black text-lg px-6 py-3">
@@ -195,10 +200,10 @@ export default function InvestorPortal() {
               </Badge>
             </div>
           ) : (
-            <div className="space-y-4">
-              <div className="flex items-center justify-center space-x-4 mb-4">
-                <img src={battlesLogo} alt="Battles Budz Logo" className="h-16 w-16 object-contain" />
-                <h1 className="text-4xl font-bold text-battles-gold">Battles Budz Investment Opportunity</h1>
+            <div className="space-y-6 relative z-10">
+              <div className="flex flex-col items-center space-y-4">
+                <img src={battlesLogo} alt="Battles Budz Logo" className="h-24 w-24 object-contain drop-shadow-2xl" />
+                <h1 className="text-4xl md:text-5xl font-bold text-battles-gold">Battles Budz Investment Opportunity</h1>
               </div>
               <Button 
                 onClick={() => setShowInvestorLogin(true)}
@@ -297,11 +302,15 @@ export default function InvestorPortal() {
           {!isAuthenticated && (
             <TabsContent value="overview" className="space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Card className="bg-gray-900 border-battles-gold">
-                  <CardHeader>
+                <Card className="bg-gray-900 border-battles-gold relative overflow-hidden">
+                  {/* Background logo for card */}
+                  <div className="absolute top-2 right-2 opacity-10">
+                    <img src={battlesLogo} alt="Battles Budz Logo" className="h-20 w-20 object-contain" />
+                  </div>
+                  <CardHeader className="relative z-10">
                     <div className="flex items-center space-x-3 mb-2">
-                      <img src={battlesLogo} alt="Battles Budz Logo" className="h-8 w-8 object-contain" />
-                      <CardTitle className="text-battles-gold">Investment Opportunity</CardTitle>
+                      <img src={battlesLogo} alt="Battles Budz Logo" className="h-12 w-12 object-contain drop-shadow-lg" />
+                      <CardTitle className="text-battles-gold text-xl">Investment Opportunity</CardTitle>
                     </div>
                     <CardDescription className="text-gray-300">Premium cannabis microbusiness seeking funding</CardDescription>
                   </CardHeader>
@@ -321,11 +330,15 @@ export default function InvestorPortal() {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-gray-900 border-battles-gold">
-                  <CardHeader>
+                <Card className="bg-gray-900 border-battles-gold relative overflow-hidden">
+                  {/* Background logo for card */}
+                  <div className="absolute bottom-2 right-2 opacity-10">
+                    <img src={battlesLogo} alt="Battles Budz Logo" className="h-20 w-20 object-contain" />
+                  </div>
+                  <CardHeader className="relative z-10">
                     <div className="flex items-center space-x-3 mb-2">
-                      <img src={battlesLogo} alt="Battles Budz Logo" className="h-8 w-8 object-contain" />
-                      <CardTitle className="text-battles-gold">Why Battles Budz?</CardTitle>
+                      <img src={battlesLogo} alt="Battles Budz Logo" className="h-12 w-12 object-contain drop-shadow-lg" />
+                      <CardTitle className="text-battles-gold text-xl">Why Battles Budz?</CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -1025,12 +1038,16 @@ export default function InvestorPortal() {
         </Tabs>
 
         {/* Contact Section */}
-        <Card className="bg-gray-900 border-battles-gold mt-8">
-          <CardHeader>
-            <div className="flex items-center space-x-3 mb-2">
-              <img src={battlesLogo} alt="Battles Budz Logo" className="h-8 w-8 object-contain" />
-              <CardTitle className="text-battles-gold flex items-center">
-                <MessageCircle className="h-5 w-5 mr-2" />
+        <Card className="bg-gray-900 border-battles-gold mt-8 relative overflow-hidden">
+          {/* Large background logo for communication section */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-5">
+            <img src={battlesLogo} alt="Battles Budz Logo" className="h-32 w-32 object-contain" />
+          </div>
+          <CardHeader className="relative z-10">
+            <div className="flex items-center space-x-4 mb-2">
+              <img src={battlesLogo} alt="Battles Budz Logo" className="h-16 w-16 object-contain drop-shadow-xl" />
+              <CardTitle className="text-battles-gold flex items-center text-2xl">
+                <MessageCircle className="h-6 w-6 mr-3" />
                 Investor Communication
               </CardTitle>
             </div>
@@ -1069,11 +1086,15 @@ export default function InvestorPortal() {
 
       {/* Calendly Modal */}
       <Dialog open={showCalendly} onOpenChange={setShowCalendly}>
-        <DialogContent className="max-w-4xl w-full h-[80vh] bg-white">
-          <DialogHeader>
-            <div className="flex items-center space-x-3 mb-2">
-              <img src={battlesLogo} alt="Battles Budz Logo" className="h-8 w-8 object-contain" />
-              <DialogTitle className="text-black text-xl">Schedule a Meeting with Battles Budz</DialogTitle>
+        <DialogContent className="max-w-4xl w-full h-[80vh] bg-white relative">
+          {/* Background logo for modal */}
+          <div className="absolute top-4 right-4 opacity-10">
+            <img src={battlesLogo} alt="Battles Budz Logo" className="h-16 w-16 object-contain" />
+          </div>
+          <DialogHeader className="relative z-10">
+            <div className="flex items-center space-x-4 mb-2">
+              <img src={battlesLogo} alt="Battles Budz Logo" className="h-12 w-12 object-contain drop-shadow-lg" />
+              <DialogTitle className="text-black text-xl font-bold">Schedule a Meeting with Battles Budz</DialogTitle>
             </div>
           </DialogHeader>
           <div className="flex-1 overflow-hidden">
