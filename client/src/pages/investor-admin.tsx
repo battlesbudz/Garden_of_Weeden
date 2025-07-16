@@ -402,29 +402,9 @@ export default function InvestorAdmin() {
                     <div className="flex items-center space-x-3">
                       <FileText className="h-8 w-8 text-battles-gold" />
                       <div>
-                        <p className="font-medium">MIPA (Membership Interest Purchase Agreement)</p>
-                        <p className="text-sm text-gray-400">Uploaded: January 10, 2025 • Size: 2.1 MB</p>
-                      </div>
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
-                        <Download className="h-4 w-4" />
-                      </Button>
-                      <Button size="sm" variant="outline" className="border-red-500 text-red-500">
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <FileText className="h-8 w-8 text-battles-gold" />
-                      <div>
-                        <p className="font-medium text-gray-200">Operating Agreement</p>
-                        <p className="text-sm text-gray-400">Uploaded: January 10, 2025 • Size: 1.8 MB</p>
+                        <p className="font-medium text-white">MIPA - Kai Turell Investment</p>
+                        <p className="text-sm text-gray-400">$15,000 for 10% membership interest - Effective July 11, 2025</p>
+                        <p className="text-xs text-red-400 mt-1">🔒 Admin Only - Confidential</p>
                       </div>
                     </div>
                     <div className="flex space-x-2">

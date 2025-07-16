@@ -6,6 +6,18 @@ This is a full-stack web application for Battles Budz, a veteran-owned cannabis 
 
 ## Recent Changes (July 16, 2025)
 
+- ✓ **COMPLETED: Business Document Integration and Privacy Controls**
+  - Integrated real MIPA document (Kai Turell $15,000 for 10% membership) in admin-only section
+  - Removed incorrect Operating Agreement from both investor and admin portals
+  - Added privacy controls to keep MIPA confidential between admin and specific investor
+  - Enhanced document descriptions with actual legal agreement details and effective dates
+  - Added proper confidentiality markers for admin-only sensitive documents
+- ✓ **COMPLETED: Mobile Responsiveness Improvements**
+  - Fixed "Access Full Investor Portal" button wrapping and sizing issues on mobile devices
+  - Made header button much larger with responsive text sizing (text-xl md:text-2xl)
+  - Reduced header padding to eliminate excess black space at top
+  - Enhanced button with proper responsive padding and full-width mobile layout
+  - Fixed text color visibility issues from white to proper gray colors for accessibility
 - ✓ **COMPLETED: Comprehensive Font Readability Improvements**
   - Fixed all text visibility issues across investor portal and admin pages for better accessibility
   - Applied consistent text-gray-200 classes to primary text elements (headings, labels, important information)
