@@ -6,6 +6,15 @@ This is a full-stack web application for Battles Budz, a veteran-owned cannabis 
 
 ## Recent Changes (July 16, 2025)
 
+- ✓ **COMPLETED: Bidirectional Investor Messaging System**
+  - Implemented complete messaging interface within investor portal with Messages tab
+  - Created secure investor-to-admin messaging with conversation history tracking
+  - Added message status progression (New/Read/Replied) with visual status badges
+  - Built admin reply system viewable by investors in threaded conversation format
+  - Applied professional black and gold Battles Budz branding throughout messaging interface
+  - Integrated proper authentication and tiered access control for messaging features
+  - Added comprehensive form validation and error handling for message submissions
+  - Email notifications sent to admin team (battlesbudz@gmail.com) for new investor messages
 - ✓ **COMPLETED: Consolidated Investor Portal System with Tiered Access**
   - Unified all investor-related pages into single investor-portal with proper tiered access control
   - Removed duplicate investor pages (/investors now redirects to /investor-portal)
