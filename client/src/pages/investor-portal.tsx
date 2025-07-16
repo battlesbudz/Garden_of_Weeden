@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { insertInvestorMessageSchema, type InsertInvestorMessage, type InvestorMessage } from "@shared/schema";
+import battlesLogo from "@assets/BattlesBudz_Logo_1752301078028.png";
 import { 
   Building2, 
   Users, 
@@ -183,7 +184,10 @@ export default function InvestorPortal() {
         <div className="text-center mb-8">
           {isAuthenticated ? (
             <div className="space-y-4">
-              <h1 className="text-4xl font-bold text-battles-gold">Battles Budz Investor Portal</h1>
+              <div className="flex items-center justify-center space-x-4 mb-4">
+                <img src={battlesLogo} alt="Battles Budz Logo" className="h-16 w-16 object-contain" />
+                <h1 className="text-4xl font-bold text-battles-gold">Battles Budz Investor Portal</h1>
+              </div>
               <p className="text-lg text-gray-300">Licensed NY Cannabis Microbusiness</p>
               <Badge className="bg-battles-gold text-black text-lg px-6 py-3">
                 <Shield className="h-5 w-5 mr-2" />
@@ -192,8 +196,10 @@ export default function InvestorPortal() {
             </div>
           ) : (
             <div className="space-y-4">
-              <h1 className="text-4xl font-bold text-battles-gold">Battles Budz Investment Opportunity</h1>
-              <p className="text-lg text-gray-300">Seeking $1M investment for 10% equity</p>
+              <div className="flex items-center justify-center space-x-4 mb-4">
+                <img src={battlesLogo} alt="Battles Budz Logo" className="h-16 w-16 object-contain" />
+                <h1 className="text-4xl font-bold text-battles-gold">Battles Budz Investment Opportunity</h1>
+              </div>
               <Button 
                 onClick={() => setShowInvestorLogin(true)}
                 className="bg-black text-battles-gold hover:bg-gray-800 text-xl md:text-2xl px-8 md:px-16 py-4 md:py-6 h-auto font-bold shadow-2xl border-2 border-battles-gold"
@@ -293,7 +299,10 @@ export default function InvestorPortal() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card className="bg-gray-900 border-battles-gold">
                   <CardHeader>
-                    <CardTitle className="text-battles-gold">Investment Opportunity</CardTitle>
+                    <div className="flex items-center space-x-3 mb-2">
+                      <img src={battlesLogo} alt="Battles Budz Logo" className="h-8 w-8 object-contain" />
+                      <CardTitle className="text-battles-gold">Investment Opportunity</CardTitle>
+                    </div>
                     <CardDescription className="text-gray-300">Premium cannabis microbusiness seeking funding</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -314,7 +323,10 @@ export default function InvestorPortal() {
 
                 <Card className="bg-gray-900 border-battles-gold">
                   <CardHeader>
-                    <CardTitle className="text-battles-gold">Why Battles Budz?</CardTitle>
+                    <div className="flex items-center space-x-3 mb-2">
+                      <img src={battlesLogo} alt="Battles Budz Logo" className="h-8 w-8 object-contain" />
+                      <CardTitle className="text-battles-gold">Why Battles Budz?</CardTitle>
+                    </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-3">
@@ -1015,10 +1027,13 @@ export default function InvestorPortal() {
         {/* Contact Section */}
         <Card className="bg-gray-900 border-battles-gold mt-8">
           <CardHeader>
-            <CardTitle className="text-battles-gold flex items-center">
-              <MessageCircle className="h-5 w-5 mr-2" />
-              Investor Communication
-            </CardTitle>
+            <div className="flex items-center space-x-3 mb-2">
+              <img src={battlesLogo} alt="Battles Budz Logo" className="h-8 w-8 object-contain" />
+              <CardTitle className="text-battles-gold flex items-center">
+                <MessageCircle className="h-5 w-5 mr-2" />
+                Investor Communication
+              </CardTitle>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -1056,7 +1071,10 @@ export default function InvestorPortal() {
       <Dialog open={showCalendly} onOpenChange={setShowCalendly}>
         <DialogContent className="max-w-4xl w-full h-[80vh] bg-white">
           <DialogHeader>
-            <DialogTitle className="text-black text-xl">Schedule a Meeting with Battles Budz</DialogTitle>
+            <div className="flex items-center space-x-3 mb-2">
+              <img src={battlesLogo} alt="Battles Budz Logo" className="h-8 w-8 object-contain" />
+              <DialogTitle className="text-black text-xl">Schedule a Meeting with Battles Budz</DialogTitle>
+            </div>
           </DialogHeader>
           <div className="flex-1 overflow-hidden">
             <div 

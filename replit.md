@@ -6,6 +6,12 @@ This is a full-stack web application for Battles Budz, a veteran-owned cannabis 
 
 ## Recent Changes (July 16, 2025)
 
+- ✓ **COMPLETED: Enhanced Branding and Calendly Integration**
+  - Added Battles Budz logo throughout investor portal in strategic locations (headers, cards, modals)
+  - Integrated Calendly scheduling widget for "Schedule Meeting" button with professional modal
+  - Removed redundant "$1M investment for 10% equity" text to reduce repetition
+  - Dynamic script loading for Calendly widget with proper cleanup
+  - Enhanced brand presence across all investor portal sections
 - ✓ **COMPLETED: Business Document Integration and Privacy Controls**
   - Integrated real MIPA document (Kai Turell $15,000 for 10% membership) in admin-only section
   - Removed incorrect Operating Agreement from both investor and admin portals
