@@ -131,6 +131,12 @@ export default function Navigation() {
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
+                          <Link href="/investor-portal" className="flex items-center text-white hover:text-battles-gold">
+                            <Settings className="h-4 w-4 mr-2" />
+                            Investor Portal
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
                           <Link href="/investor-admin" className="flex items-center text-white hover:text-battles-gold">
                             <Settings className="h-4 w-4 mr-2" />
                             Investor Admin
@@ -201,6 +207,10 @@ export default function Navigation() {
                     <Link href="/dashboard" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
                       <Settings className="h-4 w-4 mr-2" />
                       Admin Dashboard
+                    </Link>
+                    <Link href="/investor-portal" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+                      <Settings className="h-4 w-4 mr-2" />
+                      Investor Portal
                     </Link>
                     <Link href="/investor-admin" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
                       <Settings className="h-4 w-4 mr-2" />

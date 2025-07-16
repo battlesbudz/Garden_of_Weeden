@@ -8,7 +8,7 @@ import Home from "@/pages/home";
 import LoginPage from "@/pages/login";
 import Dashboard from "@/pages/dashboard";
 import Shop from "@/pages/shop";
-import InvestorsPage from "@/pages/investors";
+
 import Education from "@/pages/education";
 import EnhancedCommunityPage from "@/pages/enhanced-community";
 import ForumPostPage from "@/pages/forum-post";
@@ -43,7 +43,7 @@ function Router() {
         <Route path="/login" component={LoginPage} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/shop" component={Shop} />
-        <Route path="/investors" component={InvestorsPage} />
+        <Route path="/investors" component={InvestorPortal} />
         <Route path="/education" component={Education} />
         <Route path="/community" component={EnhancedCommunityPage} />
         <Route path="/community/posts/:id" component={ForumPostPage} />

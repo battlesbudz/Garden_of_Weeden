@@ -4,7 +4,17 @@
 
 This is a full-stack web application for Battles Budz, a veteran-owned cannabis microbusiness in Gloversville, NY. The application serves as a premium cannabis tourism and retail website featuring black and yellow branding, event booking for the consumption lounge, product showcase including Cosmic Chewz and Freedom Fog Vapes, and comprehensive educational content platform. Built for both investor presentations and consumer engagement as a tourism destination.
 
-## Recent Changes (July 14, 2025)
+## Recent Changes (July 16, 2025)
+
+- ✓ **COMPLETED: Consolidated Investor Portal System**
+  - Unified all investor-related pages into single investor-portal with tiered access
+  - Removed duplicate investor pages (/investors now redirects to /investor-portal)
+  - Implemented public access (investment overview, company info, media) vs authenticated access (documents, financials, updates)
+  - Fixed tab overlap issues and duplicate content sections
+  - Added modal login system for seamless authentication flow
+  - Professional black and gold design with responsive layout for all device types
+
+## Previous Changes (July 14, 2025)
 
 - ✓ **COMPLETED: Interactive User Guide & Age Verification System**
   - Implemented simple 21+ age verification popup (NY law compliance) with yes/no buttons

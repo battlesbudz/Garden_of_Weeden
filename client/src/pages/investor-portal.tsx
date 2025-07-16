@@ -31,20 +31,7 @@ export default function InvestorPortal() {
   const { isAuthenticated, isLoading, user } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      toast({
-        title: "Unauthorized",
-        description: "You need investor access to view this portal. Redirecting to login...",
-        variant: "destructive",
-      });
-      setTimeout(() => {
-        window.location.href = "/api/login";
-      }, 1000);
-      return;
-    }
-  }, [isAuthenticated, isLoading, toast]);
+  const [showInvestorLogin, setShowInvestorLogin] = useState(false);
 
   if (isLoading) {
     return (
@@ -54,9 +41,37 @@ export default function InvestorPortal() {
     );
   }
 
-  if (!isAuthenticated) {
-    return null; // Redirecting
-  }
+  // Investor Login Modal for non-authenticated users
+  const InvestorLoginModal = () => (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+      <Card className="max-w-md w-full bg-black border-battles-gold">
+        <CardHeader className="text-center">
+          <Shield className="h-12 w-12 text-battles-gold mx-auto mb-4" />
+          <CardTitle className="text-2xl font-playfair text-battles-gold">
+            Investor Portal Access
+          </CardTitle>
+          <p className="text-white/80">
+            Access detailed financials, documents, and exclusive investor updates
+          </p>
+        </CardHeader>
+        <CardContent className="text-center space-y-4">
+          <Button 
+            onClick={() => window.location.href = '/api/login'}
+            className="bg-battles-gold hover:bg-battles-gold/90 text-black font-semibold w-full"
+          >
+            Sign In as Investor
+          </Button>
+          <Button 
+            onClick={() => setShowInvestorLogin(false)}
+            variant="outline"
+            className="w-full border-battles-gold text-battles-gold"
+          >
+            Cancel
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
 
   // Investor portal stats (using real data for Battles Budz)
   const businessStats = {
@@ -70,12 +85,16 @@ export default function InvestorPortal() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      {showInvestorLogin && <InvestorLoginModal />}
+      
       {/* Header with Navigation */}
       <nav className="fixed w-full top-0 z-50 bg-battles-gold text-black border-b border-yellow-600">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-xl font-bold">Battles Budz Investor Portal</h1>
+              <h1 className="text-xl font-bold">
+                {isAuthenticated ? "Battles Budz Investor Portal" : "Battles Budz Investment"}
+              </h1>
             </div>
 
             {/* Desktop Navigation */}
@@ -84,17 +103,29 @@ export default function InvestorPortal() {
                 <Home className="h-4 w-4 mr-1" />
                 Home
               </a>
-              <div className="flex items-center">
-                <Shield className="h-4 w-4 mr-2" />
-                {user?.firstName} {user?.lastName}
-              </div>
-              <button
-                onClick={() => window.location.href = '/api/logout'}
-                className="flex items-center hover:text-gray-700 transition-colors"
-              >
-                <LogOut className="h-4 w-4 mr-1" />
-                Logout
-              </button>
+              {isAuthenticated ? (
+                <>
+                  <div className="flex items-center">
+                    <Shield className="h-4 w-4 mr-2" />
+                    {user?.firstName} {user?.lastName}
+                  </div>
+                  <button
+                    onClick={() => window.location.href = '/api/logout'}
+                    className="flex items-center hover:text-gray-700 transition-colors"
+                  >
+                    <LogOut className="h-4 w-4 mr-1" />
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Button
+                  onClick={() => setShowInvestorLogin(true)}
+                  variant="outline"
+                  className="border-black text-black hover:bg-black hover:text-battles-gold"
+                >
+                  Investor Login
+                </Button>
+              )}
             </div>
 
             {/* Mobile menu button */}
@@ -123,20 +154,35 @@ export default function InvestorPortal() {
                 <Home className="h-4 w-4 mr-2" />
                 Home
               </a>
-              <div className="flex items-center text-black px-3 py-2 text-base font-medium">
-                <Shield className="h-4 w-4 mr-2" />
-                {user?.firstName} {user?.lastName}
-              </div>
-              <button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  window.location.href = '/api/logout';
-                }}
-                className="flex items-center text-black hover:text-gray-700 px-3 py-2 text-base font-medium w-full text-left"
-              >
-                <LogOut className="h-4 w-4 mr-2" />
-                Logout
-              </button>
+              {isAuthenticated ? (
+                <>
+                  <div className="flex items-center text-black px-3 py-2 text-base font-medium">
+                    <Shield className="h-4 w-4 mr-2" />
+                    {user?.firstName} {user?.lastName}
+                  </div>
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      window.location.href = '/api/logout';
+                    }}
+                    className="flex items-center text-black hover:text-gray-700 px-3 py-2 text-base font-medium w-full text-left"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    setShowInvestorLogin(true);
+                  }}
+                  variant="outline"
+                  className="border-black text-black hover:bg-black hover:text-battles-gold mx-3 my-2"
+                >
+                  Investor Login
+                </Button>
+              )}
             </div>
           </div>
         )}
@@ -146,13 +192,27 @@ export default function InvestorPortal() {
       <div className="bg-gradient-to-r from-battles-gold to-yellow-600 text-black py-8 pt-24">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <h1 className="text-4xl font-bold">Battles Budz Investor Portal</h1>
-            <p className="text-lg mt-2">Licensed NY Cannabis Microbusiness</p>
+            <h1 className="text-4xl font-bold">
+              {isAuthenticated ? "Battles Budz Investor Portal" : "Battles Budz Investment Opportunity"}
+            </h1>
+            <p className="text-lg mt-2">
+              {isAuthenticated ? "Licensed NY Cannabis Microbusiness" : "Seeking $1M investment for 10% equity"}
+            </p>
             <div className="mt-4">
-              <Badge className="bg-black text-battles-gold">
-                <Shield className="h-3 w-3 mr-1" />
-                Investor Access
-              </Badge>
+              {isAuthenticated ? (
+                <Badge className="bg-black text-battles-gold">
+                  <Shield className="h-3 w-3 mr-1" />
+                  Investor Access
+                </Badge>
+              ) : (
+                <Button 
+                  onClick={() => setShowInvestorLogin(true)}
+                  className="bg-black text-battles-gold hover:bg-gray-800"
+                >
+                  <Shield className="h-4 w-4 mr-2" />
+                  Access Investor Portal
+                </Button>
+              )}
             </div>
           </div>
         </div>
