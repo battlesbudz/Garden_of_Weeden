@@ -161,6 +161,10 @@ export interface IStorage {
   getLeaderboard(timeframe: 'weekly' | 'monthly' | 'allTime'): Promise<(Leaderboard & { user: User })[]>;
   updateUserActivity(userId: string): Promise<UserPoints>;
   initializeDefaultAchievements(): Promise<void>;
+  
+  // Investor message operations
+  createInvestorMessage(messageData: InsertInvestorMessage): Promise<InvestorMessage>;
+  getAllInvestorMessages(): Promise<InvestorMessage[]>;
 }
 
 export class MemStorage implements IStorage {

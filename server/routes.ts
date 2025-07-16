@@ -1016,6 +1016,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get all investor messages (admin only)
+  app.get("/api/investor/messages", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || user.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const messages = await storage.getAllInvestorMessages();
+      res.json(messages);
+    } catch (error) {
+      console.error("Error fetching investor messages:", error);
+      res.status(500).json({ message: "Failed to fetch investor messages" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

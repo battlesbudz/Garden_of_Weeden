@@ -1,6 +1,7 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -24,13 +25,21 @@ import {
   Eye,
   Calendar,
   DollarSign,
-  Settings
+  Settings,
+  Clock,
+  CheckCircle
 } from "lucide-react";
 
 export default function InvestorAdmin() {
   const { toast } = useToast();
   const { isAuthenticated, isLoading, user } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
+
+  // Fetch investor messages
+  const { data: investorMessages, isLoading: messagesLoading, error: messagesError } = useQuery({
+    queryKey: ["/api/investor/messages"],
+    enabled: isAuthenticated && user?.role === "admin"
+  });
 
 
   // Check admin access
@@ -451,58 +460,142 @@ export default function InvestorAdmin() {
           {/* Communications Tab */}
           <TabsContent value="communications" className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-battles-gold">Investor Communications</h2>
-              <Button className="bg-battles-gold text-black hover:bg-yellow-600">
-                <MessageCircle className="h-4 w-4 mr-2" />
-                Send Message
-              </Button>
+              <h2 className="text-2xl font-bold text-battles-gold">Investor Messages</h2>
+              <div className="flex gap-2">
+                <Badge variant="outline" className="text-battles-gold border-battles-gold">
+                  {investorMessages?.length || 0} Total Messages
+                </Badge>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {messagesLoading ? (
               <Card className="bg-gray-900 border-battles-gold">
-                <CardHeader>
-                  <CardTitle className="text-battles-gold">Recent Messages</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="p-4 border border-gray-700 rounded-lg">
-                      <div className="flex justify-between items-start mb-2">
-                        <p className="font-medium">Early Investor 1</p>
-                        <span className="text-sm text-gray-400">2 days ago</span>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-center">
+                    <div className="text-battles-gold">Loading messages...</div>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : messagesError ? (
+              <Card className="bg-gray-900 border-red-500">
+                <CardContent className="p-6">
+                  <div className="text-red-400">Failed to load messages. Please refresh the page.</div>
+                </CardContent>
+              </Card>
+            ) : !investorMessages || investorMessages.length === 0 ? (
+              <Card className="bg-gray-900 border-battles-gold">
+                <CardContent className="p-6">
+                  <div className="text-center text-gray-400">
+                    <MessageCircle className="h-12 w-12 mx-auto mb-4 text-battles-gold opacity-50" />
+                    <p className="text-lg mb-2">No investor messages yet</p>
+                    <p className="text-sm">Messages from investors will appear here when they contact you through the portal.</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="space-y-4">
+                {investorMessages.map((message: any) => (
+                  <Card key={message.id} className="bg-gray-900 border-battles-gold">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <CardTitle className="text-battles-gold text-lg">
+                            {message.subject}
+                          </CardTitle>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-sm font-medium">{message.investorName}</span>
+                            <span className="text-sm text-gray-400">•</span>
+                            <span className="text-sm text-gray-400">{message.investorEmail}</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Badge 
+                            variant={message.status === 'unread' ? 'default' : 'outline'}
+                            className={message.status === 'unread' ? 'bg-battles-gold text-black' : 'text-battles-gold border-battles-gold'}
+                          >
+                            {message.status === 'unread' ? (
+                              <>
+                                <Clock className="h-3 w-3 mr-1" />
+                                Unread
+                              </>
+                            ) : (
+                              <>
+                                <CheckCircle className="h-3 w-3 mr-1" />
+                                Read
+                              </>
+                            )}
+                          </Badge>
+                          <span className="text-xs text-gray-400">
+                            {new Date(message.createdAt).toLocaleDateString()} at {new Date(message.createdAt).toLocaleTimeString()}
+                          </span>
+                        </div>
                       </div>
-                      <p className="text-sm text-gray-300">
-                        "Looking forward to the Q1 update. When can we expect details on the site approval timeline?"
-                      </p>
-                      <Button size="sm" className="mt-2 bg-battles-gold text-black hover:bg-yellow-600">
-                        Reply
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
+                          <p className="text-gray-300 whitespace-pre-wrap">{message.message}</p>
+                        </div>
+                        
+                        {message.adminReply && (
+                          <div className="p-4 bg-battles-gold/10 rounded-lg border border-battles-gold/30">
+                            <p className="text-sm text-battles-gold font-medium mb-2">Admin Reply:</p>
+                            <p className="text-gray-300 whitespace-pre-wrap">{message.adminReply}</p>
+                            {message.repliedAt && (
+                              <p className="text-xs text-gray-400 mt-2">
+                                Replied on {new Date(message.repliedAt).toLocaleDateString()} at {new Date(message.repliedAt).toLocaleTimeString()}
+                              </p>
+                            )}
+                          </div>
+                        )}
+                        
+                        <div className="flex gap-2">
+                          <Button size="sm" className="bg-battles-gold text-black hover:bg-yellow-600">
+                            <MessageCircle className="h-4 w-4 mr-2" />
+                            Reply
+                          </Button>
+                          {message.status === 'unread' && (
+                            <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black">
+                              <CheckCircle className="h-4 w-4 mr-2" />
+                              Mark as Read
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
 
-              <Card className="bg-gray-900 border-battles-gold">
-                <CardHeader>
-                  <CardTitle className="text-battles-gold">Communication Stats</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between">
-                      <span>Messages This Month</span>
-                      <span className="text-battles-gold font-semibold">3</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Average Response Time</span>
-                      <span className="text-battles-gold font-semibold">&lt; 24 hours</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Meeting Requests</span>
-                      <span className="text-battles-gold font-semibold">1 pending</span>
-                    </div>
+            {/* Message Stats */}
+            <Card className="bg-gray-900 border-battles-gold">
+              <CardHeader>
+                <CardTitle className="text-battles-gold">Message Statistics</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-battles-gold">
+                      {investorMessages?.length || 0}
+                    </p>
+                    <p className="text-sm text-gray-400">Total Messages</p>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-yellow-400">
+                      {investorMessages?.filter((m: any) => m.status === 'unread').length || 0}
+                    </p>
+                    <p className="text-sm text-gray-400">Unread</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-green-400">
+                      {investorMessages?.filter((m: any) => m.adminReply).length || 0}
+                    </p>
+                    <p className="text-sm text-gray-400">Replied</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
       </div>
