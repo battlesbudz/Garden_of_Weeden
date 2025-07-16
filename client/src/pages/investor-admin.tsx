@@ -22,13 +22,19 @@ import {
   Download,
   Eye,
   Calendar,
-  DollarSign
+  DollarSign,
+  Menu,
+  X,
+  Home,
+  LogOut,
+  Settings
 } from "lucide-react";
 
 export default function InvestorAdmin() {
   const { toast } = useToast();
   const { isAuthenticated, isLoading, user } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Check admin access
   useEffect(() => {
@@ -73,18 +79,110 @@ export default function InvestorAdmin() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-red-600 to-red-800 text-white py-6">
+      {/* Header with Navigation */}
+      <nav className="fixed w-full top-0 z-50 bg-red-600 text-white border-b border-red-700">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold">Battles Budz Admin Portal</h1>
-              <p className="text-lg mt-1">Investor Relations Management</p>
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <h1 className="text-xl font-bold">Battles Budz Admin Portal</h1>
             </div>
-            <div className="text-right">
-              <p className="text-sm">Logged in as</p>
-              <p className="font-semibold">{user?.firstName} {user?.lastName}</p>
-              <Badge className="mt-2 bg-white text-red-600">
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-6">
+              <a href="/" className="flex items-center hover:text-red-200 transition-colors">
+                <Home className="h-4 w-4 mr-1" />
+                Home
+              </a>
+              <a href="/investor-portal" className="flex items-center hover:text-red-200 transition-colors">
+                <Shield className="h-4 w-4 mr-1" />
+                Investor Portal
+              </a>
+              <a href="/dashboard" className="flex items-center hover:text-red-200 transition-colors">
+                <Settings className="h-4 w-4 mr-1" />
+                Dashboard
+              </a>
+              <div className="flex items-center">
+                <Shield className="h-4 w-4 mr-2" />
+                {user?.firstName} {user?.lastName}
+              </div>
+              <button
+                onClick={() => window.location.href = '/api/logout'}
+                className="flex items-center hover:text-red-200 transition-colors"
+              >
+                <LogOut className="h-4 w-4 mr-1" />
+                Logout
+              </button>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-white hover:text-red-200"
+              >
+                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-red-600 border-t border-red-700">
+            <div className="px-4 pt-2 pb-3 space-y-1">
+              <a
+                href="/"
+                className="flex items-center text-white hover:text-red-200 px-3 py-2 text-base font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Home className="h-4 w-4 mr-2" />
+                Home
+              </a>
+              <a
+                href="/investor-portal"
+                className="flex items-center text-white hover:text-red-200 px-3 py-2 text-base font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Shield className="h-4 w-4 mr-2" />
+                Investor Portal
+              </a>
+              <a
+                href="/dashboard"
+                className="flex items-center text-white hover:text-red-200 px-3 py-2 text-base font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Settings className="h-4 w-4 mr-2" />
+                Dashboard
+              </a>
+              <div className="flex items-center text-white px-3 py-2 text-base font-medium">
+                <Shield className="h-4 w-4 mr-2" />
+                {user?.firstName} {user?.lastName}
+              </div>
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  window.location.href = '/api/logout';
+                }}
+                className="flex items-center text-white hover:text-red-200 px-3 py-2 text-base font-medium w-full text-left"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </button>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Header Content */}
+      <div className="bg-gradient-to-r from-red-600 to-red-800 text-white py-6 pt-22">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold">Battles Budz Admin Portal</h1>
+            <p className="text-lg mt-1">Investor Relations Management</p>
+            <div className="mt-4">
+              <Badge className="bg-white text-red-600">
                 <Shield className="h-3 w-3 mr-1" />
                 Admin Access
               </Badge>

@@ -1,5 +1,5 @@
 import { useAuth } from "@/hooks/useAuth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,12 +19,17 @@ import {
   MapPin,
   Award,
   Download,
-  Eye
+  Eye,
+  Menu,
+  X,
+  Home,
+  LogOut
 } from "lucide-react";
 
 export default function InvestorPortal() {
   const { toast } = useToast();
   const { isAuthenticated, isLoading, user } = useAuth();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Redirect to login if not authenticated
   useEffect(() => {
@@ -65,18 +70,86 @@ export default function InvestorPortal() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-battles-gold to-yellow-600 text-black py-8">
+      {/* Header with Navigation */}
+      <nav className="fixed w-full top-0 z-50 bg-battles-gold text-black border-b border-yellow-600">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-bold">Battles Budz Investor Portal</h1>
-              <p className="text-lg mt-2">Licensed NY Cannabis Microbusiness</p>
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <h1 className="text-xl font-bold">Battles Budz Investor Portal</h1>
             </div>
-            <div className="text-right">
-              <p className="text-sm">Welcome back</p>
-              <p className="font-semibold">{user?.firstName} {user?.lastName}</p>
-              <Badge className="mt-2 bg-black text-battles-gold">
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-6">
+              <a href="/" className="flex items-center hover:text-gray-700 transition-colors">
+                <Home className="h-4 w-4 mr-1" />
+                Home
+              </a>
+              <div className="flex items-center">
+                <Shield className="h-4 w-4 mr-2" />
+                {user?.firstName} {user?.lastName}
+              </div>
+              <button
+                onClick={() => window.location.href = '/api/logout'}
+                className="flex items-center hover:text-gray-700 transition-colors"
+              >
+                <LogOut className="h-4 w-4 mr-1" />
+                Logout
+              </button>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-black hover:text-gray-700"
+              >
+                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-battles-gold border-t border-yellow-600">
+            <div className="px-4 pt-2 pb-3 space-y-1">
+              <a
+                href="/"
+                className="flex items-center text-black hover:text-gray-700 px-3 py-2 text-base font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Home className="h-4 w-4 mr-2" />
+                Home
+              </a>
+              <div className="flex items-center text-black px-3 py-2 text-base font-medium">
+                <Shield className="h-4 w-4 mr-2" />
+                {user?.firstName} {user?.lastName}
+              </div>
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  window.location.href = '/api/logout';
+                }}
+                className="flex items-center text-black hover:text-gray-700 px-3 py-2 text-base font-medium w-full text-left"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </button>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Header Content */}
+      <div className="bg-gradient-to-r from-battles-gold to-yellow-600 text-black py-8 pt-24">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold">Battles Budz Investor Portal</h1>
+            <p className="text-lg mt-2">Licensed NY Cannabis Microbusiness</p>
+            <div className="mt-4">
+              <Badge className="bg-black text-battles-gold">
                 <Shield className="h-3 w-3 mr-1" />
                 Investor Access
               </Badge>
