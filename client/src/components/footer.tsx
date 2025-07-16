@@ -98,8 +98,8 @@ export default function Footer() {
               Legal Disclaimer
             </h5>
             <p className="text-yellow-100 text-sm">
-              Battles Budz operates under New York State provisional
-              microbusiness license. Must be 21+ to purchase cannabis products.
+              Battles Budz LLC operates under New York State Adult-Use Microbusiness License 
+              OCMMICR-2023-000258. Must be 21+ to purchase cannabis products.
               Cannabis products have not been analyzed or approved by the FDA.
               Please consume responsibly.
             </p>
