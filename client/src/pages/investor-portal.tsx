@@ -161,39 +161,34 @@ export default function InvestorPortal() {
       {/* Use consistent navigation across all pages */}
       <Navigation />
 
-      {/* Header Content */}
-      <div className="bg-gradient-to-r from-battles-gold to-yellow-600 text-black py-8 md:py-12 pt-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold">
-              {isAuthenticated ? "Battles Budz Investor Portal" : "Battles Budz Investment Opportunity"}
-            </h1>
-            <p className="text-lg mt-2">
-              {isAuthenticated ? "Licensed NY Cannabis Microbusiness" : "Seeking $1M investment for 10% equity"}
-            </p>
-            <div className="mt-8">
-              {isAuthenticated ? (
-                <Badge className="bg-black text-battles-gold text-lg px-6 py-3">
-                  <Shield className="h-5 w-5 mr-2" />
-                  Investor Access
-                </Badge>
-              ) : (
-                <Button 
-                  onClick={() => setShowInvestorLogin(true)}
-                  className="bg-black text-battles-gold hover:bg-gray-800 text-xl md:text-2xl px-8 md:px-16 py-4 md:py-6 h-auto font-bold shadow-2xl border-2 border-battles-gold"
-                  size="lg"
-                >
-                  <Shield className="h-6 w-6 md:h-8 md:w-8 mr-3 md:mr-4" />
-                  Access Investor Portal
-                </Button>
-              )}
+      {/* Main Content - starts right after navigation */}
+      <div className="container mx-auto px-4 pt-20 pb-8">
+        {/* Investor Access Section */}
+        <div className="text-center mb-8">
+          {isAuthenticated ? (
+            <div className="space-y-4">
+              <h1 className="text-4xl font-bold text-battles-gold">Battles Budz Investor Portal</h1>
+              <p className="text-lg text-gray-300">Licensed NY Cannabis Microbusiness</p>
+              <Badge className="bg-battles-gold text-black text-lg px-6 py-3">
+                <Shield className="h-5 w-5 mr-2" />
+                Investor Access
+              </Badge>
             </div>
-          </div>
+          ) : (
+            <div className="space-y-4">
+              <h1 className="text-4xl font-bold text-battles-gold">Battles Budz Investment Opportunity</h1>
+              <p className="text-lg text-gray-300">Seeking $1M investment for 10% equity</p>
+              <Button 
+                onClick={() => setShowInvestorLogin(true)}
+                className="bg-black text-battles-gold hover:bg-gray-800 text-xl md:text-2xl px-8 md:px-16 py-4 md:py-6 h-auto font-bold shadow-2xl border-2 border-battles-gold"
+                size="lg"
+              >
+                <Shield className="h-6 w-6 md:h-8 md:w-8 mr-3 md:mr-4" />
+                Access Investor Portal
+              </Button>
+            </div>
+          )}
         </div>
-      </div>
-
-      {/* Dashboard Overview */}
-      <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <Card className="bg-gray-900 border-battles-gold">
             <CardHeader>
