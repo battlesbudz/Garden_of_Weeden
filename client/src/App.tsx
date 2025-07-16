@@ -12,6 +12,8 @@ import InvestorsPage from "@/pages/investors";
 import Education from "@/pages/education";
 import EnhancedCommunityPage from "@/pages/enhanced-community";
 import ForumPostPage from "@/pages/forum-post";
+import InvestorPortal from "@/pages/investor-portal";
+import InvestorAdmin from "@/pages/investor-admin";
 import NotFound from "@/pages/not-found";
 import { AgeVerificationModal } from "@/components/user-guide/age-verification-modal";
 import { QuickStartModal } from "@/components/user-guide/quick-start-modal";
@@ -42,6 +44,8 @@ function Router() {
         <Route path="/education" component={Education} />
         <Route path="/community" component={EnhancedCommunityPage} />
         <Route path="/community/posts/:id" component={ForumPostPage} />
+        <Route path="/investor-portal" component={InvestorPortal} />
+        <Route path="/investor-admin" component={InvestorAdmin} />
         <Route component={NotFound} />
       </Switch>
     </>

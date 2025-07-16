@@ -122,12 +122,24 @@ export default function Navigation() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-gray-900 border-battles-gold/30">
+                    <DropdownMenuItem asChild>
+                      <Link href="/investor-portal" className="flex items-center text-white hover:text-battles-gold">
+                        <Settings className="h-4 w-4 mr-2" />
+                        Investor Portal
+                      </Link>
+                    </DropdownMenuItem>
                     {isAdmin && (
                       <>
                         <DropdownMenuItem asChild>
                           <Link href="/dashboard" className="flex items-center text-white hover:text-battles-gold">
                             <Settings className="h-4 w-4 mr-2" />
                             Admin Dashboard
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/investor-admin" className="flex items-center text-white hover:text-battles-gold">
+                            <Settings className="h-4 w-4 mr-2" />
+                            Investor Admin
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator className="bg-battles-gold/30" />
@@ -190,11 +202,21 @@ export default function Navigation() {
             {/* Mobile Auth */}
             {isAuthenticated ? (
               <>
+                <Link href="/investor-portal" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+                  <Settings className="h-4 w-4 mr-2" />
+                  Investor Portal
+                </Link>
                 {isAdmin && (
-                  <Link href="/dashboard" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
-                    <Settings className="h-4 w-4 mr-2" />
-                    Admin Dashboard
-                  </Link>
+                  <>
+                    <Link href="/dashboard" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+                      <Settings className="h-4 w-4 mr-2" />
+                      Admin Dashboard
+                    </Link>
+                    <Link href="/investor-admin" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+                      <Settings className="h-4 w-4 mr-2" />
+                      Investor Admin
+                    </Link>
+                  </>
                 )}
                 <button
                   onClick={handleLogout}
