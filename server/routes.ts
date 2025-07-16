@@ -328,6 +328,59 @@ async function sendInvestorMessageNotification(message: InvestorMessage) {
   }
 }
 
+async function sendInvestorReplyNotification(message: InvestorMessage) {
+  if (!mailService) {
+    console.log('SendGrid not configured - skipping reply notification');
+    return;
+  }
+
+  try {
+    // Send reply notification to investor
+    await mailService.send({
+      to: message.investorEmail,
+      from: 'Battlesbudz@gmail.com',
+      subject: `Reply to your message: ${message.subject} - Battles Budz`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
+            💬 Reply from Battles Budz Team
+          </h2>
+          <div style="padding: 20px; background-color: #f9f9f9;">
+            <h3>Your Original Message:</h3>
+            <div style="background-color: white; padding: 15px; border-left: 3px solid #ccc; margin: 15px 0;">
+              <p><strong>Subject:</strong> ${message.subject}</p>
+              <p style="white-space: pre-wrap; background-color: #f8f8f8; padding: 10px; border-radius: 5px;">${message.message}</p>
+            </div>
+            
+            <h3>Our Reply:</h3>
+            <div style="background-color: white; padding: 15px; border-left: 3px solid #FFD700; margin: 15px 0;">
+              <p style="white-space: pre-wrap; background-color: #fffef0; padding: 15px; border-radius: 5px; color: #333;">${message.adminReply}</p>
+              <p style="font-size: 12px; color: #666; margin-top: 10px;">
+                <strong>Replied:</strong> ${new Date(message.repliedAt || new Date()).toLocaleString()}
+              </p>
+            </div>
+            
+            <div style="background-color: #e8f5e8; padding: 15px; border-radius: 5px; margin: 20px 0;">
+              <p><strong>💡 Need to continue the conversation?</strong></p>
+              <p>Log into the <a href="${process.env.REPLIT_DOMAINS?.split(',')[0] || 'https://your-domain.replit.app'}/investor-portal" style="color: #FFD700; text-decoration: none;"><strong>Investor Portal</strong></a> to send a follow-up message or contact us directly.</p>
+            </div>
+          </div>
+          <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
+            <p><strong>Battles Budz LLC - Investor Relations</strong></p>
+            <p>📞 904-415-7635 | 📧 Battlesbudz@gmail.com</p>
+            <p style="font-size: 11px; color: #ccc; margin-top: 10px;">
+              This is an automated message. Please do not reply directly to this email.
+            </p>
+          </div>
+        </div>
+      `
+    });
+    console.log(`Reply notification sent to investor: ${message.investorEmail}`);
+  } catch (error) {
+    console.error('Failed to send reply notification to investor:', error);
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   
   // Auth middleware
@@ -1031,6 +1084,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching investor messages:", error);
       res.status(500).json({ message: "Failed to fetch investor messages" });
+    }
+  });
+
+  // Reply to investor message (admin only)
+  app.post("/api/investor/message/:id/reply", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || user.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const messageId = parseInt(req.params.id);
+      const { reply } = req.body;
+      
+      if (!reply || reply.trim().length === 0) {
+        return res.status(400).json({ message: "Reply message is required" });
+      }
+
+      const updatedMessage = await storage.replyToInvestorMessage(messageId, reply.trim());
+      
+      // Send email notification to investor
+      await sendInvestorReplyNotification(updatedMessage);
+      
+      res.json({ 
+        message: "Reply sent successfully",
+        updatedMessage 
+      });
+    } catch (error) {
+      console.error("Error sending reply:", error);
+      res.status(500).json({ message: "Failed to send reply" });
+    }
+  });
+
+  // Mark investor message as read (admin only)
+  app.patch("/api/investor/message/:id/read", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || user.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const messageId = parseInt(req.params.id);
+      const updatedMessage = await storage.markInvestorMessageAsRead(messageId);
+      
+      res.json({ 
+        message: "Message marked as read",
+        updatedMessage 
+      });
+    } catch (error) {
+      console.error("Error marking message as read:", error);
+      res.status(500).json({ message: "Failed to mark message as read" });
     }
   });
 

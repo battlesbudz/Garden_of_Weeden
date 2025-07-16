@@ -1,7 +1,8 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import Navigation from "@/components/navigation";
 import { 
   Shield, 
@@ -27,19 +29,97 @@ import {
   DollarSign,
   Settings,
   Clock,
-  CheckCircle
+  CheckCircle,
+  Send,
+  X
 } from "lucide-react";
 
 export default function InvestorAdmin() {
   const { toast } = useToast();
   const { isAuthenticated, isLoading, user } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
+  const [replyModalOpen, setReplyModalOpen] = useState(false);
+  const [selectedMessage, setSelectedMessage] = useState<any>(null);
+  const [replyText, setReplyText] = useState("");
+  const queryClient = useQueryClient();
 
   // Fetch investor messages
   const { data: investorMessages, isLoading: messagesLoading, error: messagesError } = useQuery({
     queryKey: ["/api/investor/messages"],
     enabled: isAuthenticated && user?.role === "admin"
   });
+
+  // Reply to message mutation
+  const replyMutation = useMutation({
+    mutationFn: async ({ messageId, reply }: { messageId: number; reply: string }) => {
+      return apiRequest(`/api/investor/message/${messageId}/reply`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reply })
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Reply Sent",
+        description: "Your reply has been sent to the investor and they'll receive an email notification.",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/investor/messages"] });
+      setReplyModalOpen(false);
+      setReplyText("");
+      setSelectedMessage(null);
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Failed to Send Reply",
+        description: error.message || "There was an error sending your reply. Please try again.",
+        variant: "destructive",
+      });
+    }
+  });
+
+  // Mark as read mutation
+  const markAsReadMutation = useMutation({
+    mutationFn: async (messageId: number) => {
+      return apiRequest(`/api/investor/message/${messageId}/read`, {
+        method: "PATCH"
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Message Marked as Read",
+        description: "The message status has been updated.",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/investor/messages"] });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Failed to Update Status",
+        description: error.message || "There was an error updating the message status.",
+        variant: "destructive",
+      });
+    }
+  });
+
+  const handleReply = (message: any) => {
+    setSelectedMessage(message);
+    setReplyModalOpen(true);
+  };
+
+  const handleSendReply = () => {
+    if (!selectedMessage || !replyText.trim()) {
+      toast({
+        title: "Reply Required",
+        description: "Please enter a reply message.",
+        variant: "destructive",
+      });
+      return;
+    }
+    replyMutation.mutate({ messageId: selectedMessage.id, reply: replyText.trim() });
+  };
+
+  const handleMarkAsRead = (messageId: number) => {
+    markAsReadMutation.mutate(messageId);
+  };
 
 
   // Check admin access
@@ -496,37 +576,49 @@ export default function InvestorAdmin() {
               <div className="space-y-4">
                 {investorMessages.map((message: any) => (
                   <Card key={message.id} className="bg-gray-900 border-battles-gold">
-                    <CardHeader>
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <CardTitle className="text-battles-gold text-lg">
+                    <CardHeader className="pb-3">
+                      <div className="flex justify-between items-start gap-4">
+                        <div className="flex-1 min-w-0">
+                          <CardTitle className="text-battles-gold text-lg mb-2 truncate">
                             {message.subject}
                           </CardTitle>
-                          <div className="flex items-center gap-2 mt-1">
-                            <span className="text-sm font-medium">{message.investorName}</span>
-                            <span className="text-sm text-gray-400">•</span>
-                            <span className="text-sm text-gray-400">{message.investorEmail}</span>
+                          <div className="flex items-center gap-2 text-sm">
+                            <span className="font-medium text-white">{message.investorName}</span>
+                            <span className="text-gray-500">•</span>
+                            <span className="text-gray-400 truncate">{message.investorEmail}</span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-col items-end gap-2 flex-shrink-0">
                           <Badge 
-                            variant={message.status === 'unread' ? 'default' : 'outline'}
-                            className={message.status === 'unread' ? 'bg-battles-gold text-black' : 'text-battles-gold border-battles-gold'}
+                            variant={message.status === 'unread' ? 'default' : message.adminReply ? 'secondary' : 'outline'}
+                            className={
+                              message.status === 'unread' 
+                                ? 'bg-yellow-500 text-black font-medium' 
+                                : message.adminReply 
+                                  ? 'bg-green-600 text-white'
+                                  : 'text-battles-gold border-battles-gold'
+                            }
                           >
                             {message.status === 'unread' ? (
                               <>
                                 <Clock className="h-3 w-3 mr-1" />
-                                Unread
+                                New
+                              </>
+                            ) : message.adminReply ? (
+                              <>
+                                <CheckCircle className="h-3 w-3 mr-1" />
+                                Replied
                               </>
                             ) : (
                               <>
-                                <CheckCircle className="h-3 w-3 mr-1" />
+                                <Eye className="h-3 w-3 mr-1" />
                                 Read
                               </>
                             )}
                           </Badge>
-                          <span className="text-xs text-gray-400">
-                            {new Date(message.createdAt).toLocaleDateString()} at {new Date(message.createdAt).toLocaleTimeString()}
+                          <span className="text-xs text-gray-400 text-right">
+                            {new Date(message.createdAt).toLocaleDateString()}<br/>
+                            {new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </span>
                         </div>
                       </div>
@@ -550,12 +642,23 @@ export default function InvestorAdmin() {
                         )}
                         
                         <div className="flex gap-2">
-                          <Button size="sm" className="bg-battles-gold text-black hover:bg-yellow-600">
+                          <Button 
+                            size="sm" 
+                            className="bg-battles-gold text-black hover:bg-yellow-600"
+                            onClick={() => handleReply(message)}
+                            disabled={replyMutation.isPending}
+                          >
                             <MessageCircle className="h-4 w-4 mr-2" />
                             Reply
                           </Button>
                           {message.status === 'unread' && (
-                            <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black">
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
+                              onClick={() => handleMarkAsRead(message.id)}
+                              disabled={markAsReadMutation.isPending}
+                            >
                               <CheckCircle className="h-4 w-4 mr-2" />
                               Mark as Read
                             </Button>
@@ -599,6 +702,84 @@ export default function InvestorAdmin() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Reply Modal */}
+      <Dialog open={replyModalOpen} onOpenChange={setReplyModalOpen}>
+        <DialogContent className="bg-gray-900 border-battles-gold text-white max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-battles-gold">Reply to Investor Message</DialogTitle>
+            <DialogDescription className="text-gray-300">
+              Send a reply to {selectedMessage?.investorName} regarding: "{selectedMessage?.subject}"
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedMessage && (
+            <div className="space-y-4">
+              {/* Original Message Display */}
+              <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
+                <h4 className="font-medium text-battles-gold mb-2">Original Message:</h4>
+                <div className="text-sm text-gray-300 space-y-1">
+                  <p><strong>From:</strong> {selectedMessage.investorName} ({selectedMessage.investorEmail})</p>
+                  <p><strong>Subject:</strong> {selectedMessage.subject}</p>
+                  <p><strong>Sent:</strong> {new Date(selectedMessage.createdAt).toLocaleString()}</p>
+                </div>
+                <div className="mt-3 p-3 bg-gray-700 rounded border-l-3 border-battles-gold">
+                  <p className="text-gray-200 whitespace-pre-wrap">{selectedMessage.message}</p>
+                </div>
+              </div>
+
+              {/* Reply Input */}
+              <div className="space-y-2">
+                <Label htmlFor="reply-text" className="text-battles-gold">Your Reply:</Label>
+                <Textarea
+                  id="reply-text"
+                  placeholder="Type your professional reply here..."
+                  value={replyText}
+                  onChange={(e) => setReplyText(e.target.value)}
+                  className="min-h-[120px] bg-gray-800 border-gray-600 text-white focus:border-battles-gold"
+                  disabled={replyMutation.isPending}
+                />
+                <p className="text-xs text-gray-400">
+                  The investor will receive your reply via email and can view it in their investor portal.
+                </p>
+              </div>
+            </div>
+          )}
+
+          <DialogFooter className="gap-2">
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                setReplyModalOpen(false);
+                setReplyText("");
+                setSelectedMessage(null);
+              }}
+              disabled={replyMutation.isPending}
+              className="border-gray-600 text-gray-300 hover:bg-gray-800"
+            >
+              <X className="h-4 w-4 mr-2" />
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleSendReply}
+              disabled={replyMutation.isPending || !replyText.trim()}
+              className="bg-battles-gold text-black hover:bg-yellow-600"
+            >
+              {replyMutation.isPending ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin mr-2" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Send className="h-4 w-4 mr-2" />
+                  Send Reply
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

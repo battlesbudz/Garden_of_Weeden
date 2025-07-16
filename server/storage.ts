@@ -165,6 +165,8 @@ export interface IStorage {
   // Investor message operations
   createInvestorMessage(messageData: InsertInvestorMessage): Promise<InvestorMessage>;
   getAllInvestorMessages(): Promise<InvestorMessage[]>;
+  replyToInvestorMessage(messageId: number, reply: string): Promise<InvestorMessage>;
+  markInvestorMessageAsRead(messageId: number): Promise<InvestorMessage>;
 }
 
 export class MemStorage implements IStorage {
@@ -297,6 +299,16 @@ export class MemStorage implements IStorage {
   async getAllInvestorMessages(): Promise<InvestorMessage[]> {
     // In-memory storage - return empty array for now
     return [];
+  }
+
+  async replyToInvestorMessage(messageId: number, reply: string): Promise<InvestorMessage> {
+    // In-memory storage - placeholder implementation
+    throw new Error("MemStorage not implemented for investor message replies");
+  }
+
+  async markInvestorMessageAsRead(messageId: number): Promise<InvestorMessage> {
+    // In-memory storage - placeholder implementation
+    throw new Error("MemStorage not implemented for marking messages as read");
   }
 
   // Stub implementations for interface compliance - MemStorage doesn't implement these
@@ -1238,6 +1250,30 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(investorMessages)
       .orderBy(desc(investorMessages.createdAt));
+  }
+
+  async replyToInvestorMessage(messageId: number, reply: string): Promise<InvestorMessage> {
+    const [updatedMessage] = await db
+      .update(investorMessages)
+      .set({
+        adminReply: reply,
+        status: "replied" as const,
+        repliedAt: new Date()
+      })
+      .where(eq(investorMessages.id, messageId))
+      .returning();
+    return updatedMessage;
+  }
+
+  async markInvestorMessageAsRead(messageId: number): Promise<InvestorMessage> {
+    const [updatedMessage] = await db
+      .update(investorMessages)
+      .set({
+        status: "read" as const
+      })
+      .where(eq(investorMessages.id, messageId))
+      .returning();
+    return updatedMessage;
   }
 }
 
