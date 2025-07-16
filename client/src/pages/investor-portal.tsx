@@ -162,7 +162,7 @@ export default function InvestorPortal() {
       <Navigation />
 
       {/* Header Content */}
-      <div className="bg-gradient-to-r from-battles-gold to-yellow-600 text-black py-8 pt-24">
+      <div className="bg-gradient-to-r from-battles-gold to-yellow-600 text-black py-12 md:py-16 pt-24">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl font-bold">
@@ -171,18 +171,19 @@ export default function InvestorPortal() {
             <p className="text-lg mt-2">
               {isAuthenticated ? "Licensed NY Cannabis Microbusiness" : "Seeking $1M investment for 10% equity"}
             </p>
-            <div className="mt-4">
+            <div className="mt-8">
               {isAuthenticated ? (
-                <Badge className="bg-black text-battles-gold">
-                  <Shield className="h-3 w-3 mr-1" />
+                <Badge className="bg-black text-battles-gold text-lg px-6 py-3">
+                  <Shield className="h-5 w-5 mr-2" />
                   Investor Access
                 </Badge>
               ) : (
                 <Button 
                   onClick={() => setShowInvestorLogin(true)}
-                  className="bg-black text-battles-gold hover:bg-gray-800"
+                  className="bg-black text-battles-gold hover:bg-gray-800 text-xl md:text-2xl px-8 md:px-16 py-4 md:py-6 h-auto font-bold shadow-2xl border-2 border-battles-gold"
+                  size="lg"
                 >
-                  <Shield className="h-4 w-4 mr-2" />
+                  <Shield className="h-6 w-6 md:h-8 md:w-8 mr-3 md:mr-4" />
                   Access Investor Portal
                 </Button>
               )}
