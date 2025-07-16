@@ -472,60 +472,57 @@ export default function InvestorPortal() {
           {/* Documents Tab - Authenticated Only */}
           {isAuthenticated && (
             <TabsContent value="documents" className="space-y-6">
-            <Card className="bg-gray-900 border-battles-gold">
-              <CardHeader>
-                <CardTitle className="text-battles-gold">Investor Documents</CardTitle>
-                <CardDescription className="text-gray-300">Legal documents and business materials</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-
-
-                  <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <FileText className="h-8 w-8 text-battles-gold" />
-                      <div>
-                        <p className="font-medium text-white">Financial Projections</p>
-                        <p className="text-sm text-gray-400">Revenue models and growth projections</p>
-                        <p className="text-xs text-yellow-400 mt-1">⚠️ Pending final facility approval data</p>
+              <Card className="bg-gray-900 border-battles-gold">
+                <CardHeader>
+                  <CardTitle className="text-battles-gold">Investor Documents</CardTitle>
+                  <CardDescription className="text-gray-300">Legal documents and business materials</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <FileText className="h-8 w-8 text-battles-gold" />
+                        <div>
+                          <p className="font-medium text-white">Financial Projections</p>
+                          <p className="text-sm text-gray-400">Revenue models and growth projections</p>
+                          <p className="text-xs text-yellow-400 mt-1">⚠️ Pending final facility approval data</p>
+                        </div>
+                      </div>
+                      <div className="flex space-x-2">
+                        <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
+                          <Eye className="h-4 w-4 mr-1" />
+                          View
+                        </Button>
+                        <Button size="sm" className="bg-battles-gold text-black hover:bg-yellow-600">
+                          <Download className="h-4 w-4 mr-1" />
+                          Download
+                        </Button>
                       </div>
                     </div>
-                    <div className="flex space-x-2">
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
-                        <Eye className="h-4 w-4 mr-1" />
-                        View
-                      </Button>
-                      <Button size="sm" className="bg-battles-gold text-black hover:bg-yellow-600">
-                        <Download className="h-4 w-4 mr-1" />
-                        Download
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <FileText className="h-8 w-8 text-battles-gold" />
-                      <div>
-                        <p className="font-medium text-white">Business License Documentation</p>
-                        <p className="text-sm text-gray-400">OCM License OCMMICR-2023-000258</p>
-                        <p className="text-xs text-green-400 mt-1">✓ All four verticals approved</p>
+                    <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <FileText className="h-8 w-8 text-battles-gold" />
+                        <div>
+                          <p className="font-medium text-white">Business License Documentation</p>
+                          <p className="text-sm text-gray-400">OCM License OCMMICR-2023-000258</p>
+                          <p className="text-xs text-green-400 mt-1">✓ All four verticals approved</p>
+                        </div>
+                      </div>
+                      <div className="flex space-x-2">
+                        <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
+                          <Eye className="h-4 w-4 mr-1" />
+                          View
+                        </Button>
+                        <Button size="sm" className="bg-battles-gold text-black hover:bg-yellow-600">
+                          <Download className="h-4 w-4 mr-1" />
+                          Download
+                        </Button>
                       </div>
                     </div>
-                    <div className="flex space-x-2">
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
-                        <Eye className="h-4 w-4 mr-1" />
-                        View
-                      </Button>
-                      <Button size="sm" className="bg-battles-gold text-black hover:bg-yellow-600">
-                        <Download className="h-4 w-4 mr-1" />
-                        Download
-                      </Button>
-                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+                </CardContent>
+              </Card>
+            </TabsContent>
           )}
 
           {/* Financials Tab - Authenticated Only */}
