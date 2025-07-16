@@ -262,32 +262,108 @@ export default function InvestorPortal() {
         </div>
 
         {/* Main Content Tabs */}
-        <Tabs defaultValue="dashboard" className="space-y-6">
+        <Tabs defaultValue={isAuthenticated ? "dashboard" : "overview"} className="space-y-6">
           <div className="w-full overflow-hidden">
             <TabsList className="flex w-full justify-start overflow-x-auto bg-gray-900 p-1 h-auto min-h-[40px] no-scrollbar">
-              <TabsTrigger value="dashboard" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
-                Dashboard
-              </TabsTrigger>
+              {/* Public tabs - always visible */}
+              {!isAuthenticated && (
+                <TabsTrigger value="overview" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                  Overview
+                </TabsTrigger>
+              )}
               <TabsTrigger value="about" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
                 About
-              </TabsTrigger>
-              <TabsTrigger value="documents" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
-                Documents
-              </TabsTrigger>
-              <TabsTrigger value="financials" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
-                Financials
-              </TabsTrigger>
-              <TabsTrigger value="updates" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
-                Updates
               </TabsTrigger>
               <TabsTrigger value="media" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
                 Media
               </TabsTrigger>
+              
+              {/* Authenticated tabs - only visible when logged in */}
+              {isAuthenticated && (
+                <>
+                  <TabsTrigger value="dashboard" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                    Dashboard
+                  </TabsTrigger>
+                  <TabsTrigger value="documents" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                    Documents
+                  </TabsTrigger>
+                  <TabsTrigger value="financials" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                    Financials
+                  </TabsTrigger>
+                  <TabsTrigger value="updates" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                    Updates
+                  </TabsTrigger>
+                </>
+              )}
             </TabsList>
           </div>
 
-          {/* Dashboard Tab */}
-          <TabsContent value="dashboard" className="space-y-6">
+          {/* Public Overview Tab - Only for non-authenticated users */}
+          {!isAuthenticated && (
+            <TabsContent value="overview" className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card className="bg-gray-900 border-battles-gold">
+                  <CardHeader>
+                    <CardTitle className="text-battles-gold">Investment Opportunity</CardTitle>
+                    <CardDescription>Premium cannabis microbusiness seeking funding</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <p className="text-2xl font-bold">$1,000,000</p>
+                      <p className="text-gray-400">Funding Target</p>
+                    </div>
+                    <div>
+                      <p className="text-xl">10%</p>
+                      <p className="text-gray-400">Equity Offered</p>
+                    </div>
+                    <div>
+                      <p className="text-lg text-green-400">Licensed & Ready</p>
+                      <p className="text-gray-400">NY OCM approved microbusiness</p>
+                    </div>
+                    <div className="pt-4">
+                      <Button 
+                        onClick={() => setShowInvestorLogin(true)}
+                        className="w-full bg-battles-gold text-black hover:bg-yellow-600"
+                      >
+                        <Shield className="h-4 w-4 mr-2" />
+                        Access Full Investor Portal
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gray-900 border-battles-gold">
+                  <CardHeader>
+                    <CardTitle className="text-battles-gold">Why Battles Budz?</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      <div className="flex items-start space-x-3">
+                        <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                        <p className="text-gray-300">Licensed NY microbusiness with all four verticals</p>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                        <p className="text-gray-300">Veteran-owned with proven leadership team</p>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                        <p className="text-gray-300">Premium location in Gloversville, NY</p>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                        <p className="text-gray-300">Unique consumption lounge experience</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          )}
+
+          {/* Authenticated Dashboard Tab */}
+          {isAuthenticated && (
+            <TabsContent value="dashboard" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card className="bg-gray-900 border-battles-gold">
                 <CardHeader>
@@ -343,6 +419,7 @@ export default function InvestorPortal() {
               </Card>
             </div>
           </TabsContent>
+          )}
 
           {/* About Tab */}
           <TabsContent value="about" className="space-y-6">
@@ -402,8 +479,9 @@ export default function InvestorPortal() {
             </div>
           </TabsContent>
 
-          {/* Documents Tab */}
-          <TabsContent value="documents" className="space-y-6">
+          {/* Documents Tab - Authenticated Only */}
+          {isAuthenticated && (
+            <TabsContent value="documents" className="space-y-6">
             <Card className="bg-gray-900 border-battles-gold">
               <CardHeader>
                 <CardTitle className="text-battles-gold">Investor Documents</CardTitle>
@@ -474,9 +552,11 @@ export default function InvestorPortal() {
               </CardContent>
             </Card>
           </TabsContent>
+          )}
 
-          {/* Financials Tab */}
-          <TabsContent value="financials" className="space-y-6">
+          {/* Financials Tab - Authenticated Only */}
+          {isAuthenticated && (
+            <TabsContent value="financials" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card className="bg-gray-900 border-battles-gold">
                 <CardHeader>
@@ -543,9 +623,11 @@ export default function InvestorPortal() {
               </CardContent>
             </Card>
           </TabsContent>
+          )}
 
-          {/* Updates Tab */}
-          <TabsContent value="updates" className="space-y-6">
+          {/* Updates Tab - Authenticated Only */}
+          {isAuthenticated && (
+            <TabsContent value="updates" className="space-y-6">
             <Card className="bg-gray-900 border-battles-gold">
               <CardHeader>
                 <CardTitle className="text-battles-gold">Investor Updates</CardTitle>
@@ -594,6 +676,7 @@ export default function InvestorPortal() {
               </CardContent>
             </Card>
           </TabsContent>
+          )}
 
           {/* Media Tab */}
           <TabsContent value="media" className="space-y-6">
