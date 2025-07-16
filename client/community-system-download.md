@@ -1,0 +1,541 @@
+# Complete Community Page Interactive Functionality & Reward System
+
+## Overview
+This document contains all the code necessary for the community page's interactive functionality and reward system for the Battles Budz cannabis tourism platform.
+
+## System Architecture
+
+### Database Schema (shared/schema.ts)
+
+#### Forum Tables
+```typescript
+// Forum categories with colors and sorting
+export const forumCategories = pgTable("forum_categories", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  color: varchar("color", { length: 7 }).default("#FFD700"),
+  sortOrder: integer("sort_order").default(0),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// User posts with video support, view/like counts
+export const forumPosts = pgTable("forum_posts", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 500 }).notNull(),
+  content: text("content").notNull(),
+  authorId: varchar("author_id").references(() => users.id).notNull(),
+  categoryId: integer("category_id").references(() => forumCategories.id),
+  videoUrl: text("video_url"),
+  isPinned: boolean("is_pinned").default(false),
+  isLocked: boolean("is_locked").default(false),
+  viewCount: integer("view_count").default(0),
+  likeCount: integer("like_count").default(0),
+  replyCount: integer("reply_count").default(0),
+  lastActivityAt: timestamp("last_activity_at").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Nested comments with like functionality
+export const forumComments = pgTable("forum_comments", {
+  id: serial("id").primaryKey(),
+  content: text("content").notNull(),
+  postId: integer("post_id").references(() => forumPosts.id).notNull(),
+  authorId: varchar("author_id").references(() => users.id).notNull(),
+  parentId: integer("parent_id").references(() => forumComments.id),
+  likeCount: integer("like_count").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Like tracking for posts and comments
+export const forumLikes = pgTable("forum_likes", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  postId: integer("post_id").references(() => forumPosts.id),
+  commentId: integer("comment_id").references(() => forumComments.id),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+```
+
+#### Gamification Tables
+```typescript
+// User points, levels, streaks, weekly/monthly tracking
+export const userPoints = pgTable("user_points", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  totalPoints: integer("total_points").default(0).notNull(),
+  currentLevel: integer("current_level").default(1).notNull(),
+  pointsToNextLevel: integer("points_to_next_level").default(100).notNull(),
+  weeklyPoints: integer("weekly_points").default(0).notNull(),
+  monthlyPoints: integer("monthly_points").default(0).notNull(),
+  streak: integer("streak").default(0).notNull(),
+  lastActivityDate: timestamp("last_activity_date"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Detailed history of all point activities
+export const pointTransactions = pgTable("point_transactions", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  points: integer("points").notNull(),
+  action: varchar("action", { length: 50 }).notNull(),
+  relatedId: integer("related_id"),
+  relatedType: varchar("related_type", { length: 20 }),
+  description: varchar("description", { length: 255 }),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Achievement definitions with JSON requirements
+export const achievements = pgTable("achievements", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 100 }).notNull(),
+  description: text("description").notNull(),
+  badgeIcon: varchar("badge_icon", { length: 50 }).notNull(),
+  badgeColor: varchar("badge_color", { length: 20 }).default("battles-gold").notNull(),
+  category: varchar("category", { length: 30 }).notNull(),
+  requirement: jsonb("requirement").notNull(),
+  pointsReward: integer("points_reward").default(0).notNull(),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// User achievement unlocks
+export const userAchievements = pgTable("user_achievements", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  achievementId: integer("achievement_id").references(() => achievements.id).notNull(),
+  unlockedAt: timestamp("unlocked_at").defaultNow(),
+});
+
+// Rankings for different timeframes
+export const leaderboard = pgTable("leaderboard", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  weeklyRank: integer("weekly_rank"),
+  monthlyRank: integer("monthly_rank"),
+  allTimeRank: integer("all_time_rank"),
+  weeklyPoints: integer("weekly_points").default(0),
+  monthlyPoints: integer("monthly_points").default(0),
+  allTimePoints: integer("all_time_points").default(0),
+  lastUpdated: timestamp("last_updated").defaultNow(),
+});
+```
+
+### API Endpoints (server/routes.ts)
+
+#### Forum APIs
+```typescript
+// Get all forum categories
+app.get("/api/forum/categories", async (req, res) => {
+  try {
+    const categories = await storage.getAllForumCategories();
+    res.json(categories);
+  } catch (error) {
+    console.error("Error fetching forum categories:", error);
+    res.status(500).json({ message: "Failed to fetch categories" });
+  }
+});
+
+// Create new post (authenticated users only)
+app.post("/api/forum/posts", isAuthenticated, async (req: any, res) => {
+  try {
+    const userId = req.user.claims.sub;
+    const validatedData = insertForumPostSchema.parse({
+      ...req.body,
+      authorId: userId
+    });
+    
+    const post = await storage.createForumPost(validatedData);
+    
+    // Award points for creating a post
+    try {
+      await storage.addPointsToUser(userId, 25, 'post_created', post.id, 'post', 'Created a new post');
+      await storage.checkAndUnlockAchievements(userId);
+    } catch (pointsError) {
+      console.warn("Failed to award points for post creation:", pointsError);
+    }
+    
+    res.status(201).json(post);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ 
+        message: "Invalid post data",
+        errors: error.errors 
+      });
+    }
+    console.error("Error creating forum post:", error);
+    res.status(500).json({ message: "Failed to create forum post" });
+  }
+});
+
+// Add comment (authenticated users only)
+app.post("/api/forum/comments", isAuthenticated, async (req: any, res) => {
+  try {
+    const userId = req.user.claims.sub;
+    const validatedData = insertForumCommentSchema.parse({
+      ...req.body,
+      authorId: userId
+    });
+    
+    const comment = await storage.createForumComment(validatedData);
+    
+    // Award points for creating a comment
+    try {
+      await storage.addPointsToUser(userId, 10, 'comment_created', comment.id, 'comment', 'Added a comment');
+      await storage.checkAndUnlockAchievements(userId);
+    } catch (pointsError) {
+      console.warn("Failed to award points for comment creation:", pointsError);
+    }
+    
+    res.status(201).json(comment);
+  } catch (error) {
+    console.error("Error creating forum comment:", error);
+    res.status(500).json({ message: "Failed to create forum comment" });
+  }
+});
+
+// Toggle like on post (authenticated users only)
+app.post("/api/forum/posts/:id/like", isAuthenticated, async (req: any, res) => {
+  try {
+    const userId = req.user.claims.sub;
+    const postId = parseInt(req.params.id);
+    
+    const result = await storage.toggleForumPostLike(userId, postId);
+    res.json(result);
+  } catch (error) {
+    console.error("Error toggling post like:", error);
+    res.status(500).json({ message: "Failed to toggle like" });
+  }
+});
+```
+
+#### Gamification APIs
+```typescript
+// Get user stats (authenticated users only)
+app.get("/api/gamification/points", isAuthenticated, async (req: any, res) => {
+  try {
+    const userId = req.user.claims.sub;
+    await storage.updateUserActivity(userId);
+    const userPoints = await storage.getUserPoints(userId);
+    
+    if (!userPoints) {
+      return res.status(404).json({ message: "User points not found" });
+    }
+    
+    res.json(userPoints);
+  } catch (error) {
+    console.error("Error fetching user points:", error);
+    res.status(500).json({ message: "Failed to fetch user points" });
+  }
+});
+
+// Get all achievements
+app.get("/api/gamification/achievements", async (req, res) => {
+  try {
+    const achievements = await storage.getAllAchievements();
+    res.json(achievements);
+  } catch (error) {
+    console.error("Error fetching achievements:", error);
+    res.status(500).json({ message: "Failed to fetch achievements" });
+  }
+});
+
+// Get user achievements (authenticated users only)
+app.get("/api/gamification/user-achievements", isAuthenticated, async (req: any, res) => {
+  try {
+    const userId = req.user.claims.sub;
+    const userAchievements = await storage.getUserAchievements(userId);
+    res.json(userAchievements);
+  } catch (error) {
+    console.error("Error fetching user achievements:", error);
+    res.status(500).json({ message: "Failed to fetch user achievements" });
+  }
+});
+
+// Get leaderboard with timeframe filtering
+app.get("/api/gamification/leaderboard", async (req, res) => {
+  try {
+    const timeframe = req.query.timeframe as 'weekly' | 'monthly' | 'allTime' || 'allTime';
+    const leaderboard = await storage.getLeaderboard(timeframe);
+    res.json(leaderboard);
+  } catch (error) {
+    console.error("Error fetching leaderboard:", error);
+    res.status(500).json({ message: "Failed to fetch leaderboard" });
+  }
+});
+```
+
+### Frontend Components
+
+#### Main Community Page (client/src/pages/enhanced-community.tsx)
+```typescript
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { Link, useLocation } from "wouter";
+import { 
+  MessageSquare, 
+  ThumbsUp, 
+  Eye, 
+  Plus, 
+  User, 
+  Calendar,
+  BookOpen,
+  Users,
+  Video,
+  Play,
+  MapPin,
+  Shield,
+  Award,
+  Leaf,
+  Search,
+  GraduationCap,
+  FileText,
+  ExternalLink,
+  Clock,
+  Zap,
+  Home,
+  Heart,
+  ChevronDown
+} from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { apiRequest } from "@/lib/queryClient";
+import Navigation from "@/components/navigation";
+import { GamificationWidget } from '../components/gamification/gamification-widget';
+
+export default function EnhancedCommunityPage() {
+  const [activeTab, setActiveTab] = useState("forum");
+  const [newPost, setNewPost] = useState({ title: "", content: "", categoryId: "", videoUrl: "" });
+  const [showCreatePost, setShowCreatePost] = useState(false);
+  const { toast } = useToast();
+  const { user, isAuthenticated } = useAuth();
+  const [, setLocation] = useLocation();
+  const queryClient = useQueryClient();
+
+  // Queries
+  const { data: categories = [] } = useQuery({
+    queryKey: ['/api/forum/categories'],
+  });
+
+  const { data: posts = [] } = useQuery({
+    queryKey: ['/api/forum/posts'],
+  });
+
+  // Mutations
+  const createPostMutation = useMutation({
+    mutationFn: async (postData: any) => {
+      const response = await apiRequest('POST', '/api/forum/posts', postData);
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/forum/posts'] });
+      setNewPost({ title: "", content: "", categoryId: "", videoUrl: "" });
+      setShowCreatePost(false);
+      toast({ description: "Post created successfully!" });
+    },
+    onError: (error: any) => {
+      toast({ description: "Failed to create post", variant: "destructive" });
+    }
+  });
+
+  return (
+    <div className="bg-black text-white">
+      <Navigation />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pt-20">
+        <div className="mb-6 text-center">
+          <h1 className="text-4xl font-bold text-battles-gold mb-2">Community Hub</h1>
+          <p className="text-white/80 text-lg">Connect, learn, and grow with the cannabis community</p>
+        </div>
+        
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-5 bg-battles-black border border-battles-gold/20">
+            <TabsTrigger value="forum" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
+              <MessageSquare className="h-4 w-4 mr-2" />
+              Forum
+            </TabsTrigger>
+            <TabsTrigger value="education" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
+              <GraduationCap className="h-4 w-4 mr-2" />
+              Education
+            </TabsTrigger>
+            <TabsTrigger value="calendar" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
+              <Calendar className="h-4 w-4 mr-2" />
+              Calendar
+            </TabsTrigger>
+            <TabsTrigger value="events" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
+              <Users className="h-4 w-4 mr-2" />
+              Events
+            </TabsTrigger>
+            <TabsTrigger value="rewards" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
+              <Award className="h-4 w-4 mr-2" />
+              Rewards
+            </TabsTrigger>
+          </TabsList>
+
+          {/* Rewards Tab */}
+          <TabsContent value="rewards" className="mt-6">
+            <div className="space-y-6">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-battles-gold mb-2">Rewards & Achievements</h2>
+                <p className="text-white/80">Earn points, unlock achievements, and compete with the community!</p>
+              </div>
+              
+              <GamificationWidget />
+            </div>
+          </TabsContent>
+
+          {/* Other tabs content... */}
+        </Tabs>
+      </div>
+    </div>
+  );
+}
+```
+
+#### User Stats Component (client/src/components/gamification/user-stats.tsx)
+```typescript
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Trophy, Star, TrendingUp, Calendar } from 'lucide-react';
+import type { UserPoints } from '@shared/schema';
+
+export function UserStats({ className }: { className?: string }) {
+  const { data: userPoints, isLoading } = useQuery<UserPoints>({
+    queryKey: ['/api/gamification/points'],
+    enabled: true,
+  });
+
+  if (isLoading) {
+    return (
+      <Card className={className}>
+        <CardHeader>
+          <CardTitle className="text-battles-gold">Loading Stats...</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
+            <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
+            <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (!userPoints) {
+    return (
+      <Card className={className}>
+        <CardHeader>
+          <CardTitle className="text-battles-gold">Welcome!</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-gray-600">Start participating to earn points and achievements!</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const progressPercentage = ((100 - userPoints.pointsToNextLevel) / 100) * 100;
+
+  return (
+    <Card className={`bg-gradient-to-br from-battles-gold/5 to-battles-black/5 border-battles-gold/20 ${className}`}>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-battles-gold">
+          <Trophy className="h-5 w-5" />
+          Your Stats
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        {/* Level and Progress */}
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-medium">Level {userPoints.currentLevel}</span>
+            <span className="text-sm text-gray-600">
+              {userPoints.pointsToNextLevel} points to next level
+            </span>
+          </div>
+          <Progress value={progressPercentage} className="h-3" />
+        </div>
+
+        {/* Points Grid */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="text-center p-3 bg-battles-gold/10 rounded-lg border border-battles-gold/20">
+            <div className="flex items-center justify-center mb-1">
+              <Star className="h-4 w-4 text-battles-gold mr-1" />
+            </div>
+            <div className="text-2xl font-bold text-battles-black">{userPoints.totalPoints}</div>
+            <div className="text-xs text-gray-600">Total Points</div>
+          </div>
+          
+          <div className="text-center p-3 bg-battles-gold/10 rounded-lg border border-battles-gold/20">
+            <div className="flex items-center justify-center mb-1">
+              <TrendingUp className="h-4 w-4 text-battles-gold mr-1" />
+            </div>
+            <div className="text-2xl font-bold text-battles-black">{userPoints.weeklyPoints}</div>
+            <div className="text-xs text-gray-600">This Week</div>
+          </div>
+        </div>
+
+        {/* Streak */}
+        <div className="flex items-center justify-between p-3 bg-battles-black/5 rounded-lg border border-battles-black/10">
+          <div className="flex items-center gap-2">
+            <Calendar className="h-4 w-4 text-battles-gold" />
+            <span className="font-medium">Activity Streak</span>
+          </div>
+          <Badge variant="outline" className="bg-battles-gold text-battles-black border-battles-gold">
+            {userPoints.streak} days
+          </Badge>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+## Point System & Rewards
+
+### Point Values
+- **Post Creation**: +25 points
+- **Comment Addition**: +10 points  
+- **Daily Login**: +5 points (with streak tracking)
+- **Achievement Unlocks**: Variable point rewards
+- **Level Progression**: Increasing difficulty (100 + level*25 points per level)
+
+### Achievement Categories
+- **Participation**: First post, regular contributor
+- **Community**: Helpful comments, popular posts
+- **Milestones**: Point thresholds, level achievements
+- **Knowledge**: Education completion, expert interactions
+
+### Interactive Features
+1. **Forum System**: Post creation, commenting, liking with real-time updates
+2. **Gamification**: Points, levels, achievements, leaderboards
+3. **Education Hub**: Step-by-step cannabis tourism guides
+4. **Event Calendar**: Community events with RSVP functionality
+5. **Expert Sessions**: One-on-one booking system
+
+### Database Operations
+The storage layer includes comprehensive methods for:
+- Point transaction tracking
+- Achievement requirement checking
+- Leaderboard calculations with timeframe filtering
+- User activity monitoring
+- Automatic level progression
+
+This system provides a complete interactive community experience with robust reward mechanics that encourage user engagement and participation.
