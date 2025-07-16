@@ -162,7 +162,7 @@ export default function InvestorPortal() {
       <Navigation />
 
       {/* Header Content */}
-      <div className="bg-gradient-to-r from-battles-gold to-yellow-600 text-black py-12 md:py-16 pt-24">
+      <div className="bg-gradient-to-r from-battles-gold to-yellow-600 text-black py-8 md:py-12 pt-20">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl font-bold">
@@ -484,7 +484,8 @@ export default function InvestorPortal() {
                       <FileText className="h-8 w-8 text-battles-gold" />
                       <div>
                         <p className="font-medium text-white">MIPA (Membership Interest Purchase Agreement)</p>
-                        <p className="text-sm text-gray-400">Legal investment agreement</p>
+                        <p className="text-sm text-gray-400">$15,000 for 10% membership interest - Effective July 11, 2025</p>
+                        <p className="text-xs text-battles-gold mt-1">Kai Turell Investment Agreement</p>
                       </div>
                     </div>
                     <div className="flex space-x-2">
@@ -504,7 +505,8 @@ export default function InvestorPortal() {
                       <FileText className="h-8 w-8 text-battles-gold" />
                       <div>
                         <p className="font-medium text-white">Operating Agreement</p>
-                        <p className="text-sm text-gray-400">Company operating procedures</p>
+                        <p className="text-sm text-gray-400">Canna Collective, LLC - Effective June 2, 2022</p>
+                        <p className="text-xs text-battles-gold mt-1">Complete governance and operational framework</p>
                       </div>
                     </div>
                     <div className="flex space-x-2">
@@ -523,8 +525,30 @@ export default function InvestorPortal() {
                     <div className="flex items-center space-x-3">
                       <FileText className="h-8 w-8 text-battles-gold" />
                       <div>
-                        <p className="font-medium text-white">Pitch Deck</p>
-                        <p className="text-sm text-gray-400">Business overview and projections</p>
+                        <p className="font-medium text-white">Financial Projections</p>
+                        <p className="text-sm text-gray-400">Revenue models and growth projections</p>
+                        <p className="text-xs text-yellow-400 mt-1">⚠️ Pending final facility approval data</p>
+                      </div>
+                    </div>
+                    <div className="flex space-x-2">
+                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
+                        <Eye className="h-4 w-4 mr-1" />
+                        View
+                      </Button>
+                      <Button size="sm" className="bg-battles-gold text-black hover:bg-yellow-600">
+                        <Download className="h-4 w-4 mr-1" />
+                        Download
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
+                    <div className="flex items-center space-x-3">
+                      <FileText className="h-8 w-8 text-battles-gold" />
+                      <div>
+                        <p className="font-medium text-white">Business License Documentation</p>
+                        <p className="text-sm text-gray-400">OCM License OCMMICR-2023-000258</p>
+                        <p className="text-xs text-green-400 mt-1">✓ All four verticals approved</p>
                       </div>
                     </div>
                     <div className="flex space-x-2">
