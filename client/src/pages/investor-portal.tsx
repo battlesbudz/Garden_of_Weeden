@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Navigation from "@/components/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,7 +41,22 @@ export default function InvestorPortal() {
   const { toast } = useToast();
   const { isAuthenticated, isLoading, user } = useAuth();
   const [showInvestorLogin, setShowInvestorLogin] = useState(false);
+  const [showCalendly, setShowCalendly] = useState(false);
   const queryClient = useQueryClient();
+
+  // Load Calendly script when modal opens
+  useEffect(() => {
+    if (showCalendly) {
+      const script = document.createElement('script');
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      document.body.appendChild(script);
+      
+      return () => {
+        document.body.removeChild(script);
+      };
+    }
+  }, [showCalendly]);
 
   // Query for user's own messages
   const { data: userMessages = [], isLoading: messagesLoading } = useQuery<InvestorMessage[]>({
@@ -1010,7 +1026,11 @@ export default function InvestorPortal() {
                 <MessageCircle className="h-4 w-4 mr-2" />
                 Send Message to Team
               </Button>
-              <Button variant="outline" className="flex-1 border-battles-gold text-battles-gold">
+              <Button 
+                onClick={() => setShowCalendly(true)}
+                variant="outline" 
+                className="flex-1 border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
+              >
                 <Calendar className="h-4 w-4 mr-2" />
                 Schedule Meeting
               </Button>
@@ -1031,6 +1051,22 @@ export default function InvestorPortal() {
         </Card>
         </>
       </div>
+
+      {/* Calendly Modal */}
+      <Dialog open={showCalendly} onOpenChange={setShowCalendly}>
+        <DialogContent className="max-w-4xl w-full h-[80vh] bg-white">
+          <DialogHeader>
+            <DialogTitle className="text-black text-xl">Schedule a Meeting with Battles Budz</DialogTitle>
+          </DialogHeader>
+          <div className="flex-1 overflow-hidden">
+            <div 
+              className="calendly-inline-widget" 
+              data-url="https://calendly.com/battlesbudz?hide_gdpr_banner=1" 
+              style={{ minWidth: '320px', height: '100%', width: '100%' }}
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
