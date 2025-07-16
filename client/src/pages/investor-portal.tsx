@@ -159,7 +159,7 @@ export default function InvestorPortal() {
         </div>
 
         {/* Main Content Tabs */}
-        <Tabs defaultValue={isAuthenticated ? "dashboard" : "overview"} className="space-y-6">
+        <Tabs defaultValue={isAuthenticated ? "dashboard" : "about"} className="space-y-6">
           <div className="w-full overflow-hidden">
             <TabsList className="flex w-full justify-start overflow-x-auto bg-gray-900 p-1 h-auto min-h-[40px] no-scrollbar">
               {/* Public tabs - always visible */}
