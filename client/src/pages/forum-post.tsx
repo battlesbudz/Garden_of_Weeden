@@ -20,6 +20,7 @@ import {
   Heart
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
+import Navigation from "@/components/navigation";
 
 interface ForumComment {
   id: number;
@@ -212,28 +213,23 @@ export default function ForumPostPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Header */}
-      <div className="border-b border-gray-800 bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-4">
-            <Link href="/community">
-              <Button
-                variant="ghost"
-                className="text-battles-gold hover:text-battles-gold/80"
-              >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Community
-              </Button>
-            </Link>
-            <div className="flex items-center gap-2">
-              <MessageSquare className="h-6 w-6 text-battles-gold" />
-              <h1 className="text-xl font-bold text-battles-gold">Forum Discussion</h1>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Use consistent navigation */}
+      <Navigation />
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      {/* Main Content with top spacing for fixed nav */}
+      <div className="max-w-4xl mx-auto px-4 py-8 pt-20">
+        {/* Breadcrumb */}
+        <div className="mb-6">
+          <Link href="/community">
+            <Button
+              variant="ghost"
+              className="text-battles-gold hover:text-battles-gold/80"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Community
+            </Button>
+          </Link>
+        </div>
         {/* Main Post */}
         <Card className="bg-gray-900 border-gray-700 mb-8">
           <CardHeader>

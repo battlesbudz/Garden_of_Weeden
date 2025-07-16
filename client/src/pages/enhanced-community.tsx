@@ -38,6 +38,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { apiRequest } from "@/lib/queryClient";
+import Navigation from "@/components/navigation";
 import cultivationImage from "@assets/360_F_499206936_DTB3BAfocgPpunIz14tRTBZwwy5PC1Oi_1752425020338.jpg";
 import { GamificationWidget } from '../components/gamification/gamification-widget';
 
@@ -425,8 +426,11 @@ export default function EnhancedCommunityPage() {
 
   return (
     <div className="bg-black text-white">
+      {/* Use consistent navigation */}
+      <Navigation />
+      
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pt-20">
         {/* Page Title */}
         <div className="mb-6 text-center">
           <h1 className="text-4xl font-bold text-battles-gold mb-2">Community Hub</h1>
@@ -434,13 +438,7 @@ export default function EnhancedCommunityPage() {
         </div>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6 bg-battles-black border border-battles-gold/20">
-            <TabsTrigger asChild value="home">
-              <Link href="/" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white hover:bg-battles-gold/20 flex items-center justify-center">
-                <Home className="h-4 w-4 mr-2" />
-                Home
-              </Link>
-            </TabsTrigger>
+          <TabsList className="grid w-full grid-cols-5 bg-battles-black border border-battles-gold/20">
             <TabsTrigger value="forum" className="data-[state=active]:bg-battles-gold data-[state=active]:text-battles-black text-white">
               <MessageSquare className="h-4 w-4 mr-2" />
               Forum

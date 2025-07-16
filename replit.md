@@ -15,6 +15,8 @@ This is a full-stack web application for Battles Budz, a veteran-owned cannabis 
   - Professional black and gold design with responsive layout for all device types
   - Improved text visibility and contrast for better readability on dark backgrounds
   - Both /investors and /investor-portal routes use same component with proper tiered access control
+  - Standardized navigation across all pages - removed custom navigation from investor and community areas
+  - All pages now use consistent Navigation component for seamless site-wide navigation
 
 ## Previous Changes (July 14, 2025)
 

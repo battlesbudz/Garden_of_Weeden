@@ -47,7 +47,6 @@ function Router() {
         <Route path="/education" component={Education} />
         <Route path="/community" component={EnhancedCommunityPage} />
         <Route path="/community/posts/:id" component={ForumPostPage} />
-        <Route path="/investor-portal" component={InvestorPortal} />
         <Route path="/investor-admin" component={InvestorAdmin} />
         <Route path="/enhanced-community" component={EnhancedCommunityPage} />
         <Route path="/privacy-policy" component={PrivacyPolicy} />
