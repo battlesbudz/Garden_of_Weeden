@@ -52,11 +52,10 @@ export default function InvestorAdmin() {
   // Reply to message mutation
   const replyMutation = useMutation({
     mutationFn: async ({ messageId, reply }: { messageId: number; reply: string }) => {
-      return apiRequest(`/api/investor/message/${messageId}/reply`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ reply })
-      });
+      console.log("Sending reply:", { messageId, reply });
+      const response = await apiRequest("POST", `/api/investor/message/${messageId}/reply`, { reply });
+      console.log("Reply response:", response);
+      return response.json();
     },
     onSuccess: () => {
       toast({
@@ -69,6 +68,7 @@ export default function InvestorAdmin() {
       setSelectedMessage(null);
     },
     onError: (error: any) => {
+      console.error("Reply mutation error:", error);
       toast({
         title: "Failed to Send Reply",
         description: error.message || "There was an error sending your reply. Please try again.",
@@ -80,9 +80,8 @@ export default function InvestorAdmin() {
   // Mark as read mutation
   const markAsReadMutation = useMutation({
     mutationFn: async (messageId: number) => {
-      return apiRequest(`/api/investor/message/${messageId}/read`, {
-        method: "PATCH"
-      });
+      const response = await apiRequest("PATCH", `/api/investor/message/${messageId}/read`);
+      return response.json();
     },
     onSuccess: () => {
       toast({
