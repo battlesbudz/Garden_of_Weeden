@@ -193,22 +193,23 @@ export default function InvestorAdmin() {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
+        {/* Main Content Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 bg-gray-900">
-            <TabsTrigger value="overview" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 bg-gray-900">
+            <TabsTrigger value="overview" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
               Overview
             </TabsTrigger>
-            <TabsTrigger value="updates" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
-              Updates
-            </TabsTrigger>
-            <TabsTrigger value="documents" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
-              Documents
-            </TabsTrigger>
-            <TabsTrigger value="investors" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+            <TabsTrigger value="investors" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
               Investors
             </TabsTrigger>
-            <TabsTrigger value="communications" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
-              Messages
+            <TabsTrigger value="documents" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
+              Documents
+            </TabsTrigger>
+            <TabsTrigger value="updates" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
+              Updates
+            </TabsTrigger>
+            <TabsTrigger value="communications" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
+              Communications
             </TabsTrigger>
           </TabsList>
 
@@ -374,7 +375,7 @@ export default function InvestorAdmin() {
                       </Button>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
                     <div>
                       <h4 className="font-medium">Q4 2024 - License Approval</h4>

@@ -203,23 +203,23 @@ export default function InvestorPortal() {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="dashboard" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-6 bg-gray-900">
-            <TabsTrigger value="dashboard" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 bg-gray-900">
+            <TabsTrigger value="dashboard" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
               Dashboard
             </TabsTrigger>
-            <TabsTrigger value="about" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+            <TabsTrigger value="about" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
               About
             </TabsTrigger>
-            <TabsTrigger value="documents" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+            <TabsTrigger value="documents" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
               Documents
             </TabsTrigger>
-            <TabsTrigger value="financials" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+            <TabsTrigger value="financials" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
               Financials
             </TabsTrigger>
-            <TabsTrigger value="updates" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+            <TabsTrigger value="updates" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
               Updates
             </TabsTrigger>
-            <TabsTrigger value="media" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+            <TabsTrigger value="media" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
               Media
             </TabsTrigger>
           </TabsList>
