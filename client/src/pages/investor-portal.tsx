@@ -330,19 +330,19 @@ export default function InvestorPortal() {
               {/* Large Access Button - covers more space */}
               <div className="mt-8">
                 <Card className="bg-gradient-to-r from-battles-gold/10 to-battles-gold/5 border-battles-gold">
-                  <CardContent className="p-8 text-center">
-                    <Shield className="h-16 w-16 text-battles-gold mx-auto mb-6" />
-                    <h3 className="text-2xl font-bold text-white mb-4">Ready to Access Full Investor Portal?</h3>
+                  <CardContent className="p-4 sm:p-8 text-center">
+                    <Shield className="h-12 w-12 sm:h-16 sm:w-16 text-battles-gold mx-auto mb-4 sm:mb-6" />
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-200 mb-4">Ready to Access Full Investor Portal?</h3>
                     <p className="text-gray-300 mb-6 max-w-md mx-auto">
                       Get exclusive access to detailed financials, business documents, progress updates, and secure investor communications.
                     </p>
                     <Button 
                       onClick={() => setShowInvestorLogin(true)}
-                      className="bg-battles-gold text-black hover:bg-yellow-600 text-xl px-12 py-6 h-auto font-bold"
+                      className="bg-battles-gold text-black hover:bg-yellow-600 text-sm sm:text-lg md:text-xl px-4 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 h-auto font-bold w-full sm:w-auto"
                       size="lg"
                     >
-                      <Shield className="h-6 w-6 mr-3" />
-                      Access Full Investor Portal
+                      <Shield className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 mr-2 sm:mr-3 flex-shrink-0" />
+                      <span className="truncate">Access Full Investor Portal</span>
                     </Button>
                   </CardContent>
                 </Card>
