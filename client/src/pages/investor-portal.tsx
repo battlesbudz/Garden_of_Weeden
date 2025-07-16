@@ -329,10 +329,10 @@ export default function InvestorPortal() {
               
               {/* Large Access Button - covers more space */}
               <div className="mt-8">
-                <Card className="bg-gradient-to-r from-battles-gold/10 to-battles-gold/5 border-battles-gold">
+                <Card className="bg-gray-900 border-battles-gold">
                   <CardContent className="p-4 sm:p-8 text-center">
                     <Shield className="h-12 w-12 sm:h-16 sm:w-16 text-battles-gold mx-auto mb-4 sm:mb-6" />
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-200 mb-4">Ready to Access Full Investor Portal?</h3>
+                    <h3 className="text-xl sm:text-2xl font-bold text-battles-gold mb-4">Ready to Access Full Investor Portal?</h3>
                     <p className="text-gray-300 mb-6 max-w-md mx-auto">
                       Get exclusive access to detailed financials, business documents, progress updates, and secure investor communications.
                     </p>
