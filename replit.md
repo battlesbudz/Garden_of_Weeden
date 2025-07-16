@@ -6,6 +6,15 @@ This is a full-stack web application for Battles Budz, a veteran-owned cannabis 
 
 ## Recent Changes (July 16, 2025)
 
+- ✓ **COMPLETED: Comprehensive Font Readability Improvements**
+  - Fixed all text visibility issues across investor portal and admin pages for better accessibility
+  - Applied consistent text-gray-200 classes to primary text elements (headings, labels, important information)
+  - Enhanced CardDescription components with text-gray-300 for improved contrast on dark backgrounds
+  - Fixed location and funding round information visibility in dashboard overview cards
+  - Updated media appearances section with proper text-gray-200 classes for better readability
+  - Improved Use of Funds financial section with readable text-gray-200 labels
+  - Enhanced investor update headings and milestone text for clear visibility
+  - Maintained black and gold branding while ensuring accessibility compliance
 - ✓ **COMPLETED: Bidirectional Investor Messaging System**
   - Implemented complete messaging interface within investor portal with Messages tab
   - Created secure investor-to-admin messaging with conversation history tracking
@@ -22,7 +31,6 @@ This is a full-stack web application for Battles Budz, a veteran-owned cannabis 
   - Fixed tab overlap issues and duplicate content sections
   - Added modal login system for seamless authentication flow
   - Professional black and gold design with responsive layout for all device types
-  - Improved text visibility and contrast for better readability on dark backgrounds
   - Both /investors and /investor-portal routes use same component with proper tiered access control
   - Standardized navigation across all pages - removed custom navigation from investor and community areas
   - All pages now use consistent Navigation component for seamless site-wide navigation

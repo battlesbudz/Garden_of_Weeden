@@ -215,7 +215,7 @@ export default function InvestorPortal() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-lg">{businessStats.location}</p>
+              <p className="text-lg text-gray-200">{businessStats.location}</p>
               <p className="text-sm text-gray-400 mt-1">Pending final OCM approval</p>
             </CardContent>
           </Card>
@@ -228,7 +228,7 @@ export default function InvestorPortal() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-lg">{businessStats.fundingRound}</p>
+              <p className="text-lg text-gray-200">{businessStats.fundingRound}</p>
               <p className="text-sm text-gray-400 mt-1">{businessStats.capitalRaised}</p>
             </CardContent>
           </Card>
@@ -853,7 +853,7 @@ export default function InvestorPortal() {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="p-4 border border-gray-700 rounded-lg">
-                      <h4 className="font-medium mb-2">Cannabis Industry Podcast</h4>
+                      <h4 className="font-medium mb-2 text-gray-200">Cannabis Industry Podcast</h4>
                       <p className="text-sm text-gray-400 mb-2">
                         Discussion on veteran entrepreneurship in cannabis
                       </p>
@@ -862,7 +862,7 @@ export default function InvestorPortal() {
                       </Button>
                     </div>
                     <div className="p-4 border border-gray-700 rounded-lg">
-                      <h4 className="font-medium mb-2">Local Business Feature</h4>
+                      <h4 className="font-medium mb-2 text-gray-200">Local Business Feature</h4>
                       <p className="text-sm text-gray-400 mb-2">
                         Coverage of Battles Budz in local Gloversville media
                       </p>
