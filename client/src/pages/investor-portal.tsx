@@ -357,26 +357,26 @@ export default function InvestorPortal() {
               <Card className="bg-gray-900 border-battles-gold">
                 <CardHeader>
                   <CardTitle className="text-battles-gold">Business Progress</CardTitle>
-                  <CardDescription>Key milestones and achievements</CardDescription>
+                  <CardDescription className="text-gray-300">Key milestones and achievements</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span>License Approval</span>
+                      <span className="text-gray-200">License Approval</span>
                       <span className="text-green-400">100%</span>
                     </div>
                     <Progress value={100} className="h-2" />
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span>Site Approval</span>
+                      <span className="text-gray-200">Site Approval</span>
                       <span className="text-yellow-400">85%</span>
                     </div>
                     <Progress value={85} className="h-2" />
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span>Funding Round</span>
+                      <span className="text-gray-200">Funding Round</span>
                       <span className="text-blue-400">25%</span>
                     </div>
                     <Progress value={25} className="h-2" />
@@ -392,15 +392,15 @@ export default function InvestorPortal() {
                 <CardContent>
                   <div className="space-y-3">
                     <div className="border-l-4 border-battles-gold pl-4">
-                      <p className="font-medium">Provisional License Approved</p>
+                      <p className="font-medium text-gray-200">Provisional License Approved</p>
                       <p className="text-sm text-gray-400">OCM approved microbusiness license</p>
                     </div>
                     <div className="border-l-4 border-yellow-500 pl-4">
-                      <p className="font-medium">First Investment Secured</p>
+                      <p className="font-medium text-gray-200">First Investment Secured</p>
                       <p className="text-sm text-gray-400">Early investor commitment received</p>
                     </div>
                     <div className="border-l-4 border-blue-500 pl-4">
-                      <p className="font-medium">Site Selection Confirmed</p>
+                      <p className="font-medium text-gray-200">Site Selection Confirmed</p>
                       <p className="text-sm text-gray-400">19 North Main Street, Gloversville, NY</p>
                     </div>
                   </div>
@@ -448,7 +448,7 @@ export default function InvestorPortal() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <h4 className="font-semibold text-lg">Justin Battles</h4>
+                    <h4 className="font-semibold text-lg text-gray-200">Justin Battles</h4>
                     <p className="text-battles-gold text-sm mb-2">Founder & CEO</p>
                     <p className="text-gray-300 text-sm">
                       Army veteran with formal cannabis horticulture education. 
@@ -456,7 +456,7 @@ export default function InvestorPortal() {
                     </p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-lg">Andrea Battles</h4>
+                    <h4 className="font-semibold text-lg text-gray-200">Andrea Battles</h4>
                     <p className="text-battles-gold text-sm mb-2">Chief Operating Officer</p>
                     <p className="text-gray-300 text-sm">
                       15 years in sales and customer service. Cannabis advocate with personal experience 
@@ -576,19 +576,19 @@ export default function InvestorPortal() {
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span>Facility Build-out</span>
+                      <span className="text-gray-200">Facility Build-out</span>
                       <span className="text-battles-gold">40%</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Initial Inventory</span>
+                      <span className="text-gray-200">Initial Inventory</span>
                       <span className="text-battles-gold">25%</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Manufacturing Equipment</span>
+                      <span className="text-gray-200">Manufacturing Equipment</span>
                       <span className="text-battles-gold">20%</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Marketing & Operations</span>
+                      <span className="text-gray-200">Marketing & Operations</span>
                       <span className="text-battles-gold">15%</span>
                     </div>
                   </div>
@@ -626,7 +626,7 @@ export default function InvestorPortal() {
                 <div className="space-y-6">
                   <div className="border-l-4 border-green-500 pl-6">
                     <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-semibold text-white">Q4 2024 - License Approval</h4>
+                      <h4 className="font-semibold text-gray-200">Q4 2024 - License Approval</h4>
                       <span className="text-sm text-gray-400">December 2024</span>
                     </div>
                     <p className="text-gray-300 mb-2">
@@ -639,7 +639,7 @@ export default function InvestorPortal() {
 
                   <div className="border-l-4 border-yellow-500 pl-6">
                     <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-semibold text-white">Q1 2025 - Site Selection & Early Investment</h4>
+                      <h4 className="font-semibold text-gray-200">Q1 2025 - Site Selection & Early Investment</h4>
                       <span className="text-sm text-gray-400">January 2025</span>
                     </div>
                     <p className="text-gray-300 mb-2">

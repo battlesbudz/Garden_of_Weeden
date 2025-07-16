@@ -237,7 +237,7 @@ export default function InvestorAdmin() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-2xl font-bold">3</p>
+                  <p className="text-2xl font-bold text-gray-200">3</p>
                   <p className="text-sm text-gray-400">MIPA, Operating Agreement, Pitch Deck</p>
                 </CardContent>
               </Card>
@@ -264,21 +264,21 @@ export default function InvestorAdmin() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                     <div>
-                      <p className="font-medium">First investor commitment received</p>
+                      <p className="font-medium text-gray-200">First investor commitment received</p>
                       <p className="text-sm text-gray-400">January 15, 2025</p>
                     </div>
                     <Badge className="bg-green-900 text-green-300">Milestone</Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                     <div>
-                      <p className="font-medium">Provisional license approved</p>
+                      <p className="font-medium text-gray-200">Provisional license approved</p>
                       <p className="text-sm text-gray-400">December 20, 2024</p>
                     </div>
                     <Badge className="bg-blue-900 text-blue-300">Legal</Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                     <div>
-                      <p className="font-medium">Site selection confirmed</p>
+                      <p className="font-medium text-gray-200">Site selection confirmed</p>
                       <p className="text-sm text-gray-400">December 10, 2024</p>
                     </div>
                     <Badge className="bg-purple-900 text-purple-300">Operations</Badge>
@@ -301,12 +301,12 @@ export default function InvestorAdmin() {
             <Card className="bg-gray-900 border-battles-gold">
               <CardHeader>
                 <CardTitle className="text-battles-gold">Create New Update</CardTitle>
-                <CardDescription>Publish updates for investors</CardDescription>
+                <CardDescription className="text-gray-300">Publish updates for investors</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="update-title">Update Title</Label>
+                    <Label htmlFor="update-title" className="text-gray-200">Update Title</Label>
                     <Input 
                       id="update-title" 
                       placeholder="Q1 2025 Progress Report"
@@ -314,7 +314,7 @@ export default function InvestorAdmin() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="update-type">Update Type</Label>
+                    <Label htmlFor="update-type" className="text-gray-200">Update Type</Label>
                     <Select>
                       <SelectTrigger className="bg-gray-800 border-gray-700">
                         <SelectValue placeholder="Select type" />
@@ -329,7 +329,7 @@ export default function InvestorAdmin() {
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="update-content">Content</Label>
+                  <Label htmlFor="update-content" className="text-gray-200">Content</Label>
                   <Textarea 
                     id="update-content" 
                     placeholder="Enter update content..."
@@ -350,7 +350,7 @@ export default function InvestorAdmin() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
                     <div>
-                      <h4 className="font-medium">Q1 2025 - Site Approval Progress</h4>
+                      <h4 className="font-medium text-gray-200">Q1 2025 - Site Approval Progress</h4>
                       <p className="text-sm text-gray-400">Published: January 2025 • Type: Operational</p>
                     </div>
                     <div className="flex space-x-2">
@@ -365,7 +365,7 @@ export default function InvestorAdmin() {
 
                   <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
                     <div>
-                      <h4 className="font-medium">Q4 2024 - License Approval</h4>
+                      <h4 className="font-medium text-gray-200">Q4 2024 - License Approval</h4>
                       <p className="text-sm text-gray-400">Published: December 2024 • Type: Milestone</p>
                     </div>
                     <div className="flex space-x-2">
@@ -423,7 +423,7 @@ export default function InvestorAdmin() {
                     <div className="flex items-center space-x-3">
                       <FileText className="h-8 w-8 text-battles-gold" />
                       <div>
-                        <p className="font-medium">Operating Agreement</p>
+                        <p className="font-medium text-gray-200">Operating Agreement</p>
                         <p className="text-sm text-gray-400">Uploaded: January 10, 2025 • Size: 1.8 MB</p>
                       </div>
                     </div>
@@ -444,7 +444,7 @@ export default function InvestorAdmin() {
                     <div className="flex items-center space-x-3">
                       <FileText className="h-8 w-8 text-battles-gold" />
                       <div>
-                        <p className="font-medium">Pitch Deck</p>
+                        <p className="font-medium text-gray-200">Pitch Deck</p>
                         <p className="text-sm text-gray-400">Uploaded: January 10, 2025 • Size: 5.2 MB</p>
                       </div>
                     </div>
@@ -483,7 +483,7 @@ export default function InvestorAdmin() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
                     <div>
-                      <h4 className="font-medium">Early Investor 1</h4>
+                      <h4 className="font-medium text-gray-200">Early Investor 1</h4>
                       <p className="text-sm text-gray-400">Committed Investment • Access Level: Investor</p>
                       <p className="text-sm text-gray-400">Joined: January 2025</p>
                     </div>
