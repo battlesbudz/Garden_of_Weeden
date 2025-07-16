@@ -11,12 +11,14 @@ import {
   insertForumPostSchema,
   insertForumCommentSchema,
   insertMeetingRequestSchema,
+  insertInvestorMessageSchema,
   insertUserPointsSchema,
   insertPointTransactionSchema,
   insertAchievementSchema,
   insertUserAchievementSchema,
   type User,
   type MeetingRequest,
+  type InvestorMessage,
   type UserPoints,
   type PointTransaction,
   type Achievement,
@@ -276,6 +278,53 @@ async function sendExperienceBookingNotification(booking: any) {
     console.log('Experience booking admin notification sent');
   } catch (error) {
     console.error('Failed to send experience booking admin notification:', error);
+  }
+}
+
+// Investor message email notifications
+async function sendInvestorMessageNotification(message: InvestorMessage) {
+  if (!mailService) {
+    console.log('SendGrid not configured - skipping email notification');
+    return;
+  }
+
+  try {
+    // Send notification to admin about new investor message
+    await mailService.send({
+      to: 'Battlesbudz@gmail.com',
+      from: 'Battlesbudz@gmail.com',
+      subject: `New Investor Message: ${message.subject} - Battles Budz`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
+            💼 New Investor Portal Message
+          </h2>
+          <div style="padding: 20px; background-color: #f9f9f9;">
+            <h3>Investor Information:</h3>
+            <p><strong>Name:</strong> ${message.investorName}</p>
+            <p><strong>Email:</strong> ${message.investorEmail}</p>
+            <p><strong>Investor ID:</strong> ${message.investorId}</p>
+            
+            <h3>Message Details:</h3>
+            <div style="background-color: white; padding: 15px; border-left: 3px solid #FFD700; margin: 15px 0;">
+              <p><strong>Subject:</strong> ${message.subject}</p>
+              <p><strong>Message:</strong></p>
+              <p style="white-space: pre-wrap; background-color: #f8f8f8; padding: 10px; border-radius: 5px;">${message.message}</p>
+              <p><strong>Received:</strong> ${new Date(message.createdAt || new Date()).toLocaleString()}</p>
+            </div>
+            
+            <p><strong>⏰ Action Required:</strong> Respond to investor within 24 hours via portal admin or direct email.</p>
+          </div>
+          <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
+            <p><strong>Battles Budz Investor Portal</strong></p>
+            <p>📞 904-415-7635 | 📧 Battlesbudz@gmail.com</p>
+          </div>
+        </div>
+      `
+    });
+    console.log('Investor message notification sent to admin');
+  } catch (error) {
+    console.error('Failed to send investor message notification:', error);
   }
 }
 
@@ -936,6 +985,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error initializing achievements:", error);
       res.status(500).json({ message: "Failed to initialize achievements" });
+    }
+  });
+
+  // Investor message endpoint
+  app.post("/api/investor/message", isAuthenticated, async (req: any, res) => {
+    try {
+      const validatedData = insertInvestorMessageSchema.parse(req.body);
+      const message = await storage.createInvestorMessage({
+        ...validatedData,
+        investorId: req.user.claims.sub
+      });
+      
+      // Send email notification to admin
+      await sendInvestorMessageNotification(message);
+      
+      res.status(201).json({ 
+        message: "Message sent successfully",
+        messageId: message.id
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid message data",
+          errors: error.errors 
+        });
+      }
+      console.error("Investor message error:", error);
+      res.status(500).json({ message: "Failed to send message" });
     }
   });
 

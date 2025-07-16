@@ -7,6 +7,7 @@ import {
   contactSubmissions,
   eventBookings,
   jobApplications,
+  investorMessages,
   investorUpdates,
   investorDocuments,
   investorAccess,
@@ -36,6 +37,8 @@ import {
   type InsertEventBooking,
   type JobApplication,
   type InsertJobApplication,
+  type InvestorMessage,
+  type InsertInvestorMessage,
   type InvestorUpdate,
   type InsertInvestorUpdate,
   type InvestorDocument,
@@ -100,6 +103,10 @@ export interface IStorage {
   // Job applications
   createJobApplication(application: InsertJobApplication): Promise<JobApplication>;
   getAllJobApplications(): Promise<JobApplication[]>;
+  
+  // Investor messages
+  createInvestorMessage(message: InsertInvestorMessage): Promise<InvestorMessage>;
+  getAllInvestorMessages(): Promise<InvestorMessage[]>;
   
   // Investor portal
   getAllInvestorUpdates(): Promise<InvestorUpdate[]>;
@@ -266,6 +273,26 @@ export class MemStorage implements IStorage {
 
   async getAllJobApplications(): Promise<JobApplication[]> {
     return Array.from(this.jobApplications.values());
+  }
+
+  async createInvestorMessage(insertMessage: InsertInvestorMessage): Promise<InvestorMessage> {
+    const id = this.currentApplicationId++; // reuse counter for now
+    const message: InvestorMessage = { 
+      ...insertMessage, 
+      id,
+      status: "unread" as const,
+      adminReply: null,
+      createdAt: new Date(),
+      repliedAt: null,
+      investorId: insertMessage.investorId || null
+    };
+    // Using in-memory storage for now - messages won't persist on restart
+    return message;
+  }
+
+  async getAllInvestorMessages(): Promise<InvestorMessage[]> {
+    // In-memory storage - return empty array for now
+    return [];
   }
 
   // Stub implementations for interface compliance - MemStorage doesn't implement these
@@ -1186,6 +1213,27 @@ export class DatabaseStorage implements IStorage {
         await db.insert(achievements).values(achievement);
       }
     }
+  }
+
+  // Investor message operations
+  async createInvestorMessage(insertMessage: InsertInvestorMessage): Promise<InvestorMessage> {
+    const [message] = await db
+      .insert(investorMessages)
+      .values({
+        ...insertMessage,
+        status: "unread" as const,
+        adminReply: null,
+        repliedAt: null
+      })
+      .returning();
+    return message;
+  }
+
+  async getAllInvestorMessages(): Promise<InvestorMessage[]> {
+    return db
+      .select()
+      .from(investorMessages)
+      .orderBy(desc(investorMessages.createdAt));
   }
 }
 

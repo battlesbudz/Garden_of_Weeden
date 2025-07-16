@@ -98,6 +98,19 @@ export const jobApplications = pgTable("job_applications", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const investorMessages = pgTable("investor_messages", {
+  id: serial("id").primaryKey(),
+  investorId: varchar("investor_id").references(() => users.id),
+  investorName: text("investor_name").notNull(),
+  investorEmail: text("investor_email").notNull(),
+  subject: text("subject").notNull(),
+  message: text("message").notNull(),
+  status: text("status").default("unread").notNull(), // "unread", "read", "replied"
+  adminReply: text("admin_reply"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  repliedAt: timestamp("replied_at"),
+});
+
 // Investor portal tables
 export const investorUpdates = pgTable("investor_updates", {
   id: serial("id").primaryKey(),
@@ -318,6 +331,14 @@ export const insertJobApplicationSchema = createInsertSchema(jobApplications).pi
   resumeFileData: true,
 });
 
+export const insertInvestorMessageSchema = createInsertSchema(investorMessages).pick({
+  investorId: true,
+  investorName: true,
+  investorEmail: true,
+  subject: true,
+  message: true,
+});
+
 export const insertInvestorUpdateSchema = createInsertSchema(investorUpdates).pick({
   title: true,
   content: true,
@@ -435,6 +456,8 @@ export type InsertEventBooking = z.infer<typeof insertEventBookingSchema>;
 export type EventBooking = typeof eventBookings.$inferSelect;
 export type InsertJobApplication = z.infer<typeof insertJobApplicationSchema>;
 export type JobApplication = typeof jobApplications.$inferSelect;
+export type InsertInvestorMessage = z.infer<typeof insertInvestorMessageSchema>;
+export type InvestorMessage = typeof investorMessages.$inferSelect;
 export type InsertProduct = z.infer<typeof insertProductSchema>;
 export type Product = typeof products.$inferSelect;
 export type InsertOrder = z.infer<typeof insertOrderSchema>;

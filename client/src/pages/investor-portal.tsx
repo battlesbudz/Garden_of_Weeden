@@ -6,7 +6,16 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import Navigation from "@/components/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { insertInvestorMessageSchema, type InsertInvestorMessage } from "@shared/schema";
 import { 
   Building2, 
   Users, 
@@ -20,13 +29,69 @@ import {
   MapPin,
   Award,
   Download,
-  Eye
+  Eye,
+  Send
 } from "lucide-react";
 
 export default function InvestorPortal() {
   const { toast } = useToast();
   const { isAuthenticated, isLoading, user } = useAuth();
   const [showInvestorLogin, setShowInvestorLogin] = useState(false);
+  const queryClient = useQueryClient();
+
+  // Message form for authenticated investors
+  const messageForm = useForm<InsertInvestorMessage>({
+    resolver: zodResolver(insertInvestorMessageSchema.extend({
+      subject: insertInvestorMessageSchema.shape.subject.min(1, "Subject is required"),
+      message: insertInvestorMessageSchema.shape.message.min(10, "Message must be at least 10 characters"),
+    })),
+    defaultValues: {
+      investorId: user?.id || "",
+      investorName: user ? `${user.firstName} ${user.lastName}` : "",
+      investorEmail: user?.email || "",
+      subject: "",
+      message: "",
+    },
+  });
+
+  const messageMutation = useMutation({
+    mutationFn: async (data: InsertInvestorMessage) => {
+      await apiRequest("POST", "/api/investor/message", data);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Message Sent",
+        description: "Your message has been sent to the Battles Budz team. We'll respond within 24 hours.",
+      });
+      messageForm.reset({
+        investorId: user?.id || "",
+        investorName: user ? `${user.firstName} ${user.lastName}` : "",
+        investorEmail: user?.email || "",
+        subject: "",
+        message: "",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Update form defaults when user data changes
+  useEffect(() => {
+    if (user && messageForm) {
+      messageForm.reset({
+        investorId: user.id,
+        investorName: `${user.firstName} ${user.lastName}`,
+        investorEmail: user.email || "",
+        subject: "",
+        message: "",
+      });
+    }
+  }, [user, messageForm]);
 
   if (isLoading) {
     return (
@@ -190,6 +255,9 @@ export default function InvestorPortal() {
                   <TabsTrigger value="updates" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
                     Updates
                   </TabsTrigger>
+                  <TabsTrigger value="messages" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                    Messages
+                  </TabsTrigger>
                 </>
               )}
             </TabsList>
@@ -217,15 +285,6 @@ export default function InvestorPortal() {
                       <p className="text-lg text-green-400">Licensed & Ready</p>
                       <p className="text-gray-400">NY OCM approved microbusiness</p>
                     </div>
-                    <div className="pt-4">
-                      <Button 
-                        onClick={() => setShowInvestorLogin(true)}
-                        className="w-full bg-battles-gold text-black hover:bg-yellow-600"
-                      >
-                        <Shield className="h-4 w-4 mr-2" />
-                        Access Full Investor Portal
-                      </Button>
-                    </div>
                   </CardContent>
                 </Card>
 
@@ -252,6 +311,27 @@ export default function InvestorPortal() {
                         <p className="text-gray-300">Unique consumption lounge experience</p>
                       </div>
                     </div>
+                  </CardContent>
+                </Card>
+              </div>
+              
+              {/* Large Access Button - covers more space */}
+              <div className="mt-8">
+                <Card className="bg-gradient-to-r from-battles-gold/10 to-battles-gold/5 border-battles-gold">
+                  <CardContent className="p-8 text-center">
+                    <Shield className="h-16 w-16 text-battles-gold mx-auto mb-6" />
+                    <h3 className="text-2xl font-bold text-white mb-4">Ready to Access Full Investor Portal?</h3>
+                    <p className="text-gray-300 mb-6 max-w-md mx-auto">
+                      Get exclusive access to detailed financials, business documents, progress updates, and secure investor communications.
+                    </p>
+                    <Button 
+                      onClick={() => setShowInvestorLogin(true)}
+                      className="bg-battles-gold text-black hover:bg-yellow-600 text-xl px-12 py-6 h-auto font-bold"
+                      size="lg"
+                    >
+                      <Shield className="h-6 w-6 mr-3" />
+                      Access Full Investor Portal
+                    </Button>
                   </CardContent>
                 </Card>
               </div>
@@ -627,6 +707,148 @@ export default function InvestorPortal() {
               </Card>
             </div>
           </TabsContent>
+
+          {/* Messages Tab - Authenticated Only */}
+          {isAuthenticated && (
+            <TabsContent value="messages" className="space-y-6">
+              <Card className="bg-gray-900 border-battles-gold">
+                <CardHeader>
+                  <CardTitle className="text-battles-gold flex items-center">
+                    <MessageCircle className="h-5 w-5 mr-2" />
+                    Send Message to Battles Budz Team
+                  </CardTitle>
+                  <CardDescription className="text-gray-300">
+                    Direct communication with the leadership team - we respond within 24 hours
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Form {...messageForm}>
+                    <form 
+                      onSubmit={messageForm.handleSubmit((data) => messageMutation.mutate(data))}
+                      className="space-y-6"
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <FormField
+                          control={messageForm.control}
+                          name="investorName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-white">Your Name</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  {...field} 
+                                  className="bg-gray-800 border-gray-600 text-white"
+                                  disabled
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={messageForm.control}
+                          name="investorEmail"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-white">Your Email</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  {...field} 
+                                  type="email" 
+                                  className="bg-gray-800 border-gray-600 text-white"
+                                  disabled
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <FormField
+                        control={messageForm.control}
+                        name="subject"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-white">Subject</FormLabel>
+                            <FormControl>
+                              <Input 
+                                {...field} 
+                                placeholder="What would you like to discuss?"
+                                className="bg-gray-800 border-gray-600 text-white"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={messageForm.control}
+                        name="message"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-white">Message</FormLabel>
+                            <FormControl>
+                              <Textarea 
+                                {...field} 
+                                rows={6}
+                                placeholder="Share your questions, concerns, or feedback about the investment opportunity..."
+                                className="bg-gray-800 border-gray-600 text-white resize-none"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <Button 
+                        type="submit" 
+                        disabled={messageMutation.isPending}
+                        className="w-full bg-battles-gold text-black hover:bg-yellow-600 font-semibold"
+                      >
+                        {messageMutation.isPending ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin mr-2" />
+                            Sending Message...
+                          </>
+                        ) : (
+                          <>
+                            <Send className="h-4 w-4 mr-2" />
+                            Send Message
+                          </>
+                        )}
+                      </Button>
+                    </form>
+                  </Form>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gray-900 border-battles-gold">
+                <CardHeader>
+                  <CardTitle className="text-battles-gold">Direct Contact</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="p-4 bg-gray-800 rounded-lg">
+                      <p className="text-sm text-gray-300 mb-2">For urgent matters, contact the team directly:</p>
+                      <div className="flex flex-col sm:flex-row gap-4">
+                        <a href="mailto:battlesbudz@gmail.com" className="flex items-center text-battles-gold hover:underline">
+                          <MessageCircle className="h-4 w-4 mr-2" />
+                          battlesbudz@gmail.com
+                        </a>
+                        <a href="tel:904-415-7635" className="flex items-center text-battles-gold hover:underline">
+                          <Calendar className="h-4 w-4 mr-2" />
+                          (904) 415-7635
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          )}
         </Tabs>
 
         {/* Contact Section */}
