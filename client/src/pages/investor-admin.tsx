@@ -195,23 +195,25 @@ export default function InvestorAdmin() {
       <div className="container mx-auto px-4 py-8">
         {/* Main Content Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 bg-gray-900">
-            <TabsTrigger value="overview" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
-              Overview
-            </TabsTrigger>
-            <TabsTrigger value="investors" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
-              Investors
-            </TabsTrigger>
-            <TabsTrigger value="documents" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
-              Documents
-            </TabsTrigger>
-            <TabsTrigger value="updates" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
-              Updates
-            </TabsTrigger>
-            <TabsTrigger value="communications" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
-              Communications
-            </TabsTrigger>
-          </TabsList>
+          <div className="w-full overflow-hidden">
+            <TabsList className="flex w-full justify-start overflow-x-auto bg-gray-900 p-1 h-auto min-h-[40px] no-scrollbar">
+              <TabsTrigger value="overview" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                Overview
+              </TabsTrigger>
+              <TabsTrigger value="investors" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                Investors
+              </TabsTrigger>
+              <TabsTrigger value="documents" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                Documents
+              </TabsTrigger>
+              <TabsTrigger value="updates" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                Updates
+              </TabsTrigger>
+              <TabsTrigger value="communications" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                Communications
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">

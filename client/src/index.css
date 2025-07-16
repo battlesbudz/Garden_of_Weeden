@@ -23,7 +23,7 @@
   --destructive-foreground: hsl(60, 9%, 98%);
   --ring: hsl(51, 100%, 50%);
   --radius: 0.5rem;
-  
+
   /* Battles Budz custom colors */
   --battles-gold: hsl(51, 100%, 50%);
   --battles-black: hsl(0, 0%, 0%);
@@ -66,44 +66,57 @@
   .text-battles-gold {
     color: hsl(51, 100%, 50%);
   }
-  
+
   .text-battles-black {
     color: hsl(0, 0%, 0%);
   }
-  
+
   .text-battles-gray {
     color: hsl(0, 0%, 20%);
   }
-  
+
   .bg-battles-gold {
     background-color: hsl(51, 100%, 50%);
   }
-  
+
   .bg-battles-black {
     background-color: hsl(0, 0%, 0%);
   }
-  
+
   .bg-battles-gray {
     background-color: hsl(0, 0%, 20%);
   }
-  
+
   .border-battles-gold {
     border-color: hsl(51, 100%, 50%);
   }
-  
+
   .border-battles-black {
     border-color: hsl(0, 0%, 0%);
   }
-  
+
   .hover\:bg-battles-gold:hover {
     background-color: hsl(51, 100%, 50%);
   }
-  
+
   .hover\:text-battles-gold:hover {
     color: hsl(51, 100%, 50%);
   }
-  
+
   .font-playfair {
     font-family: 'Playfair Display', serif;
+  }
+
+  .no-scroll {
+    overflow: hidden;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
   }
 }

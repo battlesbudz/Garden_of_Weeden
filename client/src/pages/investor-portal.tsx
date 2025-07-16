@@ -203,26 +203,28 @@ export default function InvestorPortal() {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="dashboard" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 bg-gray-900">
-            <TabsTrigger value="dashboard" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
-              Dashboard
-            </TabsTrigger>
-            <TabsTrigger value="about" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
-              About
-            </TabsTrigger>
-            <TabsTrigger value="documents" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
-              Documents
-            </TabsTrigger>
-            <TabsTrigger value="financials" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
-              Financials
-            </TabsTrigger>
-            <TabsTrigger value="updates" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
-              Updates
-            </TabsTrigger>
-            <TabsTrigger value="media" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-sm">
-              Media
-            </TabsTrigger>
-          </TabsList>
+          <div className="w-full overflow-hidden">
+            <TabsList className="flex w-full justify-start overflow-x-auto bg-gray-900 p-1 h-auto min-h-[40px] no-scrollbar">
+              <TabsTrigger value="dashboard" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                Dashboard
+              </TabsTrigger>
+              <TabsTrigger value="about" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                About
+              </TabsTrigger>
+              <TabsTrigger value="documents" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                Documents
+              </TabsTrigger>
+              <TabsTrigger value="financials" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                Financials
+              </TabsTrigger>
+              <TabsTrigger value="updates" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                Updates
+              </TabsTrigger>
+              <TabsTrigger value="media" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                Media
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           {/* Dashboard Tab */}
           <TabsContent value="dashboard" className="space-y-6">
