@@ -1142,6 +1142,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get investor's own messages (authenticated investor)
+  app.get("/api/investor/my-messages", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const messages = await storage.getInvestorMessagesByUserId(userId);
+      res.json(messages);
+    } catch (error) {
+      console.error("Error fetching investor messages:", error);
+      res.status(500).json({ message: "Failed to fetch your messages" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

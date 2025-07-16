@@ -167,6 +167,7 @@ export interface IStorage {
   getAllInvestorMessages(): Promise<InvestorMessage[]>;
   replyToInvestorMessage(messageId: number, reply: string): Promise<InvestorMessage>;
   markInvestorMessageAsRead(messageId: number): Promise<InvestorMessage>;
+  getInvestorMessagesByUserId(userId: string): Promise<InvestorMessage[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -309,6 +310,11 @@ export class MemStorage implements IStorage {
   async markInvestorMessageAsRead(messageId: number): Promise<InvestorMessage> {
     // In-memory storage - placeholder implementation
     throw new Error("MemStorage not implemented for marking messages as read");
+  }
+
+  async getInvestorMessagesByUserId(userId: string): Promise<InvestorMessage[]> {
+    // In-memory storage - placeholder implementation
+    throw new Error("MemStorage not implemented for getting user messages");
   }
 
   // Stub implementations for interface compliance - MemStorage doesn't implement these
@@ -1274,6 +1280,14 @@ export class DatabaseStorage implements IStorage {
       .where(eq(investorMessages.id, messageId))
       .returning();
     return updatedMessage;
+  }
+
+  async getInvestorMessagesByUserId(userId: string): Promise<InvestorMessage[]> {
+    return db
+      .select()
+      .from(investorMessages)
+      .where(eq(investorMessages.investorId, userId))
+      .orderBy(desc(investorMessages.createdAt));
   }
 }
 

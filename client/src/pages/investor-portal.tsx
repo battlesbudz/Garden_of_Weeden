@@ -13,9 +13,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import Navigation from "@/components/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { insertInvestorMessageSchema, type InsertInvestorMessage } from "@shared/schema";
+import { insertInvestorMessageSchema, type InsertInvestorMessage, type InvestorMessage } from "@shared/schema";
 import { 
   Building2, 
   Users, 
@@ -30,7 +30,10 @@ import {
   Award,
   Download,
   Eye,
-  Send
+  Send,
+  MessageSquare,
+  Clock,
+  CheckCircle2
 } from "lucide-react";
 
 export default function InvestorPortal() {
@@ -38,6 +41,12 @@ export default function InvestorPortal() {
   const { isAuthenticated, isLoading, user } = useAuth();
   const [showInvestorLogin, setShowInvestorLogin] = useState(false);
   const queryClient = useQueryClient();
+
+  // Query for user's own messages
+  const { data: userMessages = [], isLoading: messagesLoading } = useQuery<InvestorMessage[]>({
+    queryKey: ["/api/investor/my-messages"],
+    enabled: isAuthenticated,
+  });
 
   // Message form for authenticated investors
   const messageForm = useForm<InsertInvestorMessage>({
@@ -70,6 +79,8 @@ export default function InvestorPortal() {
         subject: "",
         message: "",
       });
+      // Refresh messages to show the new message
+      queryClient.invalidateQueries({ queryKey: ["/api/investor/my-messages"] });
     },
     onError: (error) => {
       toast({
@@ -224,6 +235,7 @@ export default function InvestorPortal() {
         </div>
 
         {/* Main Content Tabs */}
+        <>
         <Tabs defaultValue={isAuthenticated ? "dashboard" : "about"} className="space-y-6">
           <div className="w-full overflow-hidden">
             <TabsList className="flex w-full justify-start overflow-x-auto bg-gray-900 p-1 h-auto min-h-[40px] no-scrollbar">
@@ -655,6 +667,162 @@ export default function InvestorPortal() {
           </TabsContent>
           )}
 
+          {/* Messages Tab - Authenticated Only */}
+          {isAuthenticated && (
+            <TabsContent value="messages" className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Send New Message */}
+                <Card className="bg-gray-900 border-battles-gold">
+                  <CardHeader>
+                    <CardTitle className="text-battles-gold flex items-center">
+                      <Send className="h-5 w-5 mr-2" />
+                      Send New Message
+                    </CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Send a message to the Battles Budz team. We'll respond within 24 hours.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Form {...messageForm}>
+                      <form onSubmit={messageForm.handleSubmit((data) => messageMutation.mutate(data))} className="space-y-4">
+                        <FormField
+                          control={messageForm.control}
+                          name="subject"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Subject</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  placeholder="Enter message subject" 
+                                  {...field} 
+                                  className="bg-gray-800 border-gray-700 text-white"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={messageForm.control}
+                          name="message"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Message</FormLabel>
+                              <FormControl>
+                                <Textarea 
+                                  placeholder="Enter your message" 
+                                  rows={6} 
+                                  {...field} 
+                                  className="bg-gray-800 border-gray-700 text-white resize-none"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <Button 
+                          type="submit" 
+                          className="w-full bg-battles-gold text-black hover:bg-yellow-600"
+                          disabled={messageMutation.isPending}
+                        >
+                          {messageMutation.isPending ? (
+                            <>
+                              <Clock className="h-4 w-4 mr-2 animate-spin" />
+                              Sending Message...
+                            </>
+                          ) : (
+                            <>
+                              <Send className="h-4 w-4 mr-2" />
+                              Send Message
+                            </>
+                          )}
+                        </Button>
+                      </form>
+                    </Form>
+                  </CardContent>
+                </Card>
+
+                {/* Message History */}
+                <Card className="bg-gray-900 border-battles-gold">
+                  <CardHeader>
+                    <CardTitle className="text-battles-gold flex items-center">
+                      <MessageSquare className="h-5 w-5 mr-2" />
+                      Message History
+                    </CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Your conversation history with the Battles Budz team
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {messagesLoading ? (
+                      <div className="flex items-center justify-center py-8">
+                        <Clock className="h-6 w-6 animate-spin text-battles-gold mr-2" />
+                        <span className="text-gray-400">Loading messages...</span>
+                      </div>
+                    ) : userMessages.length === 0 ? (
+                      <div className="text-center py-8">
+                        <MessageSquare className="h-12 w-12 text-gray-600 mx-auto mb-4" />
+                        <p className="text-gray-400 mb-2">No messages yet</p>
+                        <p className="text-sm text-gray-500">Send your first message to start the conversation</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4 max-h-96 overflow-y-auto">
+                        {userMessages.map((message) => (
+                          <div key={message.id} className="border border-gray-700 rounded-lg p-4 space-y-3">
+                            {/* Original Message */}
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                <h4 className="font-semibold text-battles-gold">{message.subject}</h4>
+                                <div className="flex items-center space-x-2">
+                                  <Badge 
+                                    variant={message.status === 'new' ? 'default' : message.status === 'replied' ? 'secondary' : 'outline'}
+                                    className={
+                                      message.status === 'new' 
+                                        ? 'bg-blue-600 text-white' 
+                                        : message.status === 'replied' 
+                                        ? 'bg-green-600 text-white' 
+                                        : 'bg-gray-600 text-white'
+                                    }
+                                  >
+                                    {message.status === 'new' && 'New'}
+                                    {message.status === 'read' && 'Read'}
+                                    {message.status === 'replied' && 'Replied'}
+                                  </Badge>
+                                  <span className="text-xs text-gray-500">
+                                    {message.createdAt ? new Date(message.createdAt).toLocaleDateString() : 'Unknown date'}
+                                  </span>
+                                </div>
+                              </div>
+                              <p className="text-sm text-gray-300 bg-gray-800 p-3 rounded">{message.message}</p>
+                            </div>
+
+                            {/* Admin Reply */}
+                            {message.adminReply && (
+                              <div className="border-l-4 border-battles-gold pl-4 space-y-2">
+                                <div className="flex items-center space-x-2">
+                                  <CheckCircle2 className="h-4 w-4 text-battles-gold" />
+                                  <span className="text-sm font-medium text-battles-gold">Team Response</span>
+                                  {message.repliedAt && (
+                                    <span className="text-xs text-gray-500">
+                                      {new Date(message.repliedAt).toLocaleDateString()}
+                                    </span>
+                                  )}
+                                </div>
+                                <p className="text-sm text-gray-300 bg-gray-800 p-3 rounded border border-battles-gold/20">
+                                  {message.adminReply}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          )}
+
           {/* Media Tab */}
           <TabsContent value="media" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -884,6 +1052,7 @@ export default function InvestorPortal() {
             </div>
           </CardContent>
         </Card>
+        </>
       </div>
     </div>
   );
