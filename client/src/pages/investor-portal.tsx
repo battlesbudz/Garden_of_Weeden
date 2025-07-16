@@ -479,7 +479,7 @@ export default function InvestorPortal() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg w-full">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between p-4 border border-gray-700 rounded-lg w-full gap-4">
                       <div className="flex items-center space-x-3 flex-1 min-w-0">
                         <FileText className="h-8 w-8 text-battles-gold flex-shrink-0" />
                         <div className="min-w-0 flex-1">
@@ -488,7 +488,7 @@ export default function InvestorPortal() {
                           <p className="text-xs text-yellow-400 mt-1">⚠️ Pending final facility approval data</p>
                         </div>
                       </div>
-                      <div className="flex space-x-2 flex-shrink-0 ml-4">
+                      <div className="flex space-x-2 flex-shrink-0">
                         <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
                           <Eye className="h-4 w-4 mr-1" />
                           View
@@ -499,7 +499,7 @@ export default function InvestorPortal() {
                         </Button>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg w-full">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between p-4 border border-gray-700 rounded-lg w-full gap-4">
                       <div className="flex items-center space-x-3 flex-1 min-w-0">
                         <FileText className="h-8 w-8 text-battles-gold flex-shrink-0" />
                         <div className="min-w-0 flex-1">
@@ -508,7 +508,7 @@ export default function InvestorPortal() {
                           <p className="text-xs text-green-400 mt-1">✓ All four verticals approved</p>
                         </div>
                       </div>
-                      <div className="flex space-x-2 flex-shrink-0 ml-4">
+                      <div className="flex space-x-2 flex-shrink-0">
                         <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
                           <Eye className="h-4 w-4 mr-1" />
                           View
