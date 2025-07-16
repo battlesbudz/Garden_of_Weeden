@@ -27,7 +27,8 @@ import Navigation from "@/components/navigation";
 
 export default function InvestorsPage() {
   const { user, isAuthenticated } = useAuth();
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState("overview");
+  const [showInvestorLogin, setShowInvestorLogin] = useState(false);
 
   const { data: updates, isLoading: updatesLoading } = useQuery({
     queryKey: ["/api/investor/updates"],
@@ -38,38 +39,6 @@ export default function InvestorsPage() {
     queryKey: ["/api/investor/documents"],
     enabled: isAuthenticated,
   });
-
-  // If not authenticated, show login prompt
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
-        <Card className="max-w-md w-full bg-black border-battles-gold">
-          <CardHeader className="text-center">
-            <Lock className="h-12 w-12 text-battles-gold mx-auto mb-4" />
-            <CardTitle className="text-2xl font-playfair text-battles-gold">
-              Battles Budz Investor Portal
-            </CardTitle>
-            <p className="text-white/80">
-              Access investor updates, financial reports, and business documentation for our licensed NY cannabis microbusiness.
-            </p>
-          </CardHeader>
-          <CardContent className="text-center space-y-4">
-            <div className="text-sm text-gray-400 space-y-2">
-              <p>📍 19 North Main Street, Gloversville, NY</p>
-              <p>🏛️ OCM License: OCMMICR-2023-000258</p>
-              <p>💰 Current Round: $1M for 10% equity</p>
-            </div>
-            <Button 
-              onClick={() => window.location.href = '/api/login'}
-              className="bg-battles-gold hover:bg-battles-gold/90 text-black font-semibold w-full"
-            >
-              Sign In to Access Portal
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
 
   const formatFileSize = (bytes: number) => {
     if (!bytes) return '0 B';
@@ -105,17 +74,51 @@ export default function InvestorsPage() {
     }
   };
 
+  // Investor Login Modal
+  const InvestorLoginModal = () => (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+      <Card className="max-w-md w-full bg-black border-battles-gold">
+        <CardHeader className="text-center">
+          <Lock className="h-12 w-12 text-battles-gold mx-auto mb-4" />
+          <CardTitle className="text-2xl font-playfair text-battles-gold">
+            Investor Portal Access
+          </CardTitle>
+          <p className="text-white/80">
+            Access detailed financials, documents, and exclusive investor updates
+          </p>
+        </CardHeader>
+        <CardContent className="text-center space-y-4">
+          <Button 
+            onClick={() => window.location.href = '/api/login'}
+            className="bg-battles-gold hover:bg-battles-gold/90 text-black font-semibold w-full"
+          >
+            Sign In as Investor
+          </Button>
+          <Button 
+            onClick={() => setShowInvestorLogin(false)}
+            variant="outline"
+            className="w-full border-battles-gold text-battles-gold"
+          >
+            Cancel
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
+      {showInvestorLogin && <InvestorLoginModal />}
+      
       <div className="bg-gradient-to-r from-black to-gray-900 text-white py-16 pt-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl font-playfair font-bold text-battles-gold mb-4">
-              Battles Budz Investor Portal
+              Battles Budz Investment Opportunity
             </h1>
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
-              Stay informed with the latest business updates, financial reports, and strategic developments
+              Licensed NY cannabis microbusiness seeking $1M investment for 10% equity
             </p>
             <div className="flex justify-center items-center mt-6 space-x-8">
               <div className="text-center">
@@ -123,12 +126,12 @@ export default function InvestorsPage() {
                 <p className="text-sm">Veteran-Owned</p>
               </div>
               <div className="text-center">
-                <TrendingUp className="h-8 w-8 text-battles-gold mx-auto mb-2" />
-                <p className="text-sm">Growing Market</p>
+                <Award className="h-8 w-8 text-battles-gold mx-auto mb-2" />
+                <p className="text-sm">Licensed</p>
               </div>
               <div className="text-center">
-                <Users className="h-8 w-8 text-battles-gold mx-auto mb-2" />
-                <p className="text-sm">Strong Team</p>
+                <TrendingUp className="h-8 w-8 text-battles-gold mx-auto mb-2" />
+                <p className="text-sm">Growing Market</p>
               </div>
             </div>
           </div>
@@ -136,16 +139,29 @@ export default function InvestorsPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Welcome Section */}
-        <div className="mb-8 text-center">
-          <div className="flex items-center justify-center mb-4">
-            <Shield className="h-6 w-6 text-battles-gold mr-2" />
-            <p className="text-lg font-medium">Welcome, {user?.firstName} {user?.lastName}</p>
+        {/* Welcome/Status Section */}
+        {isAuthenticated ? (
+          <div className="mb-8 text-center">
+            <div className="flex items-center justify-center mb-4">
+              <Shield className="h-6 w-6 text-battles-gold mr-2" />
+              <p className="text-lg font-medium">Welcome, {user?.firstName} {user?.lastName}</p>
+            </div>
+            <Badge className="bg-battles-gold text-black">
+              Investor Portal Access
+            </Badge>
           </div>
-          <Badge className="bg-battles-gold text-black">
-            Investor Access
-          </Badge>
-        </div>
+        ) : (
+          <div className="mb-8 text-center">
+            <Button 
+              onClick={() => setShowInvestorLogin(true)}
+              className="bg-battles-gold text-black hover:bg-yellow-600 mb-4"
+            >
+              <Lock className="h-4 w-4 mr-2" />
+              Access Investor Portal
+            </Button>
+            <p className="text-gray-600 text-sm">For detailed financials and legal documents</p>
+          </div>
+        )}
 
         {/* Key Business Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -155,7 +171,7 @@ export default function InvestorsPage() {
               <Award className="h-4 w-4 text-battles-gold" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">Provisional Approved</div>
+              <div className="text-2xl font-bold text-green-600">Approved</div>
               <p className="text-xs text-muted-foreground">
                 OCM License: OCMMICR-2023-000258
               </p>
@@ -164,13 +180,13 @@ export default function InvestorsPage() {
           
           <Card className="border-battles-gold/20">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Current Round</CardTitle>
+              <CardTitle className="text-sm font-medium">Investment Round</CardTitle>
               <DollarSign className="h-4 w-4 text-battles-gold" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">$1M for 10%</div>
               <p className="text-xs text-muted-foreground">
-                Early investment secured
+                Seeking qualified investors
               </p>
             </CardContent>
           </Card>
@@ -191,17 +207,76 @@ export default function InvestorsPage() {
 
         {/* Main Content Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-6">
-            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+          <TabsList className={`grid w-full ${isAuthenticated ? 'grid-cols-6' : 'grid-cols-3'}`}>
+            <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="about">About</TabsTrigger>
-            <TabsTrigger value="documents">Documents</TabsTrigger>
-            <TabsTrigger value="financials">Financials</TabsTrigger>
-            <TabsTrigger value="updates">Updates</TabsTrigger>
             <TabsTrigger value="media">Media</TabsTrigger>
+            {isAuthenticated && (
+              <>
+                <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+                <TabsTrigger value="documents">Documents</TabsTrigger>
+                <TabsTrigger value="financials">Financials</TabsTrigger>
+              </>
+            )}
           </TabsList>
 
-          {/* Dashboard Tab */}
-          <TabsContent value="dashboard" className="space-y-6">
+          {/* Public Overview Tab */}
+          <TabsContent value="overview" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card className="border-battles-gold/20">
+                <CardHeader>
+                  <CardTitle className="text-battles-gold">Investment Opportunity</CardTitle>
+                  <CardDescription>Cannabis microbusiness in New York's growing market</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-battles-gold mb-2">What We're Building</h4>
+                    <p className="text-gray-700">
+                      All-in-one cannabis microbusiness featuring cultivation, processing, retail, 
+                      and on-site consumption lounge in Gloversville, NY.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-battles-gold mb-2">Market Position</h4>
+                    <p className="text-gray-700">
+                      Veteran-owned business targeting the premium cannabis market with 
+                      focus on landrace strains and elevated customer experience.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-battles-gold mb-2">Investment Terms</h4>
+                    <p className="text-gray-700">
+                      Seeking $1,000,000 investment for 10% equity stake. 
+                      Early investor commitment already secured.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-battles-gold/20">
+                <CardHeader>
+                  <CardTitle className="text-battles-gold">Company Video</CardTitle>
+                  <CardDescription>Learn about our mission and vision</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="aspect-video bg-gray-200 rounded-lg flex items-center justify-center mb-4">
+                    <div className="text-center">
+                      <Video className="h-12 w-12 text-battles-gold mx-auto mb-2" />
+                      <p className="text-gray-600">Pitch Video</p>
+                      <p className="text-sm text-gray-500">Coming Soon</p>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-battles-gold text-black hover:bg-yellow-600">
+                    Watch Introduction Video
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* Dashboard Tab - Authenticated Only */}
+          {isAuthenticated && (
+            <TabsContent value="dashboard" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card className="border-battles-gold/20">
                 <CardHeader>
@@ -257,6 +332,7 @@ export default function InvestorsPage() {
               </Card>
             </div>
           </TabsContent>
+          )}
 
           {/* About Tab */}
           <TabsContent value="about" className="space-y-6">
@@ -505,7 +581,80 @@ export default function InvestorsPage() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="documents" className="space-y-4">
+          {/* Financials Tab - Authenticated Only */}
+          {isAuthenticated && (
+            <TabsContent value="financials" className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card className="border-battles-gold/20">
+                  <CardHeader>
+                    <CardTitle className="text-battles-gold">Current Funding Round</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-2xl font-bold">$1,000,000</p>
+                        <p className="text-gray-400">Target Amount</p>
+                      </div>
+                      <div>
+                        <p className="text-xl">10%</p>
+                        <p className="text-gray-400">Equity Offered</p>
+                      </div>
+                      <div>
+                        <p className="text-lg text-green-400">Early Investment Secured</p>
+                        <p className="text-gray-400">First investor commitment received</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-battles-gold/20">
+                  <CardHeader>
+                    <CardTitle className="text-battles-gold">Use of Funds</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span>Facility Build-out</span>
+                        <span className="text-battles-gold">40%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Initial Inventory</span>
+                        <span className="text-battles-gold">25%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Manufacturing Equipment</span>
+                        <span className="text-battles-gold">20%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Marketing & Operations</span>
+                        <span className="text-battles-gold">15%</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card className="border-battles-gold/20">
+                <CardHeader>
+                  <CardTitle className="text-battles-gold">Financial Projections</CardTitle>
+                  <CardDescription className="text-yellow-600">
+                    ⚠️ Projections pending final data input - Conservative estimates
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 italic">
+                    Detailed financial projections and revenue models will be provided upon completion 
+                    of site approval and facility planning. Current estimates are based on industry 
+                    benchmarks for similar microbusiness operations in New York.
+                  </p>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          )}
+
+          {/* Documents Tab - Authenticated Only */}
+          {isAuthenticated && (
+            <TabsContent value="documents" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -597,6 +746,7 @@ export default function InvestorsPage() {
               </CardContent>
             </Card>
           </TabsContent>
+          )}
         </Tabs>
 
         {/* Contact Section */}
