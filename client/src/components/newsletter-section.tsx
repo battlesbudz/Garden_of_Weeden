@@ -96,20 +96,29 @@ export default function NewsletterSection() {
               <Instagram className="h-6 w-6" />
             </a>
             <a
-              href="#"
+              href="https://www.facebook.com/profile.php?id=100095028196403"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-battles-gold text-2xl transition-colors"
+              title="Follow Battles Budz on Facebook"
             >
               <Facebook className="h-6 w-6" />
             </a>
             <a
-              href="#"
+              href="https://twitter.com/BattlesBudz"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-battles-gold text-2xl transition-colors"
+              title="Follow @BattlesBudz on Twitter"
             >
               <Twitter className="h-6 w-6" />
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/justin-battles-5548a018a"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-battles-gold text-2xl transition-colors"
+              title="Connect with Justin Battles on LinkedIn"
             >
               <Linkedin className="h-6 w-6" />
             </a>
