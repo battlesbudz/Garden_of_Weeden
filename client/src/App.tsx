@@ -14,7 +14,10 @@ import EnhancedCommunityPage from "@/pages/enhanced-community";
 import ForumPostPage from "@/pages/forum-post";
 import InvestorPortal from "@/pages/investor-portal";
 import InvestorAdmin from "@/pages/investor-admin";
-import NotFound from "@/pages/not-found";
+import NotFound from "./pages/not-found";
+import PrivacyPolicy from "./pages/privacy-policy";
+import TermsOfService from "./pages/terms-of-service";
+import AgeVerification from "./pages/age-verification";
 import { AgeVerificationModal } from "@/components/user-guide/age-verification-modal";
 import { QuickStartModal } from "@/components/user-guide/quick-start-modal";
 import { UserGuideOverlay } from "@/components/user-guide/user-guide-overlay";
@@ -23,7 +26,7 @@ import { useUserGuide } from "@/hooks/useUserGuide";
 
 function ScrollToTop() {
   const [location] = useLocation();
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
@@ -46,6 +49,10 @@ function Router() {
         <Route path="/community/posts/:id" component={ForumPostPage} />
         <Route path="/investor-portal" component={InvestorPortal} />
         <Route path="/investor-admin" component={InvestorAdmin} />
+        <Route path="/enhanced-community" component={EnhancedCommunityPage} />
+        <Route path="/privacy-policy" component={PrivacyPolicy} />
+        <Route path="/terms-of-service" component={TermsOfService} />
+        <Route path="/age-verification" component={AgeVerification} />
         <Route component={NotFound} />
       </Switch>
     </>
@@ -60,27 +67,27 @@ function App() {
       <TooltipProvider>
         <Toaster />
         <Router />
-        
+
         {/* User Guide System */}
         <AgeVerificationModal
           isOpen={userGuide.showAgeVerification}
           onVerified={userGuide.handleAgeVerified}
           onDenied={userGuide.handleAgeDenied}
         />
-        
+
         <QuickStartModal
           isOpen={userGuide.showQuickStart}
           onClose={userGuide.handleQuickStartClose}
           onStartTour={userGuide.handleStartTour}
           onOptionSelect={userGuide.handleOptionSelect}
         />
-        
+
         <UserGuideOverlay
           isOpen={userGuide.showTour}
           onClose={userGuide.handleTourClose}
           onComplete={userGuide.handleTourComplete}
         />
-        
+
         <HelpButton
           onStartTour={userGuide.handleShowTour}
           onShowGuide={userGuide.handleShowQuickStart}
