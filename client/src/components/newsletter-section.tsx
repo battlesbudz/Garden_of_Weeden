@@ -87,8 +87,11 @@ export default function NewsletterSection() {
           </h3>
           <div className="flex justify-center space-x-6">
             <a
-              href="#"
+              href="https://instagram.com/battles_budz"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-battles-gold text-2xl transition-colors"
+              title="Follow @battles_budz on Instagram"
             >
               <Instagram className="h-6 w-6" />
             </a>
