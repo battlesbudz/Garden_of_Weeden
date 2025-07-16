@@ -108,7 +108,7 @@ export default function Navigation() {
                 <ShoppingBag className="h-4 w-4 mr-1" />
                 Shop
               </Link>
-              <Link href="/investor-portal" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link href="/investors" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Investors
               </Link>
 

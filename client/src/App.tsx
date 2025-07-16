@@ -43,6 +43,7 @@ function Router() {
         <Route path="/login" component={LoginPage} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/shop" component={Shop} />
+        <Route path="/investors" component={InvestorPortal} />
         <Route path="/education" component={Education} />
         <Route path="/community" component={EnhancedCommunityPage} />
         <Route path="/community/posts/:id" component={ForumPostPage} />
