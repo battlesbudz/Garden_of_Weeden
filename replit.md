@@ -6,13 +6,14 @@ This is a full-stack web application for Battles Budz, a veteran-owned cannabis 
 
 ## Recent Changes (July 16, 2025)
 
-- ✓ **COMPLETED: Consolidated Investor Portal System**
-  - Unified all investor-related pages into single investor-portal with tiered access
+- ✓ **COMPLETED: Consolidated Investor Portal System with Tiered Access**
+  - Unified all investor-related pages into single investor-portal with proper tiered access control
   - Removed duplicate investor pages (/investors now redirects to /investor-portal)
-  - Implemented public access (investment overview, company info, media) vs authenticated access (documents, financials, updates)
+  - Implemented public access (overview, about, media tabs) vs authenticated access (dashboard, documents, financials, updates)
   - Fixed tab overlap issues and duplicate content sections
   - Added modal login system for seamless authentication flow
   - Professional black and gold design with responsive layout for all device types
+  - Improved text visibility and contrast for better readability on dark backgrounds
 
 ## Previous Changes (July 14, 2025)
 

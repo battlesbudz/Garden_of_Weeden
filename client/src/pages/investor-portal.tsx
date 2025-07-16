@@ -305,15 +305,15 @@ export default function InvestorPortal() {
                 <Card className="bg-gray-900 border-battles-gold">
                   <CardHeader>
                     <CardTitle className="text-battles-gold">Investment Opportunity</CardTitle>
-                    <CardDescription>Premium cannabis microbusiness seeking funding</CardDescription>
+                    <CardDescription className="text-gray-300">Premium cannabis microbusiness seeking funding</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div>
-                      <p className="text-2xl font-bold">$1,000,000</p>
+                      <p className="text-2xl font-bold text-white">$1,000,000</p>
                       <p className="text-gray-400">Funding Target</p>
                     </div>
                     <div>
-                      <p className="text-xl">10%</p>
+                      <p className="text-xl text-white">10%</p>
                       <p className="text-gray-400">Equity Offered</p>
                     </div>
                     <div>
@@ -398,7 +398,7 @@ export default function InvestorPortal() {
               <Card className="bg-gray-900 border-battles-gold">
                 <CardHeader>
                   <CardTitle className="text-battles-gold">Recent Activity</CardTitle>
-                  <CardDescription>Latest business developments</CardDescription>
+                  <CardDescription className="text-gray-300">Latest business developments</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -485,7 +485,7 @@ export default function InvestorPortal() {
             <Card className="bg-gray-900 border-battles-gold">
               <CardHeader>
                 <CardTitle className="text-battles-gold">Investor Documents</CardTitle>
-                <CardDescription>Legal documents and business materials</CardDescription>
+                <CardDescription className="text-gray-300">Legal documents and business materials</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -493,7 +493,7 @@ export default function InvestorPortal() {
                     <div className="flex items-center space-x-3">
                       <FileText className="h-8 w-8 text-battles-gold" />
                       <div>
-                        <p className="font-medium">MIPA (Membership Interest Purchase Agreement)</p>
+                        <p className="font-medium text-white">MIPA (Membership Interest Purchase Agreement)</p>
                         <p className="text-sm text-gray-400">Legal investment agreement</p>
                       </div>
                     </div>
@@ -513,7 +513,7 @@ export default function InvestorPortal() {
                     <div className="flex items-center space-x-3">
                       <FileText className="h-8 w-8 text-battles-gold" />
                       <div>
-                        <p className="font-medium">Operating Agreement</p>
+                        <p className="font-medium text-white">Operating Agreement</p>
                         <p className="text-sm text-gray-400">Company operating procedures</p>
                       </div>
                     </div>
@@ -533,7 +533,7 @@ export default function InvestorPortal() {
                     <div className="flex items-center space-x-3">
                       <FileText className="h-8 w-8 text-battles-gold" />
                       <div>
-                        <p className="font-medium">Pitch Deck</p>
+                        <p className="font-medium text-white">Pitch Deck</p>
                         <p className="text-sm text-gray-400">Business overview and projections</p>
                       </div>
                     </div>
@@ -565,11 +565,11 @@ export default function InvestorPortal() {
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <p className="text-2xl font-bold">$1,000,000</p>
+                      <p className="text-2xl font-bold text-white">$1,000,000</p>
                       <p className="text-gray-400">Target Amount</p>
                     </div>
                     <div>
-                      <p className="text-xl">10%</p>
+                      <p className="text-xl text-white">10%</p>
                       <p className="text-gray-400">Equity Offered</p>
                     </div>
                     <div>
@@ -631,13 +631,13 @@ export default function InvestorPortal() {
             <Card className="bg-gray-900 border-battles-gold">
               <CardHeader>
                 <CardTitle className="text-battles-gold">Investor Updates</CardTitle>
-                <CardDescription>Quarterly reports and milestone updates</CardDescription>
+                <CardDescription className="text-gray-300">Quarterly reports and milestone updates</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
                   <div className="border-l-4 border-green-500 pl-6">
                     <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-semibold">Q4 2024 - License Approval</h4>
+                      <h4 className="font-semibold text-white">Q4 2024 - License Approval</h4>
                       <span className="text-sm text-gray-400">December 2024</span>
                     </div>
                     <p className="text-gray-300 mb-2">
@@ -650,7 +650,7 @@ export default function InvestorPortal() {
 
                   <div className="border-l-4 border-yellow-500 pl-6">
                     <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-semibold">Q1 2025 - Site Selection & Early Investment</h4>
+                      <h4 className="font-semibold text-white">Q1 2025 - Site Selection & Early Investment</h4>
                       <span className="text-sm text-gray-400">January 2025</span>
                     </div>
                     <p className="text-gray-300 mb-2">
@@ -663,7 +663,7 @@ export default function InvestorPortal() {
 
                   <div className="border-l-4 border-gray-500 pl-6">
                     <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-semibold">Q2 2025 - Construction & Build-out</h4>
+                      <h4 className="font-semibold text-white">Q2 2025 - Construction & Build-out</h4>
                       <span className="text-sm text-gray-400">Planned</span>
                     </div>
                     <p className="text-gray-300 mb-2">
