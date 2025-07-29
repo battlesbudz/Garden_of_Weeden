@@ -11,6 +11,7 @@ import {
   investorUpdates,
   investorDocuments,
   investorAccess,
+  investorAccessRequests,
   forumCategories,
   forumPosts,
   forumComments,
@@ -45,6 +46,8 @@ import {
   type InsertInvestorDocument,
   type InvestorAccess,
   type InsertInvestorAccess,
+  type InvestorAccessRequest,
+  type InsertInvestorAccessRequest,
   type ForumCategory,
   type InsertForumCategory,
   type ForumPost,
@@ -122,9 +125,16 @@ export interface IStorage {
   deleteInvestorDocument(id: number): Promise<void>;
   
   getAllInvestorAccess(): Promise<InvestorAccess[]>;
-  getInvestorAccessByUserId(userId: number): Promise<InvestorAccess | undefined>;
+  getInvestorAccessByUserId(userId: string): Promise<InvestorAccess | undefined>;
   createInvestorAccess(access: InsertInvestorAccess): Promise<InvestorAccess>;
   updateInvestorAccess(id: number, access: Partial<InsertInvestorAccess>): Promise<InvestorAccess>;
+  
+  // Investor access requests
+  createInvestorAccessRequest(request: InsertInvestorAccessRequest): Promise<InvestorAccessRequest>;
+  getAllInvestorAccessRequests(): Promise<InvestorAccessRequest[]>;
+  getInvestorAccessRequest(id: number): Promise<InvestorAccessRequest | undefined>;
+  updateInvestorAccessRequestStatus(id: number, status: 'approved' | 'denied', adminNotes?: string, reviewedBy?: string): Promise<InvestorAccessRequest>;
+  checkInvestorHasAccess(userId: string): Promise<boolean>;
   
   // Forum operations
   getAllForumCategories(): Promise<ForumCategory[]>;
@@ -339,9 +349,14 @@ export class MemStorage implements IStorage {
   async updateInvestorDocument(id: number, document: Partial<InsertInvestorDocument>): Promise<InvestorDocument> { throw new Error("Not implemented in MemStorage"); }
   async deleteInvestorDocument(id: number): Promise<void> { throw new Error("Not implemented in MemStorage"); }
   async getAllInvestorAccess(): Promise<InvestorAccess[]> { return []; }
-  async getInvestorAccessByUserId(userId: number): Promise<InvestorAccess | undefined> { return undefined; }
+  async getInvestorAccessByUserId(userId: string): Promise<InvestorAccess | undefined> { return undefined; }
   async createInvestorAccess(access: InsertInvestorAccess): Promise<InvestorAccess> { throw new Error("Not implemented in MemStorage"); }
   async updateInvestorAccess(id: number, access: Partial<InsertInvestorAccess>): Promise<InvestorAccess> { throw new Error("Not implemented in MemStorage"); }
+  async createInvestorAccessRequest(request: InsertInvestorAccessRequest): Promise<InvestorAccessRequest> { throw new Error("Not implemented in MemStorage"); }
+  async getAllInvestorAccessRequests(): Promise<InvestorAccessRequest[]> { return []; }
+  async getInvestorAccessRequest(id: number): Promise<InvestorAccessRequest | undefined> { return undefined; }
+  async updateInvestorAccessRequestStatus(id: number, status: 'approved' | 'denied', adminNotes?: string, reviewedBy?: string): Promise<InvestorAccessRequest> { throw new Error("Not implemented in MemStorage"); }
+  async checkInvestorHasAccess(userId: string): Promise<boolean> { return false; }
   async getAllForumCategories(): Promise<ForumCategory[]> { return []; }
   async getActiveForumCategories(): Promise<ForumCategory[]> { return []; }
   async createForumCategory(category: InsertForumCategory): Promise<ForumCategory> { throw new Error("Not implemented in MemStorage"); }
@@ -570,7 +585,7 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(investorAccess);
   }
 
-  async getInvestorAccessByUserId(userId: number): Promise<InvestorAccess | undefined> {
+  async getInvestorAccessByUserId(userId: string): Promise<InvestorAccess | undefined> {
     const [access] = await db
       .select()
       .from(investorAccess)
@@ -593,6 +608,57 @@ export class DatabaseStorage implements IStorage {
       .where(eq(investorAccess.id, id))
       .returning();
     return access;
+  }
+
+  // Investor access request methods
+  async createInvestorAccessRequest(insertRequest: InsertInvestorAccessRequest): Promise<InvestorAccessRequest> {
+    const [request] = await db
+      .insert(investorAccessRequests)
+      .values(insertRequest)
+      .returning();
+    return request;
+  }
+
+  async getAllInvestorAccessRequests(): Promise<InvestorAccessRequest[]> {
+    return await db
+      .select()
+      .from(investorAccessRequests)
+      .orderBy(desc(investorAccessRequests.createdAt));
+  }
+
+  async getInvestorAccessRequest(id: number): Promise<InvestorAccessRequest | undefined> {
+    const [request] = await db
+      .select()
+      .from(investorAccessRequests)
+      .where(eq(investorAccessRequests.id, id));
+    return request;
+  }
+
+  async updateInvestorAccessRequestStatus(
+    id: number, 
+    status: 'approved' | 'denied', 
+    adminNotes?: string, 
+    reviewedBy?: string
+  ): Promise<InvestorAccessRequest> {
+    const [request] = await db
+      .update(investorAccessRequests)
+      .set({
+        status,
+        adminNotes,
+        reviewedBy,
+        reviewedAt: new Date(),
+      })
+      .where(eq(investorAccessRequests.id, id))
+      .returning();
+    return request;
+  }
+
+  async checkInvestorHasAccess(userId: string): Promise<boolean> {
+    const [access] = await db
+      .select()
+      .from(investorAccess)
+      .where(and(eq(investorAccess.userId, userId), eq(investorAccess.isActive, true)));
+    return !!access;
   }
 
   // Forum methods

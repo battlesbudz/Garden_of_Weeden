@@ -12,6 +12,7 @@ import {
   insertForumCommentSchema,
   insertMeetingRequestSchema,
   insertInvestorMessageSchema,
+  insertInvestorAccessRequestSchema,
   insertUserPointsSchema,
   insertPointTransactionSchema,
   insertAchievementSchema,
@@ -19,6 +20,7 @@ import {
   type User,
   type MeetingRequest,
   type InvestorMessage,
+  type InvestorAccessRequest,
   type UserPoints,
   type PointTransaction,
   type Achievement,
@@ -278,6 +280,57 @@ async function sendExperienceBookingNotification(booking: any) {
     console.log('Experience booking admin notification sent');
   } catch (error) {
     console.error('Failed to send experience booking admin notification:', error);
+  }
+}
+
+// Investor access request email notifications
+async function sendInvestorAccessRequestNotification(request: InvestorAccessRequest) {
+  if (!mailService) {
+    console.log('SendGrid not configured - skipping email notification');
+    return;
+  }
+
+  try {
+    // Send notification to admin about new investor access request
+    await mailService.send({
+      to: 'Battlesbudz@gmail.com',
+      from: 'Battlesbudz@gmail.com', 
+      subject: `New Investor Access Request: ${request.firstName} ${request.lastName} - Battles Budz`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
+            🔑 New Investor Access Request
+          </h2>
+          <div style="padding: 20px; background-color: #f9f9f9;">
+            <h3>Applicant Information:</h3>
+            <p><strong>Name:</strong> ${request.firstName} ${request.lastName}</p>
+            <p><strong>Email:</strong> ${request.email}</p>
+            <p><strong>Phone:</strong> ${request.phone || 'Not provided'}</p>
+            <p><strong>Company:</strong> ${request.company || 'Not provided'}</p>
+            <p><strong>Position:</strong> ${request.position || 'Not provided'}</p>
+            
+            <h3>Investment Details:</h3>
+            <div style="background-color: white; padding: 15px; border-left: 3px solid #FFD700; margin: 15px 0;">
+              <p><strong>Investment Interest:</strong> ${request.investmentInterest}</p>
+              <p><strong>Net Worth:</strong> ${request.netWorth || 'Not provided'}</p>
+              <p><strong>Investment Experience:</strong> ${request.investmentExperience || 'Not provided'}</p>
+              <p><strong>Reason for Interest:</strong></p>
+              <p style="white-space: pre-wrap; background-color: #f8f8f8; padding: 10px; border-radius: 5px;">${request.reasonForInterest}</p>
+              <p><strong>Submitted:</strong> ${new Date(request.createdAt || new Date()).toLocaleString()}</p>
+            </div>
+            
+            <p><strong>⏰ Action Required:</strong> Review and approve/deny this investor access request in the admin portal.</p>
+          </div>
+          <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
+            <p><strong>Battles Budz Investor Admin</strong></p>
+            <p>📞 904-415-7635 | 📧 Battlesbudz@gmail.com</p>
+          </div>
+        </div>
+      `
+    });
+    console.log('Investor access request notification sent to admin');
+  } catch (error) {
+    console.error('Failed to send investor access request notification:', error);
   }
 }
 
@@ -1151,6 +1204,104 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching investor messages:", error);
       res.status(500).json({ message: "Failed to fetch your messages" });
+    }
+  });
+
+  // Investor Access Request Routes
+
+  // Submit investor access request (public)
+  app.post("/api/investor/access-request", async (req, res) => {
+    try {
+      const validatedData = insertInvestorAccessRequestSchema.parse(req.body);
+      const request = await storage.createInvestorAccessRequest(validatedData);
+      
+      // Send email notification to admin
+      await sendInvestorAccessRequestNotification(request);
+      
+      res.status(201).json({ 
+        message: "Access request submitted successfully. We'll review your application and get back to you within 48 hours.",
+        requestId: request.id
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid request data",
+          errors: error.errors 
+        });
+      }
+      console.error("Investor access request error:", error);
+      res.status(500).json({ message: "Failed to submit access request" });
+    }
+  });
+
+  // Get all investor access requests (admin only)
+  app.get("/api/investor/access-requests", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || user.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const requests = await storage.getAllInvestorAccessRequests();
+      res.json(requests);
+    } catch (error) {
+      console.error("Error fetching access requests:", error);
+      res.status(500).json({ message: "Failed to fetch access requests" });
+    }
+  });
+
+  // Approve or deny investor access request (admin only)
+  app.patch("/api/investor/access-request/:id", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || user.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const requestId = parseInt(req.params.id);
+      const { status, adminNotes } = req.body;
+      
+      if (!['approved', 'denied'].includes(status)) {
+        return res.status(400).json({ message: "Status must be 'approved' or 'denied'" });
+      }
+
+      const updatedRequest = await storage.updateInvestorAccessRequestStatus(
+        requestId, 
+        status, 
+        adminNotes, 
+        userId
+      );
+
+      // If approved, create investor access record
+      if (status === 'approved') {
+        // Create user account if they don't have one yet
+        // For now, we'll create access record only when they actually login
+        // The checkInvestorHasAccess function will handle this logic
+      }
+      
+      res.json({ 
+        message: `Access request ${status} successfully`,
+        request: updatedRequest 
+      });
+    } catch (error) {
+      console.error("Error updating access request:", error);
+      res.status(500).json({ message: "Failed to update access request" });
+    }
+  });
+
+  // Check if current user has investor access (authenticated users)
+  app.get("/api/investor/check-access", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const hasAccess = await storage.checkInvestorHasAccess(userId);
+      res.json({ hasAccess });
+    } catch (error) {
+      console.error("Error checking investor access:", error);
+      res.status(500).json({ message: "Failed to check access" });
     }
   });
 

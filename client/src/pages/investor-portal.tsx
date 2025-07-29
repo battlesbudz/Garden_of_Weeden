@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Navigation from "@/components/navigation";
+import InvestorAccessRequestForm from "@/components/investor-access-request-form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -35,15 +36,25 @@ import {
   Send,
   MessageSquare,
   Clock,
-  CheckCircle2
+  CheckCircle2,
+  Lock
 } from "lucide-react";
 
 export default function InvestorPortal() {
   const { toast } = useToast();
   const { isAuthenticated, isLoading, user } = useAuth();
   const [showInvestorLogin, setShowInvestorLogin] = useState(false);
+  const [showAccessRequestForm, setShowAccessRequestForm] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
   const queryClient = useQueryClient();
+
+  // Check if authenticated user has investor access
+  const { data: accessCheck, isLoading: accessLoading } = useQuery({
+    queryKey: ["/api/investor/check-access"],
+    enabled: isAuthenticated,
+  });
+
+  const hasInvestorAccess = accessCheck?.hasAccess || false;
 
   // Load Calendly script when modal opens
   useEffect(() => {
@@ -129,8 +140,8 @@ export default function InvestorPortal() {
     );
   }
 
-  // Investor Login Modal for non-authenticated users
-  const InvestorLoginModal = () => (
+  // Investor Access Modal for non-authenticated users
+  const InvestorAccessModal = () => (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
       <Card className="max-w-md w-full bg-black border-battles-gold">
         <CardHeader className="text-center">
@@ -143,16 +154,45 @@ export default function InvestorPortal() {
           </p>
         </CardHeader>
         <CardContent className="text-center space-y-4">
-          <Button 
-            onClick={() => window.location.href = '/api/login'}
-            className="bg-battles-gold hover:bg-battles-gold/90 text-black font-semibold w-full"
-          >
-            Sign In as Investor
-          </Button>
+          <div className="space-y-3">
+            <p className="text-sm text-gray-300">Already an approved investor?</p>
+            <Button 
+              onClick={() => window.location.href = '/api/login'}
+              className="bg-battles-gold hover:bg-battles-gold/90 text-black font-semibold w-full"
+            >
+              <Shield className="h-4 w-4 mr-2" />
+              Sign In to Portal
+            </Button>
+          </div>
+          
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-gray-600" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-black px-2 text-gray-400">or</span>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <p className="text-sm text-gray-300">New to Battles Budz?</p>
+            <Button 
+              onClick={() => {
+                setShowInvestorLogin(false);
+                setShowAccessRequestForm(true);
+              }}
+              variant="outline"
+              className="w-full border-battles-gold text-battles-gold hover:bg-battles-gold/10"
+            >
+              <Lock className="h-4 w-4 mr-2" />
+              Request Investor Access
+            </Button>
+          </div>
+
           <Button 
             onClick={() => setShowInvestorLogin(false)}
-            variant="outline"
-            className="w-full border-battles-gold text-battles-gold"
+            variant="ghost"
+            className="w-full text-gray-400 hover:text-white"
           >
             Cancel
           </Button>
@@ -173,7 +213,10 @@ export default function InvestorPortal() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {showInvestorLogin && <InvestorLoginModal />}
+      {showInvestorLogin && <InvestorAccessModal />}
+      {showAccessRequestForm && (
+        <InvestorAccessRequestForm onClose={() => setShowAccessRequestForm(false)} />
+      )}
       
       {/* Use consistent navigation across all pages */}
       <Navigation />
@@ -183,17 +226,45 @@ export default function InvestorPortal() {
         {/* Investor Access Section */}
         <div className="text-center mb-8 py-8 sm:py-12">
           {isAuthenticated ? (
-            <div className="space-y-8">
-              <div className="flex flex-col items-center space-y-6">
-                <img src={battlesLogo} alt="Battles Budz Logo" className="h-32 w-32 sm:h-48 sm:w-48 lg:h-64 lg:w-64 object-contain drop-shadow-2xl" />
-                <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-battles-gold px-4">Battles Budz Investor Portal</h1>
+            accessLoading ? (
+              <div className="space-y-8">
+                <div className="flex flex-col items-center space-y-6">
+                  <img src={battlesLogo} alt="Battles Budz Logo" className="h-32 w-32 sm:h-48 sm:w-48 lg:h-64 lg:w-64 object-contain drop-shadow-2xl" />
+                  <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-battles-gold px-4">Checking access...</h1>
+                </div>
               </div>
-              <p className="text-base sm:text-lg text-gray-300 px-4">Licensed NY Cannabis Microbusiness</p>
-              <Badge className="bg-battles-gold text-black text-sm sm:text-lg px-4 sm:px-6 py-2 sm:py-3">
-                <Shield className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
-                Investor Access
-              </Badge>
-            </div>
+            ) : hasInvestorAccess ? (
+              <div className="space-y-8">
+                <div className="flex flex-col items-center space-y-6">
+                  <img src={battlesLogo} alt="Battles Budz Logo" className="h-32 w-32 sm:h-48 sm:w-48 lg:h-64 lg:w-64 object-contain drop-shadow-2xl" />
+                  <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-battles-gold px-4">Battles Budz Investor Portal</h1>
+                </div>
+                <p className="text-base sm:text-lg text-gray-300 px-4">Licensed NY Cannabis Microbusiness</p>
+                <Badge className="bg-battles-gold text-black text-sm sm:text-lg px-4 sm:px-6 py-2 sm:py-3">
+                  <Shield className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                  Investor Access Approved
+                </Badge>
+              </div>
+            ) : (
+              <div className="space-y-8">
+                <div className="flex flex-col items-center space-y-6">
+                  <img src={battlesLogo} alt="Battles Budz Logo" className="h-32 w-32 sm:h-48 sm:w-48 lg:h-64 lg:w-64 object-contain drop-shadow-2xl" />
+                  <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-battles-gold px-4">Access Not Approved</h1>
+                </div>
+                <div className="max-w-md mx-auto text-center space-y-4">
+                  <p className="text-gray-300">
+                    Your account doesn't have approved investor access yet. Please contact us or submit a request to gain access to the investor portal.
+                  </p>
+                  <Button 
+                    onClick={() => setShowAccessRequestForm(true)}
+                    className="bg-battles-gold hover:bg-battles-gold/90 text-black font-semibold"
+                  >
+                    <Lock className="h-4 w-4 mr-2" />
+                    Request Investor Access
+                  </Button>
+                </div>
+              </div>
+            )
           ) : (
             <div className="space-y-8">
               <div className="flex flex-col items-center space-y-6">
@@ -259,7 +330,7 @@ export default function InvestorPortal() {
           <img src={battlesLogo} alt="Battles Budz Logo" className="h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24 object-contain drop-shadow-xl" />
         </div>
 
-        <Tabs defaultValue={isAuthenticated ? "dashboard" : "about"} className="space-y-6">
+        <Tabs defaultValue={isAuthenticated && hasInvestorAccess ? "dashboard" : "about"} className="space-y-6">
           <div className="w-full overflow-hidden">
             <TabsList className="flex w-full justify-start overflow-x-auto bg-gray-900 p-1 h-auto min-h-[40px] no-scrollbar">
               {/* Public tabs - always visible */}
@@ -275,8 +346,8 @@ export default function InvestorPortal() {
                 Media
               </TabsTrigger>
               
-              {/* Authenticated tabs - only visible when logged in */}
-              {isAuthenticated && (
+              {/* Investor tabs - only visible when logged in AND has investor access */}
+              {isAuthenticated && hasInvestorAccess && (
                 <>
                   <TabsTrigger value="dashboard" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
                     Dashboard
@@ -381,8 +452,8 @@ export default function InvestorPortal() {
             </TabsContent>
           )}
 
-          {/* Authenticated Dashboard Tab */}
-          {isAuthenticated && (
+          {/* Dashboard Tab - Approved Investors Only */}
+          {isAuthenticated && hasInvestorAccess && (
             <TabsContent value="dashboard" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card className="bg-gray-900 border-battles-gold">
@@ -515,8 +586,8 @@ export default function InvestorPortal() {
             </div>
           </TabsContent>
 
-          {/* Documents Tab - Authenticated Only */}
-          {isAuthenticated && (
+          {/* Documents Tab - Approved Investors Only */}
+          {isAuthenticated && hasInvestorAccess && (
             <TabsContent value="documents" className="space-y-6">
               <Card className="bg-gray-900 border-battles-gold w-full max-w-none">
                 <CardHeader>
@@ -571,8 +642,8 @@ export default function InvestorPortal() {
             </TabsContent>
           )}
 
-          {/* Financials Tab - Authenticated Only */}
-          {isAuthenticated && (
+          {/* Financials Tab - Approved Investors Only */}
+          {isAuthenticated && hasInvestorAccess && (
             <TabsContent value="financials" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card className="bg-gray-900 border-battles-gold">
@@ -642,8 +713,8 @@ export default function InvestorPortal() {
           </TabsContent>
           )}
 
-          {/* Updates Tab - Authenticated Only */}
-          {isAuthenticated && (
+          {/* Updates Tab - Approved Investors Only */}
+          {isAuthenticated && hasInvestorAccess && (
             <TabsContent value="updates" className="space-y-6">
             <Card className="bg-gray-900 border-battles-gold">
               <CardHeader>
@@ -695,8 +766,8 @@ export default function InvestorPortal() {
           </TabsContent>
           )}
 
-          {/* Messages Tab - Authenticated Only */}
-          {isAuthenticated && (
+          {/* Messages Tab - Approved Investors Only */}
+          {isAuthenticated && hasInvestorAccess && (
             <TabsContent value="messages" className="space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Send New Message */}

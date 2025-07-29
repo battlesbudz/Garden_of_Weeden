@@ -140,13 +140,33 @@ export const investorDocuments = pgTable("investor_documents", {
 
 export const investorAccess = pgTable("investor_access", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id),
+  userId: varchar("user_id").references(() => users.id),
   accessLevel: varchar("access_level", { length: 50 }).notNull(), // 'investor', 'advisor', 'board_member'
   companyName: varchar("company_name", { length: 255 }),
   investmentAmount: decimal("investment_amount", { precision: 12, scale: 2 }),
   investmentDate: timestamp("investment_date"),
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow(),
+});
+
+// New table for investor access requests
+export const investorAccessRequests = pgTable("investor_access_requests", {
+  id: serial("id").primaryKey(),
+  firstName: varchar("first_name", { length: 255 }).notNull(),
+  lastName: varchar("last_name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  phone: varchar("phone", { length: 50 }),
+  company: varchar("company", { length: 255 }),
+  position: varchar("position", { length: 255 }),
+  investmentInterest: text("investment_interest").notNull(),
+  netWorth: varchar("net_worth", { length: 100 }),
+  investmentExperience: text("investment_experience"),
+  reasonForInterest: text("reason_for_interest").notNull(),
+  status: varchar("status", { length: 20 }).default("pending").notNull(), // 'pending', 'approved', 'denied'
+  adminNotes: text("admin_notes"),
+  reviewedBy: varchar("reviewed_by").references(() => users.id),
+  reviewedAt: timestamp("reviewed_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 // Community forum tables
@@ -369,6 +389,19 @@ export const insertInvestorAccessSchema = createInsertSchema(investorAccess).pic
   isActive: true,
 });
 
+export const insertInvestorAccessRequestSchema = createInsertSchema(investorAccessRequests).pick({
+  firstName: true,
+  lastName: true,
+  email: true,
+  phone: true,
+  company: true,
+  position: true,
+  investmentInterest: true,
+  netWorth: true,
+  investmentExperience: true,
+  reasonForInterest: true,
+});
+
 // Forum insert schemas
 export const insertForumCategorySchema = createInsertSchema(forumCategories).pick({
   name: true,
@@ -470,6 +503,8 @@ export type InsertInvestorDocument = z.infer<typeof insertInvestorDocumentSchema
 export type InvestorDocument = typeof investorDocuments.$inferSelect;
 export type InsertInvestorAccess = z.infer<typeof insertInvestorAccessSchema>;
 export type InvestorAccess = typeof investorAccess.$inferSelect;
+export type InsertInvestorAccessRequest = z.infer<typeof insertInvestorAccessRequestSchema>;
+export type InvestorAccessRequest = typeof investorAccessRequests.$inferSelect;
 
 // Forum types
 export type InsertForumCategory = z.infer<typeof insertForumCategorySchema>;

@@ -44,8 +44,14 @@ export default function InvestorAdmin() {
   const queryClient = useQueryClient();
 
   // Fetch investor messages
-  const { data: investorMessages, isLoading: messagesLoading, error: messagesError } = useQuery({
+  const { data: investorMessages = [], isLoading: messagesLoading, error: messagesError } = useQuery({
     queryKey: ["/api/investor/messages"],
+    enabled: isAuthenticated && user?.role === "admin"
+  });
+
+  // Fetch investor access requests
+  const { data: accessRequests = [], isLoading: accessRequestsLoading } = useQuery({
+    queryKey: ["/api/investor/access-requests"],
     enabled: isAuthenticated && user?.role === "admin"
   });
 
@@ -120,6 +126,31 @@ export default function InvestorAdmin() {
     markAsReadMutation.mutate(messageId);
   };
 
+  // Access request approval mutation
+  const accessRequestMutation = useMutation({
+    mutationFn: async ({ requestId, status, adminNotes }: { requestId: number; status: string; adminNotes: string }) => {
+      const response = await apiRequest("PATCH", `/api/investor/access-request/${requestId}`, { 
+        status, 
+        adminNotes 
+      });
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Request Updated",
+        description: "Access request has been updated successfully.",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/investor/access-requests"] });
+    },
+    onError: (error: any) => {
+      console.error("Access request update error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update access request",
+        variant: "destructive",
+      });
+    },
+  });
 
   // Check admin access
   useEffect(() => {
@@ -193,6 +224,9 @@ export default function InvestorAdmin() {
               </TabsTrigger>
               <TabsTrigger value="updates" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
                 Updates
+              </TabsTrigger>
+              <TabsTrigger value="access-requests" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
+                Access Requests
               </TabsTrigger>
               <TabsTrigger value="communications" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3 py-2 flex-shrink-0">
                 Communications
@@ -514,6 +548,252 @@ export default function InvestorAdmin() {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* Access Requests Tab */}
+          <TabsContent value="access-requests" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-battles-gold">Investor Access Requests</h2>
+              <div className="flex gap-2">
+                <Badge variant="outline" className="text-battles-gold border-battles-gold">
+                  {accessRequests?.length || 0} Total Requests
+                </Badge>
+                <Badge variant="outline" className="text-yellow-400 border-yellow-400">
+                  {accessRequests?.filter((req: any) => req.status === 'pending').length || 0} Pending
+                </Badge>
+              </div>
+            </div>
+
+            {accessRequestsLoading ? (
+              <Card className="bg-gray-900 border-battles-gold">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-center">
+                    <div className="text-battles-gold">Loading access requests...</div>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : !accessRequests || accessRequests.length === 0 ? (
+              <Card className="bg-gray-900 border-battles-gold">
+                <CardContent className="p-6">
+                  <div className="text-center text-gray-400">
+                    <Shield className="h-12 w-12 mx-auto mb-4 text-battles-gold opacity-50" />
+                    <p className="text-lg mb-2">No access requests yet</p>
+                    <p className="text-sm">Access requests from potential investors will appear here.</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="space-y-4">
+                {accessRequests.map((request: any) => (
+                  <Card key={request.id} className="bg-gray-900 border-battles-gold">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <CardTitle className="text-battles-gold text-lg">
+                            {request.firstName} {request.lastName}
+                          </CardTitle>
+                          <CardDescription className="text-gray-300">
+                            {request.email} • {request.phone || 'No phone provided'}
+                          </CardDescription>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Badge 
+                            variant={
+                              request.status === 'pending' ? 'secondary' :
+                              request.status === 'approved' ? 'default' : 'destructive'
+                            }
+                            className={
+                              request.status === 'pending' ? 'bg-yellow-600 text-white' :
+                              request.status === 'approved' ? 'bg-green-600 text-white' :
+                              'bg-red-600 text-white'
+                            }
+                          >
+                            {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
+                          </Badge>
+                          <span className="text-xs text-gray-500">
+                            {request.createdAt ? new Date(request.createdAt).toLocaleDateString() : 'Unknown date'}
+                          </span>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {/* Professional Information */}
+                      {(request.company || request.position) && (
+                        <div>
+                          <h4 className="font-semibold text-battles-gold mb-2">Professional Information</h4>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                            {request.company && (
+                              <div>
+                                <span className="text-gray-400">Company:</span>
+                                <span className="text-white ml-2">{request.company}</span>
+                              </div>
+                            )}
+                            {request.position && (
+                              <div>
+                                <span className="text-gray-400">Position:</span>
+                                <span className="text-white ml-2">{request.position}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Investment Information */}
+                      <div>
+                        <h4 className="font-semibold text-battles-gold mb-2">Investment Interest</h4>
+                        <p className="text-gray-300 text-sm bg-gray-800 p-3 rounded">
+                          {request.investmentInterest}
+                        </p>
+                      </div>
+
+                      {request.netWorth && (
+                        <div>
+                          <h4 className="font-semibold text-battles-gold mb-2">Net Worth Range</h4>
+                          <p className="text-gray-300 text-sm">
+                            {request.netWorth.replace('-', ' - ').replace('k', 'K').replace('m', 'M')}
+                          </p>
+                        </div>
+                      )}
+
+                      {request.investmentExperience && (
+                        <div>
+                          <h4 className="font-semibold text-battles-gold mb-2">Investment Experience</h4>
+                          <p className="text-gray-300 text-sm bg-gray-800 p-3 rounded">
+                            {request.investmentExperience}
+                          </p>
+                        </div>
+                      )}
+
+                      <div>
+                        <h4 className="font-semibold text-battles-gold mb-2">Why Battles Budz?</h4>
+                        <p className="text-gray-300 text-sm bg-gray-800 p-3 rounded">
+                          {request.reasonForInterest}
+                        </p>
+                      </div>
+
+                      {/* Admin Notes */}
+                      {request.adminNotes && (
+                        <div>
+                          <h4 className="font-semibold text-battles-gold mb-2">Admin Notes</h4>
+                          <p className="text-gray-300 text-sm bg-gray-800 p-3 rounded border border-battles-gold/20">
+                            {request.adminNotes}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Action Buttons - Only show for pending requests */}
+                      {request.status === 'pending' && (
+                        <div className="flex space-x-2 pt-4 border-t border-gray-700">
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button 
+                                size="sm" 
+                                className="bg-green-600 hover:bg-green-700 text-white"
+                              >
+                                <CheckCircle className="h-4 w-4 mr-1" />
+                                Approve
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="bg-gray-900 border-battles-gold text-white">
+                              <DialogHeader>
+                                <DialogTitle className="text-battles-gold">
+                                  Approve Access Request
+                                </DialogTitle>
+                                <DialogDescription className="text-gray-300">
+                                  Approve {request.firstName} {request.lastName}'s investor access request.
+                                </DialogDescription>
+                              </DialogHeader>
+                              <div className="space-y-4">
+                                <div>
+                                  <Label className="text-white">Admin Notes (Optional)</Label>
+                                  <Textarea 
+                                    placeholder="Add any notes about this approval..."
+                                    className="bg-gray-800 border-gray-700 text-white"
+                                    onChange={(e) => setReplyText(e.target.value)}
+                                  />
+                                </div>
+                              </div>
+                              <DialogFooter>
+                                <Button
+                                  onClick={() => {
+                                    accessRequestMutation.mutate({
+                                      requestId: request.id,
+                                      status: 'approved',
+                                      adminNotes: replyText || 'Approved for investor access'
+                                    });
+                                    setReplyText('');
+                                  }}
+                                  className="bg-green-600 hover:bg-green-700 text-white"
+                                  disabled={accessRequestMutation.isPending}
+                                >
+                                  {accessRequestMutation.isPending ? 'Approving...' : 'Approve Request'}
+                                </Button>
+                              </DialogFooter>
+                            </DialogContent>
+                          </Dialog>
+
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button 
+                                size="sm" 
+                                variant="destructive"
+                              >
+                                <X className="h-4 w-4 mr-1" />
+                                Deny
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="bg-gray-900 border-battles-gold text-white">
+                              <DialogHeader>
+                                <DialogTitle className="text-battles-gold">
+                                  Deny Access Request
+                                </DialogTitle>
+                                <DialogDescription className="text-gray-300">
+                                  Deny {request.firstName} {request.lastName}'s investor access request.
+                                </DialogDescription>
+                              </DialogHeader>
+                              <div className="space-y-4">
+                                <div>
+                                  <Label className="text-white">Reason for Denial (Required)</Label>
+                                  <Textarea 
+                                    placeholder="Please provide a reason for denial..."
+                                    className="bg-gray-800 border-gray-700 text-white"
+                                    onChange={(e) => setReplyText(e.target.value)}
+                                  />
+                                </div>
+                              </div>
+                              <DialogFooter>
+                                <Button
+                                  onClick={() => {
+                                    if (!replyText.trim()) {
+                                      toast({
+                                        title: "Reason Required",
+                                        description: "Please provide a reason for denial.",
+                                        variant: "destructive",
+                                      });
+                                      return;
+                                    }
+                                    accessRequestMutation.mutate({
+                                      requestId: request.id,
+                                      status: 'denied',
+                                      adminNotes: replyText
+                                    });
+                                    setReplyText('');
+                                  }}
+                                  variant="destructive"
+                                  disabled={accessRequestMutation.isPending}
+                                >
+                                  {accessRequestMutation.isPending ? 'Denying...' : 'Deny Request'}
+                                </Button>
+                              </DialogFooter>
+                            </DialogContent>
+                          </Dialog>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
           </TabsContent>
 
           {/* Communications Tab */}
