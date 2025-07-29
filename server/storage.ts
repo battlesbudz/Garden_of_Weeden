@@ -654,11 +654,26 @@ export class DatabaseStorage implements IStorage {
   }
 
   async checkInvestorHasAccess(userId: string): Promise<boolean> {
+    // First get the user's email from their user record
+    const user = await this.getUser(userId);
+    if (!user) return false;
+    
+    // Check if user has an approved access request using their email
+    const [request] = await db
+      .select()
+      .from(investorAccessRequests)
+      .where(and(
+        eq(investorAccessRequests.email, user.email),
+        eq(investorAccessRequests.status, 'approved')
+      ));
+    
+    // Also check the investorAccess table for any existing access records
     const [access] = await db
       .select()
       .from(investorAccess)
       .where(and(eq(investorAccess.userId, userId), eq(investorAccess.isActive, true)));
-    return !!access;
+    
+    return !!(request || access);
   }
 
   // Forum methods
