@@ -97,8 +97,9 @@ export default function InvestorAccessRequestForm({ onClose }: InvestorAccessReq
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-      <Card className="max-w-2xl w-full bg-black border-battles-gold my-8">
+    <div className="fixed inset-0 bg-black/50 z-50 overflow-y-auto">
+      <div className="min-h-screen flex py-8 px-4">
+        <Card className="max-w-2xl w-full bg-black border-battles-gold m-auto">
         <CardHeader className="text-center">
           <Shield className="h-12 w-12 text-battles-gold mx-auto mb-4" />
           <CardTitle className="text-2xl font-playfair text-battles-gold">
@@ -186,7 +187,8 @@ export default function InvestorAccessRequestForm({ onClose }: InvestorAccessReq
                           <Input 
                             placeholder="(555) 123-4567" 
                             className="bg-gray-900 border-gray-700 text-white"
-                            {...field} 
+                            {...field}
+                            value={field.value || ""}
                           />
                         </FormControl>
                         <FormMessage />
@@ -214,7 +216,8 @@ export default function InvestorAccessRequestForm({ onClose }: InvestorAccessReq
                           <Input 
                             placeholder="Company Name" 
                             className="bg-gray-900 border-gray-700 text-white"
-                            {...field} 
+                            {...field}
+                            value={field.value || ""}
                           />
                         </FormControl>
                         <FormMessage />
@@ -232,7 +235,8 @@ export default function InvestorAccessRequestForm({ onClose }: InvestorAccessReq
                           <Input 
                             placeholder="CEO, Investor, etc." 
                             className="bg-gray-900 border-gray-700 text-white"
-                            {...field} 
+                            {...field}
+                            value={field.value || ""}
                           />
                         </FormControl>
                         <FormMessage />
@@ -276,7 +280,7 @@ export default function InvestorAccessRequestForm({ onClose }: InvestorAccessReq
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-white">Net Worth Range</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
+                      <Select onValueChange={field.onChange} value={field.value || ""}>
                         <FormControl>
                           <SelectTrigger className="bg-gray-900 border-gray-700 text-white">
                             <SelectValue placeholder="Select net worth range" />
@@ -307,7 +311,8 @@ export default function InvestorAccessRequestForm({ onClose }: InvestorAccessReq
                         <Textarea 
                           placeholder="Please describe your previous investment experience, particularly in cannabis or similar industries..."
                           className="bg-gray-900 border-gray-700 text-white min-h-[80px]"
-                          {...field} 
+                          {...field}
+                          value={field.value || ""}
                         />
                       </FormControl>
                       <FormDescription className="text-gray-400">
@@ -360,7 +365,8 @@ export default function InvestorAccessRequestForm({ onClose }: InvestorAccessReq
             </form>
           </Form>
         </CardContent>
-      </Card>
+        </Card>
+      </div>
     </div>
   );
 }
