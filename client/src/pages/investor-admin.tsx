@@ -258,8 +258,10 @@ export default function InvestorAdmin() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-2xl font-bold text-green-400">Committed</p>
-                  <p className="text-sm text-gray-400">First investment secured</p>
+                  <div>
+                    <p className="text-2xl font-bold text-green-400">Committed</p>
+                    <p className="text-sm text-gray-400">First investment secured</p>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -887,7 +889,7 @@ export default function InvestorAdmin() {
                         <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
                           <p className="text-gray-300 whitespace-pre-wrap">{message.message}</p>
                         </div>
-                        
+
                         {message.adminReply && (
                           <div className="p-4 bg-battles-gold/10 rounded-lg border border-battles-gold/30">
                             <p className="text-sm text-battles-gold font-medium mb-2">Admin Reply:</p>
@@ -899,7 +901,7 @@ export default function InvestorAdmin() {
                             )}
                           </div>
                         )}
-                        
+
                         <div className="flex gap-2">
                           <Button 
                             size="sm" 
@@ -971,7 +973,7 @@ export default function InvestorAdmin() {
               Send a reply to {selectedMessage?.investorName} regarding: "{selectedMessage?.subject}"
             </DialogDescription>
           </DialogHeader>
-          
+
           {selectedMessage && (
             <div className="space-y-4">
               {/* Original Message Display */}

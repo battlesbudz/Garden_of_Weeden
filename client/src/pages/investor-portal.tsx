@@ -207,7 +207,7 @@ export default function InvestorPortal() {
     licenseNumber: "OCMMICR-2023-000258",
     location: "19 North Main Street, Gloversville, NY",
     fundingRound: "$1M for 10% equity",
-    capitalRaised: "Early investment secured",
+    capitalRaised: "Funding in progress",
     nextMilestone: "Site approval completion"
   };
 
@@ -661,8 +661,8 @@ export default function InvestorPortal() {
                       <p className="text-gray-400">Equity Offered</p>
                     </div>
                     <div>
-                      <p className="text-lg text-green-400">Early Investment Secured</p>
-                      <p className="text-gray-400">First investor commitment received</p>
+                      <p className="text-lg text-battles-gold">Funding Active</p>
+                      <p className="text-gray-400">Seeking strategic investors</p>
                     </div>
                   </div>
                 </CardContent>
