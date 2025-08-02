@@ -11,8 +11,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { ObjectUploader } from "@/components/ObjectUploader";
 import Navigation from "@/components/navigation";
+import type { UploadResult } from "@uppy/core";
 import { 
   Shield, 
   Upload, 
@@ -25,14 +29,46 @@ import {
   Trash2,
   Download,
   Eye,
+  EyeOff,
   Calendar,
   DollarSign,
   Settings,
   Clock,
   CheckCircle,
   Send,
-  X
+  X,
+  Reply
 } from "lucide-react";
+
+interface SecureDocument {
+  id: number;
+  title: string;
+  description: string | null;
+  fileName: string;
+  filePath: string;
+  fileSize: number;
+  mimeType: string;
+  uploadedBy: string;
+  uploadedByRole: "investor" | "admin";
+  ownerInvestorId: string | null;
+  isVisible: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface Investor {
+  id: string;
+  email: string;
+  firstName: string | null;
+  lastName: string | null;
+  status: "pending" | "approved" | "rejected";
+}
+
+interface DocumentUploadFormData {
+  title: string;
+  description: string;
+  assignedInvestorIds: string[];
+}
 
 export default function InvestorAdmin() {
   const { toast } = useToast();
@@ -42,6 +78,21 @@ export default function InvestorAdmin() {
   const [selectedMessage, setSelectedMessage] = useState<any>(null);
   const [replyText, setReplyText] = useState("");
   const queryClient = useQueryClient();
+
+  // Document management state
+  const [showUploadDialog, setShowUploadDialog] = useState(false);
+  const [selectedInvestorFilter, setSelectedInvestorFilter] = useState<string>("all");
+  const [uploadForm, setUploadForm] = useState<DocumentUploadFormData>({
+    title: "",
+    description: "",
+    assignedInvestorIds: [],
+  });
+  const [pendingUpload, setPendingUpload] = useState<{
+    fileName: string;
+    filePath: string;
+    fileSize: number;
+    mimeType: string;
+  } | null>(null);
 
   // Fetch investor messages
   const { data: investorMessages = [], isLoading: messagesLoading, error: messagesError } = useQuery({
@@ -54,6 +105,26 @@ export default function InvestorAdmin() {
     queryKey: ["/api/investor/access-requests"],
     enabled: isAuthenticated && user?.role === "admin"
   });
+
+  // Fetch documents for admin management
+  const { data: documentsData, isLoading: documentsLoading } = useQuery({
+    queryKey: ["/api/admin/investor-docs/list", selectedInvestorFilter],
+    queryFn: () => {
+      const params = selectedInvestorFilter !== "all" ? `?investorId=${selectedInvestorFilter}` : "";
+      return apiRequest(`/api/admin/investor-docs/list${params}`);
+    },
+    enabled: isAuthenticated && user?.role === "admin"
+  });
+
+  // Fetch investors for document assignment
+  const { data: investorsData, isLoading: investorsLoading } = useQuery({
+    queryKey: ["/api/admin/investors"],
+    enabled: isAuthenticated && user?.role === "admin"
+  });
+
+  const documents = (documentsData as any)?.documents || [];
+  const investors = (investorsData as any)?.investors || [];
+  const approvedInvestors = investors.filter((inv: Investor) => inv.status === "approved");
 
   // Reply to message mutation
   const replyMutation = useMutation({
@@ -151,6 +222,181 @@ export default function InvestorAdmin() {
       });
     },
   });
+
+  // Document management mutations
+  const getUploadUrlMutation = useMutation({
+    mutationFn: async () => {
+      return await apiRequest("/api/admin/investor-docs/upload", {
+        method: "POST",
+        body: JSON.stringify({}),
+      });
+    },
+    onError: (error) => {
+      console.error("Upload URL error:", error);
+      toast({
+        title: "Upload Error",
+        description: "Failed to get upload URL. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const completeUploadMutation = useMutation({
+    mutationFn: async (data: any) => {
+      return await apiRequest("/api/admin/investor-docs/complete", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
+      setShowUploadDialog(false);
+      setUploadForm({ title: "", description: "", assignedInvestorIds: [] });
+      setPendingUpload(null);
+      toast({
+        title: "Success",
+        description: "Document uploaded and assigned successfully!",
+      });
+    },
+    onError: (error) => {
+      console.error("Complete upload error:", error);
+      toast({
+        title: "Upload Error",
+        description: "Failed to complete upload. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const toggleVisibilityMutation = useMutation({
+    mutationFn: async ({ documentId, isVisible }: { documentId: number; isVisible: boolean }) => {
+      return await apiRequest(`/api/admin/investor-docs/${documentId}/visibility`, {
+        method: "PATCH",
+        body: JSON.stringify({ isVisible }),
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
+      toast({
+        title: "Success",
+        description: "Document visibility updated successfully!",
+      });
+    },
+    onError: (error) => {
+      console.error("Visibility toggle error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update document visibility.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deleteDocumentMutation = useMutation({
+    mutationFn: async (documentId: number) => {
+      return await apiRequest(`/api/admin/investor-docs/${documentId}`, {
+        method: "DELETE",
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
+      toast({
+        title: "Success",
+        description: "Document deleted successfully!",
+      });
+    },
+    onError: (error) => {
+      console.error("Delete document error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete document.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Document management handlers
+  const handleGetUploadParameters = async () => {
+    const result = await getUploadUrlMutation.mutateAsync();
+    return {
+      method: "PUT" as const,
+      url: (result as any).uploadURL,
+    };
+  };
+
+  const handleUploadComplete = (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
+    if (result.successful && result.successful.length > 0) {
+      const file = result.successful[0];
+      setPendingUpload({
+        fileName: file.name,
+        filePath: (file as any).uploadURL || "",
+        fileSize: file.size || 0,
+        mimeType: file.type || "application/octet-stream",
+      });
+    }
+  };
+
+  const handleSubmitUpload = () => {
+    if (!pendingUpload || !uploadForm.title.trim()) {
+      toast({
+        title: "Error",
+        description: "Please fill in the title and upload a file.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    completeUploadMutation.mutate({
+      title: uploadForm.title,
+      description: uploadForm.description,
+      fileName: pendingUpload.fileName,
+      filePath: pendingUpload.filePath,
+      fileSize: pendingUpload.fileSize,
+      mimeType: pendingUpload.mimeType,
+      assignedInvestorIds: uploadForm.assignedInvestorIds,
+    });
+  };
+
+  const handleDownloadDocument = async (documentId: number, fileName: string) => {
+    try {
+      const response = await fetch(`/api/admin/investor-docs/${documentId}/download`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${user?.token || ''}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Download failed: ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error("Download error:", error);
+      toast({
+        title: "Download Error",
+        description: "Failed to download document. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+  };
 
   // Check admin access
   useEffect(() => {
@@ -422,61 +668,213 @@ export default function InvestorAdmin() {
           <TabsContent value="documents" className="space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold text-battles-gold">Document Management</h2>
-              <Button onClick={handleDocumentUpload} className="bg-battles-gold text-black hover:bg-yellow-600">
-                <Upload className="h-4 w-4 mr-2" />
-                Upload Document
-              </Button>
+              <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
+                <DialogTrigger asChild>
+                  <Button className="bg-battles-gold text-black hover:bg-yellow-600">
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload Document
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-gray-900 border-battles-gold text-white max-w-2xl">
+                  <DialogHeader>
+                    <DialogTitle className="text-battles-gold">Upload New Document</DialogTitle>
+                    <DialogDescription className="text-gray-300">
+                      Upload and assign documents to investors. You can control visibility and access per investor.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <div>
+                      <Label className="text-white">Title *</Label>
+                      <Input
+                        value={uploadForm.title}
+                        onChange={(e) => setUploadForm({ ...uploadForm, title: e.target.value })}
+                        placeholder="Document title"
+                        className="bg-gray-800 border-gray-700 text-white"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-white">Description</Label>
+                      <Textarea
+                        value={uploadForm.description}
+                        onChange={(e) => setUploadForm({ ...uploadForm, description: e.target.value })}
+                        placeholder="Optional document description"
+                        className="bg-gray-800 border-gray-700 text-white"
+                        rows={3}
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-white">Assign to Investors</Label>
+                      <div className="space-y-2 max-h-32 overflow-y-auto">
+                        {approvedInvestors.map((investor: Investor) => (
+                          <div key={investor.id} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={investor.id}
+                              checked={uploadForm.assignedInvestorIds.includes(investor.id)}
+                              onCheckedChange={(checked) => {
+                                if (checked) {
+                                  setUploadForm({
+                                    ...uploadForm,
+                                    assignedInvestorIds: [...uploadForm.assignedInvestorIds, investor.id]
+                                  });
+                                } else {
+                                  setUploadForm({
+                                    ...uploadForm,
+                                    assignedInvestorIds: uploadForm.assignedInvestorIds.filter(id => id !== investor.id)
+                                  });
+                                }
+                              }}
+                            />
+                            <Label htmlFor={investor.id} className="text-white">
+                              {investor.firstName} {investor.lastName} ({investor.email})
+                            </Label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-white">File Upload</Label>
+                      <ObjectUploader
+                        maxNumberOfFiles={1}
+                        maxFileSize={50485760} // 50MB
+                        onGetUploadParameters={handleGetUploadParameters}
+                        onComplete={handleUploadComplete}
+                        buttonClassName="w-full bg-gray-800 hover:bg-gray-700 border-gray-600"
+                      >
+                        <div className="flex items-center justify-center space-x-2 py-3">
+                          <Upload className="h-4 w-4" />
+                          <span>Choose File to Upload</span>
+                        </div>
+                      </ObjectUploader>
+                      {pendingUpload && (
+                        <div className="mt-2 p-2 bg-gray-800 rounded border border-battles-gold/30">
+                          <p className="text-sm text-battles-gold">✓ File ready: {pendingUpload.fileName}</p>
+                          <p className="text-xs text-gray-400">Size: {formatFileSize(pendingUpload.fileSize)}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button
+                      onClick={handleSubmitUpload}
+                      disabled={!pendingUpload || !uploadForm.title.trim() || completeUploadMutation.isPending}
+                      className="bg-battles-gold text-black hover:bg-yellow-600"
+                    >
+                      {completeUploadMutation.isPending ? "Uploading..." : "Upload Document"}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
 
+            {/* Filter Controls */}
+            <Card className="bg-gray-900 border-battles-gold">
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-4">
+                  <Label className="text-white">Filter by Investor:</Label>
+                  <Select value={selectedInvestorFilter} onValueChange={setSelectedInvestorFilter}>
+                    <SelectTrigger className="w-48 bg-gray-800 border-gray-700">
+                      <SelectValue placeholder="All Investors" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-gray-800 border-battles-gold">
+                      <SelectItem value="all">All Investors</SelectItem>
+                      {approvedInvestors.map((investor: Investor) => (
+                        <SelectItem key={investor.id} value={investor.id}>
+                          {investor.firstName} {investor.lastName}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Documents List */}
             <Card className="bg-gray-900 border-battles-gold">
               <CardHeader>
-                <CardTitle className="text-battles-gold">Current Documents</CardTitle>
+                <CardTitle className="text-battles-gold">Document Library</CardTitle>
+                <CardDescription className="text-gray-300">
+                  Manage document visibility and access permissions
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <FileText className="h-8 w-8 text-battles-gold" />
-                      <div>
-                        <p className="font-medium text-white">MIPA - Kai Turell Investment</p>
-                        <p className="text-sm text-gray-400">$15,000 for 10% membership interest - Effective July 11, 2025</p>
-                        <p className="text-xs text-red-400 mt-1">🔒 Admin Only - Confidential</p>
-                      </div>
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
-                        <Download className="h-4 w-4" />
-                      </Button>
-                      <Button size="sm" variant="outline" className="border-red-500 text-red-500">
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
+                {documentsLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <div className="text-battles-gold">Loading documents...</div>
                   </div>
-
-                  <div className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <FileText className="h-8 w-8 text-battles-gold" />
-                      <div>
-                        <p className="font-medium text-gray-200">Pitch Deck</p>
-                        <p className="text-sm text-gray-400">Uploaded: January 10, 2025 • Size: 5.2 MB</p>
-                      </div>
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
-                        <Download className="h-4 w-4" />
-                      </Button>
-                      <Button size="sm" variant="outline" className="border-red-500 text-red-500">
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
+                ) : documents.length === 0 ? (
+                  <div className="text-center py-8 text-gray-400">
+                    <FileText className="h-12 w-12 mx-auto mb-4 text-battles-gold opacity-50" />
+                    <p className="text-lg mb-2">No documents uploaded yet</p>
+                    <p className="text-sm">Upload your first document to get started.</p>
                   </div>
-                </div>
+                ) : (
+                  <div className="space-y-4">
+                    {documents.map((doc: SecureDocument) => (
+                      <div key={doc.id} className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
+                        <div className="flex items-center space-x-3">
+                          <FileText className="h-8 w-8 text-battles-gold" />
+                          <div>
+                            <p className="font-medium text-white">{doc.title}</p>
+                            {doc.description && (
+                              <p className="text-sm text-gray-400 mt-1">{doc.description}</p>
+                            )}
+                            <div className="flex items-center space-x-4 mt-2">
+                              <p className="text-xs text-gray-500">
+                                Uploaded: {new Date(doc.createdAt).toLocaleDateString()}
+                              </p>
+                              <p className="text-xs text-gray-500">
+                                Size: {formatFileSize(doc.fileSize)}
+                              </p>
+                              <p className="text-xs text-gray-500">
+                                By: {doc.uploadedByRole === "admin" ? "Admin" : "Investor"}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="flex items-center space-x-2">
+                            <Label className="text-sm text-gray-300">Visible:</Label>
+                            <Switch
+                              checked={doc.isVisible}
+                              onCheckedChange={(checked) =>
+                                toggleVisibilityMutation.mutate({ documentId: doc.id, isVisible: checked })
+                              }
+                              disabled={toggleVisibilityMutation.isPending}
+                            />
+                          </div>
+                          <div className="flex space-x-1">
+                            {doc.isVisible ? (
+                              <Eye className="h-4 w-4 text-green-500" />
+                            ) : (
+                              <EyeOff className="h-4 w-4 text-red-500" />
+                            )}
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-battles-gold text-battles-gold"
+                              onClick={() => handleDownloadDocument(doc.id, doc.fileName)}
+                            >
+                              <Download className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-red-500 text-red-500"
+                              onClick={() => {
+                                if (confirm(`Are you sure you want to delete "${doc.title}"?`)) {
+                                  deleteDocumentMutation.mutate(doc.id);
+                                }
+                              }}
+                              disabled={deleteDocumentMutation.isPending}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>

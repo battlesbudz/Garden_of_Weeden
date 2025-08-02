@@ -143,7 +143,7 @@ export default function Navigation() {
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                          <Link href="/admin-documents" className="flex items-center text-white hover:text-battles-gold">
+                          <Link href="/investor-admin?tab=documents" className="flex items-center text-white hover:text-battles-gold">
                             <Settings className="h-4 w-4 mr-2" />
                             Document Management
                           </Link>
