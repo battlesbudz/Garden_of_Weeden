@@ -228,6 +228,34 @@ export const meetingRequests = pgTable("meeting_requests", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Secure Document Management System
+export const secureDocuments = pgTable("secure_documents", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 500 }).notNull(),
+  description: text("description"),
+  fileName: varchar("file_name", { length: 255 }).notNull(),
+  filePath: text("file_path").notNull(), // Object storage path
+  fileSize: integer("file_size").notNull(),
+  mimeType: varchar("mime_type", { length: 100 }).notNull(),
+  uploadedBy: varchar("uploaded_by").references(() => users.id).notNull(), // User ID who uploaded
+  uploadedByRole: varchar("uploaded_by_role", { length: 20 }).notNull(), // "admin" or "investor"
+  ownerInvestorId: varchar("owner_investor_id").references(() => users.id), // Which investor owns this document (null for admin-only docs)
+  isVisible: boolean("is_visible").default(true).notNull(), // Can be toggled by admin
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// Document permissions table for fine-grained access control
+export const documentPermissions = pgTable("document_permissions", {
+  id: serial("id").primaryKey(),
+  documentId: integer("document_id").references(() => secureDocuments.id).notNull(),
+  investorId: varchar("investor_id").references(() => users.id).notNull(),
+  canView: boolean("can_view").default(true).notNull(),
+  canDownload: boolean("can_download").default(true).notNull(),
+  grantedBy: varchar("granted_by").references(() => users.id).notNull(), // Admin who granted permission
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Gamification system tables
 export const userPoints = pgTable("user_points", {
   id: serial("id").primaryKey(),
@@ -479,6 +507,28 @@ export const insertUserAchievementSchema = createInsertSchema(userAchievements).
   achievementId: true,
 });
 
+// Secure Document schemas
+export const insertSecureDocumentSchema = createInsertSchema(secureDocuments).pick({
+  title: true,
+  description: true,
+  fileName: true,
+  filePath: true,
+  fileSize: true,
+  mimeType: true,
+  uploadedBy: true,
+  uploadedByRole: true,
+  ownerInvestorId: true,
+  isVisible: true,
+});
+
+export const insertDocumentPermissionSchema = createInsertSchema(documentPermissions).pick({
+  documentId: true,
+  investorId: true,
+  canView: true,
+  canDownload: true,
+  grantedBy: true,
+});
+
 export type UpsertUser = z.infer<typeof upsertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertNewsletterSubscriber = z.infer<typeof insertNewsletterSubscriberSchema>;
@@ -517,6 +567,12 @@ export type InsertForumLike = z.infer<typeof insertForumLikeSchema>;
 export type ForumLike = typeof forumLikes.$inferSelect;
 export type InsertMeetingRequest = z.infer<typeof insertMeetingRequestSchema>;
 export type MeetingRequest = typeof meetingRequests.$inferSelect;
+
+// Secure Document types
+export type InsertSecureDocument = z.infer<typeof insertSecureDocumentSchema>;
+export type SecureDocument = typeof secureDocuments.$inferSelect;
+export type InsertDocumentPermission = z.infer<typeof insertDocumentPermissionSchema>;
+export type DocumentPermission = typeof documentPermissions.$inferSelect;
 
 // Gamification types
 export type InsertUserPoints = z.infer<typeof insertUserPointsSchema>;

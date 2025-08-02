@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
+import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 import { 
   insertNewsletterSubscriberSchema, 
   insertContactSubmissionSchema, 
@@ -17,6 +18,8 @@ import {
   insertPointTransactionSchema,
   insertAchievementSchema,
   insertUserAchievementSchema,
+  insertSecureDocumentSchema,
+  insertDocumentPermissionSchema,
   type User,
   type MeetingRequest,
   type InvestorMessage,
@@ -24,7 +27,9 @@ import {
   type UserPoints,
   type PointTransaction,
   type Achievement,
-  type UserAchievement
+  type UserAchievement,
+  type SecureDocument,
+  type DocumentPermission
 } from "@shared/schema";
 import { z } from "zod";
 import { MailService } from '@sendgrid/mail';
@@ -1302,6 +1307,316 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error checking investor access:", error);
       res.status(500).json({ message: "Failed to check access" });
+    }
+  });
+
+  // =============================================================================
+  // SECURE DOCUMENT MANAGEMENT ROUTES
+  // =============================================================================
+
+  // Get upload URL for secure documents (investor upload)
+  app.post("/api/investor-docs/upload", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      // Check if user has investor access
+      const hasAccess = await storage.checkInvestorHasAccess(userId);
+      if (!hasAccess) {
+        return res.status(403).json({ message: "Investor access required" });
+      }
+
+      const objectStorageService = new ObjectStorageService();
+      const uploadURL = await objectStorageService.getObjectEntityUploadURL();
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error getting upload URL:", error);
+      res.status(500).json({ message: "Failed to get upload URL" });
+    }
+  });
+
+  // Upload secure document completion (investor)
+  app.post("/api/investor-docs/complete", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      // Check if user has investor access
+      const hasAccess = await storage.checkInvestorHasAccess(userId);
+      if (!hasAccess) {
+        return res.status(403).json({ message: "Investor access required" });
+      }
+
+      const { title, description, fileName, filePath, fileSize, mimeType } = req.body;
+
+      if (!title || !fileName || !filePath || !fileSize || !mimeType) {
+        return res.status(400).json({ message: "Missing required fields" });
+      }
+
+      const objectStorageService = new ObjectStorageService();
+      const normalizedPath = objectStorageService.normalizeObjectEntityPath(filePath);
+
+      const document = await storage.createSecureDocument({
+        title,
+        description: description || null,
+        fileName,
+        filePath: normalizedPath,
+        fileSize,
+        mimeType,
+        uploadedBy: userId,
+        uploadedByRole: "investor",
+        ownerInvestorId: userId,
+        isVisible: true,
+      });
+
+      res.json({ document });
+    } catch (error) {
+      console.error("Error creating document:", error);
+      res.status(500).json({ message: "Failed to create document" });
+    }
+  });
+
+  // Get investor's personal document library
+  app.get("/api/investor-docs/list", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      
+      // Check if user has investor access
+      const hasAccess = await storage.checkInvestorHasAccess(userId);
+      if (!hasAccess) {
+        return res.status(403).json({ message: "Investor access required" });
+      }
+
+      const documents = await storage.getInvestorDocumentsWithPermissions(userId);
+      res.json({ documents });
+    } catch (error) {
+      console.error("Error fetching investor documents:", error);
+      res.status(500).json({ message: "Failed to fetch documents" });
+    }
+  });
+
+  // Download secure document (investor)
+  app.get("/api/investor-docs/:id/download", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const documentId = parseInt(req.params.id);
+
+      // Check if user has investor access
+      const hasAccess = await storage.checkInvestorHasAccess(userId);
+      if (!hasAccess) {
+        return res.status(403).json({ message: "Investor access required" });
+      }
+
+      const document = await storage.getSecureDocumentById(documentId);
+      if (!document) {
+        return res.status(404).json({ message: "Document not found" });
+      }
+
+      // Check if user has access to this document
+      const canAccess = document.ownerInvestorId === userId || 
+                       await storage.checkDocumentAccess(documentId, userId);
+      
+      if (!canAccess) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+
+      const objectStorageService = new ObjectStorageService();
+      const objectFile = await objectStorageService.getObjectEntityFile(document.filePath);
+      await objectStorageService.downloadObject(objectFile, res);
+    } catch (error) {
+      console.error("Error downloading document:", error);
+      if (error instanceof ObjectNotFoundError) {
+        return res.status(404).json({ message: "Document not found" });
+      }
+      res.status(500).json({ message: "Failed to download document" });
+    }
+  });
+
+  // =============================================================================
+  // ADMIN DOCUMENT MANAGEMENT ROUTES
+  // =============================================================================
+
+  // Admin upload URL
+  app.post("/api/admin/investor-docs/upload", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      // Check if user is admin
+      if (user?.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const objectStorageService = new ObjectStorageService();
+      const uploadURL = await objectStorageService.getObjectEntityUploadURL();
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error getting admin upload URL:", error);
+      res.status(500).json({ message: "Failed to get upload URL" });
+    }
+  });
+
+  // Admin document upload completion with assignment
+  app.post("/api/admin/investor-docs/complete", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      // Check if user is admin
+      if (user?.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const { title, description, fileName, filePath, fileSize, mimeType, assignedInvestorIds } = req.body;
+
+      if (!title || !fileName || !filePath || !fileSize || !mimeType) {
+        return res.status(400).json({ message: "Missing required fields" });
+      }
+
+      const objectStorageService = new ObjectStorageService();
+      const normalizedPath = objectStorageService.normalizeObjectEntityPath(filePath);
+
+      // Create the document
+      const document = await storage.createSecureDocument({
+        title,
+        description: description || null,
+        fileName,
+        filePath: normalizedPath,
+        fileSize,
+        mimeType,
+        uploadedBy: userId,
+        uploadedByRole: "admin",
+        ownerInvestorId: null, // Admin-owned documents
+        isVisible: true,
+      });
+
+      // Assign permissions to selected investors
+      if (assignedInvestorIds && Array.isArray(assignedInvestorIds)) {
+        for (const investorId of assignedInvestorIds) {
+          await storage.createDocumentPermission({
+            documentId: document.id,
+            investorId,
+            canView: true,
+            canDownload: true,
+            grantedBy: userId,
+          });
+        }
+      }
+
+      res.json({ document });
+    } catch (error) {
+      console.error("Error creating admin document:", error);
+      res.status(500).json({ message: "Failed to create document" });
+    }
+  });
+
+  // Admin view all documents with filtering
+  app.get("/api/admin/investor-docs/list", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      // Check if user is admin
+      if (user?.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const { investorId } = req.query;
+
+      let documents;
+      if (investorId) {
+        documents = await storage.getSecureDocumentsByInvestor(investorId as string);
+      } else {
+        documents = await storage.getAllSecureDocuments();
+      }
+
+      res.json({ documents });
+    } catch (error) {
+      console.error("Error fetching admin documents:", error);
+      res.status(500).json({ message: "Failed to fetch documents" });
+    }
+  });
+
+  // Admin toggle document visibility
+  app.patch("/api/admin/investor-docs/:id/visibility", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      // Check if user is admin
+      if (user?.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const documentId = parseInt(req.params.id);
+      const { isVisible } = req.body;
+
+      const document = await storage.updateSecureDocumentVisibility(documentId, isVisible);
+      res.json({ document });
+    } catch (error) {
+      console.error("Error updating document visibility:", error);
+      res.status(500).json({ message: "Failed to update document" });
+    }
+  });
+
+  // Admin update document permissions
+  app.patch("/api/admin/investor-docs/:id/permissions", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      // Check if user is admin
+      if (user?.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const documentId = parseInt(req.params.id);
+      const { investorId, canView, canDownload } = req.body;
+
+      await storage.updateDocumentPermission(documentId, investorId, canView, canDownload);
+      res.json({ message: "Permissions updated successfully" });
+    } catch (error) {
+      console.error("Error updating document permissions:", error);
+      res.status(500).json({ message: "Failed to update permissions" });
+    }
+  });
+
+  // Admin delete document
+  app.delete("/api/admin/investor-docs/:id", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      // Check if user is admin
+      if (user?.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const documentId = parseInt(req.params.id);
+      await storage.deleteSecureDocument(documentId);
+      res.json({ message: "Document deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting document:", error);
+      res.status(500).json({ message: "Failed to delete document" });
+    }
+  });
+
+  // Get all investors for admin assignment UI
+  app.get("/api/admin/investors", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      // Check if user is admin
+      if (user?.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const investors = await storage.getAllInvestorAccess();
+      res.json({ investors });
+    } catch (error) {
+      console.error("Error fetching investors:", error);
+      res.status(500).json({ message: "Failed to fetch investors" });
     }
   });
 

@@ -22,6 +22,8 @@ import {
   achievements,
   userAchievements,
   leaderboard,
+  secureDocuments,
+  documentPermissions,
   type User, 
   type UpsertUser,
   type Product,
@@ -66,7 +68,11 @@ import {
   type InsertAchievement,
   type UserAchievement,
   type InsertUserAchievement,
-  type Leaderboard
+  type Leaderboard,
+  type SecureDocument,
+  type InsertSecureDocument,
+  type DocumentPermission,
+  type InsertDocumentPermission
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, sql } from "drizzle-orm";
@@ -178,6 +184,22 @@ export interface IStorage {
   replyToInvestorMessage(messageId: number, reply: string): Promise<InvestorMessage>;
   markInvestorMessageAsRead(messageId: number): Promise<InvestorMessage>;
   getInvestorMessagesByUserId(userId: string): Promise<InvestorMessage[]>;
+  
+  // Secure Document Management
+  createSecureDocument(document: InsertSecureDocument): Promise<SecureDocument>;
+  getSecureDocumentById(id: number): Promise<SecureDocument | undefined>;
+  getSecureDocumentsByInvestor(investorId: string): Promise<SecureDocument[]>;
+  getAllSecureDocuments(): Promise<SecureDocument[]>;
+  updateSecureDocumentVisibility(id: number, isVisible: boolean): Promise<SecureDocument>;
+  deleteSecureDocument(id: number): Promise<void>;
+  
+  // Document Permissions
+  createDocumentPermission(permission: InsertDocumentPermission): Promise<DocumentPermission>;
+  getDocumentPermissions(documentId: number): Promise<DocumentPermission[]>;
+  checkDocumentAccess(documentId: number, investorId: string): Promise<boolean>;
+  updateDocumentPermission(documentId: number, investorId: string, canView: boolean, canDownload: boolean): Promise<void>;
+  removeDocumentPermission(documentId: number, investorId: string): Promise<void>;
+  getInvestorDocumentsWithPermissions(investorId: string): Promise<(SecureDocument & { canView: boolean; canDownload: boolean })[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -1369,6 +1391,186 @@ export class DatabaseStorage implements IStorage {
       .from(investorMessages)
       .where(eq(investorMessages.investorId, userId))
       .orderBy(desc(investorMessages.createdAt));
+  }
+
+  // Secure Document Management
+  async createSecureDocument(document: InsertSecureDocument): Promise<SecureDocument> {
+    const [newDocument] = await db
+      .insert(secureDocuments)
+      .values(document)
+      .returning();
+    return newDocument;
+  }
+
+  async getSecureDocumentById(id: number): Promise<SecureDocument | undefined> {
+    const [document] = await db
+      .select()
+      .from(secureDocuments)
+      .where(eq(secureDocuments.id, id));
+    return document;
+  }
+
+  async getSecureDocumentsByInvestor(investorId: string): Promise<SecureDocument[]> {
+    return db
+      .select()
+      .from(secureDocuments)
+      .where(and(
+        eq(secureDocuments.ownerInvestorId, investorId),
+        eq(secureDocuments.isVisible, true)
+      ))
+      .orderBy(desc(secureDocuments.createdAt));
+  }
+
+  async getAllSecureDocuments(): Promise<SecureDocument[]> {
+    return db
+      .select()
+      .from(secureDocuments)
+      .orderBy(desc(secureDocuments.createdAt));
+  }
+
+  async updateSecureDocumentVisibility(id: number, isVisible: boolean): Promise<SecureDocument> {
+    const [updatedDocument] = await db
+      .update(secureDocuments)
+      .set({ isVisible, updatedAt: new Date() })
+      .where(eq(secureDocuments.id, id))
+      .returning();
+    return updatedDocument;
+  }
+
+  async deleteSecureDocument(id: number): Promise<void> {
+    // First delete all permissions for this document
+    await db
+      .delete(documentPermissions)
+      .where(eq(documentPermissions.documentId, id));
+
+    // Then delete the document
+    await db
+      .delete(secureDocuments)
+      .where(eq(secureDocuments.id, id));
+  }
+
+  // Document Permissions
+  async createDocumentPermission(permission: InsertDocumentPermission): Promise<DocumentPermission> {
+    const [newPermission] = await db
+      .insert(documentPermissions)
+      .values(permission)
+      .returning();
+    return newPermission;
+  }
+
+  async getDocumentPermissions(documentId: number): Promise<DocumentPermission[]> {
+    return db
+      .select()
+      .from(documentPermissions)
+      .where(eq(documentPermissions.documentId, documentId));
+  }
+
+  async checkDocumentAccess(documentId: number, investorId: string): Promise<boolean> {
+    const [permission] = await db
+      .select()
+      .from(documentPermissions)
+      .where(and(
+        eq(documentPermissions.documentId, documentId),
+        eq(documentPermissions.investorId, investorId),
+        eq(documentPermissions.canView, true)
+      ));
+    return !!permission;
+  }
+
+  async updateDocumentPermission(documentId: number, investorId: string, canView: boolean, canDownload: boolean): Promise<void> {
+    // Try to update existing permission first
+    const result = await db
+      .update(documentPermissions)
+      .set({ canView, canDownload })
+      .where(and(
+        eq(documentPermissions.documentId, documentId),
+        eq(documentPermissions.investorId, investorId)
+      ));
+
+    // If no existing permission, create a new one
+    if (result.rowCount === 0) {
+      await db
+        .insert(documentPermissions)
+        .values({
+          documentId,
+          investorId,
+          canView,
+          canDownload,
+          grantedBy: 'admin' // Default admin user
+        });
+    }
+  }
+
+  async removeDocumentPermission(documentId: number, investorId: string): Promise<void> {
+    await db
+      .delete(documentPermissions)
+      .where(and(
+        eq(documentPermissions.documentId, documentId),
+        eq(documentPermissions.investorId, investorId)
+      ));
+  }
+
+  async getInvestorDocumentsWithPermissions(investorId: string): Promise<(SecureDocument & { canView: boolean; canDownload: boolean })[]> {
+    const results = await db
+      .select({
+        id: secureDocuments.id,
+        title: secureDocuments.title,
+        description: secureDocuments.description,
+        fileName: secureDocuments.fileName,
+        filePath: secureDocuments.filePath,
+        fileSize: secureDocuments.fileSize,
+        mimeType: secureDocuments.mimeType,
+        uploadedBy: secureDocuments.uploadedBy,
+        uploadedByRole: secureDocuments.uploadedByRole,
+        ownerInvestorId: secureDocuments.ownerInvestorId,
+        isVisible: secureDocuments.isVisible,
+        createdAt: secureDocuments.createdAt,
+        updatedAt: secureDocuments.updatedAt,
+        canView: documentPermissions.canView,
+        canDownload: documentPermissions.canDownload,
+      })
+      .from(secureDocuments)
+      .innerJoin(documentPermissions, eq(secureDocuments.id, documentPermissions.documentId))
+      .where(and(
+        eq(documentPermissions.investorId, investorId),
+        eq(secureDocuments.isVisible, true),
+        eq(documentPermissions.canView, true)
+      ))
+      .orderBy(desc(secureDocuments.createdAt));
+
+    // Also get documents owned by the investor
+    const ownedDocuments = await db
+      .select({
+        id: secureDocuments.id,
+        title: secureDocuments.title,
+        description: secureDocuments.description,
+        fileName: secureDocuments.fileName,
+        filePath: secureDocuments.filePath,
+        fileSize: secureDocuments.fileSize,
+        mimeType: secureDocuments.mimeType,
+        uploadedBy: secureDocuments.uploadedBy,
+        uploadedByRole: secureDocuments.uploadedByRole,
+        ownerInvestorId: secureDocuments.ownerInvestorId,
+        isVisible: secureDocuments.isVisible,
+        createdAt: secureDocuments.createdAt,
+        updatedAt: secureDocuments.updatedAt,
+        canView: sql<boolean>`true`,
+        canDownload: sql<boolean>`true`,
+      })
+      .from(secureDocuments)
+      .where(and(
+        eq(secureDocuments.ownerInvestorId, investorId),
+        eq(secureDocuments.isVisible, true)
+      ))
+      .orderBy(desc(secureDocuments.createdAt));
+
+    // Combine results and remove duplicates
+    const allDocuments = [...results, ...ownedDocuments];
+    const uniqueDocuments = allDocuments.filter((doc, index, arr) => 
+      arr.findIndex(d => d.id === doc.id) === index
+    );
+
+    return uniqueDocuments;
   }
 }
 

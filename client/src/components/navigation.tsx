@@ -142,8 +142,22 @@ export default function Navigation() {
                             Investor Admin
                           </Link>
                         </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/admin-documents" className="flex items-center text-white hover:text-battles-gold">
+                            <Settings className="h-4 w-4 mr-2" />
+                            Document Management
+                          </Link>
+                        </DropdownMenuItem>
                         <DropdownMenuSeparator className="bg-battles-gold/30" />
                       </>
+                    )}
+                    {!isAdmin && (
+                      <DropdownMenuItem asChild>
+                        <Link href="/secure-documents" className="flex items-center text-white hover:text-battles-gold">
+                          <Settings className="h-4 w-4 mr-2" />
+                          My Documents
+                        </Link>
+                      </DropdownMenuItem>
                     )}
                     <DropdownMenuItem onClick={handleLogout} className="text-white hover:text-battles-gold">
                       <LogOut className="h-4 w-4 mr-2" />
@@ -216,7 +230,17 @@ export default function Navigation() {
                       <Settings className="h-4 w-4 mr-2" />
                       Investor Admin
                     </Link>
+                    <Link href="/admin-documents" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+                      <Settings className="h-4 w-4 mr-2" />
+                      Document Management
+                    </Link>
                   </>
+                )}
+                {!isAdmin && (
+                  <Link href="/secure-documents" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+                    <Settings className="h-4 w-4 mr-2" />
+                    My Documents
+                  </Link>
                 )}
                 <button
                   onClick={handleLogout}
