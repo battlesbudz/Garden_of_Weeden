@@ -1581,6 +1581,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin download document
+  app.get("/api/admin/investor-docs/:id/download", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      // Check if user is admin
+      if (user?.role !== 'admin') {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const documentId = parseInt(req.params.id);
+      const document = await storage.getSecureDocumentById(documentId);
+      
+      if (!document) {
+        return res.status(404).json({ message: "Document not found" });
+      }
+
+      const objectStorageService = new ObjectStorageService();
+      const objectFile = await objectStorageService.getObjectEntityFile(document.filePath);
+      await objectStorageService.downloadObject(objectFile, res);
+    } catch (error) {
+      console.error("Error downloading document:", error);
+      if (error instanceof ObjectNotFoundError) {
+        return res.status(404).json({ message: "Document not found" });
+      }
+      res.status(500).json({ message: "Failed to download document" });
+    }
+  });
+
   // Admin delete document
   app.delete("/api/admin/investor-docs/:id", isAuthenticated, async (req: any, res) => {
     try {

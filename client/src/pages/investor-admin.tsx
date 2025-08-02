@@ -97,13 +97,13 @@ export default function InvestorAdmin() {
   // Fetch investor messages
   const { data: investorMessages = [], isLoading: messagesLoading, error: messagesError } = useQuery({
     queryKey: ["/api/investor/messages"],
-    enabled: isAuthenticated && user?.role === "admin"
+    enabled: isAuthenticated && (user as any)?.role === "admin"
   });
 
   // Fetch investor access requests
   const { data: accessRequests = [], isLoading: accessRequestsLoading } = useQuery({
     queryKey: ["/api/investor/access-requests"],
-    enabled: isAuthenticated && user?.role === "admin"
+    enabled: isAuthenticated && (user as any)?.role === "admin"
   });
 
   // Fetch documents for admin management
@@ -111,15 +111,15 @@ export default function InvestorAdmin() {
     queryKey: ["/api/admin/investor-docs/list", selectedInvestorFilter],
     queryFn: () => {
       const params = selectedInvestorFilter !== "all" ? `?investorId=${selectedInvestorFilter}` : "";
-      return apiRequest(`/api/admin/investor-docs/list${params}`);
+      return apiRequest("GET", `/api/admin/investor-docs/list${params}`);
     },
-    enabled: isAuthenticated && user?.role === "admin"
+    enabled: isAuthenticated && (user as any)?.role === "admin"
   });
 
   // Fetch investors for document assignment
   const { data: investorsData, isLoading: investorsLoading } = useQuery({
     queryKey: ["/api/admin/investors"],
-    enabled: isAuthenticated && user?.role === "admin"
+    enabled: isAuthenticated && (user as any)?.role === "admin"
   });
 
   const documents = (documentsData as any)?.documents || [];
@@ -226,10 +226,7 @@ export default function InvestorAdmin() {
   // Document management mutations
   const getUploadUrlMutation = useMutation({
     mutationFn: async () => {
-      return await apiRequest("/api/admin/investor-docs/upload", {
-        method: "POST",
-        body: JSON.stringify({}),
-      });
+      return await apiRequest("POST", "/api/admin/investor-docs/upload", {});
     },
     onError: (error) => {
       console.error("Upload URL error:", error);
@@ -243,10 +240,7 @@ export default function InvestorAdmin() {
 
   const completeUploadMutation = useMutation({
     mutationFn: async (data: any) => {
-      return await apiRequest("/api/admin/investor-docs/complete", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
+      return await apiRequest("POST", "/api/admin/investor-docs/complete", data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
@@ -270,10 +264,7 @@ export default function InvestorAdmin() {
 
   const toggleVisibilityMutation = useMutation({
     mutationFn: async ({ documentId, isVisible }: { documentId: number; isVisible: boolean }) => {
-      return await apiRequest(`/api/admin/investor-docs/${documentId}/visibility`, {
-        method: "PATCH",
-        body: JSON.stringify({ isVisible }),
-      });
+      return await apiRequest("PATCH", `/api/admin/investor-docs/${documentId}/visibility`, { isVisible });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
@@ -294,9 +285,7 @@ export default function InvestorAdmin() {
 
   const deleteDocumentMutation = useMutation({
     mutationFn: async (documentId: number) => {
-      return await apiRequest(`/api/admin/investor-docs/${documentId}`, {
-        method: "DELETE",
-      });
+      return await apiRequest("DELETE", `/api/admin/investor-docs/${documentId}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
@@ -320,7 +309,7 @@ export default function InvestorAdmin() {
     const result = await getUploadUrlMutation.mutateAsync();
     return {
       method: "PUT" as const,
-      url: (result as any).uploadURL,
+      url: (result as any)?.uploadURL || "",
     };
   };
 
@@ -361,9 +350,7 @@ export default function InvestorAdmin() {
     try {
       const response = await fetch(`/api/admin/investor-docs/${documentId}/download`, {
         method: "GET",
-        headers: {
-          "Authorization": `Bearer ${user?.token || ''}`,
-        },
+        credentials: "include", // Use session-based auth instead of token
       });
 
       if (!response.ok) {
@@ -400,7 +387,7 @@ export default function InvestorAdmin() {
 
   // Check admin access
   useEffect(() => {
-    if (!isLoading && (!isAuthenticated || user?.role !== "admin")) {
+    if (!isLoading && (!isAuthenticated || (user as any)?.role !== "admin")) {
       toast({
         title: "Access Denied",
         description: "You need admin access to view this page. Redirecting...",
@@ -421,7 +408,7 @@ export default function InvestorAdmin() {
     );
   }
 
-  if (!isAuthenticated || user?.role !== "admin") {
+  if (!isAuthenticated || (user as any)?.role !== "admin") {
     return null; // Redirecting
   }
 
