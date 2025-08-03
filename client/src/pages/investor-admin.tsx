@@ -430,26 +430,14 @@ export default function InvestorAdmin() {
         description: `File "${uploadData.fileName}" uploaded successfully. Please fill in the document details below.`,
       });
 
-      // For testing - auto-complete with a default title to verify the flow works
-      console.log("🧪 [FRONTEND] AUTO-COMPLETING FOR TESTING...");
-      console.log("🔍 [FRONTEND] Upload data filePath:", uploadData.filePath);
-      console.log("🔍 [FRONTEND] Current upload URL:", currentUploadURL);
-      
-      // Use currentUploadURL if filePath is empty
-      const finalFilePath = uploadData.filePath || currentUploadURL;
-      console.log("🔍 [FRONTEND] Final file path for completion:", finalFilePath);
-      
-      const autoCompleteData = {
-        title: `Test Document - ${uploadData.fileName}`,
-        description: "Auto-generated test document",
+      // Store pending upload for manual completion
+      setPendingUpload({
         fileName: uploadData.fileName,
-        filePath: finalFilePath,
+        filePath: uploadData.filePath || currentUploadURL,
         fileSize: uploadData.fileSize,
         mimeType: uploadData.mimeType,
-        assignedInvestorIds: [], // No assignment for test
-      };
-      console.log("🧪 [FRONTEND] Auto-submitting completion data:", autoCompleteData);
-      completeUploadMutation.mutate(autoCompleteData);
+      });
+      setShowUploadDialog(true);
     }
   };
 

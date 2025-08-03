@@ -604,18 +604,17 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAllInvestorAccess(): Promise<any[]> {
-    // Get approved investor access requests with user details
+    // Get approved investor access requests 
     const approvedRequests = await db
       .select({
-        id: users.id,
-        email: users.email,
-        firstName: users.firstName,
-        lastName: users.lastName,
+        id: investorAccessRequests.id,
+        email: investorAccessRequests.email,
+        firstName: investorAccessRequests.firstName,
+        lastName: investorAccessRequests.lastName,
         status: investorAccessRequests.status,
         createdAt: investorAccessRequests.createdAt,
       })
       .from(investorAccessRequests)
-      .innerJoin(users, eq(users.id, investorAccessRequests.userId))
       .where(eq(investorAccessRequests.status, "approved"));
     
     return approvedRequests;
