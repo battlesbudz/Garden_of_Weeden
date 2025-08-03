@@ -124,6 +124,10 @@ export async function setupAuth(app: Express) {
         return next(err);
       }
       
+      // Debug all available data
+      console.log('Callback query params:', req.query);
+      console.log('Callback session data:', req.session);
+      
       // Try to get redirect URL from state parameter first, then session
       let redirectTo = "/";
       
@@ -133,7 +137,7 @@ export async function setupAuth(app: Express) {
           console.log('Callback redirect URL from state:', redirectTo);
         }
       } catch (e) {
-        console.log('Could not parse state parameter, trying session');
+        console.log('Could not parse state parameter, trying session:', e);
       }
       
       // Fallback to session if state didn't work
@@ -142,6 +146,8 @@ export async function setupAuth(app: Express) {
         console.log('Callback redirect URL from session:', redirectTo);
         delete req.session.redirectAfterLogin;
       }
+      
+      console.log('Final redirect URL:', redirectTo);
       
       res.redirect(redirectTo);
     });
