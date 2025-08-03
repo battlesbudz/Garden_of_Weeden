@@ -1436,15 +1436,40 @@ export class DatabaseStorage implements IStorage {
     return document;
   }
 
-  async getSecureDocumentsByInvestor(investorId: string): Promise<SecureDocument[]> {
-    return db
-      .select()
+  async getSecureDocumentsByInvestor(investorRequestId: string): Promise<SecureDocument[]> {
+    // First, convert investor request ID to actual user ID
+    const investorRequests = await this.getAllInvestorAccess();
+    const investorRequest = investorRequests.find(inv => inv.id === parseInt(investorRequestId));
+    
+    if (!investorRequest) {
+      console.log("⚠️ [STORAGE] Investor request not found for ID:", investorRequestId);
+      return [];
+    }
+    
+    const user = await this.getUserByEmail(investorRequest.email);
+    if (!user) {
+      console.log("⚠️ [STORAGE] User not found for email:", investorRequest.email);
+      return [];
+    }
+    
+    console.log("🔍 [STORAGE] Filtering documents for user ID:", user.id);
+    
+    // Get documents that the user has permission to access
+    const documentsWithPermissions = await db
+      .select({
+        document: secureDocuments,
+        permission: documentPermissions
+      })
       .from(secureDocuments)
+      .innerJoin(documentPermissions, eq(secureDocuments.id, documentPermissions.documentId))
       .where(and(
-        eq(secureDocuments.ownerInvestorId, investorId),
+        eq(documentPermissions.investorId, user.id),
         eq(secureDocuments.isVisible, true)
       ))
       .orderBy(desc(secureDocuments.createdAt));
+      
+    console.log("✅ [STORAGE] Found", documentsWithPermissions.length, "documents with permissions for user:", user.id);
+    return documentsWithPermissions.map(row => row.document);
   }
 
   async getAllSecureDocuments(): Promise<SecureDocument[]> {

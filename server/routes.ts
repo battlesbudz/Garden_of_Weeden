@@ -1579,6 +1579,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       let documents;
       if (investorId) {
+        console.log("🔍 [LIST] Filtering documents for investor request ID:", investorId);
         documents = await storage.getSecureDocumentsByInvestor(investorId as string);
       } else {
         documents = await storage.getAllSecureDocuments();
