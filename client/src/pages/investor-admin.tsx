@@ -110,9 +110,10 @@ export default function InvestorAdmin() {
   // Fetch documents for admin management
   const { data: documentsData, isLoading: documentsLoading } = useQuery({
     queryKey: ["/api/admin/investor-docs/list", selectedInvestorFilter],
-    queryFn: () => {
+    queryFn: async () => {
       const params = selectedInvestorFilter !== "all" ? `?investorId=${selectedInvestorFilter}` : "";
-      return apiRequest("GET", `/api/admin/investor-docs/list${params}`);
+      const response = await apiRequest("GET", `/api/admin/investor-docs/list${params}`);
+      return response.json();
     },
     enabled: isAuthenticated && (user as any)?.role === "admin"
   });
