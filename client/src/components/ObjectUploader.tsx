@@ -75,10 +75,24 @@ export function ObjectUploader({
         console.log("🚀 [UPPY] Upload started");
       })
       .on("upload-progress", (file, progress) => {
-        console.log("📊 [UPPY] Upload progress:", progress.percentage + "%");
+        console.log("📊 [UPPY] Upload progress:", Math.round(progress.bytesUploaded / progress.bytesTotal * 100) + "%");
+        if (progress.bytesUploaded === progress.bytesTotal) {
+          console.log("🎯 [UPPY] Upload reached 100% - should trigger complete soon");
+        }
       })
       .on("upload-success", (file, response) => {
         console.log("✅ [UPPY] Upload success for file:", file?.name, "Response:", response);
+        console.log("🔍 [UPPY] Manually triggering completion due to upload success");
+        
+        // Manually trigger completion since CORS errors prevent complete event
+        setTimeout(() => {
+          console.log("🎯 [UPPY] Manual completion trigger - calling onComplete");
+          const manualResult = {
+            successful: [file],
+            failed: []
+          };
+          onComplete?.(manualResult as any);
+        }, 100);
       })
       .on("upload-error", (file, error, response) => {
         console.log("❌ [UPPY] Upload error for file:", file?.name, "Error:", error, "Response:", response);

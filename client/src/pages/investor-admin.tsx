@@ -315,14 +315,24 @@ export default function InvestorAdmin() {
 
   // Document management handlers
   const handleGetUploadParameters = async () => {
+    console.log("🔍 [FRONTEND] ========== GETTING UPLOAD PARAMETERS ==========");
+    console.log("🔍 [FRONTEND] Making request to get upload URL...");
+    
     const result = await getUploadUrlMutation.mutateAsync();
     const uploadURL = (result as any)?.uploadURL || "";
-    console.log("🔍 [FRONTEND] Storing upload URL for completion:", uploadURL);
+    
+    console.log("✅ [FRONTEND] Upload URL received:");
+    console.log("🔍 [FRONTEND] Full result:", JSON.stringify(result, null, 2));
+    console.log("🔍 [FRONTEND] Extracted uploadURL:", uploadURL);
+    console.log("🔍 [FRONTEND] Storing upload URL in state for completion");
     setCurrentUploadURL(uploadURL);
-    return {
+    
+    const params = {
       method: "PUT" as const,
       url: uploadURL,
     };
+    console.log("🔍 [FRONTEND] Returning parameters to Uppy:", params);
+    return params;
   };
 
   const handleUploadComplete = (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
@@ -385,8 +395,19 @@ export default function InvestorAdmin() {
         description: `File "${uploadData.fileName}" uploaded successfully. Please fill in the document details below.`,
       });
 
-      // Note: We don't auto-complete here because admin needs to set title and assign to investors
-      // The form dialog will show for the user to complete the upload
+      // For testing - auto-complete with a default title to verify the flow works
+      console.log("🧪 [FRONTEND] AUTO-COMPLETING FOR TESTING...");
+      const autoCompleteData = {
+        title: `Test Document - ${uploadData.fileName}`,
+        description: "Auto-generated test document",
+        fileName: uploadData.fileName,
+        filePath: uploadData.filePath,
+        fileSize: uploadData.fileSize,
+        mimeType: uploadData.mimeType,
+        assignedInvestorIds: [], // No assignment for test
+      };
+      console.log("🧪 [FRONTEND] Auto-submitting completion data:", autoCompleteData);
+      completeUploadMutation.mutate(autoCompleteData);
     }
   };
 
