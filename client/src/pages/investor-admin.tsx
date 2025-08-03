@@ -93,6 +93,7 @@ export default function InvestorAdmin() {
     fileSize: number;
     mimeType: string;
   } | null>(null);
+  const [currentUploadURL, setCurrentUploadURL] = useState<string>("");
 
   // Fetch investor messages
   const { data: investorMessages = [], isLoading: messagesLoading, error: messagesError } = useQuery({
@@ -315,9 +316,12 @@ export default function InvestorAdmin() {
   // Document management handlers
   const handleGetUploadParameters = async () => {
     const result = await getUploadUrlMutation.mutateAsync();
+    const uploadURL = (result as any)?.uploadURL || "";
+    console.log("🔍 [FRONTEND] Storing upload URL for completion:", uploadURL);
+    setCurrentUploadURL(uploadURL);
     return {
       method: "PUT" as const,
-      url: (result as any)?.uploadURL || "",
+      url: uploadURL,
     };
   };
 
@@ -331,7 +335,7 @@ export default function InvestorAdmin() {
       
       const uploadData = {
         fileName: file.name,
-        filePath: (file as any).uploadURL || "",
+        filePath: currentUploadURL || (file as any).uploadURL || "",
         fileSize: file.size || 0,
         mimeType: file.type || "application/octet-stream",
       };
@@ -350,10 +354,16 @@ export default function InvestorAdmin() {
       // Check if it's just a CORS ETag issue (upload actually succeeded)
       if (failedFile.error?.message?.includes('ETag') || failedFile.error?.message?.includes('CORS')) {
         console.log("✅ [FRONTEND] CORS ETag error detected, treating as successful");
+        console.log("🔍 [FRONTEND] Failed file object:", failedFile);
+        
+        // For failed uploads due to CORS, we need to use the stored upload URL
+        // The file was uploaded but we can't read the ETag due to CORS
+        const uploadURL = currentUploadURL;
+        console.log("🔍 [FRONTEND] Using stored upload URL for CORS case:", uploadURL);
         
         const uploadData = {
           fileName: failedFile.name,
-          filePath: (failedFile as any).uploadURL || "",
+          filePath: uploadURL,
           fileSize: failedFile.size || 0,
           mimeType: failedFile.type || "application/octet-stream",
         };
