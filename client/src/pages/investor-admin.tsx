@@ -226,10 +226,13 @@ export default function InvestorAdmin() {
   // Document management mutations
   const getUploadUrlMutation = useMutation({
     mutationFn: async () => {
-      return await apiRequest("POST", "/api/admin/investor-docs/upload", {});
+      console.log("🔍 [FRONTEND] Getting upload URL...");
+      const result = await apiRequest("POST", "/api/admin/investor-docs/upload", {});
+      console.log("✅ [FRONTEND] Upload URL received:", result);
+      return result;
     },
     onError: (error) => {
-      console.error("Upload URL error:", error);
+      console.error("❌ [FRONTEND] Upload URL error:", error);
       toast({
         title: "Upload Error",
         description: "Failed to get upload URL. Please try again.",
@@ -240,9 +243,13 @@ export default function InvestorAdmin() {
 
   const completeUploadMutation = useMutation({
     mutationFn: async (data: any) => {
-      return await apiRequest("POST", "/api/admin/investor-docs/complete", data);
+      console.log("🔍 [FRONTEND] Completing upload with data:", data);
+      const result = await apiRequest("POST", "/api/admin/investor-docs/complete", data);
+      console.log("✅ [FRONTEND] Upload completion result:", result);
+      return result;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log("✅ [FRONTEND] Upload mutation success, invalidating queries...");
       queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
       setShowUploadDialog(false);
       setUploadForm({ title: "", description: "", assignedInvestorIds: [] });
@@ -251,9 +258,10 @@ export default function InvestorAdmin() {
         title: "Success",
         description: "Document uploaded and assigned successfully!",
       });
+      console.log("✅ [FRONTEND] Upload flow completed successfully");
     },
     onError: (error) => {
-      console.error("Complete upload error:", error);
+      console.error("❌ [FRONTEND] Complete upload error:", error);
       toast({
         title: "Upload Error",
         description: "Failed to complete upload. Please try again.",
@@ -314,15 +322,22 @@ export default function InvestorAdmin() {
   };
 
   const handleUploadComplete = (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
+    console.log("🔍 [FRONTEND] Upload complete callback triggered:", result);
+    
     // Handle both successful uploads and CORS ETag errors (which still succeed)
     if (result.successful && result.successful.length > 0) {
       const file = result.successful[0];
-      setPendingUpload({
+      console.log("✅ [FRONTEND] Successful upload detected:", file);
+      
+      const uploadData = {
         fileName: file.name,
         filePath: (file as any).uploadURL || "",
         fileSize: file.size || 0,
         mimeType: file.type || "application/octet-stream",
-      });
+      };
+      console.log("🔍 [FRONTEND] Setting pending upload data:", uploadData);
+      
+      setPendingUpload(uploadData);
       
       toast({
         title: "Upload Complete",
@@ -330,31 +345,46 @@ export default function InvestorAdmin() {
       });
     } else if (result.failed && result.failed.length > 0) {
       const failedFile = result.failed[0];
+      console.log("⚠️ [FRONTEND] Failed upload detected:", failedFile);
+      
       // Check if it's just a CORS ETag issue (upload actually succeeded)
       if (failedFile.error?.message?.includes('ETag') || failedFile.error?.message?.includes('CORS')) {
-        setPendingUpload({
+        console.log("✅ [FRONTEND] CORS ETag error detected, treating as successful");
+        
+        const uploadData = {
           fileName: failedFile.name,
           filePath: (failedFile as any).uploadURL || "",
           fileSize: failedFile.size || 0,
           mimeType: failedFile.type || "application/octet-stream",
-        });
+        };
+        console.log("🔍 [FRONTEND] Setting pending upload data for CORS case:", uploadData);
+        
+        setPendingUpload(uploadData);
         
         toast({
           title: "Upload Complete",
           description: `File "${failedFile.name}" uploaded successfully. Please fill in the document details below.`,
         });
       } else {
+        console.error("❌ [FRONTEND] Actual upload failure:", failedFile.error);
         toast({
           title: "Upload Failed",
           description: failedFile.error?.message || "Unknown error occurred",
           variant: "destructive",
         });
       }
+    } else {
+      console.log("⚠️ [FRONTEND] No successful or failed files in result");
     }
   };
 
   const handleSubmitUpload = () => {
+    console.log("🔍 [FRONTEND] Submit upload triggered");
+    console.log("🔍 [FRONTEND] Pending upload:", pendingUpload);
+    console.log("🔍 [FRONTEND] Upload form:", uploadForm);
+    
     if (!pendingUpload || !uploadForm.title.trim()) {
+      console.log("❌ [FRONTEND] Validation failed - missing pendingUpload or title");
       toast({
         title: "Error",
         description: "Please fill in the title and upload a file.",
@@ -363,7 +393,7 @@ export default function InvestorAdmin() {
       return;
     }
 
-    completeUploadMutation.mutate({
+    const submitData = {
       title: uploadForm.title,
       description: uploadForm.description,
       fileName: pendingUpload.fileName,
@@ -371,7 +401,10 @@ export default function InvestorAdmin() {
       fileSize: pendingUpload.fileSize,
       mimeType: pendingUpload.mimeType,
       assignedInvestorIds: uploadForm.assignedInvestorIds,
-    });
+    };
+    
+    console.log("🔍 [FRONTEND] Submitting completion data:", submitData);
+    completeUploadMutation.mutate(submitData);
   };
 
   const handleDownloadDocument = async (documentId: number, fileName: string) => {

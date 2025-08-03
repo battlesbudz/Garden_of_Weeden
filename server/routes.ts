@@ -1440,18 +1440,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/investor-docs/upload", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
+      console.log("🔍 [UPLOAD] Step 1: Getting upload URL for user:", userId);
+      
       const user = await storage.getUser(userId);
+      console.log("🔍 [UPLOAD] Step 2: User role:", user?.role);
       
       // Check if user is admin
       if (user?.role !== 'admin') {
+        console.log("❌ [UPLOAD] Admin access denied for user:", userId);
         return res.status(403).json({ message: "Admin access required" });
       }
 
       const objectStorageService = new ObjectStorageService();
       const uploadURL = await objectStorageService.getObjectEntityUploadURL();
+      console.log("✅ [UPLOAD] Step 3: Generated upload URL:", uploadURL.substring(0, 100) + "...");
+      
       res.json({ uploadURL });
     } catch (error) {
-      console.error("Error getting admin upload URL:", error);
+      console.error("❌ [UPLOAD] Error getting admin upload URL:", error);
       res.status(500).json({ message: "Failed to get upload URL" });
     }
   });
@@ -1460,24 +1466,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/investor-docs/complete", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
+      console.log("🔍 [COMPLETE] Step 1: Processing document completion for user:", userId);
+      console.log("🔍 [COMPLETE] Step 2: Request body:", JSON.stringify(req.body, null, 2));
+      
       const user = await storage.getUser(userId);
+      console.log("🔍 [COMPLETE] Step 3: User role:", user?.role);
       
       // Check if user is admin
       if (user?.role !== 'admin') {
+        console.log("❌ [COMPLETE] Admin access denied for user:", userId);
         return res.status(403).json({ message: "Admin access required" });
       }
 
       const { title, description, fileName, filePath, fileSize, mimeType, assignedInvestorIds } = req.body;
 
       if (!title || !fileName || !filePath || !fileSize || !mimeType) {
+        console.log("❌ [COMPLETE] Missing required fields:", { title, fileName, filePath, fileSize, mimeType });
         return res.status(400).json({ message: "Missing required fields" });
       }
 
       const objectStorageService = new ObjectStorageService();
       const normalizedPath = objectStorageService.normalizeObjectEntityPath(filePath);
+      console.log("🔍 [COMPLETE] Step 4: Normalized path:", normalizedPath);
 
       // Create the document
-      const document = await storage.createSecureDocument({
+      console.log("🔍 [COMPLETE] Step 5: Creating document in database...");
+      const documentData = {
         title,
         description: description || null,
         fileName,
@@ -1488,10 +1502,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         uploadedByRole: "admin",
         ownerInvestorId: null, // Admin-owned documents
         isVisible: true,
-      });
+      };
+      console.log("🔍 [COMPLETE] Document data:", JSON.stringify(documentData, null, 2));
+      
+      const document = await storage.createSecureDocument(documentData);
+      console.log("✅ [COMPLETE] Step 6: Document created with ID:", document.id);
 
       // Assign permissions to selected investors
       if (assignedInvestorIds && Array.isArray(assignedInvestorIds)) {
+        console.log("🔍 [COMPLETE] Step 7: Assigning permissions to investors:", assignedInvestorIds);
         for (const investorId of assignedInvestorIds) {
           await storage.createDocumentPermission({
             documentId: document.id,
@@ -1500,12 +1519,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
             canDownload: true,
             grantedBy: userId,
           });
+          console.log("✅ [COMPLETE] Permission granted to investor:", investorId);
         }
+      } else {
+        console.log("🔍 [COMPLETE] No investors assigned to document");
       }
 
+      console.log("✅ [COMPLETE] Step 8: Document completion successful, returning:", JSON.stringify(document, null, 2));
       res.json({ document });
     } catch (error) {
-      console.error("Error creating admin document:", error);
+      console.error("❌ [COMPLETE] Error creating admin document:", error);
       res.status(500).json({ message: "Failed to create document" });
     }
   });
@@ -1514,14 +1537,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/admin/investor-docs/list", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
+      console.log("🔍 [LIST] Fetching documents for admin user:", userId);
+      
       const user = await storage.getUser(userId);
       
       // Check if user is admin
       if (user?.role !== 'admin') {
+        console.log("❌ [LIST] Admin access denied for user:", userId);
         return res.status(403).json({ message: "Admin access required" });
       }
 
       const { investorId } = req.query;
+      console.log("🔍 [LIST] Filter by investor ID:", investorId || "none");
 
       let documents;
       if (investorId) {
@@ -1530,9 +1557,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         documents = await storage.getAllSecureDocuments();
       }
 
+      console.log("✅ [LIST] Returning", documents.length, "documents");
       res.json({ documents });
     } catch (error) {
-      console.error("Error fetching admin documents:", error);
+      console.error("❌ [LIST] Error fetching admin documents:", error);
       res.status(500).json({ message: "Failed to fetch documents" });
     }
   });

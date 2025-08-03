@@ -1395,11 +1395,18 @@ export class DatabaseStorage implements IStorage {
 
   // Secure Document Management
   async createSecureDocument(document: InsertSecureDocument): Promise<SecureDocument> {
-    const [newDocument] = await db
-      .insert(secureDocuments)
-      .values(document)
-      .returning();
-    return newDocument;
+    console.log("🔍 [STORAGE] Creating document with data:", JSON.stringify(document, null, 2));
+    try {
+      const [newDocument] = await db
+        .insert(secureDocuments)
+        .values(document)
+        .returning();
+      console.log("✅ [STORAGE] Document created successfully:", JSON.stringify(newDocument, null, 2));
+      return newDocument;
+    } catch (error) {
+      console.error("❌ [STORAGE] Error creating document:", error);
+      throw error;
+    }
   }
 
   async getSecureDocumentById(id: number): Promise<SecureDocument | undefined> {
@@ -1422,10 +1429,18 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAllSecureDocuments(): Promise<SecureDocument[]> {
-    return db
-      .select()
-      .from(secureDocuments)
-      .orderBy(desc(secureDocuments.createdAt));
+    console.log("🔍 [STORAGE] Fetching all secure documents...");
+    try {
+      const documents = await db
+        .select()
+        .from(secureDocuments)
+        .orderBy(desc(secureDocuments.createdAt));
+      console.log("✅ [STORAGE] Found", documents.length, "documents");
+      return documents;
+    } catch (error) {
+      console.error("❌ [STORAGE] Error fetching documents:", error);
+      throw error;
+    }
   }
 
   async updateSecureDocumentVisibility(id: number, isVisible: boolean): Promise<SecureDocument> {
