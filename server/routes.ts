@@ -3,6 +3,9 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
+import { db } from "./db";
+import { users } from "@shared/schema";
+import { eq } from "drizzle-orm";
 import { 
   insertNewsletterSubscriberSchema, 
   insertContactSubmissionSchema, 
@@ -837,7 +840,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json({ 
         ...post, 
-        viewCount: post.viewCount + 1,
+        viewCount: (post.viewCount || 0) + 1,
         comments 
       });
     } catch (error) {
@@ -1283,9 +1286,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // If approved, create investor access record
       if (status === 'approved') {
-        // Create user account if they don't have one yet
-        // For now, we'll create access record only when they actually login
-        // The checkInvestorHasAccess function will handle this logic
+        try {
+          // Look for existing user with the same email as the request, or similar email variations
+          const requestEmail = updatedRequest.email.toLowerCase();
+          const requestName = `${updatedRequest.firstName} ${updatedRequest.lastName}`.toLowerCase();
+          
+          // First try exact email match
+          let existingUsers = await db
+            .select()
+            .from(users)
+            .where(eq(users.email, requestEmail));
+          
+          // If no exact match, try to find users with similar names
+          if (existingUsers.length === 0) {
+            const allUsers = await db.select().from(users);
+            existingUsers = allUsers.filter(user => {
+              const userName = `${user.firstName || ''} ${user.lastName || ''}`.toLowerCase().trim();
+              return userName === requestName && userName.length > 0;
+            });
+          }
+          
+          // If user exists, create access record immediately
+          if (existingUsers.length > 0) {
+            const existingUser = existingUsers[0];
+            
+            // Check if access record already exists
+            const existingAccess = await storage.getInvestorAccessByUserId(existingUser.id);
+            
+            if (!existingAccess) {
+              await storage.createInvestorAccess({
+                userId: existingUser.id,
+                accessLevel: 'standard',
+                companyName: updatedRequest.company || '',
+                isActive: true
+              });
+              console.log(`✅ Created investor access for existing user: ${existingUser.email} (matched from request: ${requestEmail})`);
+            }
+          } else {
+            console.log(`⚠️ No existing user found for request: ${requestEmail} (${requestName})`);
+            console.log('User will need to create an account with the same email to gain access.');
+          }
+        } catch (error) {
+          console.error("Error creating investor access record:", error);
+          // Don't fail the approval if access creation fails
+        }
       }
       
       res.json({ 
