@@ -247,15 +247,28 @@ export default function InvestorAdmin() {
   const completeUploadMutation = useMutation({
     mutationFn: async (data: any) => {
       console.log("🔍 [FRONTEND] Completing upload with data:", data);
-      const result = await apiRequest("/api/admin/investor-docs/complete", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log("✅ [FRONTEND] Upload completion result:", result);
-      return result;
+      
+      try {
+        const response = await fetch("/api/admin/investor-docs/complete", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Failed to complete upload: ${response.statusText}`);
+        }
+        
+        const result = await response.json();
+        console.log("✅ [FRONTEND] Upload completion result:", result);
+        return result;
+      } catch (error) {
+        console.error("❌ [FRONTEND] Complete upload fetch error:", error);
+        throw error;
+      }
     },
     onSuccess: (data) => {
       console.log("✅ [FRONTEND] Upload mutation success, invalidating queries...");
@@ -419,11 +432,18 @@ export default function InvestorAdmin() {
 
       // For testing - auto-complete with a default title to verify the flow works
       console.log("🧪 [FRONTEND] AUTO-COMPLETING FOR TESTING...");
+      console.log("🔍 [FRONTEND] Upload data filePath:", uploadData.filePath);
+      console.log("🔍 [FRONTEND] Current upload URL:", currentUploadURL);
+      
+      // Use currentUploadURL if filePath is empty
+      const finalFilePath = uploadData.filePath || currentUploadURL;
+      console.log("🔍 [FRONTEND] Final file path for completion:", finalFilePath);
+      
       const autoCompleteData = {
         title: `Test Document - ${uploadData.fileName}`,
         description: "Auto-generated test document",
         fileName: uploadData.fileName,
-        filePath: uploadData.filePath,
+        filePath: finalFilePath,
         fileSize: uploadData.fileSize,
         mimeType: uploadData.mimeType,
         assignedInvestorIds: [], // No assignment for test
