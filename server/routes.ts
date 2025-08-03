@@ -1669,10 +1669,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin update document permissions
   app.patch("/api/admin/investor-docs/:id/permissions", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      console.log("🔍 [PERMISSIONS] Updating permissions for admin user:", userId);
+      const adminUserId = req.user.claims.sub;
+      console.log("🔍 [PERMISSIONS] Updating permissions for admin user:", adminUserId);
       
-      const user = await storage.getUser(userId);
+      const user = await storage.getUser(adminUserId);
       
       // Check if user is admin
       if (user?.role !== 'admin') {
