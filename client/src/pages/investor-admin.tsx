@@ -324,23 +324,37 @@ export default function InvestorAdmin() {
   // Document management handlers
   const handleGetUploadParameters = async () => {
     console.log("🔍 [FRONTEND] ========== GETTING UPLOAD PARAMETERS ==========");
-    console.log("🔍 [FRONTEND] Making request to get upload URL...");
+    console.log("🔍 [FRONTEND] Making direct API request...");
     
-    const result = await getUploadUrlMutation.mutateAsync();
-    const uploadURL = (result as any)?.uploadURL || "";
-    
-    console.log("✅ [FRONTEND] Upload URL received:");
-    console.log("🔍 [FRONTEND] Full result:", JSON.stringify(result, null, 2));
-    console.log("🔍 [FRONTEND] Extracted uploadURL:", uploadURL);
-    console.log("🔍 [FRONTEND] Storing upload URL in state for completion");
-    setCurrentUploadURL(uploadURL);
-    
-    const params = {
-      method: "PUT" as const,
-      url: uploadURL,
-    };
-    console.log("🔍 [FRONTEND] Returning parameters to Uppy:", params);
-    return params;
+    try {
+      const response = await fetch("/api/admin/investor-docs/upload", {
+        method: "POST",
+        credentials: "include",
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to get upload URL: ${response.statusText}`);
+      }
+      
+      const result = await response.json();
+      const uploadURL = result?.uploadURL || "";
+      
+      console.log("✅ [FRONTEND] Upload URL received:");
+      console.log("🔍 [FRONTEND] Full result:", JSON.stringify(result, null, 2));
+      console.log("🔍 [FRONTEND] Extracted uploadURL:", uploadURL);
+      console.log("🔍 [FRONTEND] Storing upload URL in state for completion");
+      setCurrentUploadURL(uploadURL);
+      
+      const params = {
+        method: "PUT" as const,
+        url: uploadURL,
+      };
+      console.log("🔍 [FRONTEND] Returning parameters to Uppy:", params);
+      return params;
+    } catch (error) {
+      console.error("❌ [FRONTEND] Error getting upload parameters:", error);
+      throw error;
+    }
   };
 
   const handleUploadComplete = (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
