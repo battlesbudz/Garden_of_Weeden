@@ -532,7 +532,7 @@ export default function InvestorAdmin() {
         console.log(`🔽 Shared via Web Share API: ${fileName}`);
         toast({
           title: "File Shared",
-          description: `${fileName} ready to share or save`,
+          description: `${fileName} shared successfully`,
           variant: "default",
         });
       } else {
@@ -561,7 +561,7 @@ export default function InvestorAdmin() {
         console.log(`🔽 Download initiated for: ${fileName}`);
         toast({
           title: "File Ready", 
-          description: `${fileName} ready to save`,
+          description: `${fileName} ready to share`,
           variant: "default",
         });
       }
@@ -1090,7 +1090,7 @@ export default function InvestorAdmin() {
                               onClick={() => handleDownloadDocument(doc.id, doc.fileName)}
                             >
                               <Download className="h-4 w-4 mr-1" />
-                              Share/Save
+                              Share
                             </Button>
                             <Button
                               size="sm"
