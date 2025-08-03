@@ -111,11 +111,17 @@ export default function InvestorAdmin() {
   });
 
   // Fetch documents for admin management
-  const { data: documentsData, isLoading: documentsLoading } = useQuery({
+  const { data: documentsData, isLoading: documentsLoading, error: documentsError } = useQuery({
     queryKey: ["/api/admin/investor-docs/list", selectedInvestorFilter],
-    queryFn: () => {
+    queryFn: async () => {
       const params = selectedInvestorFilter !== "all" ? `?investorId=${selectedInvestorFilter}` : "";
-      return apiRequest(`/api/admin/investor-docs/list${params}`);
+      const response = await fetch(`/api/admin/investor-docs/list${params}`, { 
+        credentials: 'include' 
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch documents: ${response.statusText}`);
+      }
+      return response.json();
     },
     enabled: isAuthenticated && (user as any)?.role === "admin"
   });
@@ -129,6 +135,8 @@ export default function InvestorAdmin() {
   const documents = (documentsData as any)?.documents || [];
   const investors = (investorsData as any)?.investors || [];
   const approvedInvestors = investors.filter((inv: Investor) => inv.status === "approved");
+
+
 
   // Helper function to format file size
   const formatFileSize = (bytes: number): string => {
@@ -240,9 +248,14 @@ export default function InvestorAdmin() {
   const getUploadUrlMutation = useMutation({
     mutationFn: async () => {
       console.log("🔍 [FRONTEND] Getting upload URL...");
-      const result = await apiRequest("/api/admin/investor-docs/upload", {
+      const response = await fetch("/api/admin/investor-docs/upload", {
         method: "POST",
+        credentials: "include",
       });
+      if (!response.ok) {
+        throw new Error(`Failed to get upload URL: ${response.statusText}`);
+      }
+      const result = await response.json();
       console.log("✅ [FRONTEND] Upload URL received:", result);
       return result;
     },
@@ -306,10 +319,16 @@ export default function InvestorAdmin() {
 
   const toggleVisibilityMutation = useMutation({
     mutationFn: async ({ documentId, isVisible }: { documentId: number; isVisible: boolean }) => {
-      return await apiRequest(`/api/admin/investor-docs/${documentId}/visibility`, {
+      const response = await fetch(`/api/admin/investor-docs/${documentId}/visibility`, {
         method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ isVisible }),
       });
+      if (!response.ok) {
+        throw new Error(`Failed to update visibility: ${response.statusText}`);
+      }
+      return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
@@ -330,9 +349,14 @@ export default function InvestorAdmin() {
 
   const deleteDocumentMutation = useMutation({
     mutationFn: async (documentId: number) => {
-      return await apiRequest(`/api/admin/investor-docs/${documentId}`, {
+      const response = await fetch(`/api/admin/investor-docs/${documentId}`, {
         method: "DELETE",
+        credentials: "include",
       });
+      if (!response.ok) {
+        throw new Error(`Failed to delete document: ${response.statusText}`);
+      }
+      return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
@@ -359,10 +383,16 @@ export default function InvestorAdmin() {
       canView: boolean; 
       canDownload: boolean; 
     }) => {
-      return await apiRequest(`/api/admin/investor-docs/${documentId}/permissions`, {
+      const response = await fetch(`/api/admin/investor-docs/${documentId}/permissions`, {
         method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ investorId, canView, canDownload }),
       });
+      if (!response.ok) {
+        throw new Error(`Failed to update permissions: ${response.statusText}`);
+      }
+      return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
