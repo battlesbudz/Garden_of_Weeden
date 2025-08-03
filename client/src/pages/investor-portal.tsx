@@ -167,7 +167,7 @@ export default function InvestorPortal() {
             <Button 
               onClick={() => {
                 // Pass redirect URL as query parameter
-                window.location.href = '/api/login?redirect=/investor-portal';
+                window.location.href = '/api/login?redirect=/investors';
               }}
               className="bg-battles-gold hover:bg-battles-gold/90 text-black font-semibold w-full"
             >
