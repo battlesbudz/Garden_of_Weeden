@@ -635,7 +635,7 @@ export default function InvestorPortal() {
                                 size="sm" 
                                 variant="outline" 
                                 className="border-battles-gold text-battles-gold"
-                                onClick={() => window.open(`/api/investor-docs/download/${doc.id}`, '_blank')}
+                                onClick={() => window.open(`/api/investor-docs/${doc.id}/download`, '_blank')}
                               >
                                 <Eye className="h-4 w-4 mr-1" />
                                 View
@@ -647,7 +647,7 @@ export default function InvestorPortal() {
                                 className="bg-battles-gold text-black hover:bg-yellow-600"
                                 onClick={() => {
                                   const link = document.createElement('a');
-                                  link.href = `/api/investor-docs/download/${doc.id}`;
+                                  link.href = `/api/investor-docs/${doc.id}/download`;
                                   link.download = doc.fileName;
                                   link.click();
                                 }}
