@@ -71,7 +71,20 @@ export function ObjectUploader({
         shouldUseMultipart: false,
         getUploadParameters: onGetUploadParameters,
       })
+      .on("upload", () => {
+        console.log("🚀 [UPPY] Upload started");
+      })
+      .on("upload-progress", (file, progress) => {
+        console.log("📊 [UPPY] Upload progress:", progress.percentage + "%");
+      })
+      .on("upload-success", (file, response) => {
+        console.log("✅ [UPPY] Upload success for file:", file?.name, "Response:", response);
+      })
+      .on("upload-error", (file, error, response) => {
+        console.log("❌ [UPPY] Upload error for file:", file?.name, "Error:", error, "Response:", response);
+      })
       .on("complete", (result) => {
+        console.log("🎯 [UPPY] Complete event triggered with result:", result);
         onComplete?.(result);
       })
   );

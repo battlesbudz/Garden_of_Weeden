@@ -326,27 +326,25 @@ export default function InvestorAdmin() {
   };
 
   const handleUploadComplete = (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
-    console.log("🔍 [FRONTEND] Upload complete callback triggered:", result);
+    console.log("🎯 [FRONTEND] ========== UPLOAD COMPLETE CALLBACK ==========");
+    console.log("🔍 [FRONTEND] Upload complete callback triggered with result:", JSON.stringify(result, null, 2));
+    console.log("🔍 [FRONTEND] Current upload URL stored:", currentUploadURL);
     
+    let uploadData: {fileName: string; filePath: string; fileSize: number; mimeType: string} | null = null;
+
     // Handle both successful uploads and CORS ETag errors (which still succeed)
     if (result.successful && result.successful.length > 0) {
       const file = result.successful[0];
       console.log("✅ [FRONTEND] Successful upload detected:", file);
       
-      const uploadData = {
+      uploadData = {
         fileName: file.name,
         filePath: currentUploadURL || (file as any).uploadURL || "",
         fileSize: file.size || 0,
         mimeType: file.type || "application/octet-stream",
       };
-      console.log("🔍 [FRONTEND] Setting pending upload data:", uploadData);
+      console.log("🔍 [FRONTEND] Created upload data from successful:", uploadData);
       
-      setPendingUpload(uploadData);
-      
-      toast({
-        title: "Upload Complete",
-        description: `File "${file.name}" uploaded successfully. Please fill in the document details below.`,
-      });
     } else if (result.failed && result.failed.length > 0) {
       const failedFile = result.failed[0];
       console.log("⚠️ [FRONTEND] Failed upload detected:", failedFile);
@@ -356,25 +354,14 @@ export default function InvestorAdmin() {
         console.log("✅ [FRONTEND] CORS ETag error detected, treating as successful");
         console.log("🔍 [FRONTEND] Failed file object:", failedFile);
         
-        // For failed uploads due to CORS, we need to use the stored upload URL
-        // The file was uploaded but we can't read the ETag due to CORS
-        const uploadURL = currentUploadURL;
-        console.log("🔍 [FRONTEND] Using stored upload URL for CORS case:", uploadURL);
-        
-        const uploadData = {
+        uploadData = {
           fileName: failedFile.name,
-          filePath: uploadURL,
+          filePath: currentUploadURL,
           fileSize: failedFile.size || 0,
           mimeType: failedFile.type || "application/octet-stream",
         };
-        console.log("🔍 [FRONTEND] Setting pending upload data for CORS case:", uploadData);
+        console.log("🔍 [FRONTEND] Created upload data from CORS case:", uploadData);
         
-        setPendingUpload(uploadData);
-        
-        toast({
-          title: "Upload Complete",
-          description: `File "${failedFile.name}" uploaded successfully. Please fill in the document details below.`,
-        });
       } else {
         console.error("❌ [FRONTEND] Actual upload failure:", failedFile.error);
         toast({
@@ -382,9 +369,24 @@ export default function InvestorAdmin() {
           description: failedFile.error?.message || "Unknown error occurred",
           variant: "destructive",
         });
+        return;
       }
     } else {
       console.log("⚠️ [FRONTEND] No successful or failed files in result");
+      return;
+    }
+
+    if (uploadData) {
+      console.log("🚀 [FRONTEND] Setting pending upload and showing form dialog");
+      setPendingUpload(uploadData);
+      
+      toast({
+        title: "Upload Complete",
+        description: `File "${uploadData.fileName}" uploaded successfully. Please fill in the document details below.`,
+      });
+
+      // Note: We don't auto-complete here because admin needs to set title and assign to investors
+      // The form dialog will show for the user to complete the upload
     }
   };
 
