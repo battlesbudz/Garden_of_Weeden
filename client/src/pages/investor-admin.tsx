@@ -489,16 +489,22 @@ export default function InvestorAdmin() {
 
   const handleDownloadDocument = async (documentId: number, fileName: string) => {
     try {
+      console.log(`🔽 Starting download for document ${documentId}: ${fileName}`);
+      
       const response = await fetch(`/api/admin/investor-docs/${documentId}/download`, {
         method: "GET",
-        credentials: "include", // Use session-based auth instead of token
+        credentials: "include",
       });
+
+      console.log(`🔽 Download response status: ${response.status}`);
 
       if (!response.ok) {
         throw new Error(`Download failed: ${response.statusText}`);
       }
 
       const blob = await response.blob();
+      console.log(`🔽 Blob created, size: ${blob.size} bytes`);
+      
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.style.display = "none";
@@ -506,8 +512,16 @@ export default function InvestorAdmin() {
       a.download = fileName;
       document.body.appendChild(a);
       a.click();
+      console.log(`🔽 Download initiated for: ${fileName}`);
+      
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
+      
+      toast({
+        title: "Download Started",
+        description: `Downloading ${fileName}`,
+        variant: "default",
+      });
     } catch (error) {
       console.error("Download error:", error);
       toast({
@@ -938,24 +952,27 @@ export default function InvestorAdmin() {
                 ) : (
                   <div className="space-y-4">
                     {documents.map((doc: SecureDocument) => (
-                      <div key={doc.id} className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
-                        <div className="flex items-center space-x-3 flex-1 min-w-0">
-                          <FileText className="h-8 w-8 text-battles-gold flex-shrink-0" />
-                          <div className="min-w-0 flex-1">
-                            <p className="font-medium text-white truncate">{doc.title}</p>
+                      <div key={doc.id} className="p-4 border border-gray-700 rounded-lg">
+                        {/* Document Header - Title and Info */}
+                        <div className="flex items-start space-x-3 mb-3">
+                          <FileText className="h-8 w-8 text-battles-gold flex-shrink-0 mt-1" />
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-medium text-white text-lg mb-1">{doc.title}</h3>
                             {doc.description && (
-                              <p className="text-sm text-gray-400 mt-1 truncate">{doc.description}</p>
+                              <p className="text-sm text-gray-400 mb-2">{doc.description}</p>
                             )}
-                            <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500">
                               <span>Uploaded: {new Date(doc.createdAt).toLocaleDateString()}</span>
                               <span>Size: {formatFileSize(doc.fileSize)}</span>
                               <span>By: {doc.uploadedByRole === "admin" ? "Admin" : "Investor"}</span>
                             </div>
                           </div>
                         </div>
-                        <div className="flex items-center space-x-3 flex-shrink-0 ml-4">
-                          <div className="flex items-center space-x-2">
-                            <Label className="text-sm text-gray-300 whitespace-nowrap">Visible:</Label>
+                        
+                        {/* Controls Row */}
+                        <div className="flex items-center justify-between pt-3 border-t border-gray-700">
+                          <div className="flex items-center space-x-3">
+                            <Label className="text-sm text-gray-300">Visible:</Label>
                             <Switch
                               checked={doc.isVisible}
                               onCheckedChange={(checked) =>
@@ -969,6 +986,7 @@ export default function InvestorAdmin() {
                               <EyeOff className="h-4 w-4 text-red-500" />
                             )}
                           </div>
+                          
                           <div className="flex space-x-2">
                             <Button
                               size="sm"
@@ -976,7 +994,8 @@ export default function InvestorAdmin() {
                               className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
                               onClick={() => handleDownloadDocument(doc.id, doc.fileName)}
                             >
-                              <Download className="h-4 w-4" />
+                              <Download className="h-4 w-4 mr-1" />
+                              Download
                             </Button>
                             <Button
                               size="sm"
@@ -989,7 +1008,8 @@ export default function InvestorAdmin() {
                               }}
                               disabled={deleteDocumentMutation.isPending}
                             >
-                              <Trash2 className="h-4 w-4" />
+                              <Trash2 className="h-4 w-4 mr-1" />
+                              Delete
                             </Button>
                           </div>
                         </div>
