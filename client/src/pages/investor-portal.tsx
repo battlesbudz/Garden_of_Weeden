@@ -535,66 +535,83 @@ export default function InvestorPortal() {
 
           {/* About Tab */}
           <TabsContent value="about" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="bg-gray-900 border-battles-gold">
-                <CardHeader>
-                  <div className="flex items-center gap-4 mb-3">
-                    <img src={battlesLogo} alt="Battles Budz Logo" className="h-12 w-12 sm:h-16 sm:w-16 object-contain drop-shadow-xl flex-shrink-0" />
-                    <CardTitle className="text-battles-gold text-xl sm:text-2xl">Company Overview</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-battles-gold mb-2">Mission</h4>
-                    <p className="text-gray-300">
-                      To provide premium, small-batch cannabis products with a focus on landrace strains 
-                      and an elevated consumption experience through our on-site lounge.
+            <Card className="bg-gray-900 border-battles-gold">
+              <CardHeader>
+                <div className="flex items-center gap-4 mb-3">
+                  <img src={battlesLogo} alt="Battles Budz Logo" className="h-12 w-12 sm:h-16 sm:w-16 object-contain drop-shadow-xl flex-shrink-0" />
+                  <CardTitle className="text-battles-gold text-xl sm:text-2xl">About Battles Budz</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <h4 className="font-semibold text-battles-gold mb-3">Mission Statement</h4>
+                  <p className="text-gray-300 text-lg leading-relaxed">
+                    "To provide high-quality cannabis products while creating a fun, holistic experience through education and comfortable surroundings."
+                  </p>
+                </div>
+                
+                <div>
+                  <h4 className="font-semibold text-battles-gold mb-3">Business Model</h4>
+                  <div className="space-y-4 text-gray-300">
+                    <p>
+                      Battles Budz is a licensed cannabis microbusiness in Gloversville, NY. We are fully vertically integrated with cultivation, processing, retail, delivery, and on-site consumption all under one license.
                     </p>
+                    
+                    <div>
+                      <h5 className="font-medium text-battles-gold mb-2">Products & Manufacturing</h5>
+                      <ul className="space-y-1 ml-4">
+                        <li>• Hand-rolled 1g joints and 2g non-tobacco leaf blunts with glass tips</li>
+                        <li>• Premium rosin and infused pre-rolls</li>
+                        <li>• Battle Brew cannabis-infused southern-style sweet tea</li>
+                        <li>• Cosmic Chews (edibles)</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <h5 className="font-medium text-battles-gold mb-2">Consumption Lounge & Tourism</h5>
+                      <p>
+                        We have a consumption lounge designed as a tourism destination, with VIP experiences, live entertainment, arcade machines, and table-side service. We offer education on organic cultivation and natural farming methods to consumers as part of the experience.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h5 className="font-medium text-battles-gold mb-2">Facility & Operations</h5>
+                      <p>
+                        Our facility includes a 7,600 sq ft building with cultivation rooms, processing kitchen, hash room, beverage production, candy lab, retail dispensary, fulfillment area, and a secured basement vault.
+                      </p>
+                      <p className="mt-2">
+                        Our cultivation features two flowering rooms, drying and curing areas, and a tissue culture-based nursery with bulletproof glass windows for guests to view.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h5 className="font-medium text-battles-gold mb-2">Unique Experiences</h5>
+                      <p>
+                        We will have Blunt & Breakfast Airbnb suites overlooking the grow, paired with private tours and premium experiences.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h5 className="font-medium text-battles-gold mb-2">Brand Focus</h5>
+                      <p>
+                        We are building a premium craft cannabis brand focused on small-batch, connoisseur-quality products and sustainable production.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h5 className="font-medium text-battles-gold mb-2">Current Achievements</h5>
+                      <ul className="space-y-1 ml-4">
+                        <li>• Received provisional microbusiness license</li>
+                        <li>• Secured retail/cultivation/processing location</li>
+                        <li>• Landlord investing 50% of rent into build-out</li>
+                        <li>• Developed shelf-stable cannabis beverage</li>
+                        <li>• Brought on first investor</li>
+                      </ul>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-battles-gold mb-2">Business Model</h4>
-                    <p className="text-gray-300">
-                      All-in-one microbusiness: Cultivation, Processing, Retail, and On-site Consumption. 
-                      Targeting connoisseur market with organic production and unique strains.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-battles-gold mb-2">Expansion Strategy</h4>
-                    <p className="text-gray-300">
-                      Franchise model for scaling, potential syndication opportunities, 
-                      MSO aspirations with IPO as long-term goal.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gray-900 border-battles-gold">
-                <CardHeader>
-                  <div className="flex items-center gap-4 mb-3">
-                    <img src={battlesLogo} alt="Battles Budz Logo" className="h-12 w-12 sm:h-16 sm:w-16 object-contain drop-shadow-xl flex-shrink-0" />
-                    <CardTitle className="text-battles-gold text-xl sm:text-2xl">Leadership Team</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div>
-                    <h4 className="font-semibold text-lg text-gray-200">Justin Battles</h4>
-                    <p className="text-battles-gold text-sm mb-2">Founder & CEO</p>
-                    <p className="text-gray-300 text-sm">
-                      Army veteran with formal cannabis horticulture education. 
-                      Experienced cultivator focused on landrace strains and organic production methods.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-lg text-gray-200">Andrea Battles</h4>
-                    <p className="text-battles-gold text-sm mb-2">Chief Operating Officer</p>
-                    <p className="text-gray-300 text-sm">
-                      15 years in sales and customer service. Cannabis advocate with personal experience 
-                      using cannabis for PTSD and bipolar management.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Documents Tab - Approved Investors Only */}
