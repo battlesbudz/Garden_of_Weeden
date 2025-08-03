@@ -1480,13 +1480,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const { title, description, fileName, filePath, fileSize, mimeType, assignedInvestorIds } = req.body;
 
-      if (!title || !fileName || !filePath || !fileSize || !mimeType) {
-        console.log("❌ [COMPLETE] Missing required fields:", { title, fileName, filePath, fileSize, mimeType });
+      if (!title || !fileName || !fileSize || !mimeType) {
+        console.log("❌ [COMPLETE] Missing required fields:", { title, fileName, fileSize, mimeType });
         return res.status(400).json({ message: "Missing required fields" });
       }
 
       const objectStorageService = new ObjectStorageService();
-      const normalizedPath = objectStorageService.normalizeObjectEntityPath(filePath);
+      
+      // If filePath is empty or a full upload URL, handle appropriately
+      let normalizedPath;
+      if (!filePath) {
+        console.log("❌ [COMPLETE] No filePath provided, cannot complete upload");
+        return res.status(400).json({ message: "File path is required for completion" });
+      } else if (filePath.startsWith("https://storage.googleapis.com/")) {
+        console.log("🔍 [COMPLETE] Converting upload URL to object path");
+        normalizedPath = objectStorageService.normalizeObjectEntityPath(filePath);
+      } else {
+        normalizedPath = filePath;
+      }
       console.log("🔍 [COMPLETE] Step 4: Normalized path:", normalizedPath);
 
       // Create the document

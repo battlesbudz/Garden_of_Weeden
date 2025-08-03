@@ -423,20 +423,36 @@ export default function InvestorAdmin() {
 
     if (uploadData) {
       console.log("🚀 [FRONTEND] Setting pending upload and showing form dialog");
-      setPendingUpload(uploadData);
+      
+      // Ensure we have a valid file path - use currentUploadURL if uploadData.filePath is empty
+      const finalFilePath = uploadData.filePath || currentUploadURL;
+      console.log("🔍 [FRONTEND] Final file path for completion:", finalFilePath);
+      
+      if (!finalFilePath) {
+        console.error("❌ [FRONTEND] No file path available for completion");
+        toast({
+          title: "Upload Error",
+          description: "Upload completed but file path is missing. Please try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      const pendingUploadData = {
+        fileName: uploadData.fileName,
+        filePath: finalFilePath,
+        fileSize: uploadData.fileSize,
+        mimeType: uploadData.mimeType,
+      };
+      
+      console.log("🔍 [FRONTEND] Setting pending upload data:", pendingUploadData);
+      setPendingUpload(pendingUploadData);
       
       toast({
         title: "Upload Complete",
         description: `File "${uploadData.fileName}" uploaded successfully. Please fill in the document details below.`,
       });
 
-      // Store pending upload for manual completion
-      setPendingUpload({
-        fileName: uploadData.fileName,
-        filePath: uploadData.filePath || currentUploadURL,
-        fileSize: uploadData.fileSize,
-        mimeType: uploadData.mimeType,
-      });
       setShowUploadDialog(true);
     }
   };
