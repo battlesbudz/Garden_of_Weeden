@@ -7,6 +7,7 @@ import type { Express, RequestHandler } from "express";
 import memoize from "memoizee";
 import connectPg from "connect-pg-simple";
 import { storage } from "./storage";
+import crypto from "crypto";
 
 if (!process.env.REPLIT_DOMAINS) {
   throw new Error("Environment variable REPLIT_DOMAINS not provided");
@@ -101,23 +102,55 @@ export async function setupAuth(app: Express) {
   passport.serializeUser((user: Express.User, cb) => cb(null, user));
   passport.deserializeUser((user: Express.User, cb) => cb(null, user));
 
-  // In-memory store for redirect URLs (temporary solution)
-  const redirectStore = new Map<string, string>();
+  // Cookie-based redirect solution that survives OAuth flow
+  const COOKIE_SECRET = process.env.SESSION_SECRET || 'fallback-secret';
+  const REDIRECT_COOKIE_NAME = 'battles_redirect';
+
+  function signRedirectUrl(url: string): string {
+    const timestamp = Date.now().toString();
+    const payload = `${url}:${timestamp}`;
+    const signature = crypto
+      .createHmac('sha256', COOKIE_SECRET)
+      .update(payload)
+      .digest('hex');
+    return `${payload}:${signature}`;
+  }
+
+  function verifyRedirectUrl(signedUrl: string): string | null {
+    try {
+      const parts = signedUrl.split(':');
+      if (parts.length !== 3) return null;
+      
+      const [url, timestamp, signature] = parts;
+      const payload = `${url}:${timestamp}`;
+      const expectedSignature = crypto
+        .createHmac('sha256', COOKIE_SECRET)
+        .update(payload)
+        .digest('hex');
+      
+      // Verify signature and check if not expired (30 minutes)
+      if (signature !== expectedSignature) return null;
+      if (Date.now() - parseInt(timestamp) > 30 * 60 * 1000) return null;
+      
+      return url;
+    } catch {
+      return null;
+    }
+  }
 
   app.get("/api/login", (req: any, res, next) => {
-    // Store redirect URL in session if provided
     const redirectTo = req.query.redirect as string;
+    
     if (redirectTo) {
-      // Store in session
-      req.session.redirectAfterLogin = redirectTo;
-      
-      // Also store in memory with session ID as backup
-      if (req.session.id) {
-        redirectStore.set(req.session.id, redirectTo);
-      }
-      
-      console.log('Storing redirect URL in session and memory:', redirectTo);
-      console.log('Session ID:', req.session.id);
+      // Store redirect URL in signed cookie that survives OAuth flow
+      const signedRedirectUrl = signRedirectUrl(redirectTo);
+      res.cookie(REDIRECT_COOKIE_NAME, signedRedirectUrl, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 30 * 60 * 1000, // 30 minutes
+        sameSite: 'lax'
+      });
+      console.log('✅ Redirect URL written to signed cookie:', redirectTo);
     }
     
     passport.authenticate(`replitauth:${req.hostname}`, {
@@ -134,36 +167,27 @@ export async function setupAuth(app: Express) {
         return next(err);
       }
       
-      // Debug all available data
-      console.log('Callback query params:', req.query);
-      console.log('Callback session data:', req.session);
-      
-      // Try multiple approaches to get redirect URL
+      // Cookie-based redirect that survives OAuth flow
       let redirectTo = "/";
       
-      // Approach 1: Check session first
-      if (req.session?.redirectAfterLogin) {
-        redirectTo = req.session.redirectAfterLogin;
-        console.log('Callback redirect URL from session:', redirectTo);
-        delete req.session.redirectAfterLogin;
-      }
-      // Approach 2: Check memory store with session ID
-      else if (req.session?.id && redirectStore.has(req.session.id)) {
-        redirectTo = redirectStore.get(req.session.id)!;
-        console.log('Callback redirect URL from memory store:', redirectTo);
-        redirectStore.delete(req.session.id);
-      }
-      // Approach 3: Default to investors if no redirect found (likely came from investor portal)
-      else if (redirectTo === "/") {
-        // Check if the referer or any indicators suggest this was an investor login
-        const referer = req.get('Referer') || '';
-        if (referer.includes('investor') || req.query.from === 'investor') {
-          redirectTo = "/investors";
-          console.log('Defaulting to investors page based on context');
+      // Read and verify signed cookie
+      const signedRedirectUrl = req.cookies[REDIRECT_COOKIE_NAME];
+      if (signedRedirectUrl) {
+        const verifiedUrl = verifyRedirectUrl(signedRedirectUrl);
+        if (verifiedUrl) {
+          redirectTo = verifiedUrl;
+          console.log('✅ Cookie/JWT verified during callback, redirecting to:', redirectTo);
+        } else {
+          console.log('❌ Cookie verification failed or expired');
         }
+        
+        // Clear the cookie after use
+        res.clearCookie(REDIRECT_COOKIE_NAME);
+      } else {
+        console.log('❌ No redirect cookie found in callback');
       }
       
-      console.log('Final redirect URL:', redirectTo);
+      console.log('✅ Correct redirect executed:', redirectTo);
       
       res.redirect(redirectTo);
     });
