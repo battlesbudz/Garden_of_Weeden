@@ -166,9 +166,8 @@ export default function InvestorPortal() {
             <p className="text-sm text-gray-300">Already an approved investor?</p>
             <Button 
               onClick={() => {
-                // Store the current URL so user returns here after login
-                sessionStorage.setItem('redirectAfterLogin', '/investor-portal');
-                window.location.href = '/login';
+                // Pass redirect URL as query parameter
+                window.location.href = '/api/login?redirect=/investor-portal';
               }}
               className="bg-battles-gold hover:bg-battles-gold/90 text-black font-semibold w-full"
             >
