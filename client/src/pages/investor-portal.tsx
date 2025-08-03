@@ -1310,11 +1310,40 @@ export default function InvestorPortal() {
                       NY Home Growers Roundtable
                     </h4>
                     <p className="text-sm text-gray-400 mb-2">Host & Moderator (2025)</p>
-                    <p className="text-gray-300 text-sm leading-relaxed">
+                    <p className="text-gray-300 text-sm leading-relaxed mb-4">
                       Justin Battles served as host/moderator for statewide panels connecting home growers 
                       with industry experts like Chris Trump and PotentPonics. Demonstrates leadership 
                       and community engagement in the cannabis industry.
                     </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black text-xs"
+                        onClick={() => window.open('https://youtu.be/XPdq8QmbOXE?si=4K35L4hNlEjqUZ7K', '_blank')}
+                      >
+                        <Play className="h-3 w-3 mr-1" />
+                        March Webinar
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black text-xs"
+                        onClick={() => window.open('https://youtu.be/g47d_dAvo3g?si=7NH_E10d2Sit7Aac', '_blank')}
+                      >
+                        <Play className="h-3 w-3 mr-1" />
+                        April Webinar
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black text-xs"
+                        onClick={() => window.open('https://youtu.be/gwUm5o-pN78?si=rsNkTmCYNCyDxIO7', '_blank')}
+                      >
+                        <Play className="h-3 w-3 mr-1" />
+                        May Webinar
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
