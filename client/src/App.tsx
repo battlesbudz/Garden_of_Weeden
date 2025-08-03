@@ -15,7 +15,7 @@ import ForumPostPage from "@/pages/forum-post";
 import InvestorPortal from "@/pages/investor-portal";
 import InvestorAdmin from "@/pages/investor-admin";
 import SecureDocuments from "@/pages/SecureDocuments";
-import AdminDocuments from "@/pages/AdminDocuments";
+
 import NotFound from "./pages/not-found";
 import PrivacyPolicy from "./pages/privacy-policy";
 import TermsOfService from "./pages/terms-of-service";
@@ -51,7 +51,7 @@ function Router() {
         <Route path="/community/posts/:id" component={ForumPostPage} />
         <Route path="/investor-admin" component={InvestorAdmin} />
         <Route path="/secure-documents" component={SecureDocuments} />
-        <Route path="/admin-documents" component={AdminDocuments} />
+
         <Route path="/enhanced-community" component={EnhancedCommunityPage} />
         <Route path="/privacy-policy" component={PrivacyPolicy} />
         <Route path="/terms-of-service" component={TermsOfService} />

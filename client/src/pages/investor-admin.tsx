@@ -94,6 +94,9 @@ export default function InvestorAdmin() {
     mimeType: string;
   } | null>(null);
   const [currentUploadURL, setCurrentUploadURL] = useState<string>("");
+  const [showPermissionsDialog, setShowPermissionsDialog] = useState(false);
+  const [selectedDocumentForPermissions, setSelectedDocumentForPermissions] = useState<SecureDocument | null>(null);
+  const [documentPermissions, setDocumentPermissions] = useState<{[investorId: string]: {canView: boolean, canDownload: boolean}}>({});
 
   // Fetch investor messages
   const { data: investorMessages = [], isLoading: messagesLoading, error: messagesError } = useQuery({
@@ -110,10 +113,9 @@ export default function InvestorAdmin() {
   // Fetch documents for admin management
   const { data: documentsData, isLoading: documentsLoading } = useQuery({
     queryKey: ["/api/admin/investor-docs/list", selectedInvestorFilter],
-    queryFn: async () => {
+    queryFn: () => {
       const params = selectedInvestorFilter !== "all" ? `?investorId=${selectedInvestorFilter}` : "";
-      const response = await apiRequest("GET", `/api/admin/investor-docs/list${params}`);
-      return response.json();
+      return apiRequest(`/api/admin/investor-docs/list${params}`);
     },
     enabled: isAuthenticated && (user as any)?.role === "admin"
   });
@@ -127,6 +129,15 @@ export default function InvestorAdmin() {
   const documents = (documentsData as any)?.documents || [];
   const investors = (investorsData as any)?.investors || [];
   const approvedInvestors = investors.filter((inv: Investor) => inv.status === "approved");
+
+  // Helper function to format file size
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
 
   // Reply to message mutation
   const replyMutation = useMutation({
@@ -295,7 +306,10 @@ export default function InvestorAdmin() {
 
   const toggleVisibilityMutation = useMutation({
     mutationFn: async ({ documentId, isVisible }: { documentId: number; isVisible: boolean }) => {
-      return await apiRequest("PATCH", `/api/admin/investor-docs/${documentId}/visibility`, { isVisible });
+      return await apiRequest(`/api/admin/investor-docs/${documentId}/visibility`, {
+        method: "PATCH",
+        body: JSON.stringify({ isVisible }),
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
@@ -316,7 +330,9 @@ export default function InvestorAdmin() {
 
   const deleteDocumentMutation = useMutation({
     mutationFn: async (documentId: number) => {
-      return await apiRequest("DELETE", `/api/admin/investor-docs/${documentId}`);
+      return await apiRequest(`/api/admin/investor-docs/${documentId}`, {
+        method: "DELETE",
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
@@ -330,6 +346,36 @@ export default function InvestorAdmin() {
       toast({
         title: "Error",
         description: "Failed to delete document.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Document permissions mutation
+  const updatePermissionsMutation = useMutation({
+    mutationFn: async ({ documentId, investorId, canView, canDownload }: { 
+      documentId: number; 
+      investorId: string; 
+      canView: boolean; 
+      canDownload: boolean; 
+    }) => {
+      return await apiRequest(`/api/admin/investor-docs/${documentId}/permissions`, {
+        method: "PATCH",
+        body: JSON.stringify({ investorId, canView, canDownload }),
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
+      toast({
+        title: "Success",
+        description: "Document permissions updated successfully!",
+      });
+    },
+    onError: (error) => {
+      console.error("Permissions update error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update document permissions.",
         variant: "destructive",
       });
     },
@@ -487,6 +533,52 @@ export default function InvestorAdmin() {
     completeUploadMutation.mutate(submitData);
   };
 
+  const handleManagePermissions = (document: SecureDocument) => {
+    setSelectedDocumentForPermissions(document);
+    // Initialize permissions state - for existing documents, assume no permissions initially
+    const initialPermissions: {[investorId: string]: {canView: boolean, canDownload: boolean}} = {};
+    approvedInvestors.forEach((investor: Investor) => {
+      initialPermissions[investor.id] = { canView: false, canDownload: false };
+    });
+    setDocumentPermissions(initialPermissions);
+    setShowPermissionsDialog(true);
+  };
+
+  const handlePermissionChange = (investorId: string, permission: 'canView' | 'canDownload', value: boolean) => {
+    setDocumentPermissions(prev => ({
+      ...prev,
+      [investorId]: {
+        ...prev[investorId],
+        [permission]: value
+      }
+    }));
+  };
+
+  const handleSavePermissions = () => {
+    if (!selectedDocumentForPermissions) return;
+    
+    // Update permissions for each investor
+    const promises = Object.entries(documentPermissions).map(([investorId, permissions]) => {
+      if (permissions.canView || permissions.canDownload) {
+        return updatePermissionsMutation.mutateAsync({
+          documentId: selectedDocumentForPermissions.id,
+          investorId,
+          canView: permissions.canView,
+          canDownload: permissions.canDownload,
+        });
+      }
+      return Promise.resolve();
+    });
+
+    Promise.all(promises).then(() => {
+      setShowPermissionsDialog(false);
+      setSelectedDocumentForPermissions(null);
+      setDocumentPermissions({});
+    }).catch((error) => {
+      console.error('Error saving permissions:', error);
+    });
+  };
+
   const handleDownloadDocument = async (documentId: number, fileName: string) => {
     try {
       console.log(`🔽 Starting download for document ${documentId}: ${fileName}`);
@@ -627,13 +719,7 @@ export default function InvestorAdmin() {
     }
   };
 
-  const formatFileSize = (bytes: number): string => {
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const sizes = ["Bytes", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
-  };
+
 
   // Check admin access
   useEffect(() => {
@@ -1083,6 +1169,15 @@ export default function InvestorAdmin() {
                           </div>
                           
                           <div className="flex flex-wrap gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black flex-shrink-0"
+                              onClick={() => handleManagePermissions(doc)}
+                            >
+                              <Settings className="h-4 w-4 mr-1" />
+                              Assign
+                            </Button>
                             <Button
                               size="sm"
                               variant="outline"
@@ -1679,6 +1774,122 @@ export default function InvestorAdmin() {
                 <>
                   <Send className="h-4 w-4 mr-2" />
                   Send Reply
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Document Permissions Dialog */}
+      <Dialog open={showPermissionsDialog} onOpenChange={setShowPermissionsDialog}>
+        <DialogContent className="bg-gray-900 border-battles-gold text-white max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-battles-gold">Manage Document Permissions</DialogTitle>
+            <DialogDescription className="text-gray-300">
+              {selectedDocumentForPermissions && `Assign permissions for "${selectedDocumentForPermissions.title}" to specific investors`}
+            </DialogDescription>
+          </DialogHeader>
+
+          {selectedDocumentForPermissions && (
+            <div className="space-y-6">
+              {/* Document Info */}
+              <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
+                <div className="flex items-start space-x-3">
+                  <FileText className="h-6 w-6 text-battles-gold flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-medium text-white text-lg">{selectedDocumentForPermissions.title}</h3>
+                    {selectedDocumentForPermissions.description && (
+                      <p className="text-sm text-gray-400 mt-1">{selectedDocumentForPermissions.description}</p>
+                    )}
+                    <div className="flex items-center gap-4 text-xs text-gray-500 mt-2">
+                      <span>Size: {formatFileSize(selectedDocumentForPermissions.fileSize)}</span>
+                      <span>Uploaded: {new Date(selectedDocumentForPermissions.createdAt).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Investor Permissions */}
+              <div className="space-y-4">
+                <h4 className="font-medium text-battles-gold">Investor Permissions</h4>
+                {approvedInvestors.length === 0 ? (
+                  <div className="text-center py-6 text-gray-400">
+                    <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                    <p>No approved investors to assign permissions to.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {approvedInvestors.map((investor: Investor) => (
+                      <div key={investor.id} className="p-4 border border-gray-700 rounded-lg">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h5 className="font-medium text-white">
+                              {investor.firstName} {investor.lastName}
+                            </h5>
+                            <p className="text-sm text-gray-400">{investor.email}</p>
+                          </div>
+                          <div className="flex items-center space-x-6">
+                            <div className="flex items-center space-x-2">
+                              <Checkbox
+                                id={`view-${investor.id}`}
+                                checked={documentPermissions[investor.id]?.canView || false}
+                                onCheckedChange={(checked) => 
+                                  handlePermissionChange(investor.id, 'canView', checked as boolean)
+                                }
+                              />
+                              <Label htmlFor={`view-${investor.id}`} className="text-sm text-gray-300">
+                                Can View
+                              </Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <Checkbox
+                                id={`download-${investor.id}`}
+                                checked={documentPermissions[investor.id]?.canDownload || false}
+                                onCheckedChange={(checked) => 
+                                  handlePermissionChange(investor.id, 'canDownload', checked as boolean)
+                                }
+                              />
+                              <Label htmlFor={`download-${investor.id}`} className="text-sm text-gray-300">
+                                Can Download
+                              </Label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          <DialogFooter className="gap-2">
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                setShowPermissionsDialog(false);
+                setSelectedDocumentForPermissions(null);
+                setDocumentPermissions({});
+              }}
+              className="border-gray-600 text-gray-300 hover:bg-gray-800"
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleSavePermissions}
+              disabled={updatePermissionsMutation.isPending}
+              className="bg-battles-gold text-black hover:bg-yellow-600"
+            >
+              {updatePermissionsMutation.isPending ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin mr-2" />
+                  Saving...
+                </>
+              ) : (
+                <>
+                  <Settings className="h-4 w-4 mr-2" />
+                  Save Permissions
                 </>
               )}
             </Button>

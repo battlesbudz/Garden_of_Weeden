@@ -118,7 +118,7 @@ export default function Navigation() {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="text-battles-gold hover:text-battles-gold/80">
                       <User className="h-4 w-4 mr-2" />
-                      {user?.email || user?.firstName || 'User'}
+                      {(user as any)?.email || (user as any)?.firstName || 'User'}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-gray-900 border-battles-gold/30">
@@ -142,12 +142,7 @@ export default function Navigation() {
                             Investor Admin
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/admin-documents" className="flex items-center text-white hover:text-battles-gold">
-                            <Settings className="h-4 w-4 mr-2" />
-                            Document Management
-                          </Link>
-                        </DropdownMenuItem>
+
                         <DropdownMenuSeparator className="bg-battles-gold/30" />
                       </>
                     )}
@@ -230,10 +225,7 @@ export default function Navigation() {
                       <Settings className="h-4 w-4 mr-2" />
                       Investor Admin
                     </Link>
-                    <Link href="/admin-documents" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
-                      <Settings className="h-4 w-4 mr-2" />
-                      Document Management
-                    </Link>
+
                   </>
                 )}
                 {!isAdmin && (
@@ -247,7 +239,7 @@ export default function Navigation() {
                   className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
                 >
                   <LogOut className="h-4 w-4 mr-2" />
-                  Logout ({user?.email || user?.firstName || 'User'})
+                  Logout ({(user as any)?.email || (user as any)?.firstName || 'User'})
                 </button>
               </>
             ) : (
