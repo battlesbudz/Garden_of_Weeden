@@ -384,7 +384,7 @@ export default function InvestorAdmin() {
       
       uploadData = {
         fileName: file.name,
-        filePath: currentUploadURL || (file as any).uploadURL || "",
+        filePath: currentUploadURL || "",
         fileSize: file.size || 0,
         mimeType: file.type || "application/octet-stream",
       };

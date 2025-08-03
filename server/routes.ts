@@ -1522,15 +1522,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Assign permissions to selected investors
       if (assignedInvestorIds && Array.isArray(assignedInvestorIds)) {
         console.log("🔍 [COMPLETE] Step 7: Assigning permissions to investors:", assignedInvestorIds);
-        for (const investorId of assignedInvestorIds) {
-          await storage.createDocumentPermission({
-            documentId: document.id,
-            investorId,
-            canView: true,
-            canDownload: true,
-            grantedBy: userId,
-          });
-          console.log("✅ [COMPLETE] Permission granted to investor:", investorId);
+        for (const requestId of assignedInvestorIds) {
+          // Get investor access request by ID
+          const investorRequests = await storage.getAllInvestorAccess();
+          const investorRequest = investorRequests.find(inv => inv.id === requestId);
+          
+          if (investorRequest) {
+            console.log("🔍 [COMPLETE] Found investor request:", investorRequest);
+            // Find the user by email from the investor request
+            const user = await storage.getUserByEmail(investorRequest.email);
+            
+            if (user) {
+              await storage.createDocumentPermission({
+                documentId: document.id,
+                investorId: user.id, // This is the actual user ID from users table
+                canView: true,
+                canDownload: true,
+                grantedBy: userId,
+              });
+              console.log("✅ [COMPLETE] Permission granted to user ID:", user.id, "Email:", user.email);
+            } else {
+              console.log("⚠️ [COMPLETE] User not found for email:", investorRequest.email);
+            }
+          } else {
+            console.log("⚠️ [COMPLETE] Investor access request not found for ID:", requestId);
+          }
         }
       } else {
         console.log("🔍 [COMPLETE] No investors assigned to document");
