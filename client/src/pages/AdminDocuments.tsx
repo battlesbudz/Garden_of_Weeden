@@ -49,6 +49,8 @@ interface DocumentUploadFormData {
 
 export default function AdminDocuments() {
   const [showUploadDialog, setShowUploadDialog] = useState(false);
+  const [showPermissionsDialog, setShowPermissionsDialog] = useState(false);
+  const [selectedDocumentForPermissions, setSelectedDocumentForPermissions] = useState<SecureDocument | null>(null);
   const [selectedInvestorFilter, setSelectedInvestorFilter] = useState<string>("all");
   const [uploadForm, setUploadForm] = useState<DocumentUploadFormData>({
     title: "",
@@ -61,6 +63,7 @@ export default function AdminDocuments() {
     fileSize: number;
     mimeType: string;
   } | null>(null);
+  const [documentPermissions, setDocumentPermissions] = useState<{[investorId: string]: {canView: boolean, canDownload: boolean}}>({})
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -179,6 +182,36 @@ export default function AdminDocuments() {
     },
   });
 
+  // Document permissions mutation
+  const updatePermissionsMutation = useMutation({
+    mutationFn: async ({ documentId, investorId, canView, canDownload }: { 
+      documentId: number; 
+      investorId: string; 
+      canView: boolean; 
+      canDownload: boolean; 
+    }) => {
+      return await apiRequest(`/api/admin/investor-docs/${documentId}/permissions`, {
+        method: "PATCH",
+        body: JSON.stringify({ investorId, canView, canDownload }),
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/investor-docs/list"] });
+      toast({
+        title: "Success",
+        description: "Document permissions updated successfully!",
+      });
+    },
+    onError: (error) => {
+      console.error("Permissions update error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update document permissions.",
+        variant: "destructive",
+      });
+    },
+  });
+
   const handleGetUploadParameters = async () => {
     const result = await getUploadUrlMutation.mutateAsync();
     return {
@@ -229,39 +262,60 @@ export default function AdminDocuments() {
     }));
   };
 
-  const handleDownload = async (documentId: number, fileName: string) => {
-    try {
-      const response = await fetch(`/api/investor-docs/${documentId}/download`, {
-        credentials: 'include',
-      });
-      
-      if (!response.ok) {
-        throw new Error('Download failed');
+  const handleManagePermissions = (document: SecureDocument) => {
+    setSelectedDocumentForPermissions(document);
+    // Initialize permissions state - for existing documents, assume no permissions initially
+    const initialPermissions: {[investorId: string]: {canView: boolean, canDownload: boolean}} = {};
+    approvedInvestors.forEach((investor: Investor) => {
+      initialPermissions[investor.id] = { canView: false, canDownload: false };
+    });
+    setDocumentPermissions(initialPermissions);
+    setShowPermissionsDialog(true);
+  };
+
+  const handlePermissionChange = (investorId: string, permission: 'canView' | 'canDownload', value: boolean) => {
+    setDocumentPermissions(prev => ({
+      ...prev,
+      [investorId]: {
+        ...prev[investorId],
+        [permission]: value
       }
+    }));
+  };
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+  const handleSavePermissions = () => {
+    if (!selectedDocumentForPermissions) return;
+    
+    // Update permissions for each investor
+    const promises = Object.entries(documentPermissions).map(([investorId, permissions]) => {
+      if (permissions.canView || permissions.canDownload) {
+        return updatePermissionsMutation.mutateAsync({
+          documentId: selectedDocumentForPermissions.id,
+          investorId,
+          canView: permissions.canView,
+          canDownload: permissions.canDownload,
+        });
+      }
+      return Promise.resolve();
+    });
 
-      toast({
-        title: "Success",
-        description: "Document downloaded successfully!",
-      });
-    } catch (error) {
-      console.error("Download error:", error);
-      toast({
-        title: "Download Error",
-        description: "Failed to download document. Please try again.",
-        variant: "destructive",
-      });
-    }
+    Promise.all(promises).then(() => {
+      setShowPermissionsDialog(false);
+      setSelectedDocumentForPermissions(null);
+      setDocumentPermissions({});
+    }).catch((error) => {
+      console.error('Error saving permissions:', error);
+    });
+  };
+
+  const handleDownload = (documentId: number, fileName: string) => {
+    const link = document.createElement('a');
+    link.href = `/api/admin/investor-docs/${documentId}/download`;
+    link.download = fileName;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const formatFileSize = (bytes: number) => {
@@ -537,6 +591,14 @@ export default function AdminDocuments() {
                     <Button
                       size="sm"
                       variant="outline"
+                      onClick={() => handleManagePermissions(doc)}
+                      className="text-battles-gold hover:text-battles-gold/80"
+                    >
+                      <Settings className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
                       onClick={() => handleDownload(doc.id, doc.fileName)}
                     >
                       <Download className="w-4 h-4" />
@@ -557,6 +619,76 @@ export default function AdminDocuments() {
           ))}
         </div>
       )}
+
+      {/* Permissions Management Dialog */}
+      <Dialog open={showPermissionsDialog} onOpenChange={setShowPermissionsDialog}>
+        <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Manage Document Permissions</DialogTitle>
+            <DialogDescription>
+              Assign viewing and download permissions for "{selectedDocumentForPermissions?.title}" to specific investors.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-6 py-4">
+            {approvedInvestors.length === 0 ? (
+              <p className="text-sm text-gray-500">No approved investors available</p>
+            ) : (
+              <div className="space-y-4">
+                <div className="grid grid-cols-3 gap-4 text-sm font-medium text-gray-700 dark:text-gray-300 border-b pb-2">
+                  <div>Investor</div>
+                  <div className="text-center">Can View</div>
+                  <div className="text-center">Can Download</div>
+                </div>
+                
+                {approvedInvestors.map((investor: Investor) => (
+                  <div key={investor.id} className="grid grid-cols-3 gap-4 items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                    <div className="text-sm">
+                      <div className="font-medium">{getInvestorName(investor.id)}</div>
+                      <div className="text-gray-500 text-xs">{investor.email}</div>
+                    </div>
+                    
+                    <div className="flex justify-center">
+                      <Checkbox
+                        checked={documentPermissions[investor.id]?.canView || false}
+                        onCheckedChange={(checked) => 
+                          handlePermissionChange(investor.id, 'canView', checked as boolean)
+                        }
+                      />
+                    </div>
+                    
+                    <div className="flex justify-center">
+                      <Checkbox
+                        checked={documentPermissions[investor.id]?.canDownload || false}
+                        onCheckedChange={(checked) => 
+                          handlePermissionChange(investor.id, 'canDownload', checked as boolean)
+                        }
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            
+            <div className="flex gap-3 pt-4">
+              <Button
+                onClick={handleSavePermissions}
+                disabled={updatePermissionsMutation.isPending}
+                className="flex-1 bg-battles-gold hover:bg-battles-gold/90 text-battles-black"
+              >
+                {updatePermissionsMutation.isPending ? "Saving..." : "Save Permissions"}
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setShowPermissionsDialog(false)}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
