@@ -1663,6 +1663,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.patch("/api/admin/investor-docs/:id/permissions", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
+      console.log("🔍 [PERMISSIONS] Updating permissions for admin user:", userId);
+      
       const user = await storage.getUser(userId);
       
       // Check if user is admin
@@ -1672,8 +1674,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const documentId = parseInt(req.params.id);
       const { investorId, canView, canDownload } = req.body;
+      console.log("🔍 [PERMISSIONS] Request data:", { documentId, investorId, canView, canDownload });
 
-      await storage.updateDocumentPermission(documentId, investorId, canView, canDownload);
+      // The investorId from the frontend is actually the investor access request ID
+      // We need to convert it to the actual user ID
+      const accessRequests = await storage.getAllInvestorAccess();
+      const investorRequest = accessRequests.find(req => req.id === parseInt(investorId));
+      
+      if (!investorRequest) {
+        console.log("❌ [PERMISSIONS] Investor access request not found for ID:", investorId);
+        return res.status(404).json({ message: "Investor request not found" });
+      }
+
+      console.log("🔍 [PERMISSIONS] Found investor request:", investorRequest.email);
+      
+      // Get the actual user by email
+      const investorUser = await storage.getUserByEmail(investorRequest.email);
+      
+      if (!investorUser) {
+        console.log("❌ [PERMISSIONS] User not found for email:", investorRequest.email);
+        return res.status(404).json({ message: "Investor user not found" });
+      }
+
+      console.log("🔍 [PERMISSIONS] Found investor user ID:", investorUser.id);
+      
+      // Update permissions using the actual user ID
+      await storage.updateDocumentPermission(documentId, investorUser.id, canView, canDownload);
+      console.log("✅ [PERMISSIONS] Permissions updated successfully");
+      
       res.json({ message: "Permissions updated successfully" });
     } catch (error) {
       console.error("Error updating document permissions:", error);
