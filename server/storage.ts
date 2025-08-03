@@ -603,8 +603,22 @@ export class DatabaseStorage implements IStorage {
     await db.delete(investorDocuments).where(eq(investorDocuments.id, id));
   }
 
-  async getAllInvestorAccess(): Promise<InvestorAccess[]> {
-    return await db.select().from(investorAccess);
+  async getAllInvestorAccess(): Promise<any[]> {
+    // Get approved investor access requests with user details
+    const approvedRequests = await db
+      .select({
+        id: users.id,
+        email: users.email,
+        firstName: users.firstName,
+        lastName: users.lastName,
+        status: investorAccessRequests.status,
+        createdAt: investorAccessRequests.createdAt,
+      })
+      .from(investorAccessRequests)
+      .innerJoin(users, eq(users.id, investorAccessRequests.userId))
+      .where(eq(investorAccessRequests.status, "approved"));
+    
+    return approvedRequests;
   }
 
   async getInvestorAccessByUserId(userId: string): Promise<InvestorAccess | undefined> {
