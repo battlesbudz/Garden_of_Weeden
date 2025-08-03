@@ -37,7 +37,14 @@ import {
   MessageSquare,
   Clock,
   CheckCircle2,
-  Lock
+  Lock,
+  Trophy,
+  Newspaper,
+  Mic,
+  Users2,
+  ExternalLink,
+  Star,
+  Play
 } from "lucide-react";
 
 export default function InvestorPortal() {
@@ -966,53 +973,347 @@ export default function InvestorPortal() {
             </TabsContent>
           )}
 
-          {/* Media Tab */}
+          {/* Media & Accomplishments Tab */}
           <TabsContent value="media" className="space-y-6">
+            {/* Hero Section */}
+            <Card className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-battles-gold">
+              <CardHeader className="text-center">
+                <div className="flex justify-center mb-4">
+                  <img src={battlesLogo} alt="Battles Budz Logo" className="h-20 w-20 object-contain drop-shadow-xl" />
+                </div>
+                <CardTitle className="text-3xl font-playfair text-battles-gold mb-2">
+                  Media & Accomplishments
+                </CardTitle>
+                <CardDescription className="text-gray-300 text-lg max-w-2xl mx-auto">
+                  Justin Battles and Battles Budz have established a strong presence in the cannabis industry through strategic business milestones, 
+                  media coverage, and thought leadership advocacy.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            {/* Business Milestones */}
+            <Card className="bg-gray-900 border-battles-gold">
+              <CardHeader>
+                <CardTitle className="text-battles-gold flex items-center text-2xl">
+                  <Trophy className="h-6 w-6 mr-3" />
+                  Business Milestones
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Major achievements and operational milestones validating our business model
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="border-l-4 border-green-500 pl-6 py-3">
+                      <h4 className="font-semibold text-white mb-2 flex items-center">
+                        <Award className="h-5 w-5 mr-2 text-green-400" />
+                        Provisional Microbusiness License
+                      </h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        Awarded by the NY OCM, allowing Battles Budz to operate as a fully vertically integrated microbusiness 
+                        with cultivation, processing, retail, delivery, and an on-site consumption lounge.
+                      </p>
+                      <Badge className="bg-green-900 text-green-300 mt-2">OCM License: OCMMICR-2023-000258</Badge>
+                    </div>
+
+                    <div className="border-l-4 border-blue-500 pl-6 py-3">
+                      <h4 className="font-semibold text-white mb-2 flex items-center">
+                        <Building2 className="h-5 w-5 mr-2 text-blue-400" />
+                        Secured Premium Facility
+                      </h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        7,600 sq. ft. building secured in Gloversville, NY for cultivation, retail, processing, 
+                        and VIP consumption lounge operations.
+                      </p>
+                      <Badge className="bg-blue-900 text-blue-300 mt-2">19 North Main Street</Badge>
+                    </div>
+
+                    <div className="border-l-4 border-yellow-500 pl-6 py-3">
+                      <h4 className="font-semibold text-white mb-2 flex items-center">
+                        <DollarSign className="h-5 w-5 mr-2 text-yellow-400" />
+                        First Investor Secured
+                      </h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        Early investor commitments secured, validating the business model and providing 
+                        foundation for continued growth and expansion.
+                      </p>
+                      <Badge className="bg-yellow-900 text-yellow-300 mt-2">Investment Validated</Badge>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="border-l-4 border-purple-500 pl-6 py-3">
+                      <h4 className="font-semibold text-white mb-2 flex items-center">
+                        <Star className="h-5 w-5 mr-2 text-purple-400" />
+                        Battle Brew Development
+                      </h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        Created "Battle Brew," a southern-style cannabis-infused sweet tea that successfully 
+                        passed taste and potency R&D testing phases.
+                      </p>
+                      <Badge className="bg-purple-900 text-purple-300 mt-2">Product Ready</Badge>
+                    </div>
+
+                    <div className="border-l-4 border-battles-gold pl-6 py-3">
+                      <h4 className="font-semibold text-white mb-2 flex items-center">
+                        <Award className="h-5 w-5 mr-2 text-battles-gold" />
+                        B.L.O.O.M. ROC Incubator Graduate
+                      </h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        Graduated from NY's first cannabis social equity incubator with a completed business plan, 
+                        investor-ready pitch deck, and comprehensive SOPs.
+                      </p>
+                      <Badge className="bg-yellow-900 text-battles-gold mt-2">Program Complete</Badge>
+                    </div>
+
+                    <div className="border-l-4 border-green-500 pl-6 py-3">
+                      <h4 className="font-semibold text-white mb-2 flex items-center">
+                        <Shield className="h-5 w-5 mr-2 text-green-400" />
+                        SDVOB Certification
+                      </h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        Recognized as a certified Service-Disabled Veteran-Owned Business (SDVOB) by New York OGS, 
+                        highlighting veteran leadership in cannabis entrepreneurship.
+                      </p>
+                      <Badge className="bg-green-900 text-green-300 mt-2">NY OGS Certified</Badge>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* News Articles & Press */}
+            <Card className="bg-gray-900 border-battles-gold">
+              <CardHeader>
+                <CardTitle className="text-battles-gold flex items-center text-2xl">
+                  <Newspaper className="h-6 w-6 mr-3" />
+                  News Articles & Press Coverage
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Media coverage establishing Battles Budz as a thought leader in veteran cannabis advocacy
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="bg-gray-800 rounded-lg p-4 border border-gray-700 hover:border-battles-gold transition-colors">
+                      <div className="flex items-start justify-between mb-3">
+                        <h4 className="font-semibold text-white">Prioritizing Veterans in Cannabis Industry</h4>
+                        <Badge className="bg-battles-gold text-black text-xs">March 2023</Badge>
+                      </div>
+                      <p className="text-sm text-gray-400 mb-3">Syracuse.com / New York Cannabis Insider</p>
+                      <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                        Guest column by Justin Battles advocating for service-disabled veterans to be prioritized in NY cannabis licensing. 
+                        Published on both Syracuse.com and NY Cannabis Insider, establishing thought leadership in equity policy.
+                      </p>
+                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black">
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        Read Article
+                      </Button>
+                    </div>
+
+                    <div className="bg-gray-800 rounded-lg p-4 border border-gray-700 hover:border-battles-gold transition-colors">
+                      <div className="flex items-start justify-between mb-3">
+                        <h4 className="font-semibold text-white">Veterans Push for Cannabis Access</h4>
+                        <Badge className="bg-battles-gold text-black text-xs">Jan 25, 2023</Badge>
+                      </div>
+                      <p className="text-sm text-gray-400 mb-3">WWNY News</p>
+                      <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                        TV news profile of Justin Battles advocating for veteran inclusion in New York's cannabis industry 
+                        and highlighting cannabis' role in treating PTSD and chronic pain.
+                      </p>
+                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black">
+                        <Play className="h-4 w-4 mr-2" />
+                        Watch Video
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="bg-gray-800 rounded-lg p-4 border border-gray-700 hover:border-battles-gold transition-colors">
+                      <div className="flex items-start justify-between mb-3">
+                        <h4 className="font-semibold text-white">SDVOB Recognition</h4>
+                        <Badge className="bg-battles-gold text-black text-xs">Nov 10, 2023</Badge>
+                      </div>
+                      <p className="text-sm text-gray-400 mb-3">New York OGS Press Release</p>
+                      <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                        Battles Budz LLC recognized as a certified Service-Disabled Veteran-Owned Business (SDVOB), 
+                        highlighting the company as a veteran-owned, vertically integrated cannabis microbusiness.
+                      </p>
+                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black">
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        View Release
+                      </Button>
+                    </div>
+
+                    <div className="bg-gray-800 rounded-lg p-4 border border-gray-700 hover:border-battles-gold transition-colors">
+                      <div className="flex items-start justify-between mb-3">
+                        <h4 className="font-semibold text-white">SUNY Cannabis Conference Feature</h4>
+                        <Badge className="bg-battles-gold text-black text-xs">Jan 26, 2024</Badge>
+                      </div>
+                      <p className="text-sm text-gray-400 mb-3">New York Weed Report</p>
+                      <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                        Featured Justin Battles and Battles Budz at the SUNY Cannabis Conference, 
+                        identifying him among New York's emerging cannabis entrepreneurs.
+                      </p>
+                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black">
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        Read Feature
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Podcasts & Interviews */}
+            <Card className="bg-gray-900 border-battles-gold">
+              <CardHeader>
+                <CardTitle className="text-battles-gold flex items-center text-2xl">
+                  <Mic className="h-6 w-6 mr-3" />
+                  Podcasts & Interviews
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Industry podcast appearances and interviews showcasing expertise and vision
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="bg-gray-800 rounded-lg p-4 border border-gray-700 hover:border-battles-gold transition-colors">
+                    <div className="flex items-center justify-between mb-3">
+                      <Mic className="h-8 w-8 text-battles-gold" />
+                      <Badge className="bg-battles-gold text-black text-xs">May 8, 2023</Badge>
+                    </div>
+                    <h4 className="font-semibold text-white mb-2">NCIA Cannabis Industry Voice</h4>
+                    <p className="text-sm text-gray-400 mb-3">Veterans & Cannabis Equity</p>
+                    <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                      Justin Battles featured on NCIA's national podcast, discussing veteran equity 
+                      and his journey from Army service to cannabis entrepreneurship.
+                    </p>
+                    <Button size="sm" className="w-full bg-battles-gold text-black hover:bg-yellow-600">
+                      <Play className="h-4 w-4 mr-2" />
+                      Listen Now
+                    </Button>
+                  </div>
+
+                  <div className="bg-gray-800 rounded-lg p-4 border border-gray-700 hover:border-battles-gold transition-colors">
+                    <div className="flex items-center justify-between mb-3">
+                      <Mic className="h-8 w-8 text-battles-gold" />
+                      <Badge className="bg-battles-gold text-black text-xs">Sept 2024</Badge>
+                    </div>
+                    <h4 className="font-semibold text-white mb-2">The Funkast by The Dank Tank</h4>
+                    <p className="text-sm text-gray-400 mb-3">Two-Part Interview Series</p>
+                    <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                      Two-part interview featuring Justin and Andrea Battles on building a veteran-owned 
+                      cannabis business and launching Battles Budz.
+                    </p>
+                    <Button size="sm" className="w-full bg-battles-gold text-black hover:bg-yellow-600">
+                      <Play className="h-4 w-4 mr-2" />
+                      Listen Series
+                    </Button>
+                  </div>
+
+                  <div className="bg-gray-800 rounded-lg p-4 border border-gray-700 hover:border-battles-gold transition-colors">
+                    <div className="flex items-center justify-between mb-3">
+                      <Users2 className="h-8 w-8 text-battles-gold" />
+                      <Badge className="bg-battles-gold text-black text-xs">2025</Badge>
+                    </div>
+                    <h4 className="font-semibold text-white mb-2">NY Home Growers Roundtable</h4>
+                    <p className="text-sm text-gray-400 mb-3">Host & Moderator</p>
+                    <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                      Justin Battles served as host/moderator for statewide panels connecting home growers 
+                      with industry experts like Chris Trump and PotentPonics.
+                    </p>
+                    <Button size="sm" className="w-full bg-battles-gold text-black hover:bg-yellow-600">
+                      <Play className="h-4 w-4 mr-2" />
+                      Watch Panels
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Public Advocacy & Social Highlights */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Public Advocacy */}
               <Card className="bg-gray-900 border-battles-gold">
                 <CardHeader>
-                  <CardTitle className="text-battles-gold">Company Videos</CardTitle>
+                  <CardTitle className="text-battles-gold flex items-center text-xl">
+                    <Shield className="h-5 w-5 mr-3" />
+                    Public Advocacy
+                  </CardTitle>
+                  <CardDescription className="text-gray-400">
+                    Leadership roles advancing veteran equity in cannabis
+                  </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center">
-                      <div className="text-center">
-                        <Video className="h-12 w-12 text-battles-gold mx-auto mb-2" />
-                        <p className="text-gray-400">Pitch Video</p>
-                        <p className="text-sm text-gray-500">Coming Soon</p>
-                      </div>
-                    </div>
-                    <Button className="w-full bg-battles-gold text-black hover:bg-yellow-600">
-                      Watch Introduction Video
-                    </Button>
+                <CardContent className="space-y-4">
+                  <div className="bg-gray-800 rounded-lg p-4 border-l-4 border-battles-gold">
+                    <h4 className="font-semibold text-white mb-2 flex items-center">
+                      <Users className="h-4 w-4 mr-2 text-battles-gold" />
+                      Veterans Committee Co-Chair
+                    </h4>
+                    <p className="text-sm text-gray-400 mb-2">Cannabis Association of New York</p>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      Justin Battles serves as Co-Chair, advocating for veteran access to licenses, 
+                      funding, and affordable products in the cannabis industry.
+                    </p>
+                  </div>
+
+                  <div className="bg-gray-800 rounded-lg p-4 border-l-4 border-battles-gold">
+                    <h4 className="font-semibold text-white mb-2 flex items-center">
+                      <Newspaper className="h-4 w-4 mr-2 text-battles-gold" />
+                      Thought Leadership
+                    </h4>
+                    <p className="text-sm text-gray-400 mb-2">Policy & Equity Advocacy</p>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      The Syracuse.com / NY Cannabis Insider guest column solidified Battles Budz 
+                      as a voice in the state's cannabis equity conversation.
+                    </p>
                   </div>
                 </CardContent>
               </Card>
 
+              {/* Social Media Highlights */}
               <Card className="bg-gray-900 border-battles-gold">
                 <CardHeader>
-                  <CardTitle className="text-battles-gold">Media Appearances</CardTitle>
+                  <CardTitle className="text-battles-gold flex items-center text-xl">
+                    <Star className="h-5 w-5 mr-3" />
+                    Social Media Highlights
+                  </CardTitle>
+                  <CardDescription className="text-gray-400">
+                    Digital presence documenting journey and expertise
+                  </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="p-4 border border-gray-700 rounded-lg">
-                      <h4 className="font-medium mb-2 text-gray-200">Cannabis Industry Podcast</h4>
-                      <p className="text-sm text-gray-400 mb-2">
-                        Discussion on veteran entrepreneurship in cannabis
-                      </p>
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
-                        Listen Now
-                      </Button>
-                    </div>
-                    <div className="p-4 border border-gray-700 rounded-lg">
-                      <h4 className="font-medium mb-2 text-gray-200">Local Business Feature</h4>
-                      <p className="text-sm text-gray-400 mb-2">
-                        Coverage of Battles Budz in local Gloversville media
-                      </p>
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
-                        Read Article
-                      </Button>
-                    </div>
+                <CardContent className="space-y-4">
+                  <div className="bg-gray-800 rounded-lg p-4 border-l-4 border-purple-500">
+                    <h4 className="font-semibold text-white mb-2 flex items-center">
+                      <Eye className="h-4 w-4 mr-2 text-purple-400" />
+                      @Battles_Budz Instagram
+                    </h4>
+                    <p className="text-gray-300 text-sm leading-relaxed mb-3">
+                      Posts documenting BLOOM ROC incubator journey, graduation milestone, 
+                      NY Home Growers Roundtable panels, and educational content.
+                    </p>
+                    <Button size="sm" variant="outline" className="border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white">
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Follow Journey
+                    </Button>
+                  </div>
+
+                  <div className="bg-gray-800 rounded-lg p-4 border-l-4 border-blue-500">
+                    <h4 className="font-semibold text-white mb-2 flex items-center">
+                      <Users className="h-4 w-4 mr-2 text-blue-400" />
+                      LinkedIn Professional Presence
+                    </h4>
+                    <p className="text-gray-300 text-sm leading-relaxed mb-3">
+                      Announced company milestones, promoted veteran advocacy initiatives, 
+                      and shared NCIA podcast appearance to professional network.
+                    </p>
+                    <Button size="sm" variant="outline" className="border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white">
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Connect
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
