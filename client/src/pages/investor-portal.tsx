@@ -76,6 +76,14 @@ export default function InvestorPortal() {
     enabled: isAuthenticated,
   });
 
+  // Query for investor documents
+  const { data: documentsData, isLoading: documentsLoading } = useQuery({
+    queryKey: ["/api/investor-docs/list"],
+    enabled: isAuthenticated && hasInvestorAccess,
+  });
+
+  const investorDocuments = documentsData?.documents || [];
+
   // Message form for authenticated investors
   const messageForm = useForm<InsertInvestorMessage>({
     resolver: zodResolver(insertInvestorMessageSchema.extend({
@@ -595,48 +603,64 @@ export default function InvestorPortal() {
                   <CardDescription className="text-gray-300">Legal documents and business materials</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between p-4 border border-gray-700 rounded-lg w-full gap-4">
-                      <div className="flex items-center space-x-3 flex-1 min-w-0">
-                        <FileText className="h-8 w-8 text-battles-gold flex-shrink-0" />
-                        <div className="min-w-0 flex-1">
-                          <p className="font-medium text-white">Financial Projections</p>
-                          <p className="text-sm text-gray-400">Revenue models and growth projections</p>
-                          <p className="text-xs text-yellow-400 mt-1">⚠️ Pending final facility approval data</p>
-                        </div>
-                      </div>
-                      <div className="flex space-x-2 flex-shrink-0">
-                        <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
-                          <Eye className="h-4 w-4 mr-1" />
-                          View
-                        </Button>
-                        <Button size="sm" className="bg-battles-gold text-black hover:bg-yellow-600">
-                          <Download className="h-4 w-4 mr-1" />
-                          Download
-                        </Button>
-                      </div>
+                  {documentsLoading ? (
+                    <div className="flex items-center justify-center p-8">
+                      <div className="text-battles-gold">Loading documents...</div>
                     </div>
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between p-4 border border-gray-700 rounded-lg w-full gap-4">
-                      <div className="flex items-center space-x-3 flex-1 min-w-0">
-                        <FileText className="h-8 w-8 text-battles-gold flex-shrink-0" />
-                        <div className="min-w-0 flex-1">
-                          <p className="font-medium text-white">Business License Documentation</p>
-                          <p className="text-sm text-gray-400">OCM License OCMMICR-2023-000258</p>
-                          <p className="text-xs text-green-400 mt-1">✓ All four verticals approved</p>
-                        </div>
-                      </div>
-                      <div className="flex space-x-2 flex-shrink-0">
-                        <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold">
-                          <Eye className="h-4 w-4 mr-1" />
-                          View
-                        </Button>
-                        <Button size="sm" className="bg-battles-gold text-black hover:bg-yellow-600">
-                          <Download className="h-4 w-4 mr-1" />
-                          Download
-                        </Button>
-                      </div>
+                  ) : investorDocuments.length === 0 ? (
+                    <div className="text-center p-8">
+                      <FileText className="h-16 w-16 text-gray-500 mx-auto mb-4" />
+                      <p className="text-gray-400 text-lg mb-2">No documents available</p>
+                      <p className="text-gray-500 text-sm">
+                        Documents will appear here once they are assigned to you by an administrator.
+                      </p>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {investorDocuments.map((doc: any) => (
+                        <div key={doc.id} className="flex flex-col md:flex-row md:items-center md:justify-between p-4 border border-gray-700 rounded-lg w-full gap-4">
+                          <div className="flex items-center space-x-3 flex-1 min-w-0">
+                            <FileText className="h-8 w-8 text-battles-gold flex-shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <p className="font-medium text-white">{doc.title}</p>
+                              <p className="text-sm text-gray-400">{doc.description || "Business document"}</p>
+                              <p className="text-xs text-gray-500 mt-1">
+                                {doc.fileName} • {Math.round(doc.fileSize / 1024)} KB
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex space-x-2 flex-shrink-0">
+                            {doc.canView && (
+                              <Button 
+                                size="sm" 
+                                variant="outline" 
+                                className="border-battles-gold text-battles-gold"
+                                onClick={() => window.open(`/api/investor-docs/download/${doc.id}`, '_blank')}
+                              >
+                                <Eye className="h-4 w-4 mr-1" />
+                                View
+                              </Button>
+                            )}
+                            {doc.canDownload && (
+                              <Button 
+                                size="sm" 
+                                className="bg-battles-gold text-black hover:bg-yellow-600"
+                                onClick={() => {
+                                  const link = document.createElement('a');
+                                  link.href = `/api/investor-docs/download/${doc.id}`;
+                                  link.download = doc.fileName;
+                                  link.click();
+                                }}
+                              >
+                                <Download className="h-4 w-4 mr-1" />
+                                Download
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>
