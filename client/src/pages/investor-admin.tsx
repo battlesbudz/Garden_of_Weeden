@@ -511,6 +511,11 @@ export default function InvestorAdmin() {
         const file = new File([blob], fileName, { type: blob.type });
         await navigator.share({ files: [file] });
         console.log(`🔽 Shared via Web Share API: ${fileName}`);
+        toast({
+          title: "File Shared",
+          description: `${fileName} ready to share or save`,
+          variant: "default",
+        });
       } else {
         // Fallback to traditional download
         const url = window.URL.createObjectURL(blob);
@@ -535,13 +540,12 @@ export default function InvestorAdmin() {
         }, 1000);
         
         console.log(`🔽 Download initiated for: ${fileName}`);
+        toast({
+          title: "Download Started",
+          description: `Downloading ${fileName}`,
+          variant: "default",
+        });
       }
-      
-      toast({
-        title: "Download Started",
-        description: `Downloading ${fileName}`,
-        variant: "default",
-      });
     } catch (error) {
       console.error("Download error:", error);
       toast({
@@ -550,6 +554,17 @@ export default function InvestorAdmin() {
         variant: "destructive",
       });
     }
+  };
+
+  // Add a direct link handler for mobile users who want to open in browser
+  const handleViewDocument = (documentId: number, fileName: string) => {
+    const directUrl = `/api/admin/investor-docs/${documentId}/download`;
+    window.open(directUrl, '_blank');
+    toast({
+      title: "Opening Document",
+      description: `Opening ${fileName} in new tab`,
+      variant: "default",
+    });
   };
 
   const formatFileSize = (bytes: number): string => {
@@ -1015,7 +1030,16 @@ export default function InvestorAdmin() {
                               onClick={() => handleDownloadDocument(doc.id, doc.fileName)}
                             >
                               <Download className="h-4 w-4 mr-1" />
-                              Download
+                              Share/Save
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white flex-shrink-0"
+                              onClick={() => handleViewDocument(doc.id, doc.fileName)}
+                            >
+                              <FileText className="h-4 w-4 mr-1" />
+                              View
                             </Button>
                             <Button
                               size="sm"
