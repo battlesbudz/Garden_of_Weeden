@@ -1107,7 +1107,12 @@ export default function InvestorPortal() {
                         Guest column by Justin Battles advocating for service-disabled veterans to be prioritized in NY cannabis licensing. 
                         Published on both Syracuse.com and NY Cannabis Insider, establishing thought leadership in equity policy.
                       </p>
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black">
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
+                        onClick={() => window.open('https://www.syracuse.com/marijuana/2023/03/prioritizing-veterans-in-the-cannabis-industry-a-call-for-action-guest-column.html', '_blank')}
+                      >
                         <ExternalLink className="h-4 w-4 mr-2" />
                         Read Article
                       </Button>
@@ -1123,7 +1128,12 @@ export default function InvestorPortal() {
                         TV news profile of Justin Battles advocating for veteran inclusion in New York's cannabis industry 
                         and highlighting cannabis' role in treating PTSD and chronic pain.
                       </p>
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black">
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
+                        onClick={() => window.open('https://www.wwnytv.com/2023/01/25/veterans-hope-better-access-cannabis-licenses/', '_blank')}
+                      >
                         <Play className="h-4 w-4 mr-2" />
                         Watch Video
                       </Button>
@@ -1141,7 +1151,12 @@ export default function InvestorPortal() {
                         Battles Budz LLC recognized as a certified Service-Disabled Veteran-Owned Business (SDVOB), 
                         highlighting the company as a veteran-owned, vertically integrated cannabis microbusiness.
                       </p>
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black">
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
+                        onClick={() => window.open('https://ogs.ny.gov/news/33-companies-receive-new-york-state-service-disabled-veteran-owned-business-certification', '_blank')}
+                      >
                         <ExternalLink className="h-4 w-4 mr-2" />
                         View Release
                       </Button>
@@ -1157,7 +1172,12 @@ export default function InvestorPortal() {
                         Featured Justin Battles and Battles Budz at the SUNY Cannabis Conference, 
                         identifying him among New York's emerging cannabis entrepreneurs.
                       </p>
-                      <Button size="sm" variant="outline" className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black">
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
+                        onClick={() => window.open('https://www.newyorkweedreport.com/p/dent-doctors-back-cannabis-for-autism', '_blank')}
+                      >
                         <ExternalLink className="h-4 w-4 mr-2" />
                         Read Feature
                       </Button>
@@ -1200,34 +1220,42 @@ export default function InvestorPortal() {
                   <div className="bg-gray-800 rounded-lg p-4 border border-gray-700 hover:border-battles-gold transition-colors">
                     <div className="flex items-center justify-between mb-3">
                       <Mic className="h-8 w-8 text-battles-gold" />
-                      <Badge className="bg-battles-gold text-black text-xs">Sept 2024</Badge>
+                      <Badge className="bg-battles-gold text-black text-xs">Sept 15, 2024</Badge>
                     </div>
-                    <h4 className="font-semibold text-white mb-2">The Funkast by The Dank Tank</h4>
-                    <p className="text-sm text-gray-400 mb-3">Two-Part Interview Series</p>
+                    <h4 className="font-semibold text-white mb-2">The Funkast (Part 1)</h4>
+                    <p className="text-sm text-gray-400 mb-3">Episode 7 - Battles Budz</p>
                     <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                      Two-part interview featuring Justin and Andrea Battles on building a veteran-owned 
+                      Part 1 of two-part interview featuring Justin and Andrea Battles on building a veteran-owned 
                       cannabis business and launching Battles Budz.
                     </p>
-                    <Button size="sm" className="w-full bg-battles-gold text-black hover:bg-yellow-600">
+                    <Button 
+                      size="sm" 
+                      className="w-full bg-battles-gold text-black hover:bg-yellow-600"
+                      onClick={() => window.open('https://www.audacy.com/podcast/the-funkast-1df2b/episodes/ep-7-part-1-battles-budz-78504', '_blank')}
+                    >
                       <Play className="h-4 w-4 mr-2" />
-                      Listen Series
+                      Listen Part 1
                     </Button>
                   </div>
 
                   <div className="bg-gray-800 rounded-lg p-4 border border-gray-700 hover:border-battles-gold transition-colors">
                     <div className="flex items-center justify-between mb-3">
-                      <Users2 className="h-8 w-8 text-battles-gold" />
-                      <Badge className="bg-battles-gold text-black text-xs">2025</Badge>
+                      <Mic className="h-8 w-8 text-battles-gold" />
+                      <Badge className="bg-battles-gold text-black text-xs">Sept 22, 2024</Badge>
                     </div>
-                    <h4 className="font-semibold text-white mb-2">NY Home Growers Roundtable</h4>
-                    <p className="text-sm text-gray-400 mb-3">Host & Moderator</p>
+                    <h4 className="font-semibold text-white mb-2">The Funkast (Part 2)</h4>
+                    <p className="text-sm text-gray-400 mb-3">Episode 8 - Battles Budz</p>
                     <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                      Justin Battles served as host/moderator for statewide panels connecting home growers 
-                      with industry experts like Chris Trump and PotentPonics.
+                      Part 2 of two-part interview featuring Justin and Andrea Battles on building a veteran-owned 
+                      cannabis business and launching Battles Budz.
                     </p>
-                    <Button size="sm" className="w-full bg-battles-gold text-black hover:bg-yellow-600">
+                    <Button 
+                      size="sm" 
+                      className="w-full bg-battles-gold text-black hover:bg-yellow-600"
+                      onClick={() => window.open('https://podcasts.apple.com/us/podcast/ep-8-part-2-battles-budz/id1755200351?i=1000670334501', '_blank')}
+                    >
                       <Play className="h-4 w-4 mr-2" />
-                      Watch Panels
+                      Listen Part 2
                     </Button>
                   </div>
                 </div>
@@ -1269,6 +1297,19 @@ export default function InvestorPortal() {
                     <p className="text-gray-300 text-sm leading-relaxed">
                       The Syracuse.com / NY Cannabis Insider guest column solidified Battles Budz 
                       as a voice in the state's cannabis equity conversation.
+                    </p>
+                  </div>
+
+                  <div className="bg-gray-800 rounded-lg p-4 border-l-4 border-battles-gold">
+                    <h4 className="font-semibold text-white mb-2 flex items-center">
+                      <Users2 className="h-4 w-4 mr-2 text-battles-gold" />
+                      NY Home Growers Roundtable
+                    </h4>
+                    <p className="text-sm text-gray-400 mb-2">Host & Moderator (2025)</p>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      Justin Battles served as host/moderator for statewide panels connecting home growers 
+                      with industry experts like Chris Trump and PotentPonics. Demonstrates leadership 
+                      and community engagement in the cannabis industry.
                     </p>
                   </div>
                 </CardContent>
