@@ -146,14 +146,7 @@ export default function Navigation() {
                         <DropdownMenuSeparator className="bg-battles-gold/30" />
                       </>
                     )}
-                    {!isAdmin && (
-                      <DropdownMenuItem asChild>
-                        <Link href="/secure-documents" className="flex items-center text-white hover:text-battles-gold">
-                          <Settings className="h-4 w-4 mr-2" />
-                          My Documents
-                        </Link>
-                      </DropdownMenuItem>
-                    )}
+
                     <DropdownMenuItem onClick={handleLogout} className="text-white hover:text-battles-gold">
                       <LogOut className="h-4 w-4 mr-2" />
                       Logout
