@@ -198,12 +198,12 @@ export const forumPosts = pgTable("forum_posts", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const forumComments = pgTable("forum_comments", {
+export const forumComments: any = pgTable("forum_comments", {
   id: serial("id").primaryKey(),
   content: text("content").notNull(),
   postId: integer("post_id").references(() => forumPosts.id).notNull(),
   authorId: varchar("author_id").references(() => users.id).notNull(),
-  parentId: integer("parent_id").references(() => forumComments.id), // For nested replies
+  parentId: integer("parent_id"), // Will reference forumComments.id after declaration
   likeCount: integer("like_count").default(0),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),

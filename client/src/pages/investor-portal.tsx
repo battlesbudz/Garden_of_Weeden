@@ -49,7 +49,7 @@ export default function InvestorPortal() {
   const queryClient = useQueryClient();
 
   // Check if authenticated user has investor access
-  const { data: accessCheck, isLoading: accessLoading } = useQuery({
+  const { data: accessCheck, isLoading: accessLoading } = useQuery<{ hasAccess: boolean }>({
     queryKey: ["/api/investor/check-access"],
     enabled: isAuthenticated,
   });
@@ -77,7 +77,7 @@ export default function InvestorPortal() {
   });
 
   // Query for investor documents
-  const { data: documentsData, isLoading: documentsLoading } = useQuery({
+  const { data: documentsData, isLoading: documentsLoading } = useQuery<{ documents: any[] }>({
     queryKey: ["/api/investor-docs/list"],
     enabled: isAuthenticated && hasInvestorAccess,
   });
@@ -165,7 +165,11 @@ export default function InvestorPortal() {
           <div className="space-y-3">
             <p className="text-sm text-gray-300">Already an approved investor?</p>
             <Button 
-              onClick={() => window.location.href = '/api/login'}
+              onClick={() => {
+                // Store the current URL so user returns here after login
+                sessionStorage.setItem('redirectAfterLogin', '/investor-portal');
+                window.location.href = '/login';
+              }}
               className="bg-battles-gold hover:bg-battles-gold/90 text-black font-semibold w-full"
             >
               <Shield className="h-4 w-4 mr-2" />
