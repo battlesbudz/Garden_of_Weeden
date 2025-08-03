@@ -15,14 +15,17 @@ A sophisticated cannabis industry digital platform designed to streamline invest
 
 ### Login & Redirect Improvements (2025-01-03)
 - **Fixed investor portal login redirect issue**: Users are now properly redirected back to the investor portal after login instead of being sent to homepage
-- **Updated login flow**: Changed "Sign In to Portal" button to redirect to `/login` instead of `/api/login` and properly set `sessionStorage` redirect URL
-- **Improved mobile responsiveness**: Added proper viewport handling and responsive design fixes
+- **Restored Replit Auth flow**: Fixed authentication to use proper Replit OAuth instead of custom login form
+- **Improved mobile responsiveness**: Resolved desktop view switching issue after login - now maintains proper mobile view
+- **Enhanced redirect mechanism**: Implemented dual-approach using OAuth state parameter and session storage for reliable redirects
 - **Fixed TypeScript errors**: Added proper type annotations for API responses in investor portal
 
 ### Technical Details
-- Modified `client/src/pages/investor-portal.tsx` to set `redirectAfterLogin` in sessionStorage before redirecting to login
-- Enhanced `client/src/hooks/useAuth.ts` with proper login mutation and TypeScript types
-- Fixed API response typing for investor access checks and document queries
+- Restored `/api/login` endpoint with Replit Auth OAuth flow
+- Added both routes `/investors` and `/investor-portal` for investor portal access
+- Implemented OAuth state parameter encoding to preserve redirect URL across authentication flow
+- Enhanced session storage backup mechanism for redirect persistence
+- Fixed all TypeScript errors in authentication and investor portal components
 
 ## User Preferences
 - Focus on mobile-first responsive design

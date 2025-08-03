@@ -112,6 +112,7 @@ export async function setupAuth(app: Express) {
     passport.authenticate(`replitauth:${req.hostname}`, {
       prompt: "login consent",
       scope: ["openid", "email", "profile", "offline_access"],
+      state: redirectTo ? Buffer.from(redirectTo).toString('base64') : undefined,
     })(req, res, next);
   });
 
@@ -123,10 +124,22 @@ export async function setupAuth(app: Express) {
         return next(err);
       }
       
-      // Check if there's a redirect URL stored in session
-      const redirectTo = req.session?.redirectAfterLogin || "/";
-      console.log('Callback redirect URL from session:', redirectTo);
-      if (req.session?.redirectAfterLogin) {
+      // Try to get redirect URL from state parameter first, then session
+      let redirectTo = "/";
+      
+      try {
+        if (req.query.state) {
+          redirectTo = Buffer.from(req.query.state as string, 'base64').toString('utf-8');
+          console.log('Callback redirect URL from state:', redirectTo);
+        }
+      } catch (e) {
+        console.log('Could not parse state parameter, trying session');
+      }
+      
+      // Fallback to session if state didn't work
+      if (redirectTo === "/" && req.session?.redirectAfterLogin) {
+        redirectTo = req.session.redirectAfterLogin;
+        console.log('Callback redirect URL from session:', redirectTo);
         delete req.session.redirectAfterLogin;
       }
       
