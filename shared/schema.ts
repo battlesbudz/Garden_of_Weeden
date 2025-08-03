@@ -152,6 +152,7 @@ export const investorAccess = pgTable("investor_access", {
 // New table for investor access requests
 export const investorAccessRequests = pgTable("investor_access_requests", {
   id: serial("id").primaryKey(),
+  userId: varchar("user_id").references(() => users.id), // Link to the logged-in user who submitted the request
   firstName: varchar("first_name", { length: 255 }).notNull(),
   lastName: varchar("last_name", { length: 255 }).notNull(),
   email: varchar("email", { length: 255 }).notNull(),
@@ -418,6 +419,7 @@ export const insertInvestorAccessSchema = createInsertSchema(investorAccess).pic
 });
 
 export const insertInvestorAccessRequestSchema = createInsertSchema(investorAccessRequests).pick({
+  userId: true,
   firstName: true,
   lastName: true,
   email: true,

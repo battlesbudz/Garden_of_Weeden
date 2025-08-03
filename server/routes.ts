@@ -1217,11 +1217,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Investor Access Request Routes
 
-  // Submit investor access request (public)
-  app.post("/api/investor/access-request", async (req, res) => {
+  // Submit investor access request (requires authentication to link to user)
+  app.post("/api/investor/access-request", isAuthenticated, async (req: any, res) => {
     try {
-      const validatedData = insertInvestorAccessRequestSchema.parse(req.body);
+      const userId = req.user.claims.sub;
+      console.log("🔍 [ACCESS-REQUEST] Creating access request for user:", userId);
+      
+      // Add the userId to the request data
+      const requestData = { ...req.body, userId };
+      const validatedData = insertInvestorAccessRequestSchema.parse(requestData);
       const request = await storage.createInvestorAccessRequest(validatedData);
+      
+      console.log("✅ [ACCESS-REQUEST] Access request created:", request.id, "for user:", userId);
       
       // Send email notification to admin
       await sendInvestorAccessRequestNotification(request);
@@ -1676,9 +1683,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { investorId, canView, canDownload } = req.body;
       console.log("🔍 [PERMISSIONS] Request data:", { documentId, investorId, canView, canDownload });
 
-      // The investorId from the frontend is actually the investor access request ID
-      // We need to convert it to the actual user ID
-      const accessRequests = await storage.getAllInvestorAccess();
+      // The investorId from the frontend is the investor access request ID
+      // We need to find the request and use its linked userId
+      const accessRequests = await storage.getAllInvestorAccessRequests();
       const investorRequest = accessRequests.find(req => req.id === parseInt(investorId));
       
       if (!investorRequest) {
@@ -1686,46 +1693,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Investor request not found" });
       }
 
-      console.log("🔍 [PERMISSIONS] Found investor request:", investorRequest.email);
+      console.log("🔍 [PERMISSIONS] Found investor request for user ID:", investorRequest.userId);
       
-      // Get the actual user by email
-      let investorUser = await storage.getUserByEmail(investorRequest.email);
+      // If the request has a userId, use that directly
+      let investorUser;
+      if (investorRequest.userId) {
+        investorUser = await storage.getUser(investorRequest.userId);
+        console.log("🔍 [PERMISSIONS] Found user via userId link:", investorUser?.email);
+      }
       
-      // If no exact email match, try to find by similar name
+      // Fallback to email matching if no userId link exists (for older requests)
       if (!investorUser) {
-        console.log("🔍 [PERMISSIONS] No exact email match, searching by name:", investorRequest.firstName, investorRequest.lastName);
+        console.log("🔍 [PERMISSIONS] No userId link, trying email match:", investorRequest.email);
+        investorUser = await storage.getUserByEmail(investorRequest.email);
         
-        // Get all users and try to find a match by name (exact match for better precision)
-        const allUsers = await storage.getAllUsers();
-        investorUser = allUsers.find(user => 
-          user.firstName?.toLowerCase().trim() === investorRequest.firstName.toLowerCase().trim() &&
-          user.lastName?.toLowerCase().trim() === investorRequest.lastName.toLowerCase().trim()
-        );
-        
-        if (investorUser) {
-          console.log("🔍 [PERMISSIONS] Found user by name match:", investorUser.email);
+        // If still no match, try name matching
+        if (!investorUser) {
+          console.log("🔍 [PERMISSIONS] No exact email match, searching by name:", investorRequest.firstName, investorRequest.lastName);
+          
+          const allUsers = await storage.getAllUsers();
+          investorUser = allUsers.find(user => 
+            user.firstName?.toLowerCase().trim() === investorRequest.firstName.toLowerCase().trim() &&
+            user.lastName?.toLowerCase().trim() === investorRequest.lastName.toLowerCase().trim()
+          );
+          
+          if (investorUser) {
+            console.log("🔍 [PERMISSIONS] Found user by name match:", investorUser.email);
+          }
         }
       }
       
       if (!investorUser) {
-        console.log("❌ [PERMISSIONS] User not found for:", investorRequest.email, "or name:", investorRequest.firstName, investorRequest.lastName);
-        
-        // Check if there are any users with similar email patterns (for troubleshooting)
-        const allUsers = await storage.getAllUsers();
-        const similarEmailUsers = allUsers.filter(user => 
-          user.email.toLowerCase().includes(investorRequest.firstName.toLowerCase()) ||
-          user.email.toLowerCase().includes(investorRequest.lastName.toLowerCase())
-        );
-        
-        if (similarEmailUsers.length > 0) {
-          console.log("🔍 [PERMISSIONS] Found users with similar email patterns:", similarEmailUsers.map(u => u.email));
-          return res.status(404).json({ 
-            message: `No user account found for ${investorRequest.email}. Found user accounts with similar names: ${similarEmailUsers.map(u => u.email).join(', ')}. The investor may need to update their access request with the correct email or create an account with the email in their access request.` 
-          });
-        }
-        
+        console.log("❌ [PERMISSIONS] User not found for request:", investorRequest.id);
         return res.status(404).json({ 
-          message: `No user account found for ${investorRequest.firstName} ${investorRequest.lastName} (${investorRequest.email}). They need to create an account first.` 
+          message: `No user account found for ${investorRequest.firstName} ${investorRequest.lastName}. They may need to create an account first.` 
         });
       }
 
