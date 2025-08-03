@@ -1695,11 +1695,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!investorUser) {
         console.log("🔍 [PERMISSIONS] No exact email match, searching by name:", investorRequest.firstName, investorRequest.lastName);
         
-        // Get all users and try to find a match by name
+        // Get all users and try to find a match by name (exact match for better precision)
         const allUsers = await storage.getAllUsers();
         investorUser = allUsers.find(user => 
-          user.firstName?.toLowerCase().includes(investorRequest.firstName.toLowerCase()) &&
-          user.lastName?.toLowerCase().includes(investorRequest.lastName.toLowerCase())
+          user.firstName?.toLowerCase().trim() === investorRequest.firstName.toLowerCase().trim() &&
+          user.lastName?.toLowerCase().trim() === investorRequest.lastName.toLowerCase().trim()
         );
         
         if (investorUser) {
@@ -1709,8 +1709,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       if (!investorUser) {
         console.log("❌ [PERMISSIONS] User not found for:", investorRequest.email, "or name:", investorRequest.firstName, investorRequest.lastName);
+        
+        // Check if there are any users with similar email patterns (for troubleshooting)
+        const allUsers = await storage.getAllUsers();
+        const similarEmailUsers = allUsers.filter(user => 
+          user.email.toLowerCase().includes(investorRequest.firstName.toLowerCase()) ||
+          user.email.toLowerCase().includes(investorRequest.lastName.toLowerCase())
+        );
+        
+        if (similarEmailUsers.length > 0) {
+          console.log("🔍 [PERMISSIONS] Found users with similar email patterns:", similarEmailUsers.map(u => u.email));
+          return res.status(404).json({ 
+            message: `No user account found for ${investorRequest.email}. Found user accounts with similar names: ${similarEmailUsers.map(u => u.email).join(', ')}. The investor may need to update their access request with the correct email or create an account with the email in their access request.` 
+          });
+        }
+        
         return res.status(404).json({ 
-          message: `No user account found for ${investorRequest.firstName} ${investorRequest.lastName}. They need to create an account first.` 
+          message: `No user account found for ${investorRequest.firstName} ${investorRequest.lastName} (${investorRequest.email}). They need to create an account first.` 
         });
       }
 
