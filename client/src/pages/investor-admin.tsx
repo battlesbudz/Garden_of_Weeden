@@ -127,6 +127,12 @@ export default function InvestorAdmin() {
   const investors = (investorsData as any)?.investors || [];
   const approvedInvestors = investors.filter((inv: Investor) => inv.status === "approved");
 
+  // Debug logging for documents
+  console.log("🔍 [FRONTEND] Documents data received:", documentsData);
+  console.log("🔍 [FRONTEND] Processed documents array:", documents);
+  console.log("🔍 [FRONTEND] Selected investor filter:", selectedInvestorFilter);
+  console.log("🔍 [FRONTEND] Documents loading state:", documentsLoading);
+
   // Reply to message mutation
   const replyMutation = useMutation({
     mutationFn: async ({ messageId, reply }: { messageId: number; reply: string }) => {
