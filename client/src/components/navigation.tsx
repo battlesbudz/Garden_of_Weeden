@@ -221,12 +221,7 @@ export default function Navigation() {
 
                   </>
                 )}
-                {!isAdmin && (
-                  <Link href="/secure-documents" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
-                    <Settings className="h-4 w-4 mr-2" />
-                    My Documents
-                  </Link>
-                )}
+
                 <button
                   onClick={handleLogout}
                   className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
