@@ -1132,7 +1132,7 @@ export default function InvestorPortal() {
                         size="sm" 
                         variant="outline" 
                         className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
-                        onClick={() => window.open('https://www.wwnytv.com/2023/01/25/veterans-hope-better-access-cannabis-licenses/', '_blank')}
+                        onClick={() => window.open('https://www.google.com/amp/s/www.wwnytv.com/2023/01/25/veterans-push-easier-access-cannabis-licenses/?outputType=amp', '_blank')}
                       >
                         <Play className="h-4 w-4 mr-2" />
                         Watch Video
@@ -1211,7 +1211,11 @@ export default function InvestorPortal() {
                       Justin Battles featured on NCIA's national podcast, discussing veteran equity 
                       and his journey from Army service to cannabis entrepreneurship.
                     </p>
-                    <Button size="sm" className="w-full bg-battles-gold text-black hover:bg-yellow-600">
+                    <Button 
+                      size="sm" 
+                      className="w-full bg-battles-gold text-black hover:bg-yellow-600"
+                      onClick={() => window.open('https://thecannabisindustry.org/podcasts/the-cannabis-industry-voice/veterans-and-cannabis-equity-in-new-york/', '_blank')}
+                    >
                       <Play className="h-4 w-4 mr-2" />
                       Listen Now
                     </Button>
