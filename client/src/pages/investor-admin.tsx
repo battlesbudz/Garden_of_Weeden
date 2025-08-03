@@ -128,12 +128,6 @@ export default function InvestorAdmin() {
   const investors = (investorsData as any)?.investors || [];
   const approvedInvestors = investors.filter((inv: Investor) => inv.status === "approved");
 
-  // Debug logging for documents
-  console.log("🔍 [FRONTEND] Documents data received:", documentsData);
-  console.log("🔍 [FRONTEND] Processed documents array:", documents);
-  console.log("🔍 [FRONTEND] Selected investor filter:", selectedInvestorFilter);
-  console.log("🔍 [FRONTEND] Documents loading state:", documentsLoading);
-
   // Reply to message mutation
   const replyMutation = useMutation({
     mutationFn: async ({ messageId, reply }: { messageId: number; reply: string }) => {
@@ -945,29 +939,23 @@ export default function InvestorAdmin() {
                   <div className="space-y-4">
                     {documents.map((doc: SecureDocument) => (
                       <div key={doc.id} className="flex items-center justify-between p-4 border border-gray-700 rounded-lg">
-                        <div className="flex items-center space-x-3">
-                          <FileText className="h-8 w-8 text-battles-gold" />
-                          <div>
-                            <p className="font-medium text-white">{doc.title}</p>
+                        <div className="flex items-center space-x-3 flex-1 min-w-0">
+                          <FileText className="h-8 w-8 text-battles-gold flex-shrink-0" />
+                          <div className="min-w-0 flex-1">
+                            <p className="font-medium text-white truncate">{doc.title}</p>
                             {doc.description && (
-                              <p className="text-sm text-gray-400 mt-1">{doc.description}</p>
+                              <p className="text-sm text-gray-400 mt-1 truncate">{doc.description}</p>
                             )}
-                            <div className="flex items-center space-x-4 mt-2">
-                              <p className="text-xs text-gray-500">
-                                Uploaded: {new Date(doc.createdAt).toLocaleDateString()}
-                              </p>
-                              <p className="text-xs text-gray-500">
-                                Size: {formatFileSize(doc.fileSize)}
-                              </p>
-                              <p className="text-xs text-gray-500">
-                                By: {doc.uploadedByRole === "admin" ? "Admin" : "Investor"}
-                              </p>
+                            <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                              <span>Uploaded: {new Date(doc.createdAt).toLocaleDateString()}</span>
+                              <span>Size: {formatFileSize(doc.fileSize)}</span>
+                              <span>By: {doc.uploadedByRole === "admin" ? "Admin" : "Investor"}</span>
                             </div>
                           </div>
                         </div>
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-3 flex-shrink-0 ml-4">
                           <div className="flex items-center space-x-2">
-                            <Label className="text-sm text-gray-300">Visible:</Label>
+                            <Label className="text-sm text-gray-300 whitespace-nowrap">Visible:</Label>
                             <Switch
                               checked={doc.isVisible}
                               onCheckedChange={(checked) =>
@@ -975,17 +963,17 @@ export default function InvestorAdmin() {
                               }
                               disabled={toggleVisibilityMutation.isPending}
                             />
-                          </div>
-                          <div className="flex space-x-1">
                             {doc.isVisible ? (
                               <Eye className="h-4 w-4 text-green-500" />
                             ) : (
                               <EyeOff className="h-4 w-4 text-red-500" />
                             )}
+                          </div>
+                          <div className="flex space-x-2">
                             <Button
                               size="sm"
                               variant="outline"
-                              className="border-battles-gold text-battles-gold"
+                              className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
                               onClick={() => handleDownloadDocument(doc.id, doc.fileName)}
                             >
                               <Download className="h-4 w-4" />
@@ -993,7 +981,7 @@ export default function InvestorAdmin() {
                             <Button
                               size="sm"
                               variant="outline"
-                              className="border-red-500 text-red-500"
+                              className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
                               onClick={() => {
                                 if (confirm(`Are you sure you want to delete "${doc.title}"?`)) {
                                   deleteDocumentMutation.mutate(doc.id);
