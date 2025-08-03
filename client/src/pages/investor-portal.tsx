@@ -1132,7 +1132,7 @@ export default function InvestorPortal() {
                         size="sm" 
                         variant="outline" 
                         className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
-                        onClick={() => window.open('https://www.google.com/amp/s/www.wwnytv.com/2023/01/25/veterans-push-easier-access-cannabis-licenses/?outputType=amp', '_blank')}
+                        onClick={() => window.open('https://www.wwnytv.com/2023/01/25/veterans-push-easier-access-cannabis-licenses/', '_blank')}
                       >
                         <Play className="h-4 w-4 mr-2" />
                         Watch Video
