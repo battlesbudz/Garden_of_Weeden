@@ -1323,7 +1323,7 @@ export default function InvestorPortal() {
                         onClick={() => window.open('https://youtu.be/XPdq8QmbOXE?si=4K35L4hNlEjqUZ7K', '_blank')}
                       >
                         <Play className="h-3 w-3 mr-1" />
-                        March Webinar
+                        February Webinar
                       </Button>
                       <Button 
                         size="sm" 
@@ -1332,7 +1332,7 @@ export default function InvestorPortal() {
                         onClick={() => window.open('https://youtu.be/g47d_dAvo3g?si=7NH_E10d2Sit7Aac', '_blank')}
                       >
                         <Play className="h-3 w-3 mr-1" />
-                        April Webinar
+                        March Webinar
                       </Button>
                       <Button 
                         size="sm" 
@@ -1341,7 +1341,7 @@ export default function InvestorPortal() {
                         onClick={() => window.open('https://youtu.be/gwUm5o-pN78?si=rsNkTmCYNCyDxIO7', '_blank')}
                       >
                         <Play className="h-3 w-3 mr-1" />
-                        May Webinar
+                        April Webinar
                       </Button>
                     </div>
                   </div>
