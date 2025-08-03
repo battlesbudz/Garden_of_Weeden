@@ -560,16 +560,16 @@ export default function InvestorAdmin() {
         
         console.log(`🔽 Download initiated for: ${fileName}`);
         toast({
-          title: "Download Started",
-          description: `Downloading ${fileName}`,
+          title: "File Ready", 
+          description: `${fileName} ready to save`,
           variant: "default",
         });
       }
     } catch (error) {
       console.error("Download error:", error);
       toast({
-        title: "Download Error",
-        description: "Failed to download document. Please try again.",
+        title: "Share Error",
+        description: "Failed to share document. Please try again.",
         variant: "destructive",
       });
     }
