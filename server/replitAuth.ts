@@ -101,18 +101,28 @@ export async function setupAuth(app: Express) {
   passport.serializeUser((user: Express.User, cb) => cb(null, user));
   passport.deserializeUser((user: Express.User, cb) => cb(null, user));
 
+  // In-memory store for redirect URLs (temporary solution)
+  const redirectStore = new Map<string, string>();
+
   app.get("/api/login", (req: any, res, next) => {
     // Store redirect URL in session if provided
     const redirectTo = req.query.redirect as string;
     if (redirectTo) {
+      // Store in session
       req.session.redirectAfterLogin = redirectTo;
-      console.log('Storing redirect URL in session:', redirectTo);
+      
+      // Also store in memory with session ID as backup
+      if (req.session.id) {
+        redirectStore.set(req.session.id, redirectTo);
+      }
+      
+      console.log('Storing redirect URL in session and memory:', redirectTo);
+      console.log('Session ID:', req.session.id);
     }
     
     passport.authenticate(`replitauth:${req.hostname}`, {
       prompt: "login consent",
       scope: ["openid", "email", "profile", "offline_access"],
-      state: redirectTo ? Buffer.from(redirectTo).toString('base64') : undefined,
     })(req, res, next);
   });
 
@@ -128,23 +138,29 @@ export async function setupAuth(app: Express) {
       console.log('Callback query params:', req.query);
       console.log('Callback session data:', req.session);
       
-      // Try to get redirect URL from state parameter first, then session
+      // Try multiple approaches to get redirect URL
       let redirectTo = "/";
       
-      try {
-        if (req.query.state) {
-          redirectTo = Buffer.from(req.query.state as string, 'base64').toString('utf-8');
-          console.log('Callback redirect URL from state:', redirectTo);
-        }
-      } catch (e) {
-        console.log('Could not parse state parameter, trying session:', e);
-      }
-      
-      // Fallback to session if state didn't work
-      if (redirectTo === "/" && req.session?.redirectAfterLogin) {
+      // Approach 1: Check session first
+      if (req.session?.redirectAfterLogin) {
         redirectTo = req.session.redirectAfterLogin;
         console.log('Callback redirect URL from session:', redirectTo);
         delete req.session.redirectAfterLogin;
+      }
+      // Approach 2: Check memory store with session ID
+      else if (req.session?.id && redirectStore.has(req.session.id)) {
+        redirectTo = redirectStore.get(req.session.id)!;
+        console.log('Callback redirect URL from memory store:', redirectTo);
+        redirectStore.delete(req.session.id);
+      }
+      // Approach 3: Default to investors if no redirect found (likely came from investor portal)
+      else if (redirectTo === "/") {
+        // Check if the referer or any indicators suggest this was an investor login
+        const referer = req.get('Referer') || '';
+        if (referer.includes('investor') || req.query.from === 'investor') {
+          redirectTo = "/investors";
+          console.log('Defaulting to investors page based on context');
+        }
       }
       
       console.log('Final redirect URL:', redirectTo);
