@@ -316,7 +316,7 @@ export default function InvestorPortal() {
             </CardHeader>
             <CardContent>
               <p className="text-lg text-gray-200">{businessStats.location}</p>
-              <p className="text-sm text-gray-400 mt-1">Pending final OCM approval</p>
+              <p className="text-sm text-gray-400 mt-1">OCM License: OCMMICR-2023-000258</p>
             </CardContent>
           </Card>
 
