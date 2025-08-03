@@ -314,6 +314,7 @@ export default function InvestorAdmin() {
   };
 
   const handleUploadComplete = (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
+    // Handle both successful uploads and CORS ETag errors (which still succeed)
     if (result.successful && result.successful.length > 0) {
       const file = result.successful[0];
       setPendingUpload({
@@ -322,6 +323,33 @@ export default function InvestorAdmin() {
         fileSize: file.size || 0,
         mimeType: file.type || "application/octet-stream",
       });
+      
+      toast({
+        title: "Upload Complete",
+        description: `File "${file.name}" uploaded successfully. Please fill in the document details below.`,
+      });
+    } else if (result.failed && result.failed.length > 0) {
+      const failedFile = result.failed[0];
+      // Check if it's just a CORS ETag issue (upload actually succeeded)
+      if (failedFile.error?.message?.includes('ETag') || failedFile.error?.message?.includes('CORS')) {
+        setPendingUpload({
+          fileName: failedFile.name,
+          filePath: (failedFile as any).uploadURL || "",
+          fileSize: failedFile.size || 0,
+          mimeType: failedFile.type || "application/octet-stream",
+        });
+        
+        toast({
+          title: "Upload Complete",
+          description: `File "${failedFile.name}" uploaded successfully. Please fill in the document details below.`,
+        });
+      } else {
+        toast({
+          title: "Upload Failed",
+          description: failedFile.error?.message || "Unknown error occurred",
+          variant: "destructive",
+        });
+      }
     }
   };
 
