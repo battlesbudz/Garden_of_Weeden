@@ -491,6 +491,17 @@ export default function InvestorAdmin() {
     try {
       console.log(`🔽 Starting download for document ${documentId}: ${fileName}`);
       
+      // Check authentication first
+      const authCheck = await fetch('/api/auth/user', { credentials: 'include' });
+      if (!authCheck.ok) {
+        toast({
+          title: "Authentication Required",
+          description: "Please refresh the page and try again",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const response = await fetch(`/api/admin/investor-docs/${documentId}/download`, {
         method: "GET",
         credentials: "include",
@@ -499,6 +510,14 @@ export default function InvestorAdmin() {
       console.log(`🔽 Download response status: ${response.status}`);
 
       if (!response.ok) {
+        if (response.status === 401) {
+          toast({
+            title: "Authentication Required",
+            description: "Please refresh the page and try again",
+            variant: "destructive",
+          });
+          return;
+        }
         throw new Error(`Download failed: ${response.statusText}`);
       }
 
@@ -557,14 +576,55 @@ export default function InvestorAdmin() {
   };
 
   // Add a direct link handler for mobile users who want to open in browser
-  const handleViewDocument = (documentId: number, fileName: string) => {
-    const directUrl = `/api/admin/investor-docs/${documentId}/download`;
-    window.open(directUrl, '_blank');
-    toast({
-      title: "Opening Document",
-      description: `Opening ${fileName} in new tab`,
-      variant: "default",
-    });
+  const handleViewDocument = async (documentId: number, fileName: string) => {
+    try {
+      // First check if user is still authenticated
+      const authCheck = await fetch('/api/auth/user', { credentials: 'include' });
+      if (!authCheck.ok) {
+        toast({
+          title: "Authentication Required",
+          description: "Please refresh the page and try again",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const directUrl = `/api/admin/investor-docs/${documentId}/download`;
+      
+      // For mobile, try to fetch and show the document inline first
+      if (window.innerWidth <= 768) {
+        try {
+          const response = await fetch(directUrl, { credentials: 'include' });
+          if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            window.open(url, '_blank');
+            setTimeout(() => window.URL.revokeObjectURL(url), 1000);
+          } else {
+            throw new Error('Download failed');
+          }
+        } catch (error) {
+          // Fallback to direct URL
+          window.open(directUrl, '_blank');
+        }
+      } else {
+        // Desktop - direct link works fine
+        window.open(directUrl, '_blank');
+      }
+      
+      toast({
+        title: "Opening Document",
+        description: `Opening ${fileName}`,
+        variant: "default",
+      });
+    } catch (error) {
+      console.error("View document error:", error);
+      toast({
+        title: "View Error", 
+        description: "Failed to open document. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const formatFileSize = (bytes: number): string => {
