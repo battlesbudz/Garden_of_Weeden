@@ -505,17 +505,37 @@ export default function InvestorAdmin() {
       const blob = await response.blob();
       console.log(`🔽 Blob created, size: ${blob.size} bytes`);
       
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.style.display = "none";
-      a.href = url;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      console.log(`🔽 Download initiated for: ${fileName}`);
-      
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+      // Try multiple download methods for better mobile compatibility
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([blob], fileName)] })) {
+        // Use Web Share API on mobile if available
+        const file = new File([blob], fileName, { type: blob.type });
+        await navigator.share({ files: [file] });
+        console.log(`🔽 Shared via Web Share API: ${fileName}`);
+      } else {
+        // Fallback to traditional download
+        const url = window.URL.createObjectURL(blob);
+        
+        // Try opening in new tab first (works better on mobile)
+        const newWindow = window.open(url, '_blank');
+        if (!newWindow) {
+          // If popup blocked, use traditional download
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.download = fileName;
+          a.target = "_blank";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+        
+        // Clean up after a delay
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url);
+        }, 1000);
+        
+        console.log(`🔽 Download initiated for: ${fileName}`);
+      }
       
       toast({
         title: "Download Started",
@@ -970,7 +990,7 @@ export default function InvestorAdmin() {
                         </div>
                         
                         {/* Controls Row */}
-                        <div className="flex items-center justify-between pt-3 border-t border-gray-700">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-3 border-t border-gray-700 gap-3">
                           <div className="flex items-center space-x-3">
                             <Label className="text-sm text-gray-300">Visible:</Label>
                             <Switch
@@ -987,11 +1007,11 @@ export default function InvestorAdmin() {
                             )}
                           </div>
                           
-                          <div className="flex space-x-2">
+                          <div className="flex flex-wrap gap-2">
                             <Button
                               size="sm"
                               variant="outline"
-                              className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
+                              className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black flex-shrink-0"
                               onClick={() => handleDownloadDocument(doc.id, doc.fileName)}
                             >
                               <Download className="h-4 w-4 mr-1" />
@@ -1000,7 +1020,7 @@ export default function InvestorAdmin() {
                             <Button
                               size="sm"
                               variant="outline"
-                              className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+                              className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white flex-shrink-0"
                               onClick={() => {
                                 if (confirm(`Are you sure you want to delete "${doc.title}"?`)) {
                                   deleteDocumentMutation.mutate(doc.id);
