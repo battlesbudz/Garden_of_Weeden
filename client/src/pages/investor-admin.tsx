@@ -1078,7 +1078,7 @@ export default function InvestorAdmin() {
                               }}
                             />
                             <Label htmlFor={investor.id} className="text-white">
-                              {investor.firstName} {investor.lastName} ({investor.email})
+                              {investor.firstName} {investor.lastName}
                             </Label>
                           </div>
                         ))}

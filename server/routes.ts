@@ -1733,7 +1733,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("🔍 [PERMISSIONS] Found investor user ID:", investorUser.id);
       
       // Update permissions using the actual user ID
-      await storage.updateDocumentPermission(documentId, investorUser.id, canView, canDownload);
+      await storage.updateDocumentPermission(documentId, investorUser.id, canView, canDownload, adminUserId);
       console.log("✅ [PERMISSIONS] Permissions updated successfully");
       
       res.json({ message: "Permissions updated successfully" });

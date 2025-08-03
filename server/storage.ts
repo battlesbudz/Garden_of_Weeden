@@ -1545,7 +1545,7 @@ export class DatabaseStorage implements IStorage {
     return !!permission;
   }
 
-  async updateDocumentPermission(documentId: number, investorId: string, canView: boolean, canDownload: boolean): Promise<void> {
+  async updateDocumentPermission(documentId: number, investorId: string, canView: boolean, canDownload: boolean, grantedBy: string): Promise<void> {
     // Try to update existing permission first
     const result = await db
       .update(documentPermissions)
@@ -1564,7 +1564,7 @@ export class DatabaseStorage implements IStorage {
           investorId,
           canView,
           canDownload,
-          grantedBy: 'admin' // Default admin user
+          grantedBy
         });
     }
   }
