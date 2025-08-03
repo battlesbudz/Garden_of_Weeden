@@ -106,6 +106,7 @@ export async function setupAuth(app: Express) {
     const redirectTo = req.query.redirect as string;
     if (redirectTo) {
       req.session.redirectAfterLogin = redirectTo;
+      console.log('Storing redirect URL in session:', redirectTo);
     }
     
     passport.authenticate(`replitauth:${req.hostname}`, {
@@ -124,6 +125,7 @@ export async function setupAuth(app: Express) {
       
       // Check if there's a redirect URL stored in session
       const redirectTo = req.session?.redirectAfterLogin || "/";
+      console.log('Callback redirect URL from session:', redirectTo);
       if (req.session?.redirectAfterLogin) {
         delete req.session.redirectAfterLogin;
       }
