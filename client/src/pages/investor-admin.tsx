@@ -228,7 +228,9 @@ export default function InvestorAdmin() {
   const getUploadUrlMutation = useMutation({
     mutationFn: async () => {
       console.log("🔍 [FRONTEND] Getting upload URL...");
-      const result = await apiRequest("POST", "/api/admin/investor-docs/upload", {});
+      const result = await apiRequest("/api/admin/investor-docs/upload", {
+        method: "POST",
+      });
       console.log("✅ [FRONTEND] Upload URL received:", result);
       return result;
     },
@@ -245,7 +247,13 @@ export default function InvestorAdmin() {
   const completeUploadMutation = useMutation({
     mutationFn: async (data: any) => {
       console.log("🔍 [FRONTEND] Completing upload with data:", data);
-      const result = await apiRequest("POST", "/api/admin/investor-docs/complete", data);
+      const result = await apiRequest("/api/admin/investor-docs/complete", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       console.log("✅ [FRONTEND] Upload completion result:", result);
       return result;
     },
