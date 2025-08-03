@@ -1689,11 +1689,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("🔍 [PERMISSIONS] Found investor request:", investorRequest.email);
       
       // Get the actual user by email
-      const investorUser = await storage.getUserByEmail(investorRequest.email);
+      let investorUser = await storage.getUserByEmail(investorRequest.email);
+      
+      // If no exact email match, try to find by similar name
+      if (!investorUser) {
+        console.log("🔍 [PERMISSIONS] No exact email match, searching by name:", investorRequest.firstName, investorRequest.lastName);
+        
+        // Get all users and try to find a match by name
+        const allUsers = await storage.getAllUsers();
+        investorUser = allUsers.find(user => 
+          user.firstName?.toLowerCase().includes(investorRequest.firstName.toLowerCase()) &&
+          user.lastName?.toLowerCase().includes(investorRequest.lastName.toLowerCase())
+        );
+        
+        if (investorUser) {
+          console.log("🔍 [PERMISSIONS] Found user by name match:", investorUser.email);
+        }
+      }
       
       if (!investorUser) {
-        console.log("❌ [PERMISSIONS] User not found for email:", investorRequest.email);
-        return res.status(404).json({ message: "Investor user not found" });
+        console.log("❌ [PERMISSIONS] User not found for:", investorRequest.email, "or name:", investorRequest.firstName, investorRequest.lastName);
+        return res.status(404).json({ 
+          message: `No user account found for ${investorRequest.firstName} ${investorRequest.lastName}. They need to create an account first.` 
+        });
       }
 
       console.log("🔍 [PERMISSIONS] Found investor user ID:", investorUser.id);
