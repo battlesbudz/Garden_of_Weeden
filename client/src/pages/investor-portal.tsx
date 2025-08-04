@@ -390,83 +390,213 @@ export default function InvestorPortal() {
           {/* Public Overview Tab - Only for non-authenticated users */}
           {!isAuthenticated && (
             <TabsContent value="overview" className="space-y-6">
+              {/* Hero Section */}
+              <Card className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-battles-gold">
+                <CardHeader className="text-center">
+                  <div className="flex justify-center mb-4">
+                    <img src={battlesLogo} alt="Battles Budz Logo" className="h-24 w-24 object-contain drop-shadow-xl" />
+                  </div>
+                  <CardTitle className="text-3xl font-playfair text-battles-gold mb-2">
+                    Investment Opportunity
+                  </CardTitle>
+                  <CardDescription className="text-gray-300 text-lg max-w-2xl mx-auto">
+                    A premier cannabis microbusiness opportunity in New York's regulated market. 
+                    Licensed, veteran-owned, and ready for growth.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+
+              {/* Key Investment Stats */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Card className="bg-gray-900 border-battles-gold text-center">
+                  <CardContent className="p-6">
+                    <DollarSign className="h-8 w-8 text-battles-gold mx-auto mb-2" />
+                    <p className="text-2xl font-bold text-white">$1,000,000</p>
+                    <p className="text-gray-400">Funding Target</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-gray-900 border-battles-gold text-center">
+                  <CardContent className="p-6">
+                    <TrendingUp className="h-8 w-8 text-battles-gold mx-auto mb-2" />
+                    <p className="text-2xl font-bold text-white">10%</p>
+                    <p className="text-gray-400">Equity Offered</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-gray-900 border-battles-gold text-center">
+                  <CardContent className="p-6">
+                    <Award className="h-8 w-8 text-battles-gold mx-auto mb-2" />
+                    <p className="text-lg font-bold text-green-400">Licensed & Ready</p>
+                    <p className="text-gray-400">NY OCM Approved</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Business Highlights */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card className="bg-gray-900 border-battles-gold">
                   <CardHeader>
-                    <div className="flex flex-col items-center text-center mb-4">
-                      <img src={battlesLogo} alt="Battles Budz Logo" className="h-20 w-20 sm:h-28 sm:w-28 lg:h-32 lg:w-32 object-contain drop-shadow-2xl mb-4" />
-                      <CardTitle className="text-battles-gold text-xl sm:text-2xl lg:text-3xl">Investment Opportunity</CardTitle>
-                      <CardDescription className="text-gray-300 mt-2 text-sm sm:text-base">Premium cannabis microbusiness seeking funding</CardDescription>
-                    </div>
+                    <CardTitle className="text-battles-gold flex items-center">
+                      <Trophy className="h-6 w-6 mr-2" />
+                      Key Achievements
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div>
-                      <p className="text-2xl font-bold text-white">$1,000,000</p>
-                      <p className="text-gray-400">Funding Target</p>
+                    <div className="border-l-4 border-green-500 pl-4">
+                      <h4 className="font-semibold text-white">Provisional License Secured</h4>
+                      <p className="text-sm text-gray-300">OCM License: OCMMICR-2023-000258</p>
                     </div>
-                    <div>
-                      <p className="text-xl text-white">10%</p>
-                      <p className="text-gray-400">Equity Offered</p>
+                    <div className="border-l-4 border-blue-500 pl-4">
+                      <h4 className="font-semibold text-white">SDVOB Certified</h4>
+                      <p className="text-sm text-gray-300">Service-Disabled Veteran-Owned Business</p>
                     </div>
-                    <div>
-                      <p className="text-lg text-green-400">Licensed & Ready</p>
-                      <p className="text-gray-400">NY OCM approved microbusiness</p>
+                    <div className="border-l-4 border-yellow-500 pl-4">
+                      <h4 className="font-semibold text-white">Premium Facility Secured</h4>
+                      <p className="text-sm text-gray-300">7,600 sq ft in Gloversville, NY</p>
                     </div>
                   </CardContent>
                 </Card>
 
                 <Card className="bg-gray-900 border-battles-gold">
                   <CardHeader>
-                    <div className="flex flex-col items-center text-center mb-4">
-                      <img src={battlesLogo} alt="Battles Budz Logo" className="h-20 w-20 sm:h-28 sm:w-28 lg:h-32 lg:w-32 object-contain drop-shadow-2xl mb-4" />
-                      <CardTitle className="text-battles-gold text-xl sm:text-2xl lg:text-3xl">Why Battles Budz?</CardTitle>
-                    </div>
+                    <CardTitle className="text-battles-gold flex items-center">
+                      <Star className="h-6 w-6 mr-2" />
+                      Competitive Advantages
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-3">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-gray-300 text-sm">Full vertical integration: cultivation, processing, retail, and consumption lounge</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-gray-300 text-sm">Veteran leadership with proven business acumen</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-gray-300 text-sm">Tourism destination with unique consumption experiences</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-gray-300 text-sm">Proprietary product lines with premium positioning</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Product Portfolio Highlight */}
+              <Card className="bg-gray-900 border-battles-gold">
+                <CardHeader>
+                  <CardTitle className="text-battles-gold flex items-center">
+                    <Building2 className="h-6 w-6 mr-2" />
+                    Signature Product Lines
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-3">
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-gray-300">Licensed NY microbusiness with all four verticals</p>
+                      <div className="bg-gray-800 p-4 rounded-lg">
+                        <h4 className="font-medium text-battles-gold mb-2">Battle Brew</h4>
+                        <p className="text-gray-300 text-sm">Proprietary cannabis-infused sweet tea with premium pricing (4x competitor rates)</p>
                       </div>
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-gray-300">Veteran-owned with proven leadership team</p>
-                      </div>
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-gray-300">Premium location in Gloversville, NY</p>
-                      </div>
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-gray-300">Unique consumption lounge experience</p>
+                      <div className="bg-gray-800 p-4 rounded-lg">
+                        <h4 className="font-medium text-battles-gold mb-2">Cosmic Chewz</h4>
+                        <p className="text-gray-300 text-sm">Full-spectrum RSO candy line with 10mg precision dosing</p>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
-              
-              {/* Large Access Button - covers more space */}
-              <div className="mt-8">
+                    <div className="space-y-3">
+                      <div className="bg-gray-800 p-4 rounded-lg">
+                        <h4 className="font-medium text-battles-gold mb-2">Freedom Fog Vapes</h4>
+                        <p className="text-gray-300 text-sm">Premium vape line with terpene preservation technology</p>
+                      </div>
+                      <div className="bg-gray-800 p-4 rounded-lg">
+                        <h4 className="font-medium text-battles-gold mb-2">Craft Cannabis</h4>
+                        <p className="text-gray-300 text-sm">Hand-rolled joints, glass-tip blunts, and premium rosin</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Business Model & Experience */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card className="bg-gray-900 border-battles-gold">
-                  <CardContent className="p-4 sm:p-8 text-center">
-                    <div className="flex justify-center mb-4 sm:mb-6">
-                      <img src={battlesLogo} alt="Battles Budz Logo" className="h-16 w-16 sm:h-20 sm:w-20 object-contain drop-shadow-2xl" />
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-battles-gold mb-4">Ready to Access Full Investor Portal?</h3>
-                    <p className="text-gray-300 mb-6 max-w-md mx-auto">
-                      Get exclusive access to detailed financials, business documents, progress updates, and secure investor communications.
+                  <CardHeader>
+                    <CardTitle className="text-battles-gold flex items-center">
+                      <Users2 className="h-6 w-6 mr-2" />
+                      Unique Experience Model
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <p className="text-gray-300 text-sm">
+                      Beyond traditional dispensary retail, Battles Budz offers a comprehensive cannabis tourism destination:
                     </p>
-                    <Button 
-                      onClick={() => setShowInvestorLogin(true)}
-                      className="bg-battles-gold text-black hover:bg-yellow-600 text-sm sm:text-lg md:text-xl px-4 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 h-auto font-bold w-full sm:w-auto"
-                      size="lg"
-                    >
-                      <Shield className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 mr-2 sm:mr-3 flex-shrink-0" />
-                      <span className="truncate">Access Full Investor Portal</span>
-                    </Button>
+                    <ul className="space-y-2 text-gray-300 text-sm">
+                      <li className="flex items-start">
+                        <span className="text-battles-gold mr-2">•</span>
+                        VIP consumption lounge with live entertainment
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-battles-gold mr-2">•</span>
+                        Educational tours of cultivation operations
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-battles-gold mr-2">•</span>
+                        Blunt & Breakfast Airbnb experiences
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-battles-gold mr-2">•</span>
+                        Table-side service and arcade gaming
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gray-900 border-battles-gold">
+                  <CardHeader>
+                    <CardTitle className="text-battles-gold flex items-center">
+                      <MapPin className="h-6 w-6 mr-2" />
+                      Strategic Location
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <p className="text-gray-300 text-sm">
+                      <strong>19 North Main Street, Gloversville, NY</strong>
+                    </p>
+                    <div className="space-y-2 text-gray-300 text-sm">
+                      <p>• 7,600 sq ft facility with dedicated areas for:</p>
+                      <p className="ml-4">- Cultivation and processing</p>
+                      <p className="ml-4">- Retail dispensary operations</p>
+                      <p className="ml-4">- Consumption lounge and entertainment</p>
+                      <p className="ml-4">- Secure storage and fulfillment</p>
+                    </div>
+                    <p className="text-gray-300 text-sm">
+                      Positioned to serve both local markets and cannabis tourism from NYC and Albany metro areas.
+                    </p>
                   </CardContent>
                 </Card>
               </div>
+
+              {/* Call to Action */}
+              <Card className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-battles-gold">
+                <CardContent className="p-8 text-center">
+                  <div className="flex justify-center mb-6">
+                    <img src={battlesLogo} alt="Battles Budz Logo" className="h-20 w-20 object-contain drop-shadow-2xl" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-battles-gold mb-4">Ready to Join Our Journey?</h3>
+                  <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
+                    Access detailed financials, business documents, progress updates, and exclusive investor communications in our secure portal.
+                  </p>
+                  <Button 
+                    onClick={() => setShowInvestorLogin(true)}
+                    className="bg-battles-gold text-black hover:bg-yellow-600 text-lg px-8 py-4 h-auto font-bold"
+                    size="lg"
+                  >
+                    <Shield className="h-5 w-5 mr-3" />
+                    Access Full Investor Portal
+                  </Button>
+                </CardContent>
+              </Card>
             </TabsContent>
           )}
 
