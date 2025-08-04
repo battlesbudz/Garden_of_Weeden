@@ -493,26 +493,33 @@ export default function InvestorPortal() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-3">
-                      <div className="bg-gray-800 p-4 rounded-lg">
-                        <h4 className="font-medium text-battles-gold mb-2">Battle Brew</h4>
-                        <p className="text-gray-300 text-sm">Market disruptor commanding 4x premium pricing in fastest-growing beverage segment</p>
-                      </div>
-                      <div className="bg-gray-800 p-4 rounded-lg">
-                        <h4 className="font-medium text-battles-gold mb-2">Cosmic Chewz</h4>
-                        <p className="text-gray-300 text-sm">High-margin scalable edibles targeting medical and recreational markets</p>
-                      </div>
+                  <div className="space-y-6">
+                    <div className="bg-gray-800 p-4 rounded-lg">
+                      <h4 className="font-medium text-battles-gold mb-2">Battle Brew</h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        Proprietary, full-spectrum cannabis-infused sweet tea engineered to deliver unmatched flavor and bioavailability without traditional nanoemulsion. Positioned as a market disruptor in the fastest-growing infused beverage segment, Battle Brew commands over 4× premium pricing compared to leading competitors.
+                      </p>
                     </div>
-                    <div className="space-y-3">
-                      <div className="bg-gray-800 p-4 rounded-lg">
-                        <h4 className="font-medium text-battles-gold mb-2">Freedom Fog Vapes</h4>
-                        <p className="text-gray-300 text-sm">Premium-positioned in fastest-growing product category with superior margins</p>
-                      </div>
-                      <div className="bg-gray-800 p-4 rounded-lg">
-                        <h4 className="font-medium text-battles-gold mb-2">Craft Cannabis</h4>
-                        <p className="text-gray-300 text-sm">Boutique connoisseur products reinforcing premium brand positioning</p>
-                      </div>
+                    
+                    <div className="bg-gray-800 p-4 rounded-lg">
+                      <h4 className="font-medium text-battles-gold mb-2">Cosmic Chewz</h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        Proprietary hard candy with a chewy, Starburst-like center infused with full-spectrum RSO. Each piece delivers 10 mg precision dosing and long shelf stability while providing effective pain relief. Cosmic Chewz combine consumer-friendly format with high-margin scalability across medical and adult-use markets.
+                      </p>
+                    </div>
+                    
+                    <div className="bg-gray-800 p-4 rounded-lg">
+                      <h4 className="font-medium text-battles-gold mb-2">Freedom Fog Vapes</h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        Premium distillate vape line utilizing proprietary terpene ratio formulations to deliver enhanced flavor, smoother draw, and optimized effects. Positioned to capture share in the fastest-growing product category while maintaining superior unit economics.
+                      </p>
+                    </div>
+                    
+                    <div className="bg-gray-800 p-4 rounded-lg">
+                      <h4 className="font-medium text-battles-gold mb-2">Craft Cannabis</h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        Premium boutique hand-rolled joints and 2 g non-tobacco leaf blunts with glass tips, made exclusively with premium organic flower. Designed as connoisseur-grade SKUs that reinforce the Battles Budz brand ethos of small-batch, craft-quality cannabis.
+                      </p>
                     </div>
                   </div>
                 </CardContent>
