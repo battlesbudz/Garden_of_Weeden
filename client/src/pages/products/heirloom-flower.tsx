@@ -25,7 +25,7 @@ export default function HeirloomFlowerPage() {
     setIsSubscribed(true);
     toast({
       title: "Success!",
-      description: "You'll be notified when Heirloom Flower is available.",
+      description: "You'll be notified when our landrace cannabis is available.",
     });
     setEmail('');
   };
@@ -50,10 +50,10 @@ export default function HeirloomFlowerPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-5xl md:text-6xl font-playfair font-bold mb-6">
-                <span className="text-battles-gold">Heirloom</span> Flower
+                <span className="text-battles-gold">Landrace</span> Cannabis
               </h1>
               <p className="text-xl text-gray-300 mb-8">
-                Premium, organically grown cannabis flower crafted for connoisseur-grade enjoyment.
+                Authentic, unmodified cannabis genetics cultivated using traditional organic methods for a pure, natural experience.
               </p>
             </div>
             <div className="flex justify-center">
@@ -67,37 +67,139 @@ export default function HeirloomFlowerPage() {
         </div>
       </section>
 
-      {/* Product Description */}
+      {/* What is Landrace Cannabis */}
       <section className="py-16 bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-battles-gold mb-8 text-center">About Heirloom Flower</h2>
-          <p className="text-lg text-gray-300 leading-relaxed text-center">
-            Premium, organically grown cannabis flower featured in boutique hand-rolled joints and non-tobacco leaf blunts 
-            with glass tips. Crafted for aroma, smoothness, and connoisseur-grade enjoyment.
-          </p>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-battles-gold mb-8 text-center">What is Landrace Cannabis?</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <p className="text-lg text-gray-300 leading-relaxed mb-6">
+                Landrace cannabis refers to ancient, pure strains that evolved naturally in specific geographic regions over thousands of years. 
+                These genetics haven't been heavily hybridized or modified by modern breeding practices.
+              </p>
+              <p className="text-lg text-gray-300 leading-relaxed mb-6">
+                At Battles Budz, we specialize in cultivating these authentic genetics, particularly long-flowering equatorial cultivars 
+                that offer unique cannabinoid profiles with typically lower THC but higher concentrations of other beneficial compounds like CBD, CBG, and rare terpenes.
+              </p>
+              <p className="text-lg text-gray-300 leading-relaxed">
+                Our flower is featured in boutique hand-rolled joints and non-tobacco leaf blunts with glass tips, 
+                crafted for superior aroma, smoothness, and a truly authentic cannabis experience.
+              </p>
+            </div>
+            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+              <h3 className="text-xl font-semibold text-battles-gold mb-4">Why Choose Landrace?</h3>
+              <ul className="space-y-3 text-gray-300">
+                <li className="flex items-start">
+                  <span className="text-battles-gold mr-2">•</span>
+                  <span>Authentic genetics unchanged for centuries</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-battles-gold mr-2">•</span>
+                  <span>Complex cannabinoid and terpene profiles</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-battles-gold mr-2">•</span>
+                  <span>Unique effects from diverse compounds</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-battles-gold mr-2">•</span>
+                  <span>Lower THC, higher therapeutic potential</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Key Highlights */}
+      {/* Cultivation Methods */}
       <section className="py-16 bg-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-battles-gold mb-12 text-center">Key Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center p-6 bg-gray-900 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">Format</h3>
-              <p className="text-gray-300">Hand-rolled joints & blunts with glass tips</p>
+          <h2 className="text-3xl font-bold text-battles-gold mb-12 text-center">Our Cultivation Methods</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="space-y-6">
+              <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
+                <h3 className="text-xl font-semibold text-battles-gold mb-4">Organic Living Soil</h3>
+                <p className="text-gray-300">
+                  We use living soil ecosystems that naturally feed our plants through beneficial microorganisms, 
+                  creating healthier plants with more complex flavors and effects.
+                </p>
+              </div>
+              <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
+                <h3 className="text-xl font-semibold text-battles-gold mb-4">No-Till Beds</h3>
+                <p className="text-gray-300">
+                  Our no-till approach preserves soil structure and microbial networks, allowing plants to 
+                  develop deeper root systems and access nutrients more efficiently.
+                </p>
+              </div>
             </div>
-            <div className="text-center p-6 bg-gray-900 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">Cultivation</h3>
-              <p className="text-gray-300">Organically grown, legacy genetics</p>
+            <div className="space-y-6">
+              <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
+                <h3 className="text-xl font-semibold text-battles-gold mb-4">Equatorial Genetics</h3>
+                <p className="text-gray-300">
+                  We specialize in long-flowering equatorial cultivars that require patience but reward with 
+                  unique cannabinoid profiles and complex terpene expressions rarely found in modern strains.
+                </p>
+              </div>
+              <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
+                <h3 className="text-xl font-semibold text-battles-gold mb-4">Traditional Methods</h3>
+                <p className="text-gray-300">
+                  Our cultivation honors traditional growing practices, allowing plants to express their 
+                  natural characteristics without forcing them into unnatural growth patterns.
+                </p>
+              </div>
             </div>
-            <div className="text-center p-6 bg-gray-900 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">Experience</h3>
-              <p className="text-gray-300">Superior aroma, smoothness</p>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-battles-gold mb-12 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-8">
+            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+              <h3 className="text-xl font-semibold text-battles-gold mb-3">What's the difference between landrace and hybrid strains?</h3>
+              <p className="text-gray-300">
+                Landrace strains are pure, original genetics that developed naturally in specific regions over thousands of years. 
+                Hybrids are created by crossing different strains. Landraces offer more authentic experiences with complex, 
+                balanced effects rather than the high-THC focus of many modern hybrids.
+              </p>
             </div>
-            <div className="text-center p-6 bg-gray-900 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">Audience</h3>
-              <p className="text-gray-300">Recreational use</p>
+            
+            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+              <h3 className="text-xl font-semibold text-battles-gold mb-3">Why is the THC lower in landrace strains?</h3>
+              <p className="text-gray-300">
+                Landrace strains naturally contain balanced cannabinoid profiles. While THC might be lower (often 12-18%), 
+                they're rich in CBD, CBG, and other compounds that create what's called the "entourage effect" - 
+                a more holistic, therapeutic experience rather than just an intense high.
+              </p>
+            </div>
+
+            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+              <h3 className="text-xl font-semibold text-battles-gold mb-3">What are equatorial cultivars?</h3>
+              <p className="text-gray-300">
+                Equatorial cultivars are cannabis strains that originated near the equator, like those from Colombia, Thailand, 
+                or parts of Africa. These plants are adapted to consistent light cycles and often have longer flowering periods, 
+                resulting in unique terpene profiles and effects you won't find in faster-finishing strains.
+              </p>
+            </div>
+
+            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+              <h3 className="text-xl font-semibold text-battles-gold mb-3">What makes organic no-till cultivation special?</h3>
+              <p className="text-gray-300">
+                No-till organic cultivation mimics nature by never disturbing the soil ecosystem. This preserves beneficial 
+                microorganisms that help plants absorb nutrients more effectively, resulting in cleaner, more flavorful 
+                cannabis with enhanced therapeutic properties.
+              </p>
+            </div>
+
+            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+              <h3 className="text-xl font-semibold text-battles-gold mb-3">How should I expect landrace cannabis to feel different?</h3>
+              <p className="text-gray-300">
+                Landrace strains typically provide more balanced, clear-headed effects with less anxiety or paranoia. 
+                The experience is often described as more "natural" or "grounding" compared to high-THC hybrids. 
+                Effects may be more subtle but longer-lasting and more therapeutic.
+              </p>
             </div>
           </div>
         </div>
@@ -108,14 +210,14 @@ export default function HeirloomFlowerPage() {
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-battles-gold mb-6">Get Notified</h2>
           <p className="text-lg text-gray-300 mb-8">
-            Be the first to know when Heirloom Flower becomes available
+            Be the first to know when our authentic landrace cannabis becomes available
           </p>
           
           {isSubscribed ? (
             <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-6">
               <Check className="h-12 w-12 text-green-500 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-green-500 mb-2">You're all set!</h3>
-              <p className="text-gray-300">We'll notify you as soon as Heirloom Flower is available.</p>
+              <p className="text-gray-300">We'll notify you as soon as our landrace cannabis is available.</p>
             </div>
           ) : (
             <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
