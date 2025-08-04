@@ -497,21 +497,21 @@ export default function InvestorPortal() {
                     <div className="space-y-3">
                       <div className="bg-gray-800 p-4 rounded-lg">
                         <h4 className="font-medium text-battles-gold mb-2">Battle Brew</h4>
-                        <p className="text-gray-300 text-sm">Proprietary cannabis-infused sweet tea with premium pricing (4x competitor rates)</p>
+                        <p className="text-gray-300 text-sm">Market disruptor commanding 4x premium pricing in fastest-growing beverage segment</p>
                       </div>
                       <div className="bg-gray-800 p-4 rounded-lg">
                         <h4 className="font-medium text-battles-gold mb-2">Cosmic Chewz</h4>
-                        <p className="text-gray-300 text-sm">Full-spectrum RSO candy line with 10mg precision dosing</p>
+                        <p className="text-gray-300 text-sm">High-margin scalable edibles targeting medical and recreational markets</p>
                       </div>
                     </div>
                     <div className="space-y-3">
                       <div className="bg-gray-800 p-4 rounded-lg">
                         <h4 className="font-medium text-battles-gold mb-2">Freedom Fog Vapes</h4>
-                        <p className="text-gray-300 text-sm">Premium vape line with terpene preservation technology</p>
+                        <p className="text-gray-300 text-sm">Premium-positioned in fastest-growing product category with superior margins</p>
                       </div>
                       <div className="bg-gray-800 p-4 rounded-lg">
                         <h4 className="font-medium text-battles-gold mb-2">Craft Cannabis</h4>
-                        <p className="text-gray-300 text-sm">Hand-rolled joints, glass-tip blunts, and premium rosin</p>
+                        <p className="text-gray-300 text-sm">Boutique connoisseur products reinforcing premium brand positioning</p>
                       </div>
                     </div>
                   </div>
