@@ -566,12 +566,46 @@ export default function InvestorPortal() {
                     
                     <div>
                       <h5 className="font-medium text-battles-gold mb-2">Products & Manufacturing</h5>
-                      <ul className="space-y-1 ml-4">
-                        <li>• Hand-rolled 1g joints and 2g non-tobacco leaf blunts with glass tips</li>
-                        <li>• Premium rosin and infused pre-rolls</li>
-                        <li>• Battle Brew cannabis-infused southern-style sweet tea</li>
-                        <li>• Cosmic Chews (edibles)</li>
-                      </ul>
+                      <p className="text-gray-300 mb-4">
+                        As part of Battles Budz' vertically integrated model, these products represent proprietary IP assets designed for scalability, premium positioning, and brand differentiation across multiple high-growth cannabis segments.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div>
+                          <p className="font-medium text-battles-gold">Battle Brew</p>
+                          <p className="text-gray-300 text-sm">
+                            A proprietary, shelf-stable cannabis-infused southern-style sweet tea formulated to deliver exceptional taste in a market dominated by distillate-based beverages. Unlike traditional nanoemulsions, Battle Brew maintains full-spectrum infusion with strong bioavailability while offering a superior flavor profile. This formulation allows the product to command a premium price point—over four times higher than leading competitors—while positioning the brand as a category disruptor in the infused beverage space.
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <p className="font-medium text-battles-gold">Cosmic Chewz</p>
+                          <p className="text-gray-300 text-sm">
+                            A proprietary candy line featuring a chewy center infused with full-spectrum RSO. Designed for long shelf stability and precision dosing at 10 mg per piece, Cosmic Chewz provide effective pain relief in a consumer-friendly format. The combination of medicinal value, broad appeal, and high-margin scalability makes this SKU a cornerstone of the Battles Budz product portfolio.
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <p className="font-medium text-battles-gold">Freedom Fog Vapes</p>
+                          <p className="text-gray-300 text-sm">
+                            A premium vape line built around terpene preservation and smooth delivery, utilizing proprietary oil formulations. Positioned to capture market share in one of the fastest-growing product segments while reinforcing brand quality.
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <p className="font-medium text-battles-gold">Hand-rolled 1g joints and 2g non-tobacco leaf blunts with glass tips</p>
+                          <p className="text-gray-300 text-sm">
+                            Boutique, connoisseur-grade SKUs crafted in-house to showcase premium flower quality and reinforce the brand's small-batch craftsmanship ethos.
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <p className="font-medium text-battles-gold">Premium rosin</p>
+                          <p className="text-gray-300 text-sm">
+                            A solventless extraction line delivering full-spectrum flavor and potency. Supports vertical integration, premium positioning, and differentiation in the craft cannabis market.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                     
                     <div>
