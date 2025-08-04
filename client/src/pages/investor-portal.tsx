@@ -1509,49 +1509,7 @@ export default function InvestorPortal() {
                 </CardContent>
               </Card>
 
-              {/* Social Media Highlights */}
-              <Card className="bg-gray-900 border-battles-gold">
-                <CardHeader>
-                  <CardTitle className="text-battles-gold flex items-center text-xl">
-                    <Star className="h-5 w-5 mr-3" />
-                    Social Media Highlights
-                  </CardTitle>
-                  <CardDescription className="text-gray-400">
-                    Digital presence documenting journey and expertise
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="bg-gray-800 rounded-lg p-4 border-l-4 border-purple-500">
-                    <h4 className="font-semibold text-white mb-2 flex items-center">
-                      <Eye className="h-4 w-4 mr-2 text-purple-400" />
-                      @Battles_Budz Instagram
-                    </h4>
-                    <p className="text-gray-300 text-sm leading-relaxed mb-3">
-                      Posts documenting BLOOM ROC incubator journey, graduation milestone, 
-                      NY Home Growers Roundtable panels, and educational content.
-                    </p>
-                    <Button size="sm" variant="outline" className="border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white">
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Follow Journey
-                    </Button>
-                  </div>
-
-                  <div className="bg-gray-800 rounded-lg p-4 border-l-4 border-blue-500">
-                    <h4 className="font-semibold text-white mb-2 flex items-center">
-                      <Users className="h-4 w-4 mr-2 text-blue-400" />
-                      LinkedIn Professional Presence
-                    </h4>
-                    <p className="text-gray-300 text-sm leading-relaxed mb-3">
-                      Announced company milestones, promoted veteran advocacy initiatives, 
-                      and shared NCIA podcast appearance to professional network.
-                    </p>
-                    <Button size="sm" variant="outline" className="border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white">
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Connect
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              
             </div>
           </TabsContent>
 
