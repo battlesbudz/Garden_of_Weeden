@@ -1,3 +1,4 @@
+import { Link } from 'wouter';
 import cosmicChewzImg from "@assets/20240228_223118_1752399041772.png";
 import freedomFogImg from "@assets/file_0000000084c86230b8826b578af0fa18_1752398828783.png";
 import cannabisFlower1 from "@assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg";
@@ -17,21 +18,25 @@ export default function RetailSection() {
       name: "Heirloom Flower",
       description: "Small-batch, hand-trimmed premium flower from legacy genetics.",
       image: cannabisFlower1,
+      route: "/products/heirloom-flower",
     },
     {
-      name: "BattleBrew Infused Sweet Tea",
+      name: "Battle Brew",
       description: "Our signature cannabis-infused sweet tea. 10mg THC per can, 12 FL OZ. Military-inspired design with bold Battles Budz branding.",
       image: battleBrewImg,
+      route: "/products/battle-brew",
     },
     {
       name: "Cosmic Chewz",
       description: "100mg per package, 10mg per piece. Hard on the outside, soft on the inside. RSO infused with cosmic flavors including watermelon, blue raspberry, strawberry, banana, cherry, and cheesecake.",
       image: cosmicChewzImg,
+      route: "/products/cosmic-chewz",
     },
     {
       name: "Freedom Fog Vapes",
       description: "Premium 1G vape cartridges with military-inspired camouflage design. High-quality cannabis extracts for the ultimate vaping experience.",
       image: freedomFogImg,
+      route: "/products/freedom-fog-vapes",
     },
   ];
 
@@ -66,10 +71,12 @@ export default function RetailSection() {
                   {product.name}
                 </h3>
                 <p className="text-gray-300 mb-4">{product.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="bg-battles-gold text-battles-black px-4 py-2 rounded-lg font-semibold">
-                    Coming Soon
-                  </span>
+                <div className="flex items-center justify-center">
+                  <Link href={product.route}>
+                    <span className="bg-battles-gold text-battles-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors cursor-pointer">
+                      Coming Soon
+                    </span>
+                  </Link>
                 </div>
               </div>
             </div>

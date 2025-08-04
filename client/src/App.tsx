@@ -15,6 +15,12 @@ import ForumPostPage from "@/pages/forum-post";
 import InvestorPortal from "@/pages/investor-portal";
 import InvestorAdmin from "@/pages/investor-admin";
 
+// Product Pages
+import BattleBrewPage from "@/pages/products/battle-brew";
+import CosmicChewzPage from "@/pages/products/cosmic-chewz";
+import FreedomFogVapesPage from "@/pages/products/freedom-fog-vapes";
+import HeirloomFlowerPage from "@/pages/products/heirloom-flower";
+
 
 import NotFound from "./pages/not-found";
 import PrivacyPolicy from "./pages/privacy-policy";
@@ -52,6 +58,11 @@ function Router() {
         <Route path="/community/posts/:id" component={ForumPostPage} />
         <Route path="/investor-admin" component={InvestorAdmin} />
 
+        {/* Product Pages */}
+        <Route path="/products/battle-brew" component={BattleBrewPage} />
+        <Route path="/products/cosmic-chewz" component={CosmicChewzPage} />
+        <Route path="/products/freedom-fog-vapes" component={FreedomFogVapesPage} />
+        <Route path="/products/heirloom-flower" component={HeirloomFlowerPage} />
 
         <Route path="/enhanced-community" component={EnhancedCommunityPage} />
         <Route path="/privacy-policy" component={PrivacyPolicy} />
