@@ -487,24 +487,24 @@ export default function InvestorPortal() {
                 <CardContent className="space-y-4">
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-200">License Approval</span>
+                      <span className="text-gray-200">Provisional Microbusiness License</span>
                       <span className="text-green-400">100%</span>
                     </div>
                     <Progress value={100} className="h-2" />
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-200">Site Approval</span>
+                      <span className="text-gray-200">OCM Location Approval</span>
                       <span className="text-yellow-400">85%</span>
                     </div>
                     <Progress value={85} className="h-2" />
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-200">Funding Round</span>
-                      <span className="text-blue-400">25%</span>
+                      <span className="text-gray-200">Funding Round ($15K of $1M)</span>
+                      <span className="text-blue-400">1.5%</span>
                     </div>
-                    <Progress value={25} className="h-2" />
+                    <Progress value={1.5} className="h-2" />
                   </div>
                 </CardContent>
               </Card>
