@@ -526,8 +526,8 @@ export default function InvestorPortal() {
                       <p className="text-sm text-gray-400">OCM approved microbusiness license</p>
                     </div>
                     <div className="border-l-4 border-yellow-500 pl-4">
-                      <p className="font-medium text-gray-200">First Investment Secured</p>
-                      <p className="text-sm text-gray-400">Early investor commitment received</p>
+                      <p className="font-medium text-gray-200">Family Round Investment Secured</p>
+                      <p className="text-sm text-gray-400">Initial family funding commitment received</p>
                     </div>
                     <div className="border-l-4 border-blue-500 pl-4">
                       <p className="font-medium text-gray-200">Site Selection Confirmed</p>
