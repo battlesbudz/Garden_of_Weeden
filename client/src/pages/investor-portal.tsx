@@ -639,17 +639,7 @@ export default function InvestorPortal() {
                       </p>
                     </div>
                     
-                    <div>
-                      <h5 className="font-medium text-battles-gold mb-2">Current Achievements</h5>
-                      <ul className="space-y-1 ml-4">
-                        <li>• Received provisional microbusiness license</li>
-                        <li>• Secured retail/cultivation/processing location</li>
-                        <li>• Landlord investing 50% of rent into build-out</li>
-                        <li>• Developed shelf-stable cannabis beverage</li>
-                        <li>• Brought on first investor</li>
-                      </ul>
                     </div>
-                  </div>
                 </div>
               </CardContent>
             </Card>
