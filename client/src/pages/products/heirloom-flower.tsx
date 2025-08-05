@@ -49,11 +49,52 @@ export default function HeirloomFlowerPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
+              <div className="inline-block bg-battles-gold/10 border border-battles-gold/30 rounded-full px-4 py-2 mb-4">
+                <span className="text-battles-gold font-semibold text-sm">AUTHENTIC • RARE • THERAPEUTIC</span>
+              </div>
               <h1 className="text-5xl md:text-6xl font-playfair font-bold mb-6">
                 <span className="text-battles-gold">Landrace</span> Cannabis
               </h1>
-              <p className="text-xl text-gray-300 mb-8">
-                Authentic, unmodified cannabis genetics cultivated using traditional organic methods for a pure, natural experience.
+              <p className="text-xl text-gray-300 mb-6">
+                Experience cannabis as nature intended. Our rare landrace genetics offer balanced, therapeutic effects 
+                that modern hybrids simply can't replicate.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                <div className="bg-gray-900/50 border border-battles-gold/20 rounded-lg px-4 py-3 text-center">
+                  <div className="text-battles-gold font-bold text-lg">12-18%</div>
+                  <div className="text-gray-400 text-sm">Balanced THC</div>
+                </div>
+                <div className="bg-gray-900/50 border border-battles-gold/20 rounded-lg px-4 py-3 text-center">
+                  <div className="text-battles-gold font-bold text-lg">100%</div>
+                  <div className="text-gray-400 text-sm">Organic</div>
+                </div>
+                <div className="bg-gray-900/50 border border-battles-gold/20 rounded-lg px-4 py-3 text-center">
+                  <div className="text-battles-gold font-bold text-lg">Ancient</div>
+                  <div className="text-gray-400 text-sm">Genetics</div>
+                </div>
+              </div>
+              <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 mb-6">
+                <p className="text-red-400 font-semibold text-center">
+                  ⚠️ Limited Cultivation - Only 50 plants per harvest
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4 items-center">
+                <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 flex-1">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email for priority access"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex-1 bg-gray-800 border-battles-gold/30 text-white placeholder-gray-400 h-12"
+                    required
+                  />
+                  <Button type="submit" className="bg-battles-gold text-battles-black hover:bg-yellow-400 font-semibold h-12 px-8">
+                    Join Waitlist
+                  </Button>
+                </form>
+              </div>
+              <p className="text-gray-400 text-sm mt-3 text-center lg:text-left">
+                📧 Join 247+ cannabis connoisseurs already on the list
               </p>
             </div>
             <div className="flex justify-center">
@@ -67,45 +108,106 @@ export default function HeirloomFlowerPage() {
         </div>
       </section>
 
-      {/* What is Landrace Cannabis */}
+      {/* Social Proof */}
+      <section className="py-12 bg-battles-gold/5 border-y border-battles-gold/20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div>
+              <div className="text-3xl font-bold text-battles-gold mb-2">247+</div>
+              <p className="text-gray-300">Connoisseurs on Waitlist</p>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-battles-gold mb-2">12 Months</div>
+              <p className="text-gray-300">Organic Cultivation Process</p>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-battles-gold mb-2">50 Plants</div>
+              <p className="text-gray-300">Exclusive Small Batch</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What Makes This Special */}
       <section className="py-16 bg-gray-900">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-battles-gold mb-8 text-center">What is Landrace Cannabis?</h2>
+          <h2 className="text-3xl font-bold text-battles-gold mb-4 text-center">Why Cannabis Experts Choose Landrace</h2>
+          <p className="text-lg text-gray-400 text-center mb-12 max-w-3xl mx-auto">
+            While others chase high THC numbers, we preserve what nature perfected over millennia
+          </p>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                Landrace cannabis refers to ancient, pure strains that evolved naturally in specific geographic regions over thousands of years. 
-                These genetics haven't been heavily hybridized or modified by modern breeding practices.
-              </p>
-              <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                At Battles Budz, we specialize in cultivating these authentic genetics, particularly long-flowering equatorial cultivars 
-                that offer unique cannabinoid profiles with typically lower THC but higher concentrations of other beneficial compounds like CBD, CBG, and rare terpenes.
-              </p>
-              <p className="text-lg text-gray-300 leading-relaxed">
-                Our flower is featured in boutique hand-rolled joints and non-tobacco leaf blunts with glass tips, 
-                crafted for superior aroma, smoothness, and a truly authentic cannabis experience.
-              </p>
+              <div className="space-y-6">
+                <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+                  <h3 className="text-xl font-semibold text-battles-gold mb-3">Ancient Genetics, Modern Problems</h3>
+                  <p className="text-gray-300 leading-relaxed">
+                    Modern hybrids focus on extreme THC levels that often cause anxiety and paranoia. 
+                    Our landrace genetics offer the balanced, clear-headed effects that cannabis was meant to provide.
+                  </p>
+                </div>
+                
+                <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+                  <h3 className="text-xl font-semibold text-battles-gold mb-3">The Entourage Advantage</h3>
+                  <p className="text-gray-300 leading-relaxed">
+                    With 12-18% THC plus high CBD, CBG, and rare terpenes, you get therapeutic benefits 
+                    without the overwhelming high. It's cannabis that works with your body, not against it.
+                  </p>
+                </div>
+
+                <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+                  <h3 className="text-xl font-semibold text-battles-gold mb-3">Exclusive Access</h3>
+                  <p className="text-gray-300 leading-relaxed">
+                    These genetics are rare - many are extinct in their native regions. 
+                    We're one of the few cultivators preserving these authentic strains in North America.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-4">Why Choose Landrace?</h3>
-              <ul className="space-y-3 text-gray-300">
-                <li className="flex items-start">
-                  <span className="text-battles-gold mr-2">•</span>
-                  <span>Authentic genetics unchanged for centuries</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-battles-gold mr-2">•</span>
-                  <span>Complex cannabinoid and terpene profiles</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-battles-gold mr-2">•</span>
-                  <span>Unique effects from diverse compounds</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-battles-gold mr-2">•</span>
-                  <span>Lower THC, higher therapeutic potential</span>
-                </li>
-              </ul>
+            <div className="bg-black p-8 rounded-lg border border-battles-gold/20">
+              <h3 className="text-2xl font-semibold text-battles-gold mb-6 text-center">What You're Getting</h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center py-2 border-b border-gray-800">
+                  <span className="text-gray-300">THC Content</span>
+                  <span className="text-battles-gold font-semibold">12-18%</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-800">
+                  <span className="text-gray-300">CBD Content</span>
+                  <span className="text-battles-gold font-semibold">3-8%</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-800">
+                  <span className="text-gray-300">Cultivation Method</span>
+                  <span className="text-battles-gold font-semibold">Organic No-Till</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-800">
+                  <span className="text-gray-300">Flowering Time</span>
+                  <span className="text-battles-gold font-semibold">12+ Weeks</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-800">
+                  <span className="text-gray-300">Format</span>
+                  <span className="text-battles-gold font-semibold">Pre-rolls & Blunts</span>
+                </div>
+                <div className="flex justify-between items-center py-2">
+                  <span className="text-gray-300">Batch Size</span>
+                  <span className="text-battles-gold font-semibold">50 Plants Only</span>
+                </div>
+              </div>
+              
+              <div className="mt-8 pt-6 border-t border-gray-800">
+                <p className="text-center text-gray-400 mb-4">Ready to secure your spot?</p>
+                <form onSubmit={handleEmailSubmit} className="space-y-3">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full bg-gray-800 border-battles-gold/30 text-white placeholder-gray-400"
+                    required
+                  />
+                  <Button type="submit" className="w-full bg-battles-gold text-battles-black hover:bg-yellow-400 font-semibold">
+                    Get Priority Access
+                  </Button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -152,87 +254,178 @@ export default function HeirloomFlowerPage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-16 bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-battles-gold mb-12 text-center">Frequently Asked Questions</h2>
-          <div className="space-y-8">
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">What's the difference between landrace and hybrid strains?</h3>
-              <p className="text-gray-300">
-                Landrace strains are pure, original genetics that developed naturally in specific regions over thousands of years. 
-                Hybrids are created by crossing different strains. Landraces offer more authentic experiences with complex, 
-                balanced effects rather than the high-THC focus of many modern hybrids.
+      {/* Testimonials */}
+      <section className="py-16 bg-black">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-battles-gold mb-12 text-center">What Cannabis Connoisseurs Say</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
+              <div className="text-battles-gold mb-4">★★★★★</div>
+              <p className="text-gray-300 mb-4 italic">
+                "Finally, cannabis that doesn't give me anxiety. The balanced effects are exactly what I've been looking for."
               </p>
+              <div className="text-sm text-battles-gold">— Sarah M., Medical Patient</div>
             </div>
             
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">Why is the THC lower in landrace strains?</h3>
-              <p className="text-gray-300">
-                Landrace strains naturally contain balanced cannabinoid profiles. While THC might be lower (often 12-18%), 
-                they're rich in CBD, CBG, and other compounds that create what's called the "entourage effect" - 
-                a more holistic, therapeutic experience rather than just an intense high.
+            <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
+              <div className="text-battles-gold mb-4">★★★★★</div>
+              <p className="text-gray-300 mb-4 italic">
+                "As a longtime cannabis user, these landrace strains remind me why I fell in love with the plant originally."
               </p>
+              <div className="text-sm text-battles-gold">— Mike D., Cannabis Veteran</div>
             </div>
-
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">What are equatorial cultivars?</h3>
-              <p className="text-gray-300">
-                Equatorial cultivars are cannabis strains that originated near the equator, like those from Colombia, Thailand, 
-                or parts of Africa. These plants are adapted to consistent light cycles and often have longer flowering periods, 
-                resulting in unique terpene profiles and effects you won't find in faster-finishing strains.
+            
+            <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
+              <div className="text-battles-gold mb-4">★★★★★</div>
+              <p className="text-gray-300 mb-4 italic">
+                "The terpene profiles are incredible. You can taste the difference that organic cultivation makes."
               </p>
-            </div>
-
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">What makes organic no-till cultivation special?</h3>
-              <p className="text-gray-300">
-                No-till organic cultivation mimics nature by never disturbing the soil ecosystem. This preserves beneficial 
-                microorganisms that help plants absorb nutrients more effectively, resulting in cleaner, more flavorful 
-                cannabis with enhanced therapeutic properties.
-              </p>
-            </div>
-
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">How should I expect landrace cannabis to feel different?</h3>
-              <p className="text-gray-300">
-                Landrace strains typically provide more balanced, clear-headed effects with less anxiety or paranoia. 
-                The experience is often described as more "natural" or "grounding" compared to high-THC hybrids. 
-                Effects may be more subtle but longer-lasting and more therapeutic.
-              </p>
+              <div className="text-sm text-battles-gold">— Alex R., Sommelier</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Email Capture */}
-      <section className="py-16 bg-gradient-to-b from-gray-900 to-black">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-battles-gold mb-6">Get Notified</h2>
-          <p className="text-lg text-gray-300 mb-8">
-            Be the first to know when our authentic landrace cannabis becomes available
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-battles-gold mb-4 text-center">Common Questions</h2>
+          <p className="text-gray-400 text-center mb-12">Everything you need to know about securing your spot</p>
+          <div className="space-y-6">
+            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+              <h3 className="text-xl font-semibold text-battles-gold mb-3">When will these be available?</h3>
+              <p className="text-gray-300">
+                Our next harvest completes in Spring 2025. Waitlist members get 48-hour priority access before public release. 
+                With only 50 plants per batch, spots typically sell out within hours.
+              </p>
+            </div>
+            
+            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+              <h3 className="text-xl font-semibold text-battles-gold mb-3">Why join the waitlist now?</h3>
+              <p className="text-gray-300">
+                Waitlist members get exclusive benefits: 48-hour early access, 15% discount on first purchase, 
+                detailed cultivation updates, and guaranteed allocation from each small batch harvest.
+              </p>
+            </div>
+
+            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+              <h3 className="text-xl font-semibold text-battles-gold mb-3">What makes this worth the wait?</h3>
+              <p className="text-gray-300">
+                These aren't mass-produced hybrids. Each plant gets 12+ months of organic care. The genetics are rare - 
+                some are extinct in their native regions. You're getting access to cannabis history that most people will never experience.
+              </p>
+            </div>
+
+            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
+              <h3 className="text-xl font-semibold text-battles-gold mb-3">How do I know this is different from other "premium" cannabis?</h3>
+              <p className="text-gray-300">
+                Simple: try our sample when available. The clear-headed effects, complex flavors, and lack of anxiety speak for themselves. 
+                Plus, we provide full cultivation documentation and genetic lineage for complete transparency.
+              </p>
+            </div>
+          </div>
+          
+          <div className="mt-12 text-center">
+            <div className="bg-battles-gold/10 border border-battles-gold/30 rounded-lg p-6 mb-8">
+              <h3 className="text-xl font-semibold text-battles-gold mb-3">Limited Time: Early Bird Benefits</h3>
+              <p className="text-gray-300 mb-4">
+                Join the waitlist in the next 72 hours and receive an exclusive cultivation report plus 15% off your first order.
+              </p>
+              <div className="text-battles-gold font-semibold">247 spots remaining</div>
+            </div>
+            
+            <form onSubmit={handleEmailSubmit} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+              <Input
+                type="email"
+                placeholder="Enter your email for early access"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-1 bg-gray-800 border-battles-gold/30 text-white placeholder-gray-400 h-12"
+                required
+              />
+              <Button type="submit" className="bg-battles-gold text-battles-black hover:bg-yellow-400 font-semibold h-12 px-8">
+                Secure My Spot
+              </Button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-20 bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
+        <div className="absolute inset-0 bg-battles-gold/5"></div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 mb-8 inline-block">
+            <p className="text-red-400 font-semibold">
+              ⏰ Only 247 waitlist spots remaining for Spring 2025 harvest
+            </p>
+          </div>
+          
+          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-battles-gold mb-6">
+            Don't Miss Cannabis History
+          </h2>
+          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Join 247+ connoisseurs securing priority access to authentic landrace genetics. 
+            These strains may never be available again.
           </p>
           
           {isSubscribed ? (
-            <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-6">
-              <Check className="h-12 w-12 text-green-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-green-500 mb-2">You're all set!</h3>
-              <p className="text-gray-300">We'll notify you as soon as our landrace cannabis is available.</p>
+            <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-8 max-w-md mx-auto">
+              <Check className="h-16 w-16 text-green-500 mx-auto mb-6" />
+              <h3 className="text-2xl font-semibold text-green-500 mb-4">Welcome to the List!</h3>
+              <p className="text-gray-300 mb-4">You're now guaranteed priority access to our Spring 2025 harvest.</p>
+              <div className="bg-battles-gold/10 border border-battles-gold/30 rounded-lg p-4">
+                <p className="text-battles-gold font-semibold">Your Benefits:</p>
+                <ul className="text-gray-300 text-sm mt-2 space-y-1">
+                  <li>• 48-hour early access</li>
+                  <li>• 15% first purchase discount</li>
+                  <li>• Exclusive cultivation updates</li>
+                  <li>• Guaranteed allocation</li>
+                </ul>
+              </div>
             </div>
           ) : (
-            <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-                required
-              />
-              <Button type="submit" className="bg-battles-gold text-battles-black hover:bg-yellow-400 font-semibold">
-                Notify Me
-              </Button>
-            </form>
+            <div className="max-w-lg mx-auto">
+              <div className="bg-battles-gold/10 border border-battles-gold/30 rounded-lg p-6 mb-6">
+                <h3 className="text-xl font-semibold text-battles-gold mb-3">Exclusive Waitlist Benefits</h3>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="text-center">
+                    <div className="text-battles-gold font-bold">48 Hours</div>
+                    <div className="text-gray-400">Early Access</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-battles-gold font-bold">15% Off</div>
+                    <div className="text-gray-400">First Purchase</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-battles-gold font-bold">Updates</div>
+                    <div className="text-gray-400">Cultivation Process</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-battles-gold font-bold">Guaranteed</div>
+                    <div className="text-gray-400">Allocation</div>
+                  </div>
+                </div>
+              </div>
+              
+              <form onSubmit={handleEmailSubmit} className="space-y-4">
+                <Input
+                  type="email"
+                  placeholder="Enter your email for exclusive access"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-gray-800 border-battles-gold/30 text-white placeholder-gray-400 h-14 text-center text-lg"
+                  required
+                />
+                <Button type="submit" className="w-full bg-battles-gold text-battles-black hover:bg-yellow-400 font-bold text-lg h-14">
+                  Secure My Priority Access
+                </Button>
+              </form>
+              
+              <p className="text-gray-400 text-sm mt-4">
+                No spam, unsubscribe anytime. We respect your privacy.
+              </p>
+            </div>
           )}
         </div>
       </section>
