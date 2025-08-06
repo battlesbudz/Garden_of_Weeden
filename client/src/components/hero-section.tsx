@@ -14,7 +14,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center text-center text-white overflow-hidden pt-8"
+      className="relative min-h-screen flex items-center justify-center text-center text-white overflow-hidden pt-20"
     >
       {/* Background video/image with overlay */}
       <div className="absolute inset-0">

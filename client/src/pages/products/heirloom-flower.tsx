@@ -179,7 +179,7 @@ export default function HeirloomFlowerPage() {
       <Navigation />
 
       {/* Breadcrumb */}
-      <div className="pt-20 pb-4 bg-black border-b border-gray-800">
+      <div className="pt-24 pb-4 bg-black border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center space-x-2 text-sm">
             <Link href="/" className="text-gray-400 hover:text-battles-gold transition-colors">
