@@ -1,14 +1,95 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
-import { ArrowLeft, Check } from 'lucide-react';
+import { ArrowLeft, Check, Leaf, Layers, Sun, Settings, MapPin, FileText, Award, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import cannabisFlower1 from "@assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg";
+
+// Landrace strain data
+const landraceStrains = [
+  {
+    name: "Malawi Gold",
+    location: "Malawi, Africa",
+    coordinates: { x: 55, y: 70 },
+    notes: "Energetic, cerebral, spicy aroma with soaring effects",
+    thc: "14-18%",
+    cbd: "2-4%",
+    flowering: "16-20 weeks"
+  },
+  {
+    name: "Thai Stick",
+    location: "Thailand",
+    coordinates: { x: 75, y: 60 },
+    notes: "Long flowering, citrus incense profile with creative clarity",
+    thc: "12-16%",
+    cbd: "3-6%",
+    flowering: "14-18 weeks"
+  },
+  {
+    name: "Afghan Kush",
+    location: "Hindu Kush Mountains",
+    coordinates: { x: 65, y: 45 },
+    notes: "Broad-leaf, hash-heavy, calming body effects",
+    thc: "15-20%",
+    cbd: "4-8%",
+    flowering: "8-10 weeks"
+  },
+  {
+    name: "Colombian Gold",
+    location: "Colombia",
+    coordinates: { x: 25, y: 75 },
+    notes: "Uplifting sativa with golden pistils and sweet earth tones",
+    thc: "13-17%",
+    cbd: "2-5%",
+    flowering: "12-16 weeks"
+  }
+];
+
+const cultivationMethods = [
+  {
+    icon: Leaf,
+    title: "Organic Living Soil",
+    description: "Microbial-rich soil built from composted matter and worm castings that naturally feeds our plants through beneficial microorganisms."
+  },
+  {
+    icon: Layers,
+    title: "No-Till Beds",
+    description: "We never disturb the soil layers, respecting the natural soil food web and preserving beneficial mycorrhizal networks."
+  },
+  {
+    icon: Sun,
+    title: "Equatorial Genetics",
+    description: "Long daylight-flowering strains with unique photoperiod responses that produce complex cannabinoid profiles."
+  },
+  {
+    icon: Settings,
+    title: "Traditional Practices",
+    description: "Hand-trimmed, sun-fed, and ritualistically grown with intention, honoring ancient cultivation wisdom."
+  }
+];
+
+const productFormats = [
+  {
+    name: "Whole Flower (5g)",
+    image: cannabisFlower1,
+    notes: "Earthy, spiced, high CBG content",
+    price: "Coming Soon"
+  },
+  {
+    name: "Pre-Rolls (3pk)",
+    image: cannabisFlower1,
+    notes: "Slow-burning, single-origin terpene bomb",
+    price: "Coming Soon"
+  }
+];
 
 export default function HeirloomFlowerPage() {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [selectedStrain, setSelectedStrain] = useState<number | null>(null);
+  const [waitlistCount, setWaitlistCount] = useState(247);
   const { toast } = useToast();
 
   const handleEmailSubmit = (e: React.FormEvent) => {
@@ -22,13 +103,74 @@ export default function HeirloomFlowerPage() {
       return;
     }
     
+    // Simulate waitlist count decrease
+    setWaitlistCount(prev => Math.max(prev - 1, 0));
     setIsSubscribed(true);
     toast({
-      title: "Success!",
-      description: "You'll be notified when our landrace cannabis is available.",
+      title: "Welcome to the Cultivation Club!",
+      description: "You're now guaranteed priority access to our Spring 2025 harvest.",
     });
     setEmail('');
   };
+
+  // Interactive map component
+  const OriginMap = () => (
+    <div className="relative">
+      <div className="bg-gray-800 rounded-lg p-8 border border-battles-gold/20">
+        <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
+        <div className="relative bg-gray-900 rounded-lg h-96 overflow-hidden">
+          {/* Simplified world map background */}
+          <svg viewBox="0 0 100 100" className="w-full h-full opacity-30">
+            <path d="M10,30 Q20,25 30,30 Q40,35 50,30 Q60,25 70,30 Q80,35 90,30" 
+                  stroke="#fbbf24" strokeWidth="0.5" fill="none" />
+            <path d="M15,45 Q25,40 35,45 Q45,50 55,45 Q65,40 75,45 Q85,50 95,45" 
+                  stroke="#fbbf24" strokeWidth="0.5" fill="none" />
+            <path d="M5,60 Q15,55 25,60 Q35,65 45,60 Q55,55 65,60 Q75,65 85,60" 
+                  stroke="#fbbf24" strokeWidth="0.5" fill="none" />
+          </svg>
+          
+          {/* Interactive strain markers */}
+          {landraceStrains.map((strain, index) => (
+            <div
+              key={strain.name}
+              className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
+              style={{ left: `${strain.coordinates.x}%`, top: `${strain.coordinates.y}%` }}
+              onClick={() => setSelectedStrain(selectedStrain === index ? null : index)}
+            >
+              <div className="relative">
+                <MapPin className="h-6 w-6 text-battles-gold group-hover:text-yellow-400 transition-colors" />
+                <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-500 rounded-full animate-pulse"></div>
+              </div>
+              
+              {selectedStrain === index && (
+                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-black border border-battles-gold rounded-lg p-4 w-64 z-10 shadow-xl">
+                  <h4 className="font-bold text-battles-gold mb-2">{strain.name}</h4>
+                  <p className="text-gray-300 text-sm mb-3">{strain.notes}</p>
+                  <div className="grid grid-cols-3 gap-2 text-xs">
+                    <div>
+                      <span className="text-battles-gold">THC:</span>
+                      <div className="text-gray-300">{strain.thc}</div>
+                    </div>
+                    <div>
+                      <span className="text-battles-gold">CBD:</span>
+                      <div className="text-gray-300">{strain.cbd}</div>
+                    </div>
+                    <div>
+                      <span className="text-battles-gold">Flowering:</span>
+                      <div className="text-gray-300">{strain.flowering}</div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+        <p className="text-gray-400 text-center mt-4 text-sm">
+          Click on the markers to explore ancient cannabis genetics from around the world
+        </p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -128,13 +270,256 @@ export default function HeirloomFlowerPage() {
         </div>
       </section>
 
-      {/* What Makes This Special */}
+      {/* Interactive Origin Map */}
+      <section className="py-16 bg-black">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-battles-gold mb-4">Ancient Cannabis Origins</h2>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              Explore the sacred genetics that have evolved naturally across the globe for thousands of years
+            </p>
+          </div>
+          <OriginMap />
+        </div>
+      </section>
+
+      {/* Landrace Education */}
       <section className="py-16 bg-gray-900">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-battles-gold mb-4 text-center">Why Cannabis Experts Choose Landrace</h2>
+          <h2 className="text-3xl font-bold text-battles-gold mb-4 text-center">Why Landrace Cannabis Matters</h2>
           <p className="text-lg text-gray-400 text-center mb-12 max-w-3xl mx-auto">
             While others chase high THC numbers, we preserve what nature perfected over millennia
           </p>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
+                  <Award className="h-6 w-6 text-battles-gold" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Unaltered by Hybridization</h3>
+                  <p className="text-gray-300">Pure genetic lineage preserved in its original form, unchanged by modern breeding practices.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
+                  <Users className="h-6 w-6 text-battles-gold" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Deep Cultural Heritage</h3>
+                  <p className="text-gray-300">Rooted in traditional use across generations, carrying the wisdom of ancient cultivation practices.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
+                  <Leaf className="h-6 w-6 text-battles-gold" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Richer Cannabinoid Profiles</h3>
+                  <p className="text-gray-300">Complex terpene expressions and balanced cannabinoid ratios create the authentic entourage effect.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
+                  <Sun className="h-6 w-6 text-battles-gold" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Equatorial Growth Patterns</h3>
+                  <p className="text-gray-300">Long-flowering narrow-leaf varieties adapted to consistent light cycles produce unique effects.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="lg:pl-12">
+              <img
+                src={cannabisFlower1}
+                alt="Landrace cannabis flower"
+                className="w-full rounded-lg shadow-2xl border border-battles-gold/20"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Cultivation Methods */}
+      <section className="py-16 bg-black">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-battles-gold mb-4">Our Cultivation Approach</h2>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              Traditional practices meet modern precision in our organic cultivation methods
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {cultivationMethods.map((method, index) => {
+              const IconComponent = method.icon;
+              return (
+                <Card key={index} className="bg-gray-900 border-battles-gold/20 hover:border-battles-gold/40 transition-colors">
+                  <CardHeader className="text-center">
+                    <div className="w-16 h-16 bg-battles-gold/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                      <IconComponent className="h-8 w-8 text-battles-gold" />
+                    </div>
+                    <CardTitle className="text-battles-gold">{method.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-300 text-sm leading-relaxed">{method.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Product Format Previews */}
+      <section className="py-16 bg-gray-900">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-battles-gold mb-4">Product Formats</h2>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              Experience landrace genetics in thoughtfully crafted formats
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {productFormats.map((product, index) => (
+              <Card key={index} className="bg-black border-battles-gold/20 overflow-hidden group hover:border-battles-gold/40 transition-colors">
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">{product.name}</h3>
+                  <p className="text-gray-300 mb-4">{product.notes}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-battles-gold font-bold">{product.price}</span>
+                    <Button disabled className="bg-gray-700 text-gray-400">
+                      Coming Soon
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Lab Results / Transparency */}
+      <section className="py-16 bg-black">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-battles-gold mb-4">Lab Results & Transparency</h2>
+            <p className="text-lg text-gray-400">
+              Every batch comes with comprehensive testing for potency, purity, and terpene profiles
+            </p>
+          </div>
+          
+          <div className="bg-gray-900 rounded-lg p-8 border border-battles-gold/20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-xl font-semibold text-battles-gold mb-4 flex items-center">
+                  <FileText className="h-5 w-5 mr-2" />
+                  Sample Lab Report
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center py-2 border-b border-gray-800">
+                    <span className="text-gray-300">Total THC</span>
+                    <span className="text-battles-gold font-semibold">14.8%</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-gray-800">
+                    <span className="text-gray-300">Total CBD</span>
+                    <span className="text-battles-gold font-semibold">5.2%</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-gray-800">
+                    <span className="text-gray-300">CBG</span>
+                    <span className="text-battles-gold font-semibold">2.1%</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-gray-800">
+                    <span className="text-gray-300">Myrcene</span>
+                    <span className="text-battles-gold font-semibold">0.8%</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-gray-300">α-Pinene</span>
+                    <span className="text-battles-gold font-semibold">0.3%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-semibold text-battles-gold mb-4">Testing Standards</h3>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                    <p className="text-gray-300 text-sm">Full cannabinoid profile analysis</p>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                    <p className="text-gray-300 text-sm">Comprehensive terpene testing</p>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                    <p className="text-gray-300 text-sm">Heavy metals & pesticide screening</p>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                    <p className="text-gray-300 text-sm">Microbial safety testing</p>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-battles-gold rounded-full mt-2 flex-shrink-0"></div>
+                    <p className="text-gray-300 text-sm">Moisture content & water activity</p>
+                  </div>
+                </div>
+                
+                <div className="mt-6">
+                  <Button className="w-full bg-battles-gold text-battles-black hover:bg-yellow-400">
+                    View Full COA Report
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Quick Email Capture Mid-Page */}
+      <section className="py-12 bg-gradient-to-r from-battles-gold/10 to-yellow-600/10">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h3 className="text-2xl font-bold text-battles-gold mb-4">
+            Secure Your Allocation Now
+          </h3>
+          <p className="text-gray-300 mb-6">
+            Only {waitlistCount} spots remaining for our Spring 2025 harvest
+          </p>
+          
+          {!isSubscribed && (
+            <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <Input
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-1 bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+                required
+              />
+              <Button type="submit" className="bg-battles-gold text-battles-black hover:bg-yellow-400 font-semibold px-8">
+                Join Now
+              </Button>
+            </form>
+          )}
+        </div>
+      </section>
+
+      {/* Why This Special - Enhanced */}
+      <section className="py-16 bg-gray-900">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="space-y-6">
@@ -213,78 +598,88 @@ export default function HeirloomFlowerPage() {
         </div>
       </section>
 
-      {/* Cultivation Methods */}
+      {/* Testimonials */}
       <section className="py-16 bg-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-battles-gold mb-12 text-center">Our Cultivation Methods</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
-                <h3 className="text-xl font-semibold text-battles-gold mb-4">Organic Living Soil</h3>
-                <p className="text-gray-300">
-                  We use living soil ecosystems that naturally feed our plants through beneficial microorganisms, 
-                  creating healthier plants with more complex flavors and effects.
-                </p>
-              </div>
-              <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
-                <h3 className="text-xl font-semibold text-battles-gold mb-4">No-Till Beds</h3>
-                <p className="text-gray-300">
-                  Our no-till approach preserves soil structure and microbial networks, allowing plants to 
-                  develop deeper root systems and access nutrients more efficiently.
-                </p>
-              </div>
-            </div>
-            <div className="space-y-6">
-              <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
-                <h3 className="text-xl font-semibold text-battles-gold mb-4">Equatorial Genetics</h3>
-                <p className="text-gray-300">
-                  We specialize in long-flowering equatorial cultivars that require patience but reward with 
-                  unique cannabinoid profiles and complex terpene expressions rarely found in modern strains.
-                </p>
-              </div>
-              <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
-                <h3 className="text-xl font-semibold text-battles-gold mb-4">Traditional Methods</h3>
-                <p className="text-gray-300">
-                  Our cultivation honors traditional growing practices, allowing plants to express their 
-                  natural characteristics without forcing them into unnatural growth patterns.
-                </p>
-              </div>
-            </div>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-battles-gold mb-4">What Connoisseurs Are Saying</h2>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              Experience the difference that authentic landrace genetics make
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card className="bg-gray-900 border-battles-gold/20">
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  <div className="flex text-yellow-400">
+                    {"★".repeat(5)}
+                  </div>
+                </div>
+                <blockquote className="text-gray-300 italic mb-4">
+                  "The most spiritual cannabis I've ever tried. Like a window to the past. 
+                  The clarity and creativity it provides is unlike anything from modern dispensaries."
+                </blockquote>
+                <div className="border-t border-gray-800 pt-4">
+                  <cite className="text-battles-gold font-semibold">Sarah M.</cite>
+                  <p className="text-gray-400 text-sm">Cannabis Consultant, 15+ years experience</p>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gray-900 border-battles-gold/20">
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  <div className="flex text-yellow-400">
+                    {"★".repeat(5)}
+                  </div>
+                </div>
+                <blockquote className="text-gray-300 italic mb-4">
+                  "Nothing touches these heirlooms. The flavor, the vibe, the effect—it's perfect. 
+                  Finally found cannabis that doesn't give me anxiety but still delivers."
+                </blockquote>
+                <div className="border-t border-gray-800 pt-4">
+                  <cite className="text-battles-gold font-semibold">Mike D.</cite>
+                  <p className="text-gray-400 text-sm">Retired Veteran, Medical Patient</p>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gray-900 border-battles-gold/20">
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  <div className="flex text-yellow-400">
+                    {"★".repeat(5)}
+                  </div>
+                </div>
+                <blockquote className="text-gray-300 italic mb-4">
+                  "As a terpene researcher, I can confirm these profiles are absolutely unique. 
+                  This is what cannabis was before we bred the complexity out of it."
+                </blockquote>
+                <div className="border-t border-gray-800 pt-4">
+                  <cite className="text-battles-gold font-semibold">Dr. Jennifer K.</cite>
+                  <p className="text-gray-400 text-sm">Cannabis Research Scientist</p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 bg-black">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-battles-gold mb-12 text-center">What Cannabis Connoisseurs Say</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
-              <div className="text-battles-gold mb-4">★★★★★</div>
-              <p className="text-gray-300 mb-4 italic">
-                "Finally, cannabis that doesn't give me anxiety. The balanced effects are exactly what I've been looking for."
-              </p>
-              <div className="text-sm text-battles-gold">— Sarah M., Medical Patient</div>
-            </div>
-            
-            <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
-              <div className="text-battles-gold mb-4">★★★★★</div>
-              <p className="text-gray-300 mb-4 italic">
-                "As a longtime cannabis user, these landrace strains remind me why I fell in love with the plant originally."
-              </p>
-              <div className="text-sm text-battles-gold">— Mike D., Cannabis Veteran</div>
-            </div>
-            
-            <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
-              <div className="text-battles-gold mb-4">★★★★★</div>
-              <p className="text-gray-300 mb-4 italic">
-                "The terpene profiles are incredible. You can taste the difference that organic cultivation makes."
-              </p>
-              <div className="text-sm text-battles-gold">— Alex R., Sommelier</div>
-            </div>
+      {/* Sticky Banner */}
+      <div className="fixed bottom-0 left-0 right-0 bg-battles-gold text-battles-black p-4 z-50 shadow-lg border-t border-battles-gold">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="text-sm font-semibold">
+            ⏰ Only {waitlistCount} spots left for Spring 2025 harvest. Secure yours today.
           </div>
+          <Button 
+            onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
+            className="bg-battles-black text-battles-gold hover:bg-gray-800 font-semibold"
+          >
+            Join Waitlist
+          </Button>
         </div>
-      </section>
+      </div>
 
       {/* FAQ Section */}
       <section className="py-16 bg-gray-900">
@@ -352,7 +747,7 @@ export default function HeirloomFlowerPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
+      <section id="waitlist" className="py-20 bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
         <div className="absolute inset-0 bg-battles-gold/5"></div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 mb-8 inline-block">
