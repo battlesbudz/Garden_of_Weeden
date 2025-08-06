@@ -14,6 +14,8 @@ import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/navigation";
 import { UserManagement } from "@/components/admin/UserManagement";
 import { DocumentManagement } from "@/components/admin/DocumentManagement";
+import { InvestorOverview } from "@/components/admin/InvestorOverview";
+import { AccessRequestsManager } from "@/components/admin/AccessRequestsManager";
 import { 
   Shield, 
   TrendingUp, 
@@ -21,8 +23,34 @@ import {
   Settings,
   Clock,
   Send,
-  Reply
+  Reply,
+  Users,
+  DollarSign,
+  FileText,
+  Plus,
+  Edit,
+  Trash2,
+  Upload,
+  Eye,
+  EyeOff,
+  Download,
+  CheckCircle,
+  X
 } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
+import { ObjectUploader } from "@/components/ObjectUploader";
+
+// Add UploadResult interface for ObjectUploader callback
+interface UploadResult<T, K> {
+  successful: Array<{
+    name: string;
+    size?: number;
+    type?: string;
+  }>;
+  failed: Array<any>;
+}
 
 interface SecureDocument {
   id: number;
@@ -819,92 +847,13 @@ export default function InvestorAdmin() {
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Card className="bg-gray-900 border-battles-gold">
-                <CardHeader>
-                  <CardTitle className="text-battles-gold flex items-center text-sm">
-                    <Users className="h-4 w-4 mr-2" />
-                    Active Investors
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-2xl font-bold">1</p>
-                  <p className="text-sm text-gray-400">Early investor secured</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gray-900 border-battles-gold">
-                <CardHeader>
-                  <CardTitle className="text-battles-gold flex items-center text-sm">
-                    <DollarSign className="h-4 w-4 mr-2" />
-                    Capital Raised
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div>
-                    <p className="text-2xl font-bold text-green-400">Committed</p>
-                    <p className="text-sm text-gray-400">First investment secured</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gray-900 border-battles-gold">
-                <CardHeader>
-                  <CardTitle className="text-battles-gold flex items-center text-sm">
-                    <FileText className="h-4 w-4 mr-2" />
-                    Documents
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-2xl font-bold text-gray-200">3</p>
-                  <p className="text-sm text-gray-400">MIPA, Operating Agreement, Pitch Deck</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gray-900 border-battles-gold">
-                <CardHeader>
-                  <CardTitle className="text-battles-gold flex items-center text-sm">
-                    <TrendingUp className="h-4 w-4 mr-2" />
-                    Round Progress
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-2xl font-bold text-yellow-400">25%</p>
-                  <p className="text-sm text-gray-400">$1M target for 10% equity</p>
-                </CardContent>
-              </Card>
-            </div>
-
-            <Card className="bg-gray-900 border-battles-gold">
-              <CardHeader>
-                <CardTitle className="text-battles-gold">Recent Activity</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-200">First investor commitment received</p>
-                      <p className="text-sm text-gray-400">January 15, 2025</p>
-                    </div>
-                    <Badge className="bg-green-900 text-green-300">Milestone</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-200">Provisional license approved</p>
-                      <p className="text-sm text-gray-400">December 20, 2024</p>
-                    </div>
-                    <Badge className="bg-blue-900 text-blue-300">Legal</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-200">Site selection confirmed</p>
-                      <p className="text-sm text-gray-400">December 10, 2024</p>
-                    </div>
-                    <Badge className="bg-purple-900 text-purple-300">Operations</Badge>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <InvestorOverview 
+              accessRequests={accessRequests}
+              totalInvestors={1}
+              activeInvestors={1}
+              totalInvestment="Committed"
+              monthlyGrowth="100%"
+            />
           </TabsContent>
 
           {/* Updates Tab */}
@@ -1307,408 +1256,29 @@ export default function InvestorAdmin() {
 
           {/* Access Requests Tab */}
           <TabsContent value="access-requests" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-battles-gold">Investor Access Requests</h2>
-              <div className="flex gap-2">
-                <Badge variant="outline" className="text-battles-gold border-battles-gold">
-                  {accessRequests?.length || 0} Total Requests
-                </Badge>
-                <Badge variant="outline" className="text-yellow-400 border-yellow-400">
-                  {accessRequests?.filter((req: any) => req.status === 'pending').length || 0} Pending
-                </Badge>
-              </div>
-            </div>
-
-            {accessRequestsLoading ? (
-              <Card className="bg-gray-900 border-battles-gold">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-center">
-                    <div className="text-battles-gold">Loading access requests...</div>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : !accessRequests || accessRequests.length === 0 ? (
-              <Card className="bg-gray-900 border-battles-gold">
-                <CardContent className="p-6">
-                  <div className="text-center text-gray-400">
-                    <Shield className="h-12 w-12 mx-auto mb-4 text-battles-gold opacity-50" />
-                    <p className="text-lg mb-2">No access requests yet</p>
-                    <p className="text-sm">Access requests from potential investors will appear here.</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="space-y-4">
-                {accessRequests.map((request: any) => (
-                  <Card key={request.id} className="bg-gray-900 border-battles-gold">
-                    <CardHeader>
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <CardTitle className="text-battles-gold text-lg">
-                            {request.firstName} {request.lastName}
-                          </CardTitle>
-                          <CardDescription className="text-gray-300">
-                            {request.email} • {request.phone || 'No phone provided'}
-                          </CardDescription>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Badge 
-                            variant={
-                              request.status === 'pending' ? 'secondary' :
-                              request.status === 'approved' ? 'default' : 'destructive'
-                            }
-                            className={
-                              request.status === 'pending' ? 'bg-yellow-600 text-white' :
-                              request.status === 'approved' ? 'bg-green-600 text-white' :
-                              'bg-red-600 text-white'
-                            }
-                          >
-                            {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
-                          </Badge>
-                          <span className="text-xs text-gray-500">
-                            {request.createdAt ? new Date(request.createdAt).toLocaleDateString() : 'Unknown date'}
-                          </span>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {/* Professional Information */}
-                      {(request.company || request.position) && (
-                        <div>
-                          <h4 className="font-semibold text-battles-gold mb-2">Professional Information</h4>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                            {request.company && (
-                              <div>
-                                <span className="text-gray-400">Company:</span>
-                                <span className="text-white ml-2">{request.company}</span>
-                              </div>
-                            )}
-                            {request.position && (
-                              <div>
-                                <span className="text-gray-400">Position:</span>
-                                <span className="text-white ml-2">{request.position}</span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Investment Information */}
-                      <div>
-                        <h4 className="font-semibold text-battles-gold mb-2">Investment Interest</h4>
-                        <p className="text-gray-300 text-sm bg-gray-800 p-3 rounded">
-                          {request.investmentInterest}
-                        </p>
-                      </div>
-
-                      {request.netWorth && (
-                        <div>
-                          <h4 className="font-semibold text-battles-gold mb-2">Net Worth Range</h4>
-                          <p className="text-gray-300 text-sm">
-                            {request.netWorth.replace('-', ' - ').replace('k', 'K').replace('m', 'M')}
-                          </p>
-                        </div>
-                      )}
-
-                      {request.investmentExperience && (
-                        <div>
-                          <h4 className="font-semibold text-battles-gold mb-2">Investment Experience</h4>
-                          <p className="text-gray-300 text-sm bg-gray-800 p-3 rounded">
-                            {request.investmentExperience}
-                          </p>
-                        </div>
-                      )}
-
-                      <div>
-                        <h4 className="font-semibold text-battles-gold mb-2">Why Battles Budz?</h4>
-                        <p className="text-gray-300 text-sm bg-gray-800 p-3 rounded">
-                          {request.reasonForInterest}
-                        </p>
-                      </div>
-
-                      {/* Admin Notes */}
-                      {request.adminNotes && (
-                        <div>
-                          <h4 className="font-semibold text-battles-gold mb-2">Admin Notes</h4>
-                          <p className="text-gray-300 text-sm bg-gray-800 p-3 rounded border border-battles-gold/20">
-                            {request.adminNotes}
-                          </p>
-                        </div>
-                      )}
-
-                      {/* Action Buttons - Only show for pending requests */}
-                      {request.status === 'pending' && (
-                        <div className="flex space-x-2 pt-4 border-t border-gray-700">
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <Button 
-                                size="sm" 
-                                className="bg-green-600 hover:bg-green-700 text-white"
-                              >
-                                <CheckCircle className="h-4 w-4 mr-1" />
-                                Approve
-                              </Button>
-                            </DialogTrigger>
-                            <DialogContent className="bg-gray-900 border-battles-gold text-white">
-                              <DialogHeader>
-                                <DialogTitle className="text-battles-gold">
-                                  Approve Access Request
-                                </DialogTitle>
-                                <DialogDescription className="text-gray-300">
-                                  Approve {request.firstName} {request.lastName}'s investor access request.
-                                </DialogDescription>
-                              </DialogHeader>
-                              <div className="space-y-4">
-                                <div>
-                                  <Label className="text-white">Admin Notes (Optional)</Label>
-                                  <Textarea 
-                                    placeholder="Add any notes about this approval..."
-                                    className="bg-gray-800 border-gray-700 text-white"
-                                    onChange={(e) => setReplyText(e.target.value)}
-                                  />
-                                </div>
-                              </div>
-                              <DialogFooter>
-                                <Button
-                                  onClick={() => {
-                                    accessRequestMutation.mutate({
-                                      requestId: request.id,
-                                      status: 'approved',
-                                      adminNotes: replyText || 'Approved for investor access'
-                                    });
-                                    setReplyText('');
-                                  }}
-                                  className="bg-green-600 hover:bg-green-700 text-white"
-                                  disabled={accessRequestMutation.isPending}
-                                >
-                                  {accessRequestMutation.isPending ? 'Approving...' : 'Approve Request'}
-                                </Button>
-                              </DialogFooter>
-                            </DialogContent>
-                          </Dialog>
-
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <Button 
-                                size="sm" 
-                                variant="destructive"
-                              >
-                                <X className="h-4 w-4 mr-1" />
-                                Deny
-                              </Button>
-                            </DialogTrigger>
-                            <DialogContent className="bg-gray-900 border-battles-gold text-white">
-                              <DialogHeader>
-                                <DialogTitle className="text-battles-gold">
-                                  Deny Access Request
-                                </DialogTitle>
-                                <DialogDescription className="text-gray-300">
-                                  Deny {request.firstName} {request.lastName}'s investor access request.
-                                </DialogDescription>
-                              </DialogHeader>
-                              <div className="space-y-4">
-                                <div>
-                                  <Label className="text-white">Reason for Denial (Required)</Label>
-                                  <Textarea 
-                                    placeholder="Please provide a reason for denial..."
-                                    className="bg-gray-800 border-gray-700 text-white"
-                                    onChange={(e) => setReplyText(e.target.value)}
-                                  />
-                                </div>
-                              </div>
-                              <DialogFooter>
-                                <Button
-                                  onClick={() => {
-                                    if (!replyText.trim()) {
-                                      toast({
-                                        title: "Reason Required",
-                                        description: "Please provide a reason for denial.",
-                                        variant: "destructive",
-                                      });
-                                      return;
-                                    }
-                                    accessRequestMutation.mutate({
-                                      requestId: request.id,
-                                      status: 'denied',
-                                      adminNotes: replyText
-                                    });
-                                    setReplyText('');
-                                  }}
-                                  variant="destructive"
-                                  disabled={accessRequestMutation.isPending}
-                                >
-                                  {accessRequestMutation.isPending ? 'Denying...' : 'Deny Request'}
-                                </Button>
-                              </DialogFooter>
-                            </DialogContent>
-                          </Dialog>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
+            <AccessRequestsManager accessRequests={accessRequests} />
           </TabsContent>
 
           {/* Communications Tab */}
           <TabsContent value="communications" className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-battles-gold">Investor Messages</h2>
-              <div className="flex gap-2">
-                <Badge variant="outline" className="text-battles-gold border-battles-gold">
-                  {investorMessages?.length || 0} Total Messages
-                </Badge>
-              </div>
+              <h2 className="text-2xl font-bold text-battles-gold">Investor Communications</h2>
+              <Button className="bg-battles-gold text-black hover:bg-yellow-600">
+                <Send className="h-4 w-4 mr-2" />
+                New Message
+              </Button>
             </div>
 
-            {messagesLoading ? (
-              <Card className="bg-gray-900 border-battles-gold">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-center">
-                    <div className="text-battles-gold">Loading messages...</div>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : messagesError ? (
-              <Card className="bg-gray-900 border-red-500">
-                <CardContent className="p-6">
-                  <div className="text-red-400">Failed to load messages. Please refresh the page.</div>
-                </CardContent>
-              </Card>
-            ) : !investorMessages || investorMessages.length === 0 ? (
-              <Card className="bg-gray-900 border-battles-gold">
-                <CardContent className="p-6">
-                  <div className="text-center text-gray-400">
-                    <MessageCircle className="h-12 w-12 mx-auto mb-4 text-battles-gold opacity-50" />
-                    <p className="text-lg mb-2">No investor messages yet</p>
-                    <p className="text-sm">Messages from investors will appear here when they contact you through the portal.</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="space-y-4">
-                {investorMessages.map((message: any) => (
-                  <Card key={message.id} className="bg-gray-900 border-battles-gold">
-                    <CardHeader className="pb-3">
-                      <div className="flex justify-between items-start gap-4">
-                        <div className="flex-1 min-w-0">
-                          <CardTitle className="text-battles-gold text-lg mb-2 truncate">
-                            {message.subject}
-                          </CardTitle>
-                          <div className="flex items-center gap-2 text-sm">
-                            <span className="font-medium text-white">{message.investorName}</span>
-                            <span className="text-gray-500">•</span>
-                            <span className="text-gray-400 truncate">{message.investorEmail}</span>
-                          </div>
-                        </div>
-                        <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                          <Badge 
-                            variant={message.status === 'unread' ? 'default' : message.adminReply ? 'secondary' : 'outline'}
-                            className={
-                              message.status === 'unread' 
-                                ? 'bg-yellow-500 text-black font-medium' 
-                                : message.adminReply 
-                                  ? 'bg-green-600 text-white'
-                                  : 'text-battles-gold border-battles-gold'
-                            }
-                          >
-                            {message.status === 'unread' ? (
-                              <>
-                                <Clock className="h-3 w-3 mr-1" />
-                                New
-                              </>
-                            ) : message.adminReply ? (
-                              <>
-                                <CheckCircle className="h-3 w-3 mr-1" />
-                                Replied
-                              </>
-                            ) : (
-                              <>
-                                <Eye className="h-3 w-3 mr-1" />
-                                Read
-                              </>
-                            )}
-                          </Badge>
-                          <span className="text-xs text-gray-400 text-right">
-                            {new Date(message.createdAt).toLocaleDateString()}<br/>
-                            {new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                          </span>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
-                          <p className="text-gray-300 whitespace-pre-wrap">{message.message}</p>
-                        </div>
-
-                        {message.adminReply && (
-                          <div className="p-4 bg-battles-gold/10 rounded-lg border border-battles-gold/30">
-                            <p className="text-sm text-battles-gold font-medium mb-2">Admin Reply:</p>
-                            <p className="text-gray-300 whitespace-pre-wrap">{message.adminReply}</p>
-                            {message.repliedAt && (
-                              <p className="text-xs text-gray-400 mt-2">
-                                Replied on {new Date(message.repliedAt).toLocaleDateString()} at {new Date(message.repliedAt).toLocaleTimeString()}
-                              </p>
-                            )}
-                          </div>
-                        )}
-
-                        <div className="flex gap-2">
-                          <Button 
-                            size="sm" 
-                            className="bg-battles-gold text-black hover:bg-yellow-600"
-                            onClick={() => handleReply(message)}
-                            disabled={replyMutation.isPending}
-                          >
-                            <MessageCircle className="h-4 w-4 mr-2" />
-                            Reply
-                          </Button>
-                          {message.status === 'unread' && (
-                            <Button 
-                              size="sm" 
-                              variant="outline" 
-                              className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
-                              onClick={() => handleMarkAsRead(message.id)}
-                              disabled={markAsReadMutation.isPending}
-                            >
-                              <CheckCircle className="h-4 w-4 mr-2" />
-                              Mark as Read
-                            </Button>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-
-            {/* Message Stats */}
             <Card className="bg-gray-900 border-battles-gold">
               <CardHeader>
-                <CardTitle className="text-battles-gold">Message Statistics</CardTitle>
+                <CardTitle className="text-battles-gold">Recent Messages</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-battles-gold">
-                      {investorMessages?.length || 0}
-                    </p>
-                    <p className="text-sm text-gray-400">Total Messages</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-yellow-400">
-                      {investorMessages?.filter((m: any) => m.status === 'unread').length || 0}
-                    </p>
-                    <p className="text-sm text-gray-400">Unread</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-green-400">
-                      {investorMessages?.filter((m: any) => m.adminReply).length || 0}
-                    </p>
-                    <p className="text-sm text-gray-400">Replied</p>
+                <div className="space-y-4">
+                  <div className="text-center text-gray-400 py-8">
+                    <MessageCircle className="h-12 w-12 mx-auto mb-4 text-battles-gold opacity-50" />
+                    <p className="text-lg mb-2">No messages yet</p>
+                    <p className="text-sm">Investor communications will appear here</p>
                   </div>
                 </div>
               </CardContent>
@@ -1716,200 +1286,6 @@ export default function InvestorAdmin() {
           </TabsContent>
         </Tabs>
       </div>
-
-      {/* Reply Modal */}
-      <Dialog open={replyModalOpen} onOpenChange={setReplyModalOpen}>
-        <DialogContent className="bg-gray-900 border-battles-gold text-white max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="text-battles-gold">Reply to Investor Message</DialogTitle>
-            <DialogDescription className="text-gray-300">
-              Send a reply to {selectedMessage?.investorName} regarding: "{selectedMessage?.subject}"
-            </DialogDescription>
-          </DialogHeader>
-
-          {selectedMessage && (
-            <div className="space-y-4">
-              {/* Original Message Display */}
-              <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
-                <h4 className="font-medium text-battles-gold mb-2">Original Message:</h4>
-                <div className="text-sm text-gray-300 space-y-1">
-                  <p><strong>From:</strong> {selectedMessage.investorName} ({selectedMessage.investorEmail})</p>
-                  <p><strong>Subject:</strong> {selectedMessage.subject}</p>
-                  <p><strong>Sent:</strong> {new Date(selectedMessage.createdAt).toLocaleString()}</p>
-                </div>
-                <div className="mt-3 p-3 bg-gray-700 rounded border-l-3 border-battles-gold">
-                  <p className="text-gray-200 whitespace-pre-wrap">{selectedMessage.message}</p>
-                </div>
-              </div>
-
-              {/* Reply Input */}
-              <div className="space-y-2">
-                <Label htmlFor="reply-text" className="text-battles-gold">Your Reply:</Label>
-                <Textarea
-                  id="reply-text"
-                  placeholder="Type your professional reply here..."
-                  value={replyText}
-                  onChange={(e) => setReplyText(e.target.value)}
-                  className="min-h-[120px] bg-gray-800 border-gray-600 text-white focus:border-battles-gold"
-                  disabled={replyMutation.isPending}
-                />
-                <p className="text-xs text-gray-400">
-                  The investor will receive your reply via email and can view it in their investor portal.
-                </p>
-              </div>
-            </div>
-          )}
-
-          <DialogFooter className="gap-2">
-            <Button 
-              variant="outline" 
-              onClick={() => {
-                setReplyModalOpen(false);
-                setReplyText("");
-                setSelectedMessage(null);
-              }}
-              disabled={replyMutation.isPending}
-              className="border-gray-600 text-gray-300 hover:bg-gray-800"
-            >
-              <X className="h-4 w-4 mr-2" />
-              Cancel
-            </Button>
-            <Button 
-              onClick={handleSendReply}
-              disabled={replyMutation.isPending || !replyText.trim()}
-              className="bg-battles-gold text-black hover:bg-yellow-600"
-            >
-              {replyMutation.isPending ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin mr-2" />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <Send className="h-4 w-4 mr-2" />
-                  Send Reply
-                </>
-              )}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Document Permissions Dialog */}
-      <Dialog open={showPermissionsDialog} onOpenChange={setShowPermissionsDialog}>
-        <DialogContent className="bg-gray-900 border-battles-gold text-white max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-battles-gold">Manage Document Permissions</DialogTitle>
-            <DialogDescription className="text-gray-300">
-              {selectedDocumentForPermissions && `Assign permissions for "${selectedDocumentForPermissions.title}" to specific investors`}
-            </DialogDescription>
-          </DialogHeader>
-
-          {selectedDocumentForPermissions && (
-            <div className="space-y-6">
-              {/* Document Info */}
-              <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
-                <div className="flex items-start space-x-3">
-                  <FileText className="h-6 w-6 text-battles-gold flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-medium text-white text-lg">{selectedDocumentForPermissions.title}</h3>
-                    {selectedDocumentForPermissions.description && (
-                      <p className="text-sm text-gray-400 mt-1">{selectedDocumentForPermissions.description}</p>
-                    )}
-                    <div className="flex items-center gap-4 text-xs text-gray-500 mt-2">
-                      <span>Size: {formatFileSize(selectedDocumentForPermissions.fileSize)}</span>
-                      <span>Uploaded: {new Date(selectedDocumentForPermissions.createdAt).toLocaleDateString()}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Investor Permissions */}
-              <div className="space-y-4">
-                <h4 className="font-medium text-battles-gold">Investor Permissions</h4>
-                {approvedInvestors.length === 0 ? (
-                  <div className="text-center py-6 text-gray-400">
-                    <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                    <p>No approved investors to assign permissions to.</p>
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    {approvedInvestors.map((investor: Investor) => (
-                      <div key={investor.id} className="p-4 border border-gray-700 rounded-lg">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <h5 className="font-medium text-white">
-                              {investor.firstName} {investor.lastName}
-                            </h5>
-                            <p className="text-sm text-gray-400">{investor.email}</p>
-                          </div>
-                          <div className="flex items-center space-x-6">
-                            <div className="flex items-center space-x-2">
-                              <Checkbox
-                                id={`view-${investor.id}`}
-                                checked={documentPermissions[investor.id]?.canView || false}
-                                onCheckedChange={(checked) => 
-                                  handlePermissionChange(investor.id, 'canView', checked as boolean)
-                                }
-                              />
-                              <Label htmlFor={`view-${investor.id}`} className="text-sm text-gray-300">
-                                Can View
-                              </Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <Checkbox
-                                id={`download-${investor.id}`}
-                                checked={documentPermissions[investor.id]?.canDownload || false}
-                                onCheckedChange={(checked) => 
-                                  handlePermissionChange(investor.id, 'canDownload', checked as boolean)
-                                }
-                              />
-                              <Label htmlFor={`download-${investor.id}`} className="text-sm text-gray-300">
-                                Can Download
-                              </Label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
-          <DialogFooter className="gap-2">
-            <Button 
-              variant="outline" 
-              onClick={() => {
-                setShowPermissionsDialog(false);
-                setSelectedDocumentForPermissions(null);
-                setDocumentPermissions({});
-              }}
-              className="border-gray-600 text-gray-300 hover:bg-gray-800"
-            >
-              Cancel
-            </Button>
-            <Button 
-              onClick={handleSavePermissions}
-              disabled={updatePermissionsMutation.isPending}
-              className="bg-battles-gold text-black hover:bg-yellow-600"
-            >
-              {updatePermissionsMutation.isPending ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin mr-2" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Settings className="h-4 w-4 mr-2" />
-                  Save Permissions
-                </>
-              )}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

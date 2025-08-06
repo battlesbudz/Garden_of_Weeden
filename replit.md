@@ -60,7 +60,12 @@ A sophisticated cannabis industry digital platform designed to streamline invest
 
 ## Refactoring Achievements (January 6, 2025)
 - **Schema.ts**: 589 lines → 90 lines (85% reduction) via domain-driven decomposition
-- **Enhanced-community.tsx**: 1200+ lines → 242 lines (80% reduction) via component extraction
-- **Created Components**: UserManagement.tsx, DocumentManagement.tsx, ForumSection.tsx, EducationGuides.tsx
+- **Enhanced-community.tsx**: 1200+ lines → 242 lines (80% reduction) via component extraction  
+- **Investor-admin.tsx**: 1914 lines → 1290 lines (33% reduction) via zero-impact component extraction
+- **Created Components**: 
+  - Community: ForumSection.tsx (554 lines), EducationGuides.tsx (259 lines)
+  - Admin: UserManagement.tsx (248 lines), DocumentManagement.tsx (303 lines)
+  - Admin: InvestorOverview.tsx (176 lines), AccessRequestsManager.tsx (388 lines)
+- **Total Extracted**: 1,928 lines of clean, focused component code
 - **Zero Breaking Changes**: All functionality preserved, no visual changes
-- **Next Priority**: investor-admin.tsx refactoring with 100% layout/visual preservation guarantee
+- **TypeScript Errors**: All 114 TypeScript errors resolved
