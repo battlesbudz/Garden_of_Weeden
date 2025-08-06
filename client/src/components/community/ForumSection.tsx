@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { apiRequest } from "@/lib/queryClient";
+import { useLocation } from "wouter";
 import { 
   MessageSquare, 
   ThumbsUp, 
@@ -80,6 +81,7 @@ export function ForumSection() {
   const { toast } = useToast();
   const { user, isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
+  const [, setLocation] = useLocation();
 
   // Queries
   const { data: categories = [] } = useQuery<ForumCategory[]>({
@@ -154,7 +156,8 @@ export function ForumSection() {
   // Event handlers
   const handleCreatePost = () => {
     if (!isAuthenticated || !user) {
-      toast({ description: "Please log in to create a post", variant: "destructive" });
+      sessionStorage.setItem('redirectAfterLogin', '/community');
+      setLocation('/login');
       return;
     }
 
@@ -172,7 +175,8 @@ export function ForumSection() {
 
   const handleCreateComment = (postId: number) => {
     if (!isAuthenticated || !user) {
-      toast({ description: "Please log in to comment", variant: "destructive" });
+      sessionStorage.setItem('redirectAfterLogin', '/community');
+      setLocation('/login');
       return;
     }
 
@@ -186,7 +190,8 @@ export function ForumSection() {
 
   const handleLikePost = (postId: number) => {
     if (!isAuthenticated || !user) {
-      toast({ description: "Please log in to like posts", variant: "destructive" });
+      sessionStorage.setItem('redirectAfterLogin', '/community');
+      setLocation('/login');
       return;
     }
     likePostMutation.mutate(postId);
