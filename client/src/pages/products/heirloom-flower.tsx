@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Navigation from '@/components/navigation';
 import cannabisFlower1 from "@assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg";
 
 // Landrace strain data
@@ -175,19 +176,27 @@ export default function HeirloomFlowerPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-battles-gold/20">
+      <Navigation />
+
+      {/* Breadcrumb */}
+      <div className="pt-20 pb-4 bg-black border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center text-battles-gold hover:text-yellow-400 transition-colors">
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Home
+          <nav className="flex items-center space-x-2 text-sm">
+            <Link href="/" className="text-gray-400 hover:text-battles-gold transition-colors">
+              Home
             </Link>
-          </div>
+            <span className="text-gray-600">/</span>
+            <Link href="/shop" className="text-gray-400 hover:text-battles-gold transition-colors">
+              Shop
+            </Link>
+            <span className="text-gray-600">/</span>
+            <span className="text-battles-gold font-semibold">Landrace Cannabis</span>
+          </nav>
         </div>
-      </nav>
+      </div>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16 bg-gradient-to-b from-black to-gray-900">
+      <section className="pt-16 pb-16 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
