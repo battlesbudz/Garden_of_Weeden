@@ -61,10 +61,13 @@ export default function Navigation() {
               alt="Battles Budz Logo"
               className="h-28 w-auto"
             />
-            <span className="ml-4 text-battles-gold font-bold text-xl flex items-center">
+          </Link>
+          
+          <div className="absolute left-1/2 transform -translate-x-1/2">
+            <span className="text-battles-gold font-bold text-xl">
               BATTLES BUDZ
             </span>
-          </Link>
+          </div>
 
           {/* Mobile menu button - Always visible with yellow styling */}
           <div className="block">
