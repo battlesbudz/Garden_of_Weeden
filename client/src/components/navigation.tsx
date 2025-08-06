@@ -59,7 +59,7 @@ export default function Navigation() {
             <img
               src={logoPath}
               alt="Battles Budz Logo"
-              className="h-20 w-auto"
+              className="h-28 w-auto"
             />
             <span className="ml-4 text-battles-gold font-bold text-xl">
               BATTLES BUDZ
