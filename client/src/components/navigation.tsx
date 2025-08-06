@@ -61,7 +61,7 @@ export default function Navigation() {
               alt="Battles Budz Logo"
               className="h-28 w-auto"
             />
-            <span className="ml-4 text-battles-gold font-bold text-xl">
+            <span className="ml-4 text-battles-gold font-bold text-xl flex items-center">
               BATTLES BUDZ
             </span>
           </Link>
