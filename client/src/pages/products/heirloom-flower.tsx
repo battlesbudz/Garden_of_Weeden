@@ -116,6 +116,31 @@ export default function HeirloomFlowerPage() {
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
   const lastWheelTime = useRef(0);
+  
+  // Global mouse move handler to handle dragging outside the container
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const newX = e.clientX - dragStart.x;
+      const newY = e.clientY - dragStart.y;
+      setTransform(prev => ({ ...prev, x: newX, y: newY }));
+    };
+
+    const handleGlobalMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleGlobalMouseMove);
+      document.addEventListener('mouseup', handleGlobalMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging, dragStart]);
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -146,20 +171,12 @@ export default function HeirloomFlowerPage() {
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
     setIsDragging(true);
     setDragStart({ x: e.clientX - transform.x, y: e.clientY - transform.y });
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    const newX = e.clientX - dragStart.x;
-    const newY = e.clientY - dragStart.y;
-    setTransform(prev => ({ ...prev, x: newX, y: newY }));
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
+  // Mouse move is now handled globally - no need for container-specific handler
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
@@ -198,26 +215,106 @@ export default function HeirloomFlowerPage() {
     });
   };
 
-  // Touch support for mobile
+  // Enhanced touch support for mobile with pinch-to-zoom
+  const lastTouchDistance = useRef<number | null>(null);
+  const lastTouchCenter = useRef<{ x: number, y: number } | null>(null);
+
+  const getTouchDistance = (touches: React.TouchList) => {
+    if (touches.length < 2) return null;
+    const touch1 = touches[0];
+    const touch2 = touches[1];
+    return Math.sqrt(
+      Math.pow(touch2.clientX - touch1.clientX, 2) + 
+      Math.pow(touch2.clientY - touch1.clientY, 2)
+    );
+  };
+
+  const getTouchCenter = (touches: React.TouchList) => {
+    if (touches.length < 2) return null;
+    const touch1 = touches[0];
+    const touch2 = touches[1];
+    return {
+      x: (touch1.clientX + touch2.clientX) / 2,
+      y: (touch1.clientY + touch2.clientY) / 2
+    };
+  };
+
   const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault();
+    
     if (e.touches.length === 1) {
+      // Single touch - start panning
       const touch = e.touches[0];
       setIsDragging(true);
       setDragStart({ x: touch.clientX - transform.x, y: touch.clientY - transform.y });
+      lastTouchDistance.current = null;
+      lastTouchCenter.current = null;
+    } else if (e.touches.length === 2) {
+      // Two fingers - prepare for pinch zoom
+      setIsDragging(false);
+      lastTouchDistance.current = getTouchDistance(e.touches);
+      lastTouchCenter.current = getTouchCenter(e.touches);
     }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || e.touches.length !== 1) return;
     e.preventDefault();
-    const touch = e.touches[0];
-    const newX = touch.clientX - dragStart.x;
-    const newY = touch.clientY - dragStart.y;
-    setTransform(prev => ({ ...prev, x: newX, y: newY }));
+    
+    if (e.touches.length === 1 && isDragging) {
+      // Single finger panning
+      const touch = e.touches[0];
+      const newX = touch.clientX - dragStart.x;
+      const newY = touch.clientY - dragStart.y;
+      setTransform(prev => ({ ...prev, x: newX, y: newY }));
+    } else if (e.touches.length === 2 && lastTouchDistance.current && lastTouchCenter.current) {
+      // Two finger pinch-to-zoom
+      const currentDistance = getTouchDistance(e.touches);
+      const currentCenter = getTouchCenter(e.touches);
+      
+      if (currentDistance && currentCenter) {
+        // Calculate scale change
+        const scaleChange = currentDistance / lastTouchDistance.current;
+        const newScale = Math.max(0.3, Math.min(4, transform.scale * scaleChange));
+        
+        // Calculate position adjustment to zoom towards pinch center
+        const rect = e.currentTarget.getBoundingClientRect();
+        const pinchCenterX = currentCenter.x - rect.left;
+        const pinchCenterY = currentCenter.y - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const deltaScale = newScale - transform.scale;
+        const newX = transform.x - (pinchCenterX - centerX) * (deltaScale / transform.scale);
+        const newY = transform.y - (pinchCenterY - centerY) * (deltaScale / transform.scale);
+        
+        setTransform({
+          x: newX,
+          y: newY,
+          scale: newScale
+        });
+        
+        lastTouchDistance.current = currentDistance;
+        lastTouchCenter.current = currentCenter;
+      }
+    }
   };
 
-  const handleTouchEnd = () => {
-    setIsDragging(false);
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    e.preventDefault();
+    
+    if (e.touches.length === 0) {
+      // All fingers lifted
+      setIsDragging(false);
+      lastTouchDistance.current = null;
+      lastTouchCenter.current = null;
+    } else if (e.touches.length === 1) {
+      // One finger remaining - switch back to pan mode
+      const touch = e.touches[0];
+      setIsDragging(true);
+      setDragStart({ x: touch.clientX - transform.x, y: touch.clientY - transform.y });
+      lastTouchDistance.current = null;
+      lastTouchCenter.current = null;
+    }
   };
 
   const handleEmailSubmit = (e: React.FormEvent) => {
@@ -339,7 +436,8 @@ export default function HeirloomFlowerPage() {
             {/* Map Instructions */}
             <div className="absolute bottom-4 left-4 z-10 bg-black/80 border border-battles-gold/30 rounded px-3 py-1">
               <p className="text-battles-gold text-xs">
-                🖱️ Click & drag to pan • 🔍 Scroll to zoom • 📍 Click markers for details
+                <span className="hidden sm:inline">🖱️ Click & drag to pan • 🔍 Scroll to zoom • 📍 Click markers for details</span>
+                <span className="sm:hidden">👆 Tap & drag to pan • 🤏 Pinch to zoom • 📍 Tap markers for details</span>
               </p>
             </div>
 
@@ -348,12 +446,12 @@ export default function HeirloomFlowerPage() {
               <div 
                 className="relative w-full h-full overflow-hidden rounded-lg cursor-grab active:cursor-grabbing"
                 style={{ 
-                  touchAction: 'none'
+                  touchAction: 'none',
+                  userSelect: 'none',
+                  WebkitUserSelect: 'none',
+                  WebkitTouchCallout: 'none'
                 }}
                 onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
                 onWheel={handleWheel}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
