@@ -9,6 +9,8 @@ import { Link } from "wouter";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import cultivationImage from "@assets/360_F_499206936_DTB3BAfocgPpunIz14tRTBZwwy5PC1Oi_1752425020338.jpg";
+import SEOHead from "@/components/seo/SEOHead";
+import { getCanonicalUrl, getPageTitle, CANNABIS_KEYWORDS } from "@/utils/seo";
 
 export default function Education() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -249,6 +251,13 @@ export default function Education() {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title={getPageTitle("Cannabis Education & Tourism Guide")}
+        description="Comprehensive cannabis education and tourism guide for New York State. Learn about legal cannabis use, dispensary visits, consumption lounges, and safe cannabis tourism practices."
+        keywords={CANNABIS_KEYWORDS.education}
+        canonicalUrl={getCanonicalUrl("/education")}
+        ogType="website"
+      />
       <Navigation />
       
       {/* Hero Section */}

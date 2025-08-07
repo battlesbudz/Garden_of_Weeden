@@ -7,6 +7,8 @@ import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Navigation from '@/components/navigation';
 import cannabisFlower1 from "@assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg";
+import SEOHead from '@/components/seo/SEOHead';
+import { getCanonicalUrl, getPageTitle, getProductSchema } from '@/utils/seo';
 
 // Landrace strain data
 const landraceStrains = [
@@ -93,6 +95,15 @@ export default function HeirloomFlowerPage() {
   const [waitlistCount, setWaitlistCount] = useState(247);
   const { toast } = useToast();
 
+  const productStructuredData = getProductSchema({
+    name: "Heirloom Cannabis Flower - Premium Landrace Strains",
+    description: "Premium heirloom cannabis flower cultivated using traditional organic methods from authentic landrace genetics.",
+    price: "TBD",
+    category: "Cannabis Flower",
+    imageUrl: cannabisFlower1,
+    inStock: false
+  });
+
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
@@ -175,6 +186,15 @@ export default function HeirloomFlowerPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <SEOHead
+        title={getPageTitle("Heirloom Cannabis Flower - Premium Landrace Strains")}
+        description="Premium heirloom cannabis flower cultivated using traditional organic methods from authentic landrace genetics. Join the waitlist for rare, therapeutic cannabis strains."
+        keywords={["heirloom cannabis", "landrace strains", "organic cannabis", "premium flower", "therapeutic cannabis", "ancient genetics", "cannabis cultivation", "Battles Budz flower"]}
+        canonicalUrl={getCanonicalUrl("/products/heirloom-flower")}
+        structuredData={productStructuredData}
+        ogType="product"
+        ogImage={cannabisFlower1}
+      />
       {/* Navigation */}
       <Navigation />
 

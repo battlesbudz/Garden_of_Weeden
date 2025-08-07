@@ -21,6 +21,8 @@ import Navigation from "@/components/navigation";
 import { GamificationWidget } from '../components/gamification/gamification-widget';
 import { ForumSection } from '../components/community/ForumSection';
 import { EducationGuides } from '../components/community/EducationGuides';
+import SEOHead from "@/components/seo/SEOHead";
+import { getCanonicalUrl, getPageTitle, CANNABIS_KEYWORDS } from "@/utils/seo";
 
 export default function EnhancedCommunityPage() {
   const [activeTab, setActiveTab] = useState("forum");
@@ -58,6 +60,13 @@ export default function EnhancedCommunityPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-battles-black via-gray-900 to-battles-black">
+      <SEOHead
+        title={getPageTitle("Cannabis Community Forum & Education Hub")}
+        description="Join the premier cannabis community in New York. Connect with fellow enthusiasts, access educational resources, participate in discussions, and book expert consultations."
+        keywords={CANNABIS_KEYWORDS.community}
+        canonicalUrl={getCanonicalUrl("/community")}
+        ogType="website"
+      />
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">

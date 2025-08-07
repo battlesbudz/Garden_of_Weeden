@@ -8,10 +8,25 @@ import EventsSection from "@/components/events-section";
 import EducationSection from "@/components/education-section";
 import NewsletterSection from "@/components/newsletter-section";
 import Footer from "@/components/footer";
+import SEOHead from "@/components/seo/SEOHead";
+import { getCanonicalUrl, getOrganizationSchema, getLocalBusinessSchema, CANNABIS_KEYWORDS } from "@/utils/seo";
 
 export default function Home() {
+  const structuredData = [
+    getOrganizationSchema(),
+    getLocalBusinessSchema()
+  ];
+
   return (
     <div className="min-h-screen">
+      <SEOHead
+        title="Battles Budz - Premium Cannabis Experience | Gloversville, NY"
+        description="Premium cannabis cultivation, processing, and consumption experiences in Gloversville, NY. Veteran-owned microbusiness offering retail cannabis, consumption lounge, and educational events."
+        keywords={CANNABIS_KEYWORDS.home}
+        canonicalUrl={getCanonicalUrl("/")}
+        structuredData={structuredData}
+        ogType="website"
+      />
       <Navigation />
       <HeroSection />
       <RetailSection />

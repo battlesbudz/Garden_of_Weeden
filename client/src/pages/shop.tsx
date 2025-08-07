@@ -9,6 +9,8 @@ import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { apiRequest } from "@/lib/queryClient";
+import SEOHead from "@/components/seo/SEOHead";
+import { getCanonicalUrl, getPageTitle, CANNABIS_KEYWORDS } from "@/utils/seo";
 
 // Import product images
 import cosmicChewzImg from "@assets/20240228_223118_1752399041772.png";
@@ -132,7 +134,7 @@ export default function Shop() {
       })),
       customerInfo: {
         email: user?.email || "guest@battlesbudz.com",
-        name: user?.username || "Guest Customer",
+        name: user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : "Guest Customer",
         address: "To be provided", // You can add address collection here
       },
     };
@@ -150,6 +152,13 @@ export default function Shop() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <SEOHead
+        title={getPageTitle("Cannabis Shop - Premium Products")}
+        description="Shop premium cannabis products at Battles Budz. Browse our selection of cannabis flower, edibles, vapes, and beverages. Legal cannabis dispensary in Gloversville, NY."
+        keywords={CANNABIS_KEYWORDS.shop}
+        canonicalUrl={getCanonicalUrl("/shop")}
+        ogType="website"
+      />
       <Navigation />
       
       <div className="pt-20 pb-16">
@@ -248,7 +257,7 @@ export default function Shop() {
 
           {/* Products Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products?.map((product: Product) => (
+            {(products as Product[])?.map((product: Product) => (
               <Card key={product.id} className="bg-gray-900 border-battles-gold/20 hover:border-battles-gold/60 transition-all">
                 <CardHeader>
                   <div className="aspect-square bg-black/50 rounded-lg mb-4 flex items-center justify-center">
@@ -290,7 +299,7 @@ export default function Shop() {
           </div>
 
           {/* Empty State */}
-          {products?.length === 0 && (
+          {(products as Product[])?.length === 0 && (
             <div className="text-center py-16">
               <div className="text-6xl text-battles-gold/30 mb-4">🛍️</div>
               <h2 className="text-2xl font-playfair text-battles-gold mb-2">

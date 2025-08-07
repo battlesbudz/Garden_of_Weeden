@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import cosmicChewzImg from "@assets/20240228_223118_1752399041772.png";
+import SEOHead from '@/components/seo/SEOHead';
+import { getCanonicalUrl, getPageTitle, getProductSchema } from '@/utils/seo';
 
 export default function CosmicChewzPage() {
   const [email, setEmail] = useState('');
@@ -30,8 +32,26 @@ export default function CosmicChewzPage() {
     setEmail('');
   };
 
+  const productStructuredData = getProductSchema({
+    name: "Cosmic Chewz - Premium Cannabis Edibles",
+    description: "Premium cannabis-infused edibles with precise dosing and cosmic flavors. Coming soon from Battles Budz.",
+    price: "TBD",
+    category: "Cannabis Edibles",
+    imageUrl: cosmicChewzImg,
+    inStock: false
+  });
+
   return (
     <div className="min-h-screen bg-black text-white">
+      <SEOHead
+        title={getPageTitle("Cosmic Chewz - Premium Cannabis Edibles")}
+        description="Premium cannabis-infused edibles with precise dosing and cosmic flavors. Join the waitlist for early access to Battles Budz' innovative edible products."
+        keywords={["cannabis edibles", "premium edibles", "cannabis gummies", "precise dosing", "Battles Budz edibles", "New York cannabis edibles", "veteran owned cannabis", "cosmic chewz"]}
+        canonicalUrl={getCanonicalUrl("/products/cosmic-chewz")}
+        structuredData={productStructuredData}
+        ogType="product"
+        ogImage={cosmicChewzImg}
+      />
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-battles-gold/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

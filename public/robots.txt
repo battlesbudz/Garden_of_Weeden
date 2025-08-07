@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# Cannabis industry compliance
+Disallow: /admin/
+Disallow: /api/
+Disallow: /investor-admin
+Disallow: /_*
+
+# Allow important pages for SEO
+Allow: /
+Allow: /shop
+Allow: /education
+Allow: /community
+Allow: /investors
+Allow: /products/
+Allow: /privacy-policy
+Allow: /terms-of-service
+
+# Sitemap location
+Sitemap: https://battlesbudz.com/sitemap.xml
+
+# Crawl delay for responsible crawling
+Crawl-delay: 1

@@ -13,6 +13,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Navigation from "@/components/navigation";
 import InvestorAccessRequestForm from "@/components/investor-access-request-form";
+import SEOHead from "@/components/seo/SEOHead";
+import { getCanonicalUrl, getPageTitle, CANNABIS_KEYWORDS } from "@/utils/seo";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";

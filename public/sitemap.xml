@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://battlesbudz.com/</loc>
+    <lastmod>2025-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Main Pages -->
+  <url>
+    <loc>https://battlesbudz.com/shop</loc>
+    <lastmod>2025-01-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://battlesbudz.com/education</loc>
+    <lastmod>2025-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://battlesbudz.com/community</loc>
+    <lastmod>2025-01-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://battlesbudz.com/investors</loc>
+    <lastmod>2025-01-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Product Pages -->
+  <url>
+    <loc>https://battlesbudz.com/products/heirloom-flower</loc>
+    <lastmod>2025-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://battlesbudz.com/assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg</image:loc>
+      <image:title>Heirloom Cannabis Flower - Premium Landrace Strains</image:title>
+      <image:caption>Premium heirloom cannabis flower cultivated using traditional organic methods</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://battlesbudz.com/products/cosmic-chewz</loc>
+    <lastmod>2025-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://battlesbudz.com/assets/20240228_223118_1752399041772.png</image:loc>
+      <image:title>Cosmic Chewz - Premium Cannabis Edibles</image:title>
+      <image:caption>Premium cannabis-infused edibles with precise dosing</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://battlesbudz.com/products/freedom-fog-vapes</loc>
+    <lastmod>2025-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://battlesbudz.com/assets/file_0000000084c86230b8826b578af0fa18_1752398828783.png</image:loc>
+      <image:title>Freedom Fog Vapes - Premium Cannabis Vaporizers</image:title>
+      <image:caption>High-quality cannabis vaporizer cartridges and devices</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://battlesbudz.com/products/battle-brew</loc>
+    <lastmod>2025-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://battlesbudz.com/assets/file_00000000a95c61f9a7846b7990b6738f_1752399026270.png</image:loc>
+      <image:title>Battle Brew - Cannabis-Infused Beverages</image:title>
+      <image:caption>Premium cannabis-infused beverages and teas</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://battlesbudz.com/privacy-policy</loc>
+    <lastmod>2025-01-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://battlesbudz.com/terms-of-service</loc>
+    <lastmod>2025-01-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+</urlset>
