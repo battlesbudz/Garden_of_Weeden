@@ -227,8 +227,7 @@ export default function HeirloomFlowerPage() {
                 The world's oldest cannabis, grown with modern reverence
               </p>
               <p className="text-xl text-gray-300 mb-6">
-                Experience cannabis as nature intended. Our rare landrace genetics offer balanced, therapeutic effects 
-                that modern hybrids simply can't replicate.
+                Our Heirloom Collection features rare landrace strains — preserved from their native climates, grown in organic living soil, and hand-harvested in small batches. These are the ancestors of modern cannabis — unspoiled, potent, and spiritually rooted.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <div className="bg-gray-900/50 border border-battles-gold/20 rounded-lg px-4 py-3 text-center">
