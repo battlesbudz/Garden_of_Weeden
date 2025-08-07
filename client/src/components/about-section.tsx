@@ -49,6 +49,7 @@ export default function AboutSection() {
                 <p className="mt-4 text-sm">— Justin Battles, Founder & CEO</p>
               </div>
             </div>
+          </div>
         </div>
 
         {/* Mission Values */}
