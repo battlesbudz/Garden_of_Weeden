@@ -279,21 +279,21 @@ export default function HeirloomFlowerPage() {
         </div>
       </section>
 
-      {/* Social Proof */}
+      {/* Values Section */}
       <section className="py-12 bg-battles-gold/5 border-y border-battles-gold/20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-battles-gold mb-2">247+</div>
-              <p className="text-gray-300">Connoisseurs on Waitlist</p>
+              <div className="text-2xl font-bold text-battles-gold mb-2">Preserved by Time</div>
+              <p className="text-gray-300">Each cultivar is an heirloom, untouched by modern breeding.</p>
             </div>
             <div>
-              <div className="text-3xl font-bold text-battles-gold mb-2">12 Months</div>
-              <p className="text-gray-300">Organic Cultivation Process</p>
+              <div className="text-2xl font-bold text-battles-gold mb-2">Grown with Intention</div>
+              <p className="text-gray-300">Tended by hand in living soil — no shortcuts, ever.</p>
             </div>
             <div>
-              <div className="text-3xl font-bold text-battles-gold mb-2">50 Plants</div>
-              <p className="text-gray-300">Exclusive Small Batch</p>
+              <div className="text-2xl font-bold text-battles-gold mb-2">Crafted in Small Batches</div>
+              <p className="text-gray-300">Only 50 plants. Harvested with purpose, not pressure.</p>
             </div>
           </div>
         </div>
