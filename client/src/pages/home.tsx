@@ -20,9 +20,23 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <SEOHead
-        title="Battles Budz - Premium Cannabis Experience | Gloversville, NY"
-        description="Premium cannabis cultivation, processing, and consumption experiences in Gloversville, NY. Veteran-owned microbusiness offering retail cannabis, consumption lounge, and educational events."
-        keywords={CANNABIS_KEYWORDS.home}
+        title="Battles Budz Cannabis Dispensary Gloversville NY - Veteran Owned Premium Cannabis"
+        description="Battles Budz - Premier veteran-owned cannabis dispensary in Gloversville, NY. Premium cannabis flower, edibles, vapes and consumption lounge. Founded by U.S. Military Veteran Justin Battles."
+        keywords={[
+          "Battles Budz",
+          "battles buds cannabis",
+          "cannabis dispensary Gloversville NY",
+          "veteran owned cannabis Gloversville",
+          "Gloversville cannabis dispensary",
+          "veteran cannabis New York",
+          "Justin Battles cannabis",
+          "premium cannabis Gloversville",
+          "cannabis consumption lounge NY",
+          "New York cannabis microbusiness",
+          "battles budz dispensary",
+          "gloversville marijuana dispensary",
+          "veteran owned dispensary NY"
+        ]}
         canonicalUrl={getCanonicalUrl("/")}
         structuredData={structuredData}
         ogType="website"
