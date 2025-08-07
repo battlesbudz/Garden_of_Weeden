@@ -271,7 +271,7 @@ export default function HeirloomFlowerPage() {
                 </form>
               </div>
               <p className="text-gray-400 text-sm mt-3 text-center lg:text-left">
-                📧 Join 247+ cannabis connoisseurs already on the list
+                📧 Get notified when the harvest is ready
               </p>
             </div>
             <div className="flex justify-center">
