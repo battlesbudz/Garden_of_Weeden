@@ -399,41 +399,7 @@ export default function HeirloomFlowerPage() {
         </div>
       </section>
 
-      {/* Product Format Previews */}
-      <section className="py-16 bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-battles-gold mb-4">Product Formats</h2>
-            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-              Experience landrace genetics in thoughtfully crafted formats
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {productFormats.map((product, index) => (
-              <Card key={index} className="bg-black border-battles-gold/20 overflow-hidden group hover:border-battles-gold/40 transition-colors">
-                <div className="aspect-square overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold text-battles-gold mb-2">{product.name}</h3>
-                  <p className="text-gray-300 mb-4">{product.notes}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-battles-gold font-bold">{product.price}</span>
-                    <button disabled className="text-battles-gold/60 font-semibold hover:text-battles-gold/80 transition-colors cursor-not-allowed border-b border-battles-gold/20 pb-1">
-                      Join Waitlist for Early Access →
-                    </button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* Lab Results / Transparency */}
       <section className="py-16 bg-black">
