@@ -150,62 +150,89 @@ export default function HeirloomFlowerPage() {
           <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
           <div className="relative bg-gray-900 rounded-lg h-96 border border-gray-700 overflow-hidden">
             
-            {/* Visible world map using simple but effective SVG */}
+            {/* Highly visible world map with proper coordinates */}
             <div className="absolute inset-0">
-              <svg className="w-full h-full opacity-30" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
-                {/* Grid lines for geographic reference */}
-                <defs>
-                  <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
-                    <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#fbbf24" strokeWidth="0.5" opacity="0.3"/>
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#grid)" />
-                
-                {/* Simplified continent outlines - clearly visible */}
-                
-                {/* North America */}
-                <path d="M80,100 L180,90 L190,120 L200,140 L180,180 L140,190 L100,170 L80,140 Z" 
-                      fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.8" />
+              {/* Clear visible background pattern */}
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900"></div>
+              
+              {/* Simple but recognizable continent shapes using CSS rectangles */}
+              <div className="absolute inset-0">
+                {/* North America - clearly visible */}
+                <div className="absolute bg-battles-gold/40 border border-battles-gold/60" style={{
+                  left: '10%',
+                  top: '25%',
+                  width: '15%',
+                  height: '35%',
+                  transform: 'rotate(-10deg)',
+                  borderRadius: '20px 40px 20px 40px'
+                }}></div>
                 
                 {/* South America */}
-                <path d="M160,220 L180,210 L200,230 L210,280 L200,340 L180,350 L160,340 L150,300 L155,250 Z" 
-                      fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.8" />
+                <div className="absolute bg-battles-gold/40 border border-battles-gold/60" style={{
+                  left: '20%',
+                  top: '55%',
+                  width: '8%',
+                  height: '30%',
+                  transform: 'rotate(15deg)',
+                  borderRadius: '40px 20px 60px 20px'
+                }}></div>
                 
                 {/* Europe */}
-                <path d="M320,80 L380,70 L400,85 L390,110 L370,120 L340,115 L320,100 Z" 
-                      fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.8" />
+                <div className="absolute bg-battles-gold/40 border border-battles-gold/60" style={{
+                  left: '40%',
+                  top: '20%',
+                  width: '12%',
+                  height: '20%',
+                  transform: 'rotate(5deg)',
+                  borderRadius: '30px'
+                }}></div>
                 
                 {/* Africa */}
-                <path d="M340,130 L380,120 L400,140 L410,180 L405,240 L390,300 L370,320 L350,310 L340,280 L345,220 L340,160 Z" 
-                      fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.8" />
+                <div className="absolute bg-battles-gold/40 border border-battles-gold/60" style={{
+                  left: '42%',
+                  top: '35%',
+                  width: '10%',
+                  height: '40%',
+                  transform: 'rotate(-5deg)',
+                  borderRadius: '20px 20px 40px 40px'
+                }}></div>
                 
                 {/* Asia */}
-                <path d="M420,90 L520,80 L600,95 L650,110 L680,140 L670,180 L640,190 L580,185 L520,190 L460,185 L420,170 Z" 
-                      fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.8" />
+                <div className="absolute bg-battles-gold/40 border border-battles-gold/60" style={{
+                  left: '55%',
+                  top: '15%',
+                  width: '25%',
+                  height: '45%',
+                  transform: 'rotate(3deg)',
+                  borderRadius: '40px 60px 40px 20px'
+                }}></div>
                 
                 {/* Australia */}
-                <path d="M580,280 L640,275 L660,290 L655,310 L630,320 L590,315 L580,300 Z" 
-                      fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.8" />
-
-                {/* Add some landmass fill for better visibility */}
-                <path d="M80,100 L180,90 L190,120 L200,140 L180,180 L140,190 L100,170 L80,140 Z" 
-                      fill="#fbbf24" fillOpacity="0.1" stroke="none" />
-                <path d="M160,220 L180,210 L200,230 L210,280 L200,340 L180,350 L160,340 L150,300 L155,250 Z" 
-                      fill="#fbbf24" fillOpacity="0.1" stroke="none" />
-                <path d="M320,80 L380,70 L400,85 L390,110 L370,120 L340,115 L320,100 Z" 
-                      fill="#fbbf24" fillOpacity="0.1" stroke="none" />
-                <path d="M340,130 L380,120 L400,140 L410,180 L405,240 L390,300 L370,320 L350,310 L340,280 L345,220 L340,160 Z" 
-                      fill="#fbbf24" fillOpacity="0.1" stroke="none" />
-                <path d="M420,90 L520,80 L600,95 L650,110 L680,140 L670,180 L640,190 L580,185 L520,190 L460,185 L420,170 Z" 
-                      fill="#fbbf24" fillOpacity="0.1" stroke="none" />
-                <path d="M580,280 L640,275 L660,290 L655,310 L630,320 L590,315 L580,300 Z" 
-                      fill="#fbbf24" fillOpacity="0.1" stroke="none" />
-              </svg>
+                <div className="absolute bg-battles-gold/40 border border-battles-gold/60" style={{
+                  left: '72%',
+                  top: '70%',
+                  width: '12%',
+                  height: '15%',
+                  transform: 'rotate(-8deg)',
+                  borderRadius: '50px'
+                }}></div>
+              </div>
               
-              {/* Additional visual elements for depth */}
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-800/20 to-gray-900/40"></div>
-              <div className="absolute top-4 left-4 text-battles-gold/20 text-xs font-mono">GLOBAL LANDRACE ORIGINS</div>
-              <div className="absolute bottom-4 right-4 text-battles-gold/20 text-xs font-mono">ANCIENT CANNABIS GENETICS</div>
+              {/* Grid overlay for geographic reference */}
+              <div className="absolute inset-0">
+                <div className="h-full w-px bg-battles-gold/20 absolute" style={{left: '25%'}}></div>
+                <div className="h-full w-px bg-battles-gold/20 absolute" style={{left: '50%'}}></div>
+                <div className="h-full w-px bg-battles-gold/20 absolute" style={{left: '75%'}}></div>
+                <div className="w-full h-px bg-battles-gold/20 absolute" style={{top: '33%'}}></div>
+                <div className="w-full h-px bg-battles-gold/20 absolute" style={{top: '66%'}}></div>
+              </div>
+              
+              {/* Labels for clarity */}
+              <div className="absolute top-2 left-2 text-battles-gold/60 text-xs font-bold">WORLD LANDRACE MAP</div>
+              <div className="absolute bottom-2 right-2 text-battles-gold/60 text-xs">ANCIENT CANNABIS ORIGINS</div>
+              
+              {/* Subtle texture overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-battles-gold/5 to-transparent"></div>
             </div>
             
             {/* Interactive strain markers */}
