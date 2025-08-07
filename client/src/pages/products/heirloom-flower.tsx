@@ -115,6 +115,7 @@ export default function HeirloomFlowerPage() {
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
+  const lastWheelTime = useRef(0);
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -129,14 +130,14 @@ export default function HeirloomFlowerPage() {
   const handleZoomIn = () => {
     setTransform(prev => ({
       ...prev,
-      scale: Math.min(prev.scale * 1.2, 3)
+      scale: Math.min(prev.scale * 1.15, 4)
     }));
   };
 
   const handleZoomOut = () => {
     setTransform(prev => ({
       ...prev,
-      scale: Math.max(prev.scale / 1.2, 0.5)
+      scale: Math.max(prev.scale / 1.15, 0.3)
     }));
   };
 
@@ -162,11 +163,39 @@ export default function HeirloomFlowerPage() {
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
-    const delta = e.deltaY > 0 ? 0.9 : 1.1;
-    setTransform(prev => ({
-      ...prev,
-      scale: Math.min(Math.max(prev.scale * delta, 0.5), 3)
-    }));
+    
+    // Throttle wheel events to prevent glitchy behavior
+    const now = Date.now();
+    if (now - lastWheelTime.current < 16) return; // ~60fps limit
+    lastWheelTime.current = now;
+    
+    // Get the mouse position relative to the container
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    
+    // Calculate zoom factor with smoother scaling - use deltaY magnitude for better control
+    const zoomIntensity = Math.min(Math.abs(e.deltaY) / 100, 1) * 0.1;
+    const zoomFactor = e.deltaY > 0 ? (1 - zoomIntensity) : (1 + zoomIntensity);
+    const newScale = Math.max(0.3, Math.min(4, transform.scale * zoomFactor));
+    
+    // Only update if scale actually changes
+    if (Math.abs(newScale - transform.scale) < 0.001) return;
+    
+    // Calculate the zoom center offset
+    const scaleChange = newScale - transform.scale;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    // Adjust position to zoom towards mouse cursor
+    const newX = transform.x - (mouseX - centerX) * (scaleChange / transform.scale);
+    const newY = transform.y - (mouseY - centerY) * (scaleChange / transform.scale);
+    
+    setTransform({
+      x: newX,
+      y: newY,
+      scale: newScale
+    });
   };
 
   // Touch support for mobile
