@@ -694,21 +694,6 @@ export default function HeirloomFlowerPage() {
         </div>
       </section>
 
-      {/* Sticky Banner */}
-      <div className="fixed bottom-0 left-0 right-0 bg-battles-gold text-battles-black p-4 z-50 shadow-lg border-t border-battles-gold">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="text-sm font-semibold">
-            ⏰ Only {waitlistCount} spots left for Spring 2025 harvest. Secure yours today.
-          </div>
-          <Button 
-            onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
-            className="bg-battles-black text-battles-gold hover:bg-gray-800 font-semibold"
-          >
-            Join Waitlist
-          </Button>
-        </div>
-      </div>
-
       {/* FAQ Section */}
       <section className="py-16 bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
