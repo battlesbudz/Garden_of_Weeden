@@ -314,11 +314,10 @@ export default function HeirloomFlowerPage() {
             </div>
 
             <div className="w-full" style={{ height: '500px' }}>
-              {/* Interactive world map with SVG overlay for markers */}
+              {/* Interactive world map with image background and overlay markers */}
               <div 
                 className="relative w-full h-full overflow-hidden rounded-lg cursor-grab active:cursor-grabbing"
                 style={{ 
-                  background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%)',
                   touchAction: 'none'
                 }}
                 onMouseDown={handleMouseDown}
@@ -330,205 +329,99 @@ export default function HeirloomFlowerPage() {
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
               >
-                {/* Professional world map SVG */}
+                {/* Winkel Triple Projection World Map Image */}
+                <img 
+                  src="/attached_assets/Winkel_triple_projection_SW_1754600003820.jpg"
+                  alt="World Map - Winkel Triple Projection"
+                  className="w-full h-full object-cover"
+                  style={{ 
+                    transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
+                    transformOrigin: 'center center'
+                  }}
+                />
+                
+                {/* SVG Overlay for Interactive Markers */}
                 <svg 
-                  ref={svgRef}
-                  viewBox="0 0 1400 700" 
-                  className="w-full h-full"
+                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  viewBox="0 0 1400 700"
                   style={{ 
                     transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
                     transformOrigin: 'center center'
                   }}
                 >
-                <g 
-                  transform={`translate(${transform.x}, ${transform.y}) scale(${transform.scale})`}
-                  style={{ transformOrigin: 'center' }}
-                >
-                <defs>
-                  {/* Winkel Triple Projection Gradient - Ocean */}
-                  <radialGradient id="ocean" cx="50%" cy="50%" r="70%">
-                    <stop offset="0%" stopColor="#4fb3d9" />
-                    <stop offset="40%" stopColor="#2980b9" />
-                    <stop offset="100%" stopColor="#1b4f72" />
-                  </radialGradient>
-                  
-                  {/* Realistic Land Gradients */}
-                  <linearGradient id="land-green" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#27ae60" />
-                    <stop offset="50%" stopColor="#2ecc71" />
-                    <stop offset="100%" stopColor="#239b56" />
-                  </linearGradient>
-                  
-                  <linearGradient id="land-brown" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#a0937d" />
-                    <stop offset="50%" stopColor="#b7a391" />
-                    <stop offset="100%" stopColor="#8d7966" />
-                  </linearGradient>
-                  
-                  <linearGradient id="landrace-land" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#f1c40f" />
-                    <stop offset="100%" stopColor="#f39c12" />
-                  </linearGradient>
-                  
-                  {/* Earth curvature shadow */}
-                  <filter id="earth-shadow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
-                    <feOffset dx="3" dy="3" result="offset"/>
-                    <feComponentTransfer>
-                      <feFuncA type="linear" slope="0.4"/>
-                    </feComponentTransfer>
-                    <feMerge> 
-                      <feMergeNode/>
-                      <feMergeNode in="SourceGraphic"/> 
-                    </feMerge>
-                  </filter>
-                  
-                  {/* Winkel Triple clipPath for curved edges */}
-                  <clipPath id="winkel-projection">
-                    <ellipse cx="700" cy="350" rx="650" ry="320"/>
-                  </clipPath>
-                </defs>
+                  <defs>
+                    {/* Landrace glow effect */}
+                    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                      <feMerge> 
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
 
-                {/* Winkel Triple Projection Background */}
-                <g clipPath="url(#winkel-projection)" filter="url(#earth-shadow)">
-                  {/* Ocean with authentic blue gradient */}
-                  <ellipse cx="700" cy="350" rx="650" ry="320" fill="url(#ocean)" />
-                  
-                  {/* Professional Geographic Grid - Curved for Winkel projection */}
-                  <g stroke="rgba(255,255,255,0.15)" strokeWidth="1" fill="none">
-                    {/* Latitude lines - curved for projection */}
-                    <ellipse cx="700" cy="200" rx="520" ry="15" />
-                    <ellipse cx="700" cy="280" rx="580" ry="25" />
-                    <ellipse cx="700" cy="350" rx="650" ry="30" />
-                    <ellipse cx="700" cy="420" rx="580" ry="25" />
-                    <ellipse cx="700" cy="500" rx="520" ry="15" />
+                  {/* Landrace strain markers positioned over the image */}
+                  {Object.entries(landraceData).map(([code, data], index) => {
+                    let x = 0, y = 0;
+                    // Coordinate mapping to the Winkel Triple projection image
+                    switch(code) {
+                      case 'MW': x = 765; y = 480; break; // Malawi - East Africa
+                      case 'TH': x = 1050; y = 420; break; // Thailand - Southeast Asia 
+                      case 'AF': x = 820; y = 280; break; // Afghanistan - Central Asia
+                      case 'CO': x = 320; y = 480; break; // Colombia - South America
+                      case 'ZA': x = 700; y = 580; break; // South Africa
+                    }
                     
-                    {/* Longitude lines - curved meridians */}
-                    <path d="M200,150 Q350,50 500,150 Q650,250 800,150 Q950,50 1200,150" />
-                    <path d="M150,300 Q400,200 650,300 Q900,400 1250,300" />
-                    <path d="M700,50 Q700,200 700,350 Q700,500 700,650" />
-                    <path d="M150,400 Q400,500 650,400 Q900,300 1250,400" />
-                    <path d="M200,550 Q350,650 500,550 Q650,450 800,550 Q950,650 1200,550" />
+                    return (
+                      <g key={code} className="pointer-events-auto">
+                        {/* Glowing strain marker with enhanced visibility */}
+                        <circle cx={x} cy={y} r="30" fill="rgba(241, 196, 15, 0.1)" stroke="#f1c40f" strokeWidth="2" opacity="0.8" />
+                        <circle cx={x} cy={y} r="20" fill="rgba(241, 196, 15, 0.3)" stroke="#f39c12" strokeWidth="3" />
+                        <circle cx={x} cy={y} r="12" fill="#f1c40f" stroke="#ffffff" strokeWidth="3" 
+                                className="cursor-pointer hover:scale-125 transition-all duration-300 drop-shadow-2xl"
+                                onClick={() => handleCountryClick(code)} 
+                                filter="url(#glow)" />
+                        <circle cx={x} cy={y} r="6" fill="#fef9e7" className="pointer-events-none" />
+                        
+                        {/* Enhanced strain labels with better contrast */}
+                        <text x={x} y={y - 50} textAnchor="middle" 
+                              className="fill-white text-lg font-bold pointer-events-none"
+                              style={{ 
+                                textShadow: '3px 3px 6px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.8)',
+                                filter: 'drop-shadow(0 0 8px rgba(241, 196, 15, 0.6))'
+                              }}>
+                          {data.strainName}
+                        </text>
+                        <text x={x} y={y - 30} textAnchor="middle" 
+                              className="fill-yellow-200 text-sm font-semibold pointer-events-none"
+                              style={{ 
+                                textShadow: '2px 2px 4px rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.7)'
+                              }}>
+                          {data.location.split(',')[0]}
+                        </text>
+                      </g>
+                    );
+                  })}
+
+                  {/* Title overlay */}
+                  <text x="700" y="50" textAnchor="middle" 
+                        className="fill-white text-3xl font-bold pointer-events-none"
+                        style={{ 
+                          textShadow: '4px 4px 8px rgba(0,0,0,0.9), 0 0 15px rgba(0,0,0,0.8)',
+                          filter: 'drop-shadow(0 0 10px rgba(241, 196, 15, 0.4))'
+                        }}>
+                    GLOBAL LANDRACE CANNABIS ORIGINS
+                  </text>
+                  
+                  {/* Enhanced legend with better visibility */}
+                  <g transform="translate(50, 580)" className="pointer-events-none">
+                    <rect x="0" y="0" width="320" height="90" fill="rgba(0,0,0,0.85)" rx="12" 
+                          stroke="#f1c40f" strokeWidth="3" filter="url(#glow)" />
+                    <circle cx="25" cy="25" r="12" fill="#f1c40f" stroke="#fff" strokeWidth="3" />
+                    <text x="50" y="32" className="fill-white text-lg font-bold">Ancient Landrace Origins</text>
+                    <text x="25" y="55" className="fill-yellow-200 text-base font-medium">Click markers to explore strain heritage</text>
+                    <text x="25" y="75" className="fill-gray-300 text-sm">Pan & zoom to explore the world</text>
                   </g>
-
-                {/* Winkel Triple World Map - Satellite Imagery Style */}
-                  {/* NORTH AMERICA - Authentic coastline shapes */}
-                  <g id="north-america">
-                    {/* Canada - Realistic northern landmass with satellite coloring */}
-                    <path d="M120,160 Q180,155 240,165 Q300,175 360,185 Q420,195 450,215 Q470,235 465,255 Q460,275 445,295 Q425,310 400,315 Q375,320 350,315 Q325,310 300,300 Q275,290 250,275 Q225,260 200,240 Q180,220 165,195 Q145,175 120,160 Z" 
-                          fill="url(#land-green)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                    
-                    {/* United States - Continental shape with realistic terrain coloring */}
-                    <path d="M140,340 Q190,335 240,345 Q290,355 340,365 Q390,375 420,395 Q435,415 430,440 Q420,460 400,475 Q375,485 345,480 Q315,475 285,465 Q255,455 225,440 Q195,425 170,405 Q150,385 145,360 Q140,340 140,340 Z" 
-                          fill="url(#land-brown)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                    
-                    {/* Mexico - Tapering towards Central America with desert coloring */}
-                    <path d="M180,480 Q220,475 260,485 Q300,495 340,510 Q365,530 370,555 Q365,580 350,600 Q330,615 305,620 Q280,615 255,605 Q230,590 210,570 Q195,545 190,515 Q185,495 180,480 Z" 
-                          fill="url(#land-brown)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                  </g>
-                  
-                  {/* SOUTH AMERICA - Andes Mountains and Amazon rainforest */}
-                  <path id="south-america" d="M300,590 Q340,585 380,605 Q400,630 405,660 Q410,690 415,720 Q420,750 425,780 Q430,810 425,840 Q415,865 395,880 Q375,885 355,880 Q335,870 320,850 Q310,825 305,795 Q300,765 295,735 Q290,705 285,675 Q280,645 275,615 Q280,595 295,585 Q300,590 300,590 Z" 
-                        fill={hoveredCountry === 'CO' || landraceData['CO'] ? "url(#landrace-land)" : "url(#land-green)"} 
-                        stroke={hoveredCountry === 'CO' || landraceData['CO'] ? "#f1c40f" : "rgba(255,255,255,0.2)"} 
-                        strokeWidth={hoveredCountry === 'CO' || landraceData['CO'] ? "2" : "0.8"}
-                        className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
-                        onClick={() => handleCountryClick('CO')}
-                        onMouseEnter={() => handleCountryHover('CO')}
-                        onMouseLeave={() => handleCountryHover(null)} />
-
-                  {/* AFRICA - Satellite imagery style with realistic terrain */}
-                  <g id="africa">
-                    {/* Northern Africa - Sahara Desert with sand coloring */}
-                    <path d="M550,290 Q610,285 670,300 Q720,315 760,335 Q780,355 775,375 Q765,395 750,410 Q725,420 700,415 Q675,410 650,405 Q625,400 600,390 Q575,380 560,360 Q550,340 550,320 Q555,300 550,290 Z" 
-                          fill="url(#land-brown)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                    
-                    {/* Central Africa - Rainforest regions with green coloring */}
-                    <path d="M500,420 Q550,415 600,430 Q650,445 690,470 Q710,500 715,535 Q710,570 695,600 Q675,625 650,635 Q620,640 590,635 Q560,625 535,605 Q515,580 510,550 Q505,520 510,490 Q515,460 500,420 Z" 
-                          fill="url(#land-green)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                    
-                    {/* East Africa - Horn of Africa with mixed terrain */}
-                    <path id="malawi" d="M720,440 Q760,435 790,450 Q805,470 810,495 Q815,520 805,545 Q790,565 770,575 Q750,580 730,575 Q710,565 700,545 Q695,520 700,495 Q705,470 720,450 Q720,440 720,440 Z" 
-                          fill={hoveredCountry === 'MW' || landraceData['MW'] ? "url(#landrace-land)" : "url(#land-brown)"} 
-                          stroke={hoveredCountry === 'MW' || landraceData['MW'] ? "#f1c40f" : "rgba(255,255,255,0.2)"} 
-                          strokeWidth={hoveredCountry === 'MW' || landraceData['MW'] ? "2" : "0.8"}
-                          className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
-                          onClick={() => handleCountryClick('MW')}
-                          onMouseEnter={() => handleCountryHover('MW')}
-                          onMouseLeave={() => handleCountryHover(null)} />
-
-                    {/* Southern Africa - Cape region with diverse terrain */}
-                    <path id="south-africa" d="M600,670 Q650,665 690,680 Q720,700 730,730 Q725,760 710,780 Q690,795 665,800 Q640,795 620,780 Q605,760 600,730 Q595,700 600,670 Z" 
-                          fill={hoveredCountry === 'ZA' || landraceData['ZA'] ? "url(#landrace-land)" : "url(#land-brown)"} 
-                          stroke={hoveredCountry === 'ZA' || landraceData['ZA'] ? "#f1c40f" : "rgba(255,255,255,0.2)"} 
-                          strokeWidth={hoveredCountry === 'ZA' || landraceData['ZA'] ? "2" : "0.8"}
-                          className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
-                          onClick={() => handleCountryClick('ZA')}
-                          onMouseEnter={() => handleCountryHover('ZA')}
-                          onMouseLeave={() => handleCountryHover(null)} />
-                  </g>
-
-                  {/* EUROPE - Satellite-style with mixed terrain */}
-                  <g id="europe">
-                    {/* Scandinavia - Nordic forests and coastlines */}
-                    <path d="M620,140 Q660,135 700,150 Q720,170 725,195 Q720,220 710,240 Q690,255 670,260 Q650,265 630,260 Q610,255 595,240 Q585,220 585,195 Q590,170 605,155 Q620,140 620,140 Z" 
-                          fill="url(#land-green)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                    
-                    {/* British Isles - Green hills and coastlines */}
-                    <path d="M560,210 Q580,205 595,220 Q600,240 595,260 Q580,275 560,280 Q540,275 525,260 Q520,240 525,220 Q540,205 560,210 Z" 
-                          fill="url(#land-green)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                    
-                    {/* Continental Europe - Mixed terrain from Mediterranean to Alps */}
-                    <path d="M570,280 Q620,275 670,290 Q710,310 730,340 Q735,370 725,400 Q705,425 680,435 Q655,440 630,435 Q605,425 585,400 Q570,370 570,340 Q570,310 570,280 Z" 
-                          fill="url(#land-brown)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                  </g>
-
-                  {/* ASIA - Vast continent with satellite imagery styling */}
-                  <g id="asia">
-                    {/* Siberia/Russia - Tundra and forest regions */}
-                    <path d="M760,120 Q860,115 960,125 Q1060,135 1160,145 Q1200,160 1210,190 Q1205,220 1190,245 Q1170,265 1145,280 Q1120,290 1095,295 Q1070,300 1045,305 Q1020,310 995,315 Q970,320 945,315 Q920,305 900,290 Q885,270 880,245 Q880,220 885,195 Q895,170 910,150 Q930,135 950,125 Q760,120 760,120 Z" 
-                          fill="url(#land-green)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                    
-                    {/* China - Eastern Asia with varied terrain */}
-                    <path d="M900,340 Q960,335 1020,350 Q1060,370 1080,400 Q1085,430 1075,460 Q1055,485 1030,500 Q1000,505 970,500 Q940,490 920,470 Q905,445 905,415 Q910,385 925,360 Q900,340 900,340 Z" 
-                          fill="url(#land-brown)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                    
-                    {/* India - Subcontinent with monsoon regions */}
-                    <path d="M830,400 Q880,395 930,410 Q960,435 970,470 Q965,505 950,535 Q930,560 905,575 Q880,580 855,575 Q830,560 810,535 Q795,505 800,470 Q810,435 830,410 Z" 
-                          fill="url(#land-green)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                    
-                    {/* Southeast Asia - Tropical archipelagos */}
-                    <path d="M980,520 Q1040,515 1090,535 Q1120,560 1115,590 Q1100,615 1075,625 Q1050,630 1025,625 Q1000,615 985,590 Q975,560 980,535 Q980,520 980,520 Z" 
-                          fill="url(#land-green)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                  </g>
-
-                  {/* AFGHANISTAN - Hindu Kush mountain region */}
-                  <path id="afghanistan" d="M810,350 Q850,345 880,360 Q900,380 905,405 Q900,430 880,445 Q855,450 830,445 Q805,430 795,405 Q795,380 805,365 Q810,350 810,350 Z" 
-                        fill={hoveredCountry === 'AF' || landraceData['AF'] ? "url(#landrace-land)" : "url(#land-brown)"} 
-                        stroke={hoveredCountry === 'AF' || landraceData['AF'] ? "#f1c40f" : "rgba(255,255,255,0.2)"} 
-                        strokeWidth={hoveredCountry === 'AF' || landraceData['AF'] ? "2" : "0.8"}
-                        className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
-                        onClick={() => handleCountryClick('AF')}
-                        onMouseEnter={() => handleCountryHover('AF')}
-                        onMouseLeave={() => handleCountryHover(null)} />
-
-                  {/* AUSTRALIA - Outback and coastal regions */}
-                  <path id="australia" d="M1100,600 Q1160,595 1220,610 Q1260,630 1280,660 Q1285,690 1270,715 Q1250,735 1225,740 Q1200,735 1175,725 Q1150,710 1135,690 Q1125,665 1125,640 Q1130,615 1145,605 Q1100,600 1100,600 Z" 
-                        fill="url(#land-brown)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" 
-                        className="continent hover:brightness-110 transition-all duration-300" />
-                </g>
 
                 {/* Landrace strain markers with authentic positioning */}
                 {Object.entries(landraceData).map(([code, data], index) => {
@@ -564,120 +457,6 @@ export default function HeirloomFlowerPage() {
                   );
                 })}
 
-                  {/* THAILAND region - Southeast Asia */}
-                  <path id="thailand" d="M1080,510 L1110,505 L1130,515 L1140,535 L1135,555 L1115,570 L1095,575 L1075,570 L1060,555 L1055,535 L1060,515 L1080,510 Z" 
-                        fill={hoveredCountry === 'TH' || landraceData['TH'] ? "url(#landrace-land)" : "url(#land)"} 
-                        stroke={hoveredCountry === 'TH' || landraceData['TH'] ? "#fbbf24" : "#10b981"} 
-                        strokeWidth="2"
-                        className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
-                        onClick={() => handleCountryClick('TH')}
-                        onMouseEnter={() => handleCountryHover('TH')}
-                        onMouseLeave={() => handleCountryHover(null)} />
-
-                  {/* AUSTRALIA - Properly positioned down under */}
-                  <path id="australia" d="M1040,650 L1100,645 L1160,655 L1200,675 L1205,705 L1195,730 L1175,750 L1150,765 L1120,770 L1090,765 L1065,750 L1045,730 L1035,705 L1040,675 L1040,650 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
-                        className="continent hover:brightness-110 transition-all duration-300" />
-                  
-                  {/* New Zealand */}
-                  <path d="M1220,750 L1240,745 L1250,765 L1245,785 L1235,795 L1220,800 L1210,785 L1210,765 L1220,750 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1" 
-                        className="continent hover:brightness-110 transition-all duration-300" />
-                </g>
-
-                {/* Clean landrace strain markers positioned on properly spaced continents */}
-                {Object.entries(landraceData).map(([code, data], index) => {
-                  let x = 0, y = 0;
-                  switch(code) {
-                    case 'MW': x = 775; y = 515; break; // Malawi - East Africa
-                    case 'TH': x = 1100; y = 540; break; // Thailand - Southeast Asia
-                    case 'AF': x = 870; y = 370; break; // Afghanistan - Central Asia  
-                    case 'CO': x = 380; y = 560; break; // Colombia - Northern South America
-                    case 'ZA': x = 720; y = 675; break; // South Africa
-                  }
-                  
-                  return (
-                    <g key={code}>
-                      {/* Static marker with glow effect */}
-                      <circle cx={x} cy={y} r="20" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" strokeWidth="2" />
-                      <circle cx={x} cy={y} r="12" fill="#fbbf24" stroke="#ffffff" strokeWidth="2" 
-                              className="cursor-pointer hover:scale-110 transition-all duration-300 drop-shadow-lg"
-                              onClick={() => handleCountryClick(code)} />
-                      <circle cx={x} cy={y} r="6" fill="#fef3c7" className="pointer-events-none" />
-                      
-                      {/* Strain name label */}
-                      <text x={x} y={y - 35} textAnchor="middle" className="fill-white text-sm font-bold pointer-events-none"
-                            style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.9)' }}>
-                        {data.strainName}
-                      </text>
-                      
-                      {/* Location label */}
-                      <text x={x} y={y - 20} textAnchor="middle" className="fill-yellow-200 text-xs font-medium pointer-events-none"
-                            style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
-                        {data.location.split(',')[0]}
-                      </text>
-                      
-                      {/* Tooltip on hover */}
-                      {hoveredCountry === code && (
-                        <g>
-                          <rect x={x - 80} y={y + 25} width="160" height="60" 
-                                fill="rgba(0,0,0,0.9)" stroke="#fbbf24" strokeWidth="1" rx="5" />
-                          <text x={x} y={y + 45} textAnchor="middle" className="fill-battles-gold text-xs font-semibold">
-                            {data.strainName}
-                          </text>
-                          <text x={x} y={y + 60} textAnchor="middle" className="fill-white text-xs">
-                            THC: {data.thc} | CBD: {data.cbd}
-                          </text>
-                          <text x={x} y={y + 75} textAnchor="middle" className="fill-gray-300 text-xs">
-                            Click for details
-                          </text>
-                        </g>
-                      )}
-                    </g>
-                  );
-                })}
-
-                {/* Geographic grid - Professional cartographic lines */}
-                <g opacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4,4">
-                  <line x1="350" y1="0" x2="350" y2="700" />
-                  <line x1="700" y1="0" x2="700" y2="700" />
-                  <line x1="1050" y1="0" x2="1050" y2="700" />
-                  <line x1="0" y1="175" x2="1400" y2="175" />
-                  <line x1="0" y1="350" x2="1400" y2="350" />
-                  <line x1="0" y1="525" x2="1400" y2="525" />
-                  {/* Equator line */}
-                  <line x1="0" y1="350" x2="1400" y2="350" stroke="#fbbf24" strokeWidth="2" opacity="0.4" />
-                </g>
-
-                {/* Title */}
-                <text x="700" y="45" textAnchor="middle" className="fill-white text-2xl font-bold drop-shadow-lg"
-                      style={{ filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.8))' }}>
-                  GLOBAL LANDRACE CANNABIS ORIGINS
-                </text>
-                
-                {/* Professional legend */}
-                <g transform="translate(40, 600)">
-                  <rect x="0" y="0" width="280" height="80" fill="rgba(0,0,0,0.8)" rx="8" stroke="#fbbf24" strokeWidth="2" />
-                  <circle cx="20" cy="20" r="10" fill="#fbbf24" stroke="#fff" strokeWidth="2" />
-                  <text x="40" y="26" className="fill-white text-base font-medium">Ancient Landrace Origins</text>
-                  <circle cx="20" cy="45" r="6" fill="#047857" stroke="#10b981" strokeWidth="1" />
-                  <text x="40" y="51" className="fill-white text-base">Other Continents</text>
-                  <text x="20" y="70" className="fill-yellow-200 text-sm">Click markers to explore strain details</text>
-                </g>
-
-                {/* Compass rose - Professional cartographic style */}
-                <g transform="translate(1320, 80)" opacity="0.7">
-                  <circle r="35" fill="none" stroke="#fbbf24" strokeWidth="2" />
-                  <circle r="25" fill="none" stroke="#fbbf24" strokeWidth="1" opacity="0.5" />
-                  <path d="M 0,-30 L 5,-20 L 0,-10 L -5,-20 Z" fill="#fbbf24" />
-                  <path d="M 30,0 L 20,5 L 10,0 L 20,-5 Z" fill="#fbbf24" />
-                  <path d="M 0,30 L 5,20 L 0,10 L -5,20 Z" fill="#fbbf24" />
-                  <path d="M -30,0 L -20,5 L -10,0 L -20,-5 Z" fill="#fbbf24" />
-                  <text y="-40" textAnchor="middle" className="fill-white text-sm font-bold">N</text>
-                  <text y="8" x="40" textAnchor="middle" className="fill-white text-sm">E</text>
-                  <text y="50" textAnchor="middle" className="fill-white text-sm">S</text>
-                  <text y="8" x="-40" textAnchor="middle" className="fill-white text-sm">W</text>
-                </g>
                 </svg>
               </div>
             </div>
