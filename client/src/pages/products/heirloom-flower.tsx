@@ -150,27 +150,62 @@ export default function HeirloomFlowerPage() {
           <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
           <div className="relative bg-gray-900 rounded-lg h-96 border border-gray-700 overflow-hidden">
             
-            {/* Simplified but visible world map using CSS and basic shapes */}
+            {/* Visible world map using simple but effective SVG */}
             <div className="absolute inset-0">
-              {/* Background pattern to simulate world map */}
-              <div className="w-full h-full relative">
-                {/* Continent shapes using CSS */}
-                <div className="absolute top-16 left-12 w-24 h-16 bg-battles-gold/20 rounded-lg transform rotate-12" style={{clipPath: 'polygon(20% 0%, 100% 20%, 80% 100%, 0% 80%)'}}></div>
-                <div className="absolute top-32 left-20 w-16 h-20 bg-battles-gold/15 rounded-lg transform -rotate-6" style={{clipPath: 'polygon(30% 0%, 100% 30%, 70% 100%, 0% 70%)'}}></div>
-                <div className="absolute top-12 left-60 w-32 h-20 bg-battles-gold/20 rounded-lg transform rotate-3" style={{clipPath: 'polygon(25% 0%, 100% 25%, 75% 100%, 0% 75%)'}}></div>
-                <div className="absolute top-20 left-80 w-40 h-24 bg-battles-gold/15 rounded-lg transform -rotate-2" style={{clipPath: 'polygon(15% 0%, 100% 15%, 85% 100%, 0% 85%)'}}></div>
-                <div className="absolute bottom-20 right-20 w-20 h-12 bg-battles-gold/20 rounded-lg transform rotate-45" style={{clipPath: 'polygon(40% 0%, 100% 40%, 60% 100%, 0% 60%)'}}></div>
-                
+              <svg className="w-full h-full opacity-30" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
                 {/* Grid lines for geographic reference */}
-                <div className="absolute inset-0">
-                  <div className="h-full w-px bg-battles-gold/10 absolute left-1/4"></div>
-                  <div className="h-full w-px bg-battles-gold/10 absolute left-1/2"></div>
-                  <div className="h-full w-px bg-battles-gold/10 absolute left-3/4"></div>
-                  <div className="w-full h-px bg-battles-gold/10 absolute top-1/4"></div>
-                  <div className="w-full h-px bg-battles-gold/10 absolute top-1/2"></div>
-                  <div className="w-full h-px bg-battles-gold/10 absolute top-3/4"></div>
-                </div>
-              </div>
+                <defs>
+                  <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+                    <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#fbbf24" strokeWidth="0.5" opacity="0.3"/>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+                
+                {/* Simplified continent outlines - clearly visible */}
+                
+                {/* North America */}
+                <path d="M80,100 L180,90 L190,120 L200,140 L180,180 L140,190 L100,170 L80,140 Z" 
+                      fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.8" />
+                
+                {/* South America */}
+                <path d="M160,220 L180,210 L200,230 L210,280 L200,340 L180,350 L160,340 L150,300 L155,250 Z" 
+                      fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.8" />
+                
+                {/* Europe */}
+                <path d="M320,80 L380,70 L400,85 L390,110 L370,120 L340,115 L320,100 Z" 
+                      fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.8" />
+                
+                {/* Africa */}
+                <path d="M340,130 L380,120 L400,140 L410,180 L405,240 L390,300 L370,320 L350,310 L340,280 L345,220 L340,160 Z" 
+                      fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.8" />
+                
+                {/* Asia */}
+                <path d="M420,90 L520,80 L600,95 L650,110 L680,140 L670,180 L640,190 L580,185 L520,190 L460,185 L420,170 Z" 
+                      fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.8" />
+                
+                {/* Australia */}
+                <path d="M580,280 L640,275 L660,290 L655,310 L630,320 L590,315 L580,300 Z" 
+                      fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.8" />
+
+                {/* Add some landmass fill for better visibility */}
+                <path d="M80,100 L180,90 L190,120 L200,140 L180,180 L140,190 L100,170 L80,140 Z" 
+                      fill="#fbbf24" fillOpacity="0.1" stroke="none" />
+                <path d="M160,220 L180,210 L200,230 L210,280 L200,340 L180,350 L160,340 L150,300 L155,250 Z" 
+                      fill="#fbbf24" fillOpacity="0.1" stroke="none" />
+                <path d="M320,80 L380,70 L400,85 L390,110 L370,120 L340,115 L320,100 Z" 
+                      fill="#fbbf24" fillOpacity="0.1" stroke="none" />
+                <path d="M340,130 L380,120 L400,140 L410,180 L405,240 L390,300 L370,320 L350,310 L340,280 L345,220 L340,160 Z" 
+                      fill="#fbbf24" fillOpacity="0.1" stroke="none" />
+                <path d="M420,90 L520,80 L600,95 L650,110 L680,140 L670,180 L640,190 L580,185 L520,190 L460,185 L420,170 Z" 
+                      fill="#fbbf24" fillOpacity="0.1" stroke="none" />
+                <path d="M580,280 L640,275 L660,290 L655,310 L630,320 L590,315 L580,300 Z" 
+                      fill="#fbbf24" fillOpacity="0.1" stroke="none" />
+              </svg>
+              
+              {/* Additional visual elements for depth */}
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-800/20 to-gray-900/40"></div>
+              <div className="absolute top-4 left-4 text-battles-gold/20 text-xs font-mono">GLOBAL LANDRACE ORIGINS</div>
+              <div className="absolute bottom-4 right-4 text-battles-gold/20 text-xs font-mono">ANCIENT CANNABIS GENETICS</div>
             </div>
             
             {/* Interactive strain markers */}
