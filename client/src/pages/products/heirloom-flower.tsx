@@ -229,21 +229,9 @@ export default function HeirloomFlowerPage() {
               <p className="text-xl text-gray-300 mb-4 leading-relaxed">
                 Our Heirloom Collection features rare landrace strains — preserved from their native climates, grown in organic living soil, and hand-harvested in small batches.
               </p>
-              <p className="text-lg text-gray-400 mb-3">These are the ancestors of modern cannabis:</p>
-              <ul className="text-lg text-gray-300 space-y-2 mb-6 pl-6">
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-battles-gold rounded-full mr-3 flex-shrink-0"></span>
-                  Unspoiled
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-battles-gold rounded-full mr-3 flex-shrink-0"></span>
-                  Potent
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-battles-gold rounded-full mr-3 flex-shrink-0"></span>
-                  Spiritually rooted
-                </li>
-              </ul>
+              <p className="text-lg text-gray-400 mb-6">
+                These are the ancestors of modern cannabis: Unspoiled. Potent. Spiritually rooted.
+              </p>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
                   <div className="text-battles-gold font-bold text-xl">5-20%</div>
