@@ -202,11 +202,11 @@ export default function HeirloomFlowerPage() {
         <div className="bg-gray-800 rounded-lg p-8 border border-battles-gold/20">
           <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
           
-          {/* Detailed World Map with Accurate Continent Shapes */}
+          {/* Highly Detailed Interactive World Map */}
           <div className="relative bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
-            <div className="w-full" style={{ height: '450px' }}>
+            <div className="w-full" style={{ height: '500px' }}>
               <svg 
-                viewBox="0 0 1200 600" 
+                viewBox="0 0 1400 700" 
                 className="w-full h-full"
                 style={{ background: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%)' }}
               >
@@ -224,128 +224,195 @@ export default function HeirloomFlowerPage() {
                     <stop offset="0%" stopColor="#fbbf24" />
                     <stop offset="100%" stopColor="#f59e0b" />
                   </linearGradient>
+                  <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feDropShadow dx="2" dy="2" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
+                  </filter>
                 </defs>
 
                 {/* Ocean background */}
                 <rect width="100%" height="100%" fill="url(#ocean)" />
 
-                {/* NORTH AMERICA - Detailed recognizable shape */}
-                <g>
-                  {/* Canada */}
-                  <path d="M 60 120 L 120 110 L 180 115 L 240 120 L 300 115 L 360 125 L 420 135 Q 430 145 420 155 L 380 165 L 320 170 Q 280 175 240 165 L 180 160 L 120 155 Q 80 150 60 140 Z" 
+                {/* NORTH AMERICA - Highly detailed accurate shape */}
+                <g filter="url(#shadow)">
+                  {/* Alaska */}
+                  <path d="M 80 140 L 140 135 L 180 145 Q 190 155 180 165 L 140 170 L 100 165 Q 70 160 80 140 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
+                  
+                  {/* Canada - Realistic jagged coastlines */}
+                  <path d="M 120 180 L 200 175 L 280 170 L 360 175 L 440 180 L 520 185 Q 530 195 520 205 L 480 210 L 440 215 L 400 220 Q 380 225 360 220 L 320 215 L 280 210 L 240 205 L 200 200 L 160 195 Q 140 190 120 180 Z" 
                         fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  {/* USA */}
-                  <path d="M 100 180 L 160 175 L 220 180 L 280 185 L 340 190 L 380 195 Q 390 205 380 215 L 340 220 L 280 225 L 220 220 L 160 215 Q 120 210 100 200 Z" 
+                  
+                  {/* USA - Detailed coastlines with Florida */}
+                  <path d="M 160 240 L 240 235 L 320 240 L 400 245 L 480 250 Q 490 260 480 270 L 460 275 L 440 280 L 420 285 Q 410 295 400 290 L 380 285 L 360 280 L 340 275 L 320 270 L 300 265 L 280 260 L 260 255 L 240 250 L 220 245 Q 180 245 160 240 Z" 
                         fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  {/* Mexico */}
-                  <path d="M 140 240 L 200 235 L 260 240 L 300 245 Q 310 255 300 265 L 260 270 L 200 265 L 140 260 Q 130 250 140 240 Z" 
+                  
+                  {/* Florida */}
+                  <path d="M 420 300 L 440 295 L 460 305 L 455 320 L 445 325 L 425 320 Q 415 310 420 300 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
+                  
+                  {/* Mexico with detailed shape */}
+                  <path d="M 200 310 L 280 305 L 360 315 Q 370 325 360 335 L 340 340 L 320 345 L 300 350 Q 280 355 260 350 L 240 345 L 220 340 Q 190 330 200 310 Z" 
                         fill="url(#land)" stroke="#10b981" strokeWidth="2" />
+                  
+                  {/* Central America */}
+                  <path d="M 340 360 L 380 355 L 400 365 Q 405 375 400 385 L 380 390 L 360 385 Q 335 375 340 360 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
                 </g>
 
-                {/* SOUTH AMERICA - Distinctive shape */}
-                <g>
-                  {/* Colombia/Venezuela */}
-                  <path d="M 280 290 L 340 285 L 380 295 Q 390 305 380 315 L 340 320 L 280 315 Q 270 305 280 290 Z" 
+                {/* SOUTH AMERICA - Accurate distinctive shape */}
+                <g filter="url(#shadow)">
+                  {/* Colombia/Venezuela - Landrace region */}
+                  <path d="M 380 400 L 440 395 L 480 405 L 500 420 Q 505 430 500 440 L 480 445 L 460 450 L 440 455 L 420 460 L 400 455 Q 375 445 380 400 Z" 
                         fill={landraceData['CO'] ? "url(#landrace-land)" : "url(#land)"} 
                         stroke={landraceData['CO'] ? "#fbbf24" : "#10b981"} 
                         strokeWidth="3"
                         className="cursor-pointer transition-all duration-300 hover:brightness-125"
                         onClick={() => handleCountryClick('CO')} />
-                  {/* Brazil */}
-                  <path d="M 300 335 L 380 330 L 440 340 L 460 370 L 450 420 L 420 450 L 380 470 L 340 465 L 300 450 L 280 420 L 285 390 L 300 360 Z" 
+                  
+                  {/* Brazil - Large detailed shape */}
+                  <path d="M 440 480 L 520 475 L 580 485 L 620 500 L 640 530 L 635 570 L 620 600 L 600 620 L 580 635 L 560 640 L 540 645 L 520 640 L 500 635 L 480 630 L 460 625 L 440 620 L 425 615 L 410 610 Q 400 600 405 585 L 410 570 L 415 555 L 420 540 L 425 525 L 430 510 L 435 495 Q 440 485 440 480 Z" 
                         fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  {/* Argentina/Chile */}
-                  <path d="M 320 480 L 360 475 L 380 500 L 375 540 L 360 570 L 340 575 L 320 570 L 310 540 L 315 500 Z" 
+                  
+                  {/* Argentina - Long narrow shape */}
+                  <path d="M 460 650 L 500 645 L 520 655 L 525 680 L 520 710 L 515 740 L 510 770 L 505 800 L 500 820 L 495 835 L 485 845 L 475 850 L 465 845 L 460 835 L 455 820 L 450 800 L 445 770 L 440 740 L 435 710 L 430 680 Q 440 665 460 650 Z" 
                         fill="url(#land)" stroke="#10b981" strokeWidth="2" />
+                  
+                  {/* Chile - Thin coastal strip */}
+                  <path d="M 420 670 L 430 665 L 435 690 L 440 720 L 445 750 L 450 780 L 455 810 L 460 835 L 455 845 L 445 850 L 435 845 L 430 835 L 425 810 L 420 780 L 415 750 L 410 720 L 405 690 Q 410 675 420 670 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
                 </g>
 
-                {/* AFRICA - Iconic recognizable shape */}
-                <g>
-                  {/* North Africa */}
-                  <path d="M 580 200 L 660 195 L 720 205 L 760 220 Q 770 230 760 240 L 720 245 L 660 240 L 580 235 Q 570 225 580 200 Z" 
+                {/* AFRICA - Highly detailed iconic shape */}
+                <g filter="url(#shadow)">
+                  {/* North Africa - Morocco to Egypt */}
+                  <path d="M 680 280 L 780 275 L 880 285 L 920 295 Q 930 305 920 315 L 880 320 L 840 325 L 800 330 L 760 335 L 720 340 L 680 335 Q 670 325 675 305 Q 675 295 680 280 Z" 
                         fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  {/* West Africa */}
-                  <path d="M 540 260 L 580 255 L 620 265 L 640 295 L 635 325 L 620 340 L 580 345 L 540 340 Q 530 330 535 300 Q 535 280 540 260 Z" 
+                  
+                  {/* West Africa - Distinctive bulge */}
+                  <path d="M 640 360 L 680 355 L 720 365 L 740 380 L 745 400 L 740 420 L 735 440 L 730 460 L 720 475 L 700 485 L 680 490 L 660 485 L 640 480 Q 630 470 635 450 L 640 430 L 645 410 L 650 390 Q 645 375 640 360 Z" 
                         fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  {/* East Africa including Malawi */}
-                  <path d="M 660 260 L 720 255 L 760 270 L 780 300 L 775 340 L 760 380 L 740 400 L 720 395 L 660 385 Q 650 375 655 345 L 660 315 L 665 285 Z" 
+                  
+                  {/* East Africa - Including Malawi */}
+                  <path d="M 780 360 L 840 355 L 880 365 L 900 380 L 905 405 L 900 430 L 895 455 L 890 480 L 885 505 L 880 530 L 870 550 L 860 565 L 850 575 L 840 580 L 820 575 L 800 570 L 780 565 Q 770 555 775 535 L 780 515 L 785 495 L 790 475 L 795 455 L 800 435 L 805 415 L 810 395 Q 795 375 780 360 Z" 
                         fill={landraceData['MW'] ? "url(#landrace-land)" : "url(#land)"} 
                         stroke={landraceData['MW'] ? "#fbbf24" : "#10b981"} 
                         strokeWidth="3"
                         className="cursor-pointer transition-all duration-300 hover:brightness-125"
                         onClick={() => handleCountryClick('MW')} />
-                  {/* South Africa */}
-                  <path d="M 620 420 L 680 415 L 720 425 L 740 445 L 735 475 L 720 485 L 680 480 L 620 475 Q 610 465 615 445 Q 615 435 620 420 Z" 
+                  
+                  {/* South Africa - Distinctive southern tip */}
+                  <path d="M 740 600 L 800 595 L 840 605 L 860 620 L 865 640 L 860 655 L 850 665 L 835 670 L 820 675 L 800 680 L 780 675 L 760 670 L 740 665 Q 730 655 735 635 Q 735 615 740 600 Z" 
                         fill={landraceData['ZA'] ? "url(#landrace-land)" : "url(#land)"} 
                         stroke={landraceData['ZA'] ? "#fbbf24" : "#10b981"} 
                         strokeWidth="3"
                         className="cursor-pointer transition-all duration-300 hover:brightness-125"
                         onClick={() => handleCountryClick('ZA')} />
+                  
+                  {/* Madagascar */}
+                  <path d="M 920 580 L 940 575 L 945 600 L 940 625 L 935 640 L 925 645 L 915 640 Q 910 630 915 610 Q 915 595 920 580 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
                 </g>
 
-                {/* EUROPE - Detailed shape */}
-                <g>
-                  <path d="M 540 140 L 600 135 L 660 145 L 700 155 Q 710 165 700 175 L 660 180 L 600 175 L 540 170 Q 530 160 540 140 Z" 
+                {/* EUROPE - Detailed peninsulas and coastlines */}
+                <g filter="url(#shadow)">
+                  {/* Scandinavia */}
+                  <path d="M 740 160 L 780 155 L 800 170 L 805 190 L 800 210 L 790 220 L 775 225 L 760 220 L 745 215 Q 735 205 740 185 Q 740 175 740 160 Z" 
                         fill="url(#land)" stroke="#10b981" strokeWidth="2" />
+                  
+                  {/* British Isles */}
+                  <path d="M 680 200 L 700 195 L 715 205 L 710 225 L 700 235 L 685 230 Q 675 220 680 200 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
+                  
+                  {/* Western Europe */}
+                  <path d="M 720 240 L 780 235 L 820 245 L 840 260 Q 845 270 840 280 L 820 285 L 800 290 L 780 295 L 760 290 L 740 285 Q 715 275 720 240 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
+                  
+                  {/* Mediterranean peninsulas */}
+                  <path d="M 760 310 L 800 305 L 820 320 L 815 340 L 800 345 L 785 340 Q 755 330 760 310 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
                 </g>
 
-                {/* ASIA - Large detailed continent */}
-                <g>
+                {/* ASIA - Massive detailed continent */}
+                <g filter="url(#shadow)">
+                  {/* Siberia/Russia */}
+                  <path d="M 860 160 L 1000 155 L 1140 165 L 1240 175 Q 1250 185 1240 195 L 1200 200 L 1160 205 L 1120 210 L 1080 215 L 1040 220 L 1000 225 L 960 230 L 920 235 L 880 240 Q 850 235 860 160 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
+                  
                   {/* Central Asia including Afghanistan */}
-                  <path d="M 720 160 L 780 155 L 840 165 L 880 180 Q 890 190 880 200 L 840 205 L 780 200 L 720 195 Q 710 185 720 160 Z" 
+                  <path d="M 880 260 L 940 255 L 980 265 L 1020 275 Q 1030 285 1020 295 L 980 300 L 940 305 L 900 310 Q 870 305 880 260 Z" 
                         fill={landraceData['AF'] ? "url(#landrace-land)" : "url(#land)"} 
                         stroke={landraceData['AF'] ? "#fbbf24" : "#10b981"} 
                         strokeWidth="3"
                         className="cursor-pointer transition-all duration-300 hover:brightness-125"
                         onClick={() => handleCountryClick('AF')} />
+                  
+                  {/* China - Large detailed shape */}
+                  <path d="M 1040 240 L 1120 235 L 1180 245 L 1220 260 L 1240 280 L 1235 305 L 1220 325 L 1200 340 L 1180 355 L 1160 370 L 1140 375 L 1120 380 L 1100 375 L 1080 370 L 1060 365 Q 1035 355 1040 320 L 1045 300 L 1050 280 L 1055 260 Q 1045 250 1040 240 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
+                  
+                  {/* India - Distinctive triangular peninsula */}
+                  <path d="M 980 340 L 1040 335 L 1080 350 L 1100 380 L 1095 420 L 1080 450 L 1060 470 L 1040 480 L 1020 485 L 1000 480 L 980 475 Q 970 465 975 445 L 980 425 L 985 405 L 990 385 Q 985 365 980 340 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
+                  
                   {/* Southeast Asia including Thailand */}
-                  <path d="M 920 220 L 980 215 L 1020 225 L 1040 255 L 1035 285 L 1020 305 L 980 310 L 920 305 Q 910 295 915 265 Q 915 245 920 220 Z" 
+                  <path d="M 1120 400 L 1180 395 L 1220 405 L 1240 425 L 1245 450 L 1240 475 L 1230 495 L 1215 510 L 1200 520 L 1180 525 L 1160 520 L 1140 515 Q 1115 505 1120 475 L 1125 455 L 1130 435 Q 1125 420 1120 400 Z" 
                         fill={landraceData['TH'] ? "url(#landrace-land)" : "url(#land)"} 
                         stroke={landraceData['TH'] ? "#fbbf24" : "#10b981"} 
                         strokeWidth="3"
                         className="cursor-pointer transition-all duration-300 hover:brightness-125"
                         onClick={() => handleCountryClick('TH')} />
-                  {/* China */}
-                  <path d="M 840 200 L 920 195 L 980 205 L 1020 220 Q 1030 230 1020 240 L 980 245 L 920 240 L 840 235 Q 830 225 840 200 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  {/* India */}
-                  <path d="M 840 240 L 900 235 L 940 250 L 960 280 L 955 310 L 940 325 L 900 330 L 840 325 Q 830 315 835 285 Q 835 265 840 240 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
+                  
+                  {/* Japan */}
+                  <path d="M 1280 320 L 1320 315 L 1340 330 L 1335 350 L 1320 355 L 1305 350 Q 1275 340 1280 320 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
+                  
+                  {/* Indonesia */}
+                  <path d="M 1180 540 L 1240 535 L 1280 545 L 1300 560 L 1295 580 L 1280 585 L 1260 590 L 1240 585 L 1220 580 L 1200 575 Q 1175 565 1180 540 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
                 </g>
 
-                {/* AUSTRALIA - Recognizable oval */}
-                <g>
-                  <path d="M 980 420 L 1060 415 L 1120 425 L 1140 445 L 1135 465 L 1120 475 L 1060 480 L 980 475 Q 970 465 975 445 Q 975 435 980 420 Z" 
+                {/* AUSTRALIA - Detailed recognizable shape */}
+                <g filter="url(#shadow)">
+                  <path d="M 1200 620 L 1300 615 L 1380 625 L 1420 640 L 1425 665 L 1420 685 L 1410 700 L 1395 710 L 1380 715 L 1360 720 L 1340 715 L 1320 710 L 1300 705 L 1280 700 L 1260 695 L 1240 690 L 1220 685 Q 1195 675 1200 645 Q 1200 635 1200 620 Z" 
                         fill="url(#land)" stroke="#10b981" strokeWidth="2" />
+                  
+                  {/* Tasmania */}
+                  <path d="M 1340 740 L 1360 735 L 1365 750 L 1360 760 L 1350 765 L 1340 760 Q 1335 750 1340 740 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
+                  
+                  {/* New Zealand */}
+                  <path d="M 1460 720 L 1480 715 L 1485 740 L 1480 760 L 1475 775 L 1465 780 L 1455 775 Q 1450 765 1455 745 Q 1455 735 1460 720 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
                 </g>
 
-                {/* ANTARCTICA */}
-                <rect x="0" y="570" width="1200" height="30" fill="url(#land)" opacity="0.8" />
+                {/* ANTARCTICA - Detailed ice shelf */}
+                <rect x="0" y="670" width="1400" height="30" fill="url(#land)" opacity="0.9" />
 
-                {/* Landrace strain markers */}
+                {/* Landrace strain markers - Large and prominent */}
                 {Object.entries(landraceData).map(([code, data], index) => {
                   let x = 0, y = 0;
                   switch(code) {
-                    case 'MW': x = 700; y = 340; break; // Malawi - East Africa
-                    case 'TH': x = 980; y = 260; break; // Thailand - Southeast Asia
-                    case 'AF': x = 800; y = 180; break; // Afghanistan - Central Asia  
-                    case 'CO': x = 320; y = 300; break; // Colombia - Northern South America
-                    case 'ZA': x = 670; y = 450; break; // South Africa
+                    case 'MW': x = 840; y = 480; break; // Malawi - East Africa
+                    case 'TH': x = 1180; y = 460; break; // Thailand - Southeast Asia
+                    case 'AF': x = 950; y = 280; break; // Afghanistan - Central Asia  
+                    case 'CO': x = 430; y = 420; break; // Colombia - Northern South America
+                    case 'ZA': x = 800; y = 640; break; // South Africa
                   }
                   
                   return (
                     <g key={code}>
-                      <circle cx={x} cy={y} r="25" fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.4" className="animate-ping" />
-                      <circle cx={x} cy={y} r="15" fill="none" stroke="#f59e0b" strokeWidth="2" opacity="0.6" />
-                      <circle cx={x} cy={y} r="10" fill="#fbbf24" stroke="#ffffff" strokeWidth="2" 
-                              className="cursor-pointer hover:scale-125 transition-all duration-300"
+                      <circle cx={x} cy={y} r="35" fill="none" stroke="#fbbf24" strokeWidth="3" opacity="0.3" className="animate-ping" />
+                      <circle cx={x} cy={y} r="25" fill="none" stroke="#f59e0b" strokeWidth="2" opacity="0.5" />
+                      <circle cx={x} cy={y} r="15" fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.7" />
+                      <circle cx={x} cy={y} r="12" fill="#fbbf24" stroke="#ffffff" strokeWidth="3" 
+                              className="cursor-pointer hover:scale-125 transition-all duration-300 drop-shadow-lg"
                               onClick={() => handleCountryClick(code)} />
-                      <circle cx={x} cy={y} r="6" fill="#fef3c7" className="pointer-events-none" />
-                      <text x={x} y={y - 35} textAnchor="middle" className="fill-white text-sm font-bold"
-                            style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+                      <circle cx={x} cy={y} r="8" fill="#fef3c7" className="pointer-events-none" />
+                      <text x={x} y={y - 45} textAnchor="middle" className="fill-white text-lg font-bold"
+                            style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.9)', filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.8))' }}>
                         {data.strainName}
                       </text>
-                      <text x={x} y={y - 20} textAnchor="middle" className="fill-yellow-200 text-xs"
+                      <text x={x} y={y - 25} textAnchor="middle" className="fill-yellow-200 text-sm font-medium"
                             style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
                         {data.location.split(',')[0]}
                       </text>
@@ -353,28 +420,46 @@ export default function HeirloomFlowerPage() {
                   );
                 })}
 
-                {/* Grid lines */}
-                <g opacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,3">
-                  <line x1="300" y1="0" x2="300" y2="600" />
-                  <line x1="600" y1="0" x2="600" y2="600" />
-                  <line x1="900" y1="0" x2="900" y2="600" />
-                  <line x1="0" y1="150" x2="1200" y2="150" />
-                  <line x1="0" y1="300" x2="1200" y2="300" />
-                  <line x1="0" y1="450" x2="1200" y2="450" />
+                {/* Geographic grid - Professional cartographic lines */}
+                <g opacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4,4">
+                  <line x1="350" y1="0" x2="350" y2="700" />
+                  <line x1="700" y1="0" x2="700" y2="700" />
+                  <line x1="1050" y1="0" x2="1050" y2="700" />
+                  <line x1="0" y1="175" x2="1400" y2="175" />
+                  <line x1="0" y1="350" x2="1400" y2="350" />
+                  <line x1="0" y1="525" x2="1400" y2="525" />
+                  {/* Equator line */}
+                  <line x1="0" y1="350" x2="1400" y2="350" stroke="#fbbf24" strokeWidth="2" opacity="0.4" />
                 </g>
 
                 {/* Title */}
-                <text x="600" y="40" textAnchor="middle" className="fill-white text-xl font-bold">
+                <text x="700" y="45" textAnchor="middle" className="fill-white text-2xl font-bold drop-shadow-lg"
+                      style={{ filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.8))' }}>
                   GLOBAL LANDRACE CANNABIS ORIGINS
                 </text>
                 
-                {/* Legend */}
-                <g transform="translate(30, 510)">
-                  <rect x="0" y="0" width="200" height="50" fill="rgba(0,0,0,0.7)" rx="5" stroke="#fbbf24" strokeWidth="1" />
-                  <circle cx="15" cy="15" r="6" fill="#fbbf24" stroke="#fff" strokeWidth="1" />
-                  <text x="30" y="20" className="fill-white text-sm">Landrace Origin</text>
-                  <circle cx="15" cy="35" r="4" fill="#047857" />
-                  <text x="30" y="40" className="fill-white text-sm">Other Regions</text>
+                {/* Professional legend */}
+                <g transform="translate(40, 600)">
+                  <rect x="0" y="0" width="280" height="80" fill="rgba(0,0,0,0.8)" rx="8" stroke="#fbbf24" strokeWidth="2" />
+                  <circle cx="20" cy="20" r="10" fill="#fbbf24" stroke="#fff" strokeWidth="2" />
+                  <text x="40" y="26" className="fill-white text-base font-medium">Ancient Landrace Origins</text>
+                  <circle cx="20" cy="45" r="6" fill="#047857" stroke="#10b981" strokeWidth="1" />
+                  <text x="40" y="51" className="fill-white text-base">Other Continents</text>
+                  <text x="20" y="70" className="fill-yellow-200 text-sm">Click markers to explore strain details</text>
+                </g>
+
+                {/* Compass rose - Professional cartographic style */}
+                <g transform="translate(1320, 80)" opacity="0.7">
+                  <circle r="35" fill="none" stroke="#fbbf24" strokeWidth="2" />
+                  <circle r="25" fill="none" stroke="#fbbf24" strokeWidth="1" opacity="0.5" />
+                  <path d="M 0,-30 L 5,-20 L 0,-10 L -5,-20 Z" fill="#fbbf24" />
+                  <path d="M 30,0 L 20,5 L 10,0 L 20,-5 Z" fill="#fbbf24" />
+                  <path d="M 0,30 L 5,20 L 0,10 L -5,20 Z" fill="#fbbf24" />
+                  <path d="M -30,0 L -20,5 L -10,0 L -20,-5 Z" fill="#fbbf24" />
+                  <text y="-40" textAnchor="middle" className="fill-white text-sm font-bold">N</text>
+                  <text y="8" x="40" textAnchor="middle" className="fill-white text-sm">E</text>
+                  <text y="50" textAnchor="middle" className="fill-white text-sm">S</text>
+                  <text y="8" x="-40" textAnchor="middle" className="fill-white text-sm">W</text>
                 </g>
               </svg>
             </div>
