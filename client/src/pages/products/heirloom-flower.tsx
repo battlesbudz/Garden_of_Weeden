@@ -223,6 +223,9 @@ export default function HeirloomFlowerPage() {
               <h1 className="text-5xl md:text-6xl font-playfair font-bold mb-6">
                 <span className="text-battles-gold">Landrace</span> Cannabis
               </h1>
+              <p className="text-2xl font-bold text-white mb-6">
+                The world's oldest cannabis, grown with modern reverence
+              </p>
               <p className="text-xl text-gray-300 mb-6">
                 Experience cannabis as nature intended. Our rare landrace genetics offer balanced, therapeutic effects 
                 that modern hybrids simply can't replicate.
