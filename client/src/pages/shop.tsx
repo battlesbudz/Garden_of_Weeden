@@ -303,7 +303,7 @@ export default function Shop() {
             <div className="text-center py-16">
               <div className="text-6xl text-battles-gold/30 mb-4">🛍️</div>
               <h2 className="text-2xl font-playfair text-battles-gold mb-2">
-                Coming Soon!
+                Shop Opening Soon!
               </h2>
               <p className="text-gray-400 max-w-md mx-auto">
                 We're working on stocking our shop with premium cannabis products and merchandise. 

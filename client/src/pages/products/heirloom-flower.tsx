@@ -78,13 +78,13 @@ const productFormats = [
     name: "Whole Flower (5g)",
     image: cannabisFlower1,
     notes: "Earthy, spiced, high CBG content",
-    price: "Coming Soon"
+    price: "Pre-Launch Pricing"
   },
   {
     name: "Pre-Rolls (3pk)",
     image: cannabisFlower1,
     notes: "Slow-burning, single-origin terpene bomb",
-    price: "Coming Soon"
+    price: "Pre-Launch Pricing"
   }
 ];
 
@@ -430,9 +430,9 @@ export default function HeirloomFlowerPage() {
                   <p className="text-gray-300 mb-4">{product.notes}</p>
                   <div className="flex justify-between items-center">
                     <span className="text-battles-gold font-bold">{product.price}</span>
-                    <Button disabled className="bg-gray-700 text-gray-400">
-                      Coming Soon
-                    </Button>
+                    <button disabled className="text-battles-gold/60 font-semibold hover:text-battles-gold/80 transition-colors cursor-not-allowed border-b border-battles-gold/20 pb-1">
+                      Join Waitlist for Early Access →
+                    </button>
                   </div>
                 </CardContent>
               </Card>

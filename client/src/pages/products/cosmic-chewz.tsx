@@ -34,7 +34,7 @@ export default function CosmicChewzPage() {
 
   const productStructuredData = getProductSchema({
     name: "Cosmic Chewz - Premium Cannabis Edibles",
-    description: "Premium cannabis-infused edibles with precise dosing and cosmic flavors. Coming soon from Battles Budz.",
+    description: "Premium cannabis-infused edibles with precise dosing and cosmic flavors. Launching 2025 from Battles Budz.",
     price: "TBD",
     category: "Cannabis Edibles",
     imageUrl: cosmicChewzImg,

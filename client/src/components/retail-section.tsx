@@ -73,8 +73,8 @@ export default function RetailSection() {
                 <p className="text-gray-300 mb-4">{product.description}</p>
                 <div className="flex items-center justify-center">
                   <Link href={product.route}>
-                    <span className="bg-battles-gold text-battles-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors cursor-pointer">
-                      Coming Soon
+                    <span className="text-battles-gold font-semibold hover:text-yellow-400 transition-colors cursor-pointer border-b border-battles-gold/30 hover:border-battles-gold pb-1">
+                      Learn More & Join Waitlist →
                     </span>
                   </Link>
                 </div>

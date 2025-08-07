@@ -33,7 +33,7 @@ export default function KeywordLandingPage() {
               Gloversville, NY
             </h1>
             <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-300">
-              Veteran-Owned Cannabis Dispensary Coming Soon
+              Veteran-Owned Cannabis Dispensary <span className="text-battles-gold">Opening 2025</span>
             </h2>
             <p className="text-xl text-gray-300 mb-8">
               Founded by U.S. Military Veteran Justin Battles, bringing premium cannabis 
