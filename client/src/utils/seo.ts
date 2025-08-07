@@ -4,7 +4,7 @@ export const SITE_CONFIG = {
   name: "Battles Budz",
   tagline: "Premium Cannabis Experience",
   description: "Premium cannabis cultivation, processing, and consumption experiences in Gloversville, NY. Veteran-owned microbusiness offering retail cannabis, consumption lounge, and educational events.",
-  url: import.meta.env.VITE_SITE_URL || "https://battlesbudz.com",
+  url: import.meta.env.VITE_SITE_URL || "https://battlesbudz.replit.app",
   businessName: "Battles Budz LLC",
   location: {
     city: "Gloversville",
