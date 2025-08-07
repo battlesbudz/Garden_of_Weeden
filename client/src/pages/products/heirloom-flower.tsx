@@ -79,12 +79,6 @@ const productFormats = [
     image: cannabisFlower1,
     notes: "Earthy, spiced, high CBG content",
     price: "Pre-Launch Pricing"
-  },
-  {
-    name: "Pre-Rolls (3pk)",
-    image: cannabisFlower1,
-    notes: "Slow-burning, single-origin terpene bomb",
-    price: "Pre-Launch Pricing"
   }
 ];
 
@@ -369,13 +363,7 @@ export default function HeirloomFlowerPage() {
               </div>
             </div>
             
-            <div className="lg:pl-12">
-              <img
-                src={cannabisFlower1}
-                alt="Landrace cannabis flower"
-                className="w-full rounded-lg shadow-2xl border border-battles-gold/20"
-              />
-            </div>
+
           </div>
         </div>
       </section>
