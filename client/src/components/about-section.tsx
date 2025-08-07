@@ -23,15 +23,7 @@ export default function AboutSection() {
   return (
     <section id="about" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <img
-              src={cultivationImg}
-              alt="Battles Budz cannabis cultivation"
-              className="rounded-xl shadow-lg w-full"
-            />
-          </div>
-
+        <div className="max-w-4xl mx-auto">
           <div>
             <h2 className="text-4xl md:text-5xl font-playfair font-bold text-battles-black mb-6">
               Our <span className="text-battles-gold">Story</span>
@@ -57,7 +49,6 @@ export default function AboutSection() {
                 <p className="mt-4 text-sm">— Justin Battles, Founder & CEO</p>
               </div>
             </div>
-          </div>
         </div>
 
         {/* Mission Values */}
