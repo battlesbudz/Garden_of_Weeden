@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'wouter';
-import { ArrowLeft, Check, Leaf, Layers, Sun, Settings, MapPin, FileText, Award, Users } from 'lucide-react';
+import { ArrowLeft, Check, Leaf, Layers, Sun, Settings, MapPin, FileText, Award, Users, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
@@ -104,8 +104,16 @@ export default function HeirloomFlowerPage() {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [selectedStrain, setSelectedStrain] = useState<number | null>(null);
+  const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [waitlistCount, setWaitlistCount] = useState(247);
   const { toast } = useToast();
+  
+  // Pan and zoom state
+  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -115,6 +123,72 @@ export default function HeirloomFlowerPage() {
     imageUrl: cannabisFlower1,
     inStock: false
   });
+
+  // Pan and zoom functions
+  const handleZoomIn = () => {
+    setTransform(prev => ({
+      ...prev,
+      scale: Math.min(prev.scale * 1.2, 3)
+    }));
+  };
+
+  const handleZoomOut = () => {
+    setTransform(prev => ({
+      ...prev,
+      scale: Math.max(prev.scale / 1.2, 0.5)
+    }));
+  };
+
+  const handleReset = () => {
+    setTransform({ x: 0, y: 0, scale: 1 });
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragStart({ x: e.clientX - transform.x, y: e.clientY - transform.y });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    const newX = e.clientX - dragStart.x;
+    const newY = e.clientY - dragStart.y;
+    setTransform(prev => ({ ...prev, x: newX, y: newY }));
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+    setTransform(prev => ({
+      ...prev,
+      scale: Math.min(Math.max(prev.scale * delta, 0.5), 3)
+    }));
+  };
+
+  // Touch support for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      const touch = e.touches[0];
+      setIsDragging(true);
+      setDragStart({ x: touch.clientX - transform.x, y: touch.clientY - transform.y });
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const newX = touch.clientX - dragStart.x;
+    const newY = touch.clientY - dragStart.y;
+    setTransform(prev => ({ ...prev, x: newX, y: newY }));
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
 
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -202,14 +276,65 @@ export default function HeirloomFlowerPage() {
         <div className="bg-gray-800 rounded-lg p-8 border border-battles-gold/20">
           <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
           
-          {/* Highly Detailed Interactive World Map */}
+          {/* Enhanced Interactive World Map with Pan/Zoom */}
           <div className="relative bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
+            {/* Map Controls */}
+            <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
+              <Button
+                onClick={handleZoomIn}
+                size="sm"
+                variant="outline"
+                className="bg-black/80 border-battles-gold/30 text-battles-gold hover:bg-battles-gold/20 w-10 h-10 p-0"
+              >
+                <ZoomIn className="h-4 w-4" />
+              </Button>
+              <Button
+                onClick={handleZoomOut}
+                size="sm"
+                variant="outline"
+                className="bg-black/80 border-battles-gold/30 text-battles-gold hover:bg-battles-gold/20 w-10 h-10 p-0"
+              >
+                <ZoomOut className="h-4 w-4" />
+              </Button>
+              <Button
+                onClick={handleReset}
+                size="sm"
+                variant="outline"
+                className="bg-black/80 border-battles-gold/30 text-battles-gold hover:bg-battles-gold/20 w-10 h-10 p-0"
+              >
+                <RotateCcw className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* Map Instructions */}
+            <div className="absolute bottom-4 left-4 z-10 bg-black/80 border border-battles-gold/30 rounded px-3 py-1">
+              <p className="text-battles-gold text-xs">
+                🖱️ Click & drag to pan • 🔍 Scroll to zoom • 📍 Click markers for details
+              </p>
+            </div>
+
             <div className="w-full" style={{ height: '500px' }}>
               <svg 
+                ref={svgRef}
                 viewBox="0 0 1400 700" 
-                className="w-full h-full"
-                style={{ background: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%)' }}
+                className="w-full h-full cursor-grab active:cursor-grabbing"
+                style={{ 
+                  background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)',
+                  touchAction: 'none'
+                }}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+                onWheel={handleWheel}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
               >
+                <g 
+                  transform={`translate(${transform.x}, ${transform.y}) scale(${transform.scale})`}
+                  style={{ transformOrigin: 'center' }}
+                >
                 <defs>
                   <linearGradient id="ocean" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#1e3a8a" />
@@ -460,6 +585,7 @@ export default function HeirloomFlowerPage() {
                   <text y="8" x="40" textAnchor="middle" className="fill-white text-sm">E</text>
                   <text y="50" textAnchor="middle" className="fill-white text-sm">S</text>
                   <text y="8" x="-40" textAnchor="middle" className="fill-white text-sm">W</text>
+                </g>
                 </g>
               </svg>
             </div>
