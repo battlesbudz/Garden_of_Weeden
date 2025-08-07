@@ -10,12 +10,12 @@ import cannabisFlower1 from "@assets/Screenshot_20250713_025017_Gallery_17523894
 import SEOHead from '@/components/seo/SEOHead';
 import { getCanonicalUrl, getPageTitle, getProductSchema } from '@/utils/seo';
 
-// Landrace strain data
+// Landrace strain data with geographically accurate coordinates
 const landraceStrains = [
   {
     name: "Malawi Gold",
-    location: "Malawi, Africa",
-    coordinates: { x: 55, y: 70 },
+    location: "Malawi, Southeast Africa",
+    coordinates: { x: 52, y: 72 }, // More accurate position for Malawi
     notes: "Energetic, cerebral, spicy aroma with soaring effects",
     thc: "14-18%",
     cbd: "2-4%",
@@ -23,8 +23,8 @@ const landraceStrains = [
   },
   {
     name: "Thai Stick",
-    location: "Thailand",
-    coordinates: { x: 75, y: 60 },
+    location: "Northern Thailand",
+    coordinates: { x: 68, y: 55 }, // More accurate position for Thailand
     notes: "Long flowering, citrus incense profile with creative clarity",
     thc: "12-16%",
     cbd: "3-6%",
@@ -32,8 +32,8 @@ const landraceStrains = [
   },
   {
     name: "Afghan Kush",
-    location: "Hindu Kush Mountains",
-    coordinates: { x: 65, y: 45 },
+    location: "Hindu Kush Mountains, Afghanistan",
+    coordinates: { x: 58, y: 42 }, // More accurate position for Afghanistan
     notes: "Broad-leaf, hash-heavy, calming body effects",
     thc: "15-20%",
     cbd: "4-8%",
@@ -41,12 +41,30 @@ const landraceStrains = [
   },
   {
     name: "Colombian Gold",
-    location: "Colombia",
-    coordinates: { x: 25, y: 75 },
+    location: "Santa Marta Mountains, Colombia",
+    coordinates: { x: 22, y: 68 }, // More accurate position for Colombia
     notes: "Uplifting sativa with golden pistils and sweet earth tones",
     thc: "13-17%",
     cbd: "2-5%",
     flowering: "12-16 weeks"
+  },
+  {
+    name: "Aceh",
+    location: "Sumatra, Indonesia", 
+    coordinates: { x: 72, y: 78 }, // Indonesia position
+    notes: "Earthy, woody flavor with balanced relaxing effects",
+    thc: "16-22%",
+    cbd: "3-7%",
+    flowering: "10-12 weeks"
+  },
+  {
+    name: "Durban Poison",
+    location: "Durban, South Africa",
+    coordinates: { x: 48, y: 82 }, // South Africa position
+    notes: "Sweet anise aroma with energizing, clear-headed effects",
+    thc: "15-25%",
+    cbd: "1-3%",
+    flowering: "8-9 weeks"
   }
 ];
 
@@ -119,61 +137,123 @@ export default function HeirloomFlowerPage() {
     setEmail('');
   };
 
-  // Interactive map component
+  // Interactive map component with enhanced world map
   const OriginMap = () => (
     <div className="relative">
       <div className="bg-gray-800 rounded-lg p-8 border border-battles-gold/20">
         <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
-        <div className="relative bg-gray-900 rounded-lg h-96 overflow-hidden">
-          {/* Simplified world map background */}
-          <svg viewBox="0 0 100 100" className="w-full h-full opacity-30">
-            <path d="M10,30 Q20,25 30,30 Q40,35 50,30 Q60,25 70,30 Q80,35 90,30" 
-                  stroke="#fbbf24" strokeWidth="0.5" fill="none" />
-            <path d="M15,45 Q25,40 35,45 Q45,50 55,45 Q65,40 75,45 Q85,50 95,45" 
-                  stroke="#fbbf24" strokeWidth="0.5" fill="none" />
-            <path d="M5,60 Q15,55 25,60 Q35,65 45,60 Q55,55 65,60 Q75,65 85,60" 
-                  stroke="#fbbf24" strokeWidth="0.5" fill="none" />
+        <div className="relative bg-gradient-to-b from-gray-900 to-black rounded-lg h-96 overflow-hidden border border-gray-700">
+          {/* Enhanced world map background */}
+          <svg viewBox="0 0 800 400" className="w-full h-full opacity-40" preserveAspectRatio="xMidYMid meet">
+            {/* Continents outlined with more detail */}
+            
+            {/* North America */}
+            <path d="M120,80 Q140,70 160,85 Q180,75 200,90 L200,140 Q180,160 160,150 Q140,160 120,150 Z" 
+                  fill="none" stroke="#fbbf24" strokeWidth="1.5" />
+            
+            {/* South America */}
+            <path d="M180,180 Q200,170 220,185 Q210,220 200,260 Q190,280 180,270 Q170,250 175,220 Q170,200 180,180 Z" 
+                  fill="none" stroke="#fbbf24" strokeWidth="1.5" />
+            
+            {/* Europe */}
+            <path d="M350,60 Q370,55 390,65 Q410,60 430,70 L425,100 Q410,110 390,105 Q370,110 350,100 Z" 
+                  fill="none" stroke="#fbbf24" strokeWidth="1.5" />
+            
+            {/* Africa */}
+            <path d="M380,120 Q400,110 420,125 Q430,140 425,180 Q420,220 410,250 Q400,270 390,265 Q380,250 385,220 Q375,180 380,140 Q375,130 380,120 Z" 
+                  fill="none" stroke="#fbbf24" strokeWidth="1.5" />
+            
+            {/* Asia */}
+            <path d="M450,70 Q500,65 550,80 Q600,75 650,90 L645,130 Q620,140 580,135 Q540,140 500,135 Q470,140 450,130 Z" 
+                  fill="none" stroke="#fbbf24" strokeWidth="1.5" />
+            
+            {/* Australia */}
+            <path d="M580,250 Q620,245 660,260 L655,280 Q630,285 600,280 Q580,285 580,270 Z" 
+                  fill="none" stroke="#fbbf24" strokeWidth="1.5" />
+            
+            {/* Geographic grid lines */}
+            <g stroke="#fbbf24" strokeWidth="0.3" opacity="0.6">
+              <line x1="0" y1="100" x2="800" y2="100" />
+              <line x1="0" y1="200" x2="800" y2="200" />
+              <line x1="0" y1="300" x2="800" y2="300" />
+              <line x1="200" y1="0" x2="200" y2="400" />
+              <line x1="400" y1="0" x2="400" y2="400" />
+              <line x1="600" y1="0" x2="600" y2="400" />
+            </g>
           </svg>
           
-          {/* Interactive strain markers */}
+          {/* Interactive strain markers with enhanced positioning */}
           {landraceStrains.map((strain, index) => (
             <div
               key={strain.name}
-              className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
+              className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group transition-all duration-300 hover:scale-110"
               style={{ left: `${strain.coordinates.x}%`, top: `${strain.coordinates.y}%` }}
               onClick={() => setSelectedStrain(selectedStrain === index ? null : index)}
             >
               <div className="relative">
-                <MapPin className="h-6 w-6 text-battles-gold group-hover:text-yellow-400 transition-colors" />
-                <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-500 rounded-full animate-pulse"></div>
+                <div className="relative z-10">
+                  <MapPin className="h-7 w-7 text-battles-gold group-hover:text-yellow-300 transition-all duration-300 filter drop-shadow-lg" />
+                </div>
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-red-500 to-orange-500 rounded-full animate-pulse opacity-80"></div>
+                
+                {/* Pulsing ring effect on hover */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border-2 border-battles-gold rounded-full opacity-0 group-hover:opacity-50 group-hover:animate-ping"></div>
               </div>
               
+              {/* Enhanced tooltip with better positioning */}
               {selectedStrain === index && (
-                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-black border border-battles-gold rounded-lg p-4 w-64 z-10 shadow-xl">
-                  <h4 className="font-bold text-battles-gold mb-2">{strain.name}</h4>
-                  <p className="text-gray-300 text-sm mb-3">{strain.notes}</p>
-                  <div className="grid grid-cols-3 gap-2 text-xs">
-                    <div>
-                      <span className="text-battles-gold">THC:</span>
-                      <div className="text-gray-300">{strain.thc}</div>
+                <div className={`absolute ${index < 2 ? 'bottom-10' : 'top-10'} left-1/2 transform -translate-x-1/2 bg-black/95 backdrop-blur-sm border border-battles-gold rounded-xl p-5 w-72 z-20 shadow-2xl animate-in fade-in duration-300`}>
+                  <div className="flex items-center mb-3">
+                    <Leaf className="h-5 w-5 text-battles-gold mr-2" />
+                    <h4 className="font-bold text-battles-gold text-lg">{strain.name}</h4>
+                  </div>
+                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">{strain.notes}</p>
+                  <div className="grid grid-cols-3 gap-3 text-xs">
+                    <div className="bg-gray-800/50 rounded-lg p-2 text-center">
+                      <span className="text-battles-gold font-semibold block">THC</span>
+                      <div className="text-white font-bold">{strain.thc}</div>
                     </div>
-                    <div>
-                      <span className="text-battles-gold">CBD:</span>
-                      <div className="text-gray-300">{strain.cbd}</div>
+                    <div className="bg-gray-800/50 rounded-lg p-2 text-center">
+                      <span className="text-battles-gold font-semibold block">CBD</span>
+                      <div className="text-white font-bold">{strain.cbd}</div>
                     </div>
-                    <div>
-                      <span className="text-battles-gold">Flowering:</span>
-                      <div className="text-gray-300">{strain.flowering}</div>
+                    <div className="bg-gray-800/50 rounded-lg p-2 text-center">
+                      <span className="text-battles-gold font-semibold block">Flower</span>
+                      <div className="text-white font-bold">{strain.flowering}</div>
                     </div>
                   </div>
+                  <div className="mt-3 pt-3 border-t border-gray-700">
+                    <p className="text-battles-gold text-xs font-medium flex items-center">
+                      <MapPin className="h-3 w-3 mr-1" />
+                      {strain.location}
+                    </p>
+                  </div>
+                  
+                  {/* Tooltip arrow */}
+                  <div className={`absolute ${index < 2 ? 'top-full' : 'bottom-full'} left-1/2 transform -translate-x-1/2 w-0 h-0 ${index < 2 ? 'border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-battles-gold' : 'border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-battles-gold'}`}></div>
                 </div>
               )}
             </div>
           ))}
+          
+          {/* Subtle animated background elements */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-4 left-4 w-2 h-2 bg-battles-gold rounded-full animate-pulse"></div>
+            <div className="absolute top-12 right-8 w-1 h-1 bg-battles-gold rounded-full animate-pulse animation-delay-1000"></div>
+            <div className="absolute bottom-8 left-12 w-1.5 h-1.5 bg-battles-gold rounded-full animate-pulse animation-delay-2000"></div>
+            <div className="absolute bottom-4 right-4 w-1 h-1 bg-battles-gold rounded-full animate-pulse animation-delay-3000"></div>
+          </div>
         </div>
-        <p className="text-gray-400 text-center mt-4 text-sm">
-          Click on the markers to explore ancient cannabis genetics from around the world
-        </p>
+        <div className="flex items-center justify-center mt-4 space-x-6 text-sm">
+          <p className="text-gray-400 flex items-center">
+            <MapPin className="h-4 w-4 mr-2 text-battles-gold" />
+            Click markers to explore ancient cannabis genetics
+          </p>
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-gradient-to-r from-red-500 to-orange-500 rounded-full animate-pulse"></div>
+            <span className="text-gray-500 text-xs">Active Cultivation Sites</span>
+          </div>
+        </div>
       </div>
     </div>
   );
