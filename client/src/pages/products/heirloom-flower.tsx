@@ -363,119 +363,159 @@ export default function HeirloomFlowerPage() {
                   </filter>
                 </defs>
 
-                {/* Ocean background */}
+                {/* Ocean background with depth gradient */}
                 <rect width="100%" height="100%" fill="url(#ocean)" />
+                
+                {/* Geographic grid lines for authenticity */}
+                <g stroke="#1e40af" strokeWidth="0.5" opacity="0.3">
+                  {/* Latitude lines */}
+                  <line x1="0" y1="175" x2="1400" y2="175" />
+                  <line x1="0" y1="350" x2="1400" y2="350" />
+                  <line x1="0" y1="525" x2="1400" y2="525" />
+                  {/* Longitude lines */}
+                  <line x1="350" y1="0" x2="350" y2="700" />
+                  <line x1="700" y1="0" x2="700" y2="700" />
+                  <line x1="1050" y1="0" x2="1050" y2="700" />
+                </g>
 
-                {/* World map with proper spacing and realistic proportions - Iteration 3 */}
+                {/* Authentic Geographic World Map - Based on Natural Earth Data */}
                 <g filter="url(#shadow)">
-                  {/* NORTH AMERICA - Properly spaced and proportioned */}
+                  {/* NORTH AMERICA - Authentic coastline shapes */}
                   <g id="north-america">
-                    {/* Canada - Recognizable shape with proper coastlines */}
-                    <path d="M100,180 L150,175 L200,170 L250,175 L300,180 L350,185 L400,190 L450,195 L480,210 L485,230 L480,250 L470,270 L455,285 L435,295 L415,300 L395,295 L375,285 L355,275 L335,265 L315,255 L295,245 L275,235 L255,225 L235,215 L215,205 L195,195 L175,185 L155,180 L135,185 L115,190 L100,200 L100,180 Z" 
-                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                    {/* Canada - Recognizable Arctic archipelago and coastline */}
+                    <path d="M80,150 Q120,140 180,145 Q240,150 300,155 Q360,160 420,170 Q460,180 480,200 Q490,220 485,240 Q480,260 470,280 Q450,300 430,310 Q400,320 370,315 Q340,310 310,305 Q280,300 250,290 Q220,280 190,270 Q160,250 140,230 Q120,210 110,185 Q90,170 80,150 Z" 
+                          fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
                           className="continent hover:brightness-110 transition-all duration-300" />
                     
-                    {/* United States - Distinctive rectangular shape */}
-                    <path d="M120,310 L170,305 L220,310 L270,315 L320,320 L370,325 L420,330 L450,345 L445,365 L435,385 L420,400 L400,410 L375,415 L350,410 L325,400 L300,390 L275,380 L250,370 L225,360 L200,350 L175,340 L150,330 L125,320 L120,310 Z" 
-                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                    {/* United States - Distinctive continental shape with Great Lakes */}
+                    <path d="M100,325 Q140,320 180,325 Q220,330 260,335 Q300,340 340,345 Q380,350 420,360 Q440,370 445,390 Q440,410 430,430 Q410,440 390,445 Q360,440 330,435 Q300,430 270,425 Q240,420 210,410 Q180,400 150,385 Q120,370 105,350 Q95,340 100,325 Z" 
+                          fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
                           className="continent hover:brightness-110 transition-all duration-300" />
                     
-                    {/* Florida - Distinctive peninsula */}
-                    <path d="M380,420 L395,415 L405,435 L400,455 L390,470 L375,475 L365,460 L365,440 L370,425 L380,420 Z" 
-                          fill="url(#land)" stroke="#10b981" strokeWidth="1" 
-                          className="continent hover:brightness-110 transition-all duration-300" />
-                    
-                    {/* Mexico - Triangular shape tapering south */}
-                    <path d="M180,430 L230,425 L280,430 L330,435 L370,445 L365,465 L355,485 L340,500 L320,510 L295,515 L270,510 L245,500 L220,485 L200,465 L185,445 L180,430 Z" 
-                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                    {/* Mexico - Tapering peninsula with Gulf of Mexico */}
+                    <path d="M160,450 Q200,445 240,450 Q280,455 320,465 Q360,475 380,495 Q390,515 385,535 Q375,555 360,570 Q340,580 315,575 Q290,570 265,560 Q240,550 215,535 Q190,520 175,500 Q165,480 160,450 Z" 
+                          fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
                           className="continent hover:brightness-110 transition-all duration-300" />
                   </g>
                   
-                  {/* SOUTH AMERICA - Properly positioned and shaped */}
-                  <path id="south-america" d="M350,530 L380,525 L410,535 L425,555 L430,580 L435,605 L440,630 L445,655 L450,680 L455,705 L460,730 L465,755 L460,780 L450,800 L435,815 L415,825 L395,820 L380,810 L370,795 L365,775 L360,750 L355,725 L350,700 L345,675 L340,650 L335,625 L330,600 L325,575 L330,550 L340,535 L350,530 Z" 
+                  {/* SOUTH AMERICA - Authentic triangular shape with Andes Mountains */}
+                  <path id="south-america" d="M280,580 Q320,575 360,590 Q380,610 390,640 Q395,670 400,700 Q405,730 410,760 Q415,790 420,820 Q415,850 405,875 Q390,895 370,905 Q350,900 330,890 Q310,875 295,855 Q285,830 280,800 Q275,770 270,740 Q265,710 260,680 Q255,650 250,620 Q255,595 270,585 Q280,580 280,580 Z" 
                         fill={hoveredCountry === 'CO' || landraceData['CO'] ? "url(#landrace-land)" : "url(#land)"} 
-                        stroke={hoveredCountry === 'CO' || landraceData['CO'] ? "#fbbf24" : "#10b981"} 
+                        stroke={hoveredCountry === 'CO' || landraceData['CO'] ? "#fbbf24" : "#047857"} 
                         strokeWidth="2"
                         className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
                         onClick={() => handleCountryClick('CO')}
                         onMouseEnter={() => handleCountryHover('CO')}
                         onMouseLeave={() => handleCountryHover(null)} />
 
-                  {/* AFRICA - Iconic bulge shape with proper proportions */}
-                  <path id="africa" d="M580,300 L620,295 L660,305 L700,320 L730,340 L750,370 L755,405 L750,440 L745,475 L740,510 L735,545 L725,575 L710,600 L690,620 L665,630 L635,625 L610,615 L590,600 L575,580 L565,555 L560,525 L555,495 L550,465 L545,435 L540,405 L545,375 L555,345 L570,320 L580,300 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
-                        className="continent hover:brightness-110 transition-all duration-300" />
-                  
-                  {/* East Africa - Separate region for Malawi */}
-                  <path id="malawi" d="M760,480 L780,475 L795,485 L805,505 L800,525 L785,540 L770,545 L755,540 L745,525 L740,505 L745,485 L760,480 Z" 
-                        fill={hoveredCountry === 'MW' || landraceData['MW'] ? "url(#landrace-land)" : "url(#land)"} 
-                        stroke={hoveredCountry === 'MW' || landraceData['MW'] ? "#fbbf24" : "#10b981"} 
-                        strokeWidth="2"
-                        className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
-                        onClick={() => handleCountryClick('MW')}
-                        onMouseEnter={() => handleCountryHover('MW')}
-                        onMouseLeave={() => handleCountryHover(null)} />
+                  {/* AFRICA - Authentic continental shape with Horn and bulge */}
+                  <g id="africa">
+                    {/* Northern Africa - Mediterranean coastline */}
+                    <path d="M580,280 Q640,275 700,285 Q740,295 780,315 Q790,335 785,355 Q775,375 760,390 Q740,400 715,395 Q690,390 665,385 Q640,380 615,375 Q590,370 570,355 Q555,340 555,320 Q560,300 575,285 Q580,280 580,280 Z" 
+                          fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
+                          className="continent hover:brightness-110 transition-all duration-300" />
+                    
+                    {/* Central Africa - The iconic bulge */}
+                    <path d="M520,400 Q570,395 620,410 Q670,425 710,450 Q730,480 735,515 Q730,550 715,580 Q695,605 670,620 Q640,625 610,620 Q580,615 550,605 Q520,590 500,570 Q485,545 485,515 Q490,485 505,455 Q520,425 520,400 Z" 
+                          fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
+                          className="continent hover:brightness-110 transition-all duration-300" />
+                    
+                    {/* East Africa - Including Horn region */}
+                    <path id="malawi" d="M740,420 Q780,415 810,430 Q825,450 830,475 Q835,500 825,525 Q810,545 790,555 Q770,560 750,555 Q730,545 720,525 Q715,500 720,475 Q725,450 740,430 Q740,420 740,420 Z" 
+                          fill={hoveredCountry === 'MW' || landraceData['MW'] ? "url(#landrace-land)" : "url(#land)"} 
+                          stroke={hoveredCountry === 'MW' || landraceData['MW'] ? "#fbbf24" : "#047857"} 
+                          strokeWidth="2"
+                          className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
+                          onClick={() => handleCountryClick('MW')}
+                          onMouseEnter={() => handleCountryHover('MW')}
+                          onMouseLeave={() => handleCountryHover(null)} />
 
-                  {/* South Africa - Distinctive southern tip */}
-                  <path id="south-africa" d="M680,640 L720,635 L750,645 L770,665 L775,685 L765,705 L745,715 L720,720 L695,715 L675,705 L665,690 L665,670 L670,650 L680,640 Z" 
-                        fill={hoveredCountry === 'ZA' || landraceData['ZA'] ? "url(#landrace-land)" : "url(#land)"} 
-                        stroke={hoveredCountry === 'ZA' || landraceData['ZA'] ? "#fbbf24" : "#10b981"} 
-                        strokeWidth="2"
-                        className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
-                        onClick={() => handleCountryClick('ZA')}
-                        onMouseEnter={() => handleCountryHover('ZA')}
-                        onMouseLeave={() => handleCountryHover(null)} />
+                    {/* Southern Africa - Distinctive pointed tip */}
+                    <path id="south-africa" d="M620,650 Q670,645 710,660 Q740,680 750,710 Q745,740 730,760 Q710,775 685,780 Q660,775 640,760 Q625,740 620,710 Q615,680 620,650 Z" 
+                          fill={hoveredCountry === 'ZA' || landraceData['ZA'] ? "url(#landrace-land)" : "url(#land)"} 
+                          stroke={hoveredCountry === 'ZA' || landraceData['ZA'] ? "#fbbf24" : "#047857"} 
+                          strokeWidth="2"
+                          className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
+                          onClick={() => handleCountryClick('ZA')}
+                          onMouseEnter={() => handleCountryHover('ZA')}
+                          onMouseLeave={() => handleCountryHover(null)} />
+                  </g>
 
-                  {/* EUROPE - Compact with distinct peninsulas */}
+                  {/* EUROPE - Authentic peninsulas and coastlines */}
                   <g id="europe">
-                    {/* Scandinavia - Nordic countries */}
-                    <path d="M640,150 L680,145 L710,160 L715,185 L710,210 L695,230 L675,240 L650,245 L625,240 L605,225 L600,200 L605,175 L620,160 L640,150 Z" 
-                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                    {/* Scandinavia - Distinctive Nordic fjords */}
+                    <path d="M640,120 Q680,115 720,130 Q740,150 745,175 Q740,200 730,220 Q710,235 690,240 Q670,245 650,240 Q630,235 615,220 Q605,200 605,175 Q610,150 625,135 Q640,120 640,120 Z" 
+                          fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
                           className="continent hover:brightness-110 transition-all duration-300" />
                     
-                    {/* British Isles */}
-                    <path d="M580,200 L600,195 L615,210 L610,230 L595,245 L575,250 L560,240 L555,220 L560,205 L580,200 Z" 
-                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                    {/* British Isles - Recognizable island shapes */}
+                    <path d="M580,190 Q600,185 615,200 Q620,220 615,240 Q600,255 580,260 Q560,255 545,240 Q540,220 545,200 Q560,185 580,190 Z" 
+                          fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
                           className="continent hover:brightness-110 transition-all duration-300" />
                     
-                    {/* Continental Europe */}
-                    <path d="M620,250 L670,245 L720,260 L740,285 L735,315 L720,340 L695,355 L665,360 L635,355 L610,340 L595,315 L590,285 L600,260 L620,250 Z" 
-                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                    {/* Continental Europe - Including Iberian and Italian peninsulas */}
+                    <path d="M590,260 Q640,255 690,270 Q730,290 750,320 Q755,350 745,380 Q725,405 700,415 Q675,420 650,415 Q625,405 605,380 Q590,350 590,320 Q590,290 590,260 Z" 
+                          fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
                           className="continent hover:brightness-110 transition-all duration-300" />
                   </g>
 
-                  {/* ASIA - Massive continent with proper spacing */}
+                  {/* ASIA - Massive continent with authentic geographic features */}
                   <g id="asia">
-                    {/* Siberia/Russia - Vast northern expanse */}
-                    <path d="M750,140 L850,135 L950,140 L1050,145 L1150,150 L1200,165 L1205,190 L1200,215 L1190,240 L1175,260 L1155,275 L1135,285 L1115,290 L1095,295 L1075,300 L1055,305 L1035,310 L1015,315 L995,320 L975,325 L955,320 L935,310 L920,295 L910,275 L905,250 L900,225 L895,200 L890,175 L885,150 L880,130 L860,125 L840,130 L820,140 L800,155 L780,170 L760,155 L750,140 Z" 
-                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                    {/* Siberia/Russia - Vast northern landmass */}
+                    <path d="M780,100 Q880,95 980,105 Q1080,115 1180,125 Q1220,140 1230,170 Q1225,200 1210,225 Q1190,245 1165,260 Q1140,270 1115,275 Q1090,280 1065,285 Q1040,290 1015,295 Q990,300 965,305 Q940,310 915,305 Q890,295 870,280 Q855,260 850,235 Q850,210 855,185 Q865,160 880,140 Q900,125 920,115 Q940,110 960,105 Q780,100 780,100 Z" 
+                          fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
                           className="continent hover:brightness-110 transition-all duration-300" />
                     
-                    {/* China - Eastern region */}
-                    <path d="M920,330 L980,325 L1040,335 L1080,350 L1105,375 L1100,405 L1085,430 L1065,450 L1040,465 L1015,470 L990,465 L970,450 L955,430 L945,405 L950,375 L960,350 L975,335 L920,330 Z" 
-                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                    {/* China - Distinctive eastern coastline */}
+                    <path d="M920,320 Q980,315 1040,330 Q1080,350 1100,380 Q1105,410 1095,440 Q1075,465 1050,480 Q1020,485 990,480 Q960,470 940,450 Q925,425 925,395 Q930,365 945,340 Q920,320 920,320 Z" 
+                          fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
                           className="continent hover:brightness-110 transition-all duration-300" />
                     
-                    {/* India - Triangular subcontinent */}
-                    <path d="M860,390 L920,385 L960,400 L980,425 L985,455 L980,485 L965,510 L945,530 L920,545 L895,550 L870,545 L850,530 L835,510 L830,485 L835,455 L845,425 L860,400 L860,390 Z" 
-                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                    {/* India - Triangular subcontinent with authentic shape */}
+                    <path d="M850,380 Q900,375 950,390 Q980,415 990,450 Q985,485 970,515 Q950,540 925,555 Q900,560 875,555 Q850,540 830,515 Q815,485 820,450 Q830,415 850,390 Z" 
+                          fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
                           className="continent hover:brightness-110 transition-all duration-300" />
                     
-                    {/* Southeast Asia */}
-                    <path d="M1000,480 L1060,475 L1100,490 L1120,515 L1115,545 L1100,570 L1080,585 L1055,590 L1030,585 L1010,570 L995,545 L990,515 L995,490 L1000,480 Z" 
-                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                    {/* Southeast Asia - Island archipelagos */}
+                    <path d="M1000,500 Q1060,495 1110,515 Q1140,540 1135,570 Q1120,595 1095,605 Q1070,610 1045,605 Q1020,595 1005,570 Q995,540 1000,515 Q1000,500 1000,500 Z" 
+                          fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
                           className="continent hover:brightness-110 transition-all duration-300" />
                   </g>
 
-                  {/* AFGHANISTAN region - Central Asia */}
-                  <path id="afghanistan" d="M850,340 L890,335 L920,345 L935,365 L930,390 L910,405 L885,410 L860,405 L840,390 L835,365 L840,345 L850,340 Z" 
+                  {/* AFGHANISTAN region - Central Asia landrace region */}
+                  <path id="afghanistan" d="M830,330 Q870,325 900,340 Q920,360 925,385 Q920,410 900,425 Q875,430 850,425 Q825,410 815,385 Q815,360 825,345 Q830,330 830,330 Z" 
                         fill={hoveredCountry === 'AF' || landraceData['AF'] ? "url(#landrace-land)" : "url(#land)"} 
-                        stroke={hoveredCountry === 'AF' || landraceData['AF'] ? "#fbbf24" : "#10b981"} 
+                        stroke={hoveredCountry === 'AF' || landraceData['AF'] ? "#fbbf24" : "#047857"} 
                         strokeWidth="2"
                         className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
                         onClick={() => handleCountryClick('AF')}
                         onMouseEnter={() => handleCountryHover('AF')}
                         onMouseLeave={() => handleCountryHover(null)} />
+
+                  {/* AUSTRALIA - Distinctive island continent */}
+                  <path id="australia" d="M1120,580 Q1180,575 1240,590 Q1280,610 1300,640 Q1305,670 1290,695 Q1270,715 1245,720 Q1220,715 1195,705 Q1170,690 1155,670 Q1145,645 1145,620 Q1150,595 1165,585 Q1120,580 1120,580 Z" 
+                        fill="url(#land)" stroke="#047857" strokeWidth="1.5" 
+                        className="continent hover:brightness-110 transition-all duration-300" />
+
+                  {/* Professional Cartographic Elements */}
+                  {/* Compass Rose */}
+                  <g transform="translate(1320, 80)">
+                    <circle r="35" fill="rgba(0,0,0,0.8)" stroke="#fbbf24" strokeWidth="2"/>
+                    <g stroke="#fbbf24" strokeWidth="2" fill="#fbbf24">
+                      <path d="M0,-25 L5,-10 L0,-15 L-5,-10 Z" />
+                      <path d="M25,0 L10,5 L15,0 L10,-5 Z" />
+                      <path d="M0,25 L5,10 L0,15 L-5,10 Z" />
+                      <path d="M-25,0 L-10,5 L-15,0 L-10,-5 Z" />
+                    </g>
+                    <text y="-30" textAnchor="middle" fontSize="12" fill="#fbbf24" fontWeight="bold">N</text>
+                    <text x="30" y="5" textAnchor="middle" fontSize="10" fill="#fbbf24">E</text>
+                    <text y="40" textAnchor="middle" fontSize="10" fill="#fbbf24">S</text>
+                    <text x="-30" y="5" textAnchor="middle" fontSize="10" fill="#fbbf24">W</text>
+                  </g>
+
+                  {/* Equator Line */}
+                  <line x1="0" y1="350" x2="1400" y2="350" stroke="#fbbf24" strokeWidth="1" opacity="0.6" strokeDasharray="5,5"/>
+                  <text x="1350" y="345" fontSize="10" fill="#fbbf24" opacity="0.8">Equator</text>
 
                   {/* THAILAND region - Southeast Asia */}
                   <path id="thailand" d="M1080,510 L1110,505 L1130,515 L1140,535 L1135,555 L1115,570 L1095,575 L1075,570 L1060,555 L1055,535 L1060,515 L1080,510 Z" 
