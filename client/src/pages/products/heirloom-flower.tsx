@@ -284,8 +284,8 @@ export default function HeirloomFlowerPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-battles-gold mb-2">[REPLACE ME]</div>
-              <p className="text-gray-300">[WITH SOMETHING TRUE]</p>
+              <div className="text-3xl font-bold text-battles-gold mb-2">247+</div>
+              <p className="text-gray-300">Connoisseurs on Waitlist</p>
             </div>
             <div>
               <div className="text-3xl font-bold text-battles-gold mb-2">12 Months</div>
