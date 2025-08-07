@@ -229,18 +229,22 @@ export default function HeirloomFlowerPage() {
               <p className="text-xl text-gray-300 mb-6">
                 Our Heirloom Collection features rare landrace strains — preserved from their native climates, grown in organic living soil, and hand-harvested in small batches. These are the ancestors of modern cannabis — unspoiled, potent, and spiritually rooted.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <div className="bg-gray-900/50 border border-battles-gold/20 rounded-lg px-4 py-3 text-center">
-                  <div className="text-battles-gold font-bold text-lg">12-18%</div>
-                  <div className="text-gray-400 text-sm">Balanced THC</div>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
+                  <div className="text-battles-gold font-bold text-xl">5-20%</div>
+                  <div className="text-gray-300 text-sm font-medium">THC Range</div>
                 </div>
-                <div className="bg-gray-900/50 border border-battles-gold/20 rounded-lg px-4 py-3 text-center">
-                  <div className="text-battles-gold font-bold text-lg">100%</div>
-                  <div className="text-gray-400 text-sm">Organic</div>
+                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
+                  <div className="text-battles-gold font-bold text-xl">Living</div>
+                  <div className="text-gray-300 text-sm font-medium">Soil Grown</div>
                 </div>
-                <div className="bg-gray-900/50 border border-battles-gold/20 rounded-lg px-4 py-3 text-center">
-                  <div className="text-battles-gold font-bold text-lg">Ancient</div>
-                  <div className="text-gray-400 text-sm">Genetics</div>
+                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
+                  <div className="text-battles-gold font-bold text-xl">1000+</div>
+                  <div className="text-gray-300 text-sm font-medium">Years Old</div>
+                </div>
+                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
+                  <div className="text-battles-gold font-bold text-xl">Pure</div>
+                  <div className="text-gray-300 text-sm font-medium">Landrace</div>
                 </div>
               </div>
               <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 mb-6">
