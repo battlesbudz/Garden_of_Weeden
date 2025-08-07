@@ -137,144 +137,236 @@ export default function HeirloomFlowerPage() {
     setEmail('');
   };
 
-  // Redesigned interactive map component
+  // Clean interactive world map using SVG from SimpleMaps
   const OriginMap = () => {
-    const handleMarkerClick = (index: number) => {
-      console.log('Marker clicked:', index);
-      setSelectedStrain(selectedStrain === index ? null : index);
+    const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
+    
+    // Country code mapping for landrace strains
+    const landraceData: { [key: string]: any } = {
+      'MW': { // Malawi
+        strainName: 'Malawi Gold',
+        location: 'Malawi, Southeast Africa',
+        notes: 'Energetic, cerebral, spicy aroma with soaring effects',
+        thc: '14-18%',
+        cbd: '2-4%',
+        flowering: '16-20 weeks'
+      },
+      'TH': { // Thailand
+        strainName: 'Thai Stick',
+        location: 'Northern Thailand',
+        notes: 'Long flowering, citrus incense profile with creative clarity',
+        thc: '12-16%',
+        cbd: '3-6%',
+        flowering: '14-18 weeks'
+      },
+      'AF': { // Afghanistan
+        strainName: 'Afghan Kush',
+        location: 'Hindu Kush Mountains, Afghanistan',
+        notes: 'Broad-leaf, hash-heavy, calming body effects',
+        thc: '15-20%',
+        cbd: '4-8%',
+        flowering: '8-10 weeks'
+      },
+      'CO': { // Colombia
+        strainName: 'Colombian Gold',
+        location: 'Santa Marta Mountains, Colombia',
+        notes: 'Uplifting sativa with golden pistils and sweet earth tones',
+        thc: '13-17%',
+        cbd: '2-5%',
+        flowering: '12-16 weeks'
+      },
+      'ZA': { // South Africa
+        strainName: 'Durban Poison',
+        location: 'Durban, South Africa',
+        notes: 'Sweet anise aroma with energizing, clear-headed effects',
+        thc: '15-25%',
+        cbd: '1-3%',
+        flowering: '8-9 weeks'
+      }
+    };
+
+    const handleCountryClick = (countryCode: string) => {
+      if (landraceData[countryCode]) {
+        const index = Object.keys(landraceData).indexOf(countryCode);
+        setSelectedStrain(index);
+        console.log('Country clicked:', countryCode, landraceData[countryCode].strainName);
+      }
+    };
+
+    const handleCountryHover = (countryCode: string | null) => {
+      setHoveredCountry(countryCode);
     };
 
     return (
       <div className="relative">
         <div className="bg-gray-800 rounded-lg p-8 border border-battles-gold/20">
           <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
-          <div className="relative bg-gray-900 rounded-lg h-96 border border-gray-700 overflow-hidden">
-            
-            {/* Highly visible world map with proper coordinates */}
-            <div className="absolute inset-0">
-              {/* Clear visible background pattern */}
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900"></div>
-              
-              {/* Simple but recognizable continent shapes using CSS rectangles */}
-              <div className="absolute inset-0">
-                {/* North America - clearly visible */}
-                <div className="absolute bg-battles-gold/40 border border-battles-gold/60" style={{
-                  left: '10%',
-                  top: '25%',
-                  width: '15%',
-                  height: '35%',
-                  transform: 'rotate(-10deg)',
-                  borderRadius: '20px 40px 20px 40px'
-                }}></div>
-                
-                {/* South America */}
-                <div className="absolute bg-battles-gold/40 border border-battles-gold/60" style={{
-                  left: '20%',
-                  top: '55%',
-                  width: '8%',
-                  height: '30%',
-                  transform: 'rotate(15deg)',
-                  borderRadius: '40px 20px 60px 20px'
-                }}></div>
-                
-                {/* Europe */}
-                <div className="absolute bg-battles-gold/40 border border-battles-gold/60" style={{
-                  left: '40%',
-                  top: '20%',
-                  width: '12%',
-                  height: '20%',
-                  transform: 'rotate(5deg)',
-                  borderRadius: '30px'
-                }}></div>
-                
-                {/* Africa */}
-                <div className="absolute bg-battles-gold/40 border border-battles-gold/60" style={{
-                  left: '42%',
-                  top: '35%',
-                  width: '10%',
-                  height: '40%',
-                  transform: 'rotate(-5deg)',
-                  borderRadius: '20px 20px 40px 40px'
-                }}></div>
-                
-                {/* Asia */}
-                <div className="absolute bg-battles-gold/40 border border-battles-gold/60" style={{
-                  left: '55%',
-                  top: '15%',
-                  width: '25%',
-                  height: '45%',
-                  transform: 'rotate(3deg)',
-                  borderRadius: '40px 60px 40px 20px'
-                }}></div>
-                
-                {/* Australia */}
-                <div className="absolute bg-battles-gold/40 border border-battles-gold/60" style={{
-                  left: '72%',
-                  top: '70%',
-                  width: '12%',
-                  height: '15%',
-                  transform: 'rotate(-8deg)',
-                  borderRadius: '50px'
-                }}></div>
-              </div>
-              
-              {/* Grid overlay for geographic reference */}
-              <div className="absolute inset-0">
-                <div className="h-full w-px bg-battles-gold/20 absolute" style={{left: '25%'}}></div>
-                <div className="h-full w-px bg-battles-gold/20 absolute" style={{left: '50%'}}></div>
-                <div className="h-full w-px bg-battles-gold/20 absolute" style={{left: '75%'}}></div>
-                <div className="w-full h-px bg-battles-gold/20 absolute" style={{top: '33%'}}></div>
-                <div className="w-full h-px bg-battles-gold/20 absolute" style={{top: '66%'}}></div>
-              </div>
-              
-              {/* Labels for clarity */}
-              <div className="absolute top-2 left-2 text-battles-gold/60 text-xs font-bold">WORLD LANDRACE MAP</div>
-              <div className="absolute bottom-2 right-2 text-battles-gold/60 text-xs">ANCIENT CANNABIS ORIGINS</div>
-              
-              {/* Subtle texture overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-battles-gold/5 to-transparent"></div>
-            </div>
-            
-            {/* Interactive strain markers */}
-            {landraceStrains.map((strain, index) => (
-              <button
-                key={strain.name}
-                className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group focus:outline-none z-10"
-                style={{ 
-                  left: `${strain.coordinates.x}%`, 
-                  top: `${strain.coordinates.y}%` 
-                }}
-                onClick={() => handleMarkerClick(index)}
-                aria-label={`View ${strain.name} details`}
+          
+          {/* Interactive World Map */}
+          <div className="relative bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
+            <div className="w-full" style={{ height: '400px' }}>
+              <svg 
+                viewBox="0 0 900 500" 
+                className="w-full h-full cursor-pointer"
+                style={{ background: 'linear-gradient(135deg, #1a1a1a 0%, #0f1419 100%)' }}
               >
-                <div className="relative flex items-center justify-center">
-                  {/* Marker pin */}
-                  <div className="relative">
-                    <MapPin 
-                      className={`h-8 w-8 transition-all duration-300 ${
-                        selectedStrain === index 
-                          ? 'text-yellow-400 scale-125' 
-                          : 'text-battles-gold group-hover:text-yellow-300 group-hover:scale-110'
-                      }`}
-                    />
-                    {/* Pulsing indicator */}
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                    
-                    {/* Hover ring */}
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border-2 border-battles-gold rounded-full opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                  </div>
+                {/* Background */}
+                <rect width="100%" height="100%" fill="url(#ocean)" />
+                
+                {/* Gradient Definitions */}
+                <defs>
+                  <linearGradient id="ocean" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#1a202c" />
+                    <stop offset="100%" stopColor="#2d3748" />
+                  </linearGradient>
+                  <linearGradient id="landrace" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#ffd700" />
+                    <stop offset="100%" stopColor="#ffed4a" />
+                  </linearGradient>
+                </defs>
+
+                {/* Simplified recognizable continent shapes */}
+                
+                {/* Africa (with highlight for South Africa, Malawi) */}
+                <path
+                  d="M 450 150 L 500 140 L 530 160 L 540 200 L 535 260 L 525 320 L 500 350 L 470 345 L 450 320 L 445 280 L 440 240 L 445 200 L 450 150 Z"
+                  fill={landraceData['ZA'] || landraceData['MW'] ? "url(#landrace)" : "#4a5568"}
+                  stroke="#ffd700"
+                  strokeWidth="2"
+                  className="transition-all duration-300 hover:brightness-110"
+                  onClick={() => handleCountryClick('ZA')}
+                  onMouseEnter={() => handleCountryHover('ZA')}
+                  onMouseLeave={() => handleCountryHover(null)}
+                />
+
+                {/* Asia (with highlight for Thailand, Afghanistan) */}
+                <path
+                  d="M 550 100 L 700 90 L 750 120 L 800 140 L 820 180 L 810 220 L 780 240 L 720 245 L 660 240 L 600 235 L 560 220 L 550 180 L 555 140 L 550 100 Z"
+                  fill={landraceData['TH'] || landraceData['AF'] ? "url(#landrace)" : "#4a5568"}
+                  stroke="#ffd700"
+                  strokeWidth="2"
+                  className="transition-all duration-300 hover:brightness-110"
+                  onClick={() => handleCountryClick('TH')}
+                  onMouseEnter={() => handleCountryHover('TH')}
+                  onMouseLeave={() => handleCountryHover(null)}
+                />
+
+                {/* North America */}
+                <path
+                  d="M 100 120 L 250 110 L 280 140 L 290 180 L 270 220 L 230 235 L 180 240 L 130 230 L 100 200 L 95 160 L 100 120 Z"
+                  fill="#4a5568"
+                  stroke="#718096"
+                  strokeWidth="1"
+                  className="transition-all duration-300 hover:brightness-110"
+                />
+
+                {/* South America (with highlight for Colombia) */}
+                <path
+                  d="M 220 260 L 270 250 L 290 280 L 300 340 L 295 400 L 280 420 L 250 425 L 220 420 L 200 390 L 190 350 L 195 310 L 210 280 L 220 260 Z"
+                  fill={landraceData['CO'] ? "url(#landrace)" : "#4a5568"}
+                  stroke="#ffd700"
+                  strokeWidth="2"
+                  className="transition-all duration-300 hover:brightness-110"
+                  onClick={() => handleCountryClick('CO')}
+                  onMouseEnter={() => handleCountryHover('CO')}
+                  onMouseLeave={() => handleCountryHover(null)}
+                />
+
+                {/* Europe */}
+                <path
+                  d="M 420 80 L 480 75 L 520 90 L 525 120 L 510 140 L 480 145 L 450 140 L 420 125 L 415 105 L 420 80 Z"
+                  fill="#4a5568"
+                  stroke="#718096"
+                  strokeWidth="1"
+                  className="transition-all duration-300 hover:brightness-110"
+                />
+
+                {/* Australia */}
+                <path
+                  d="M 700 320 L 780 315 L 820 335 L 825 365 L 810 380 L 770 385 L 720 380 L 700 365 L 695 345 L 700 320 Z"
+                  fill="#4a5568"
+                  stroke="#718096"
+                  strokeWidth="1"
+                  className="transition-all duration-300 hover:brightness-110"
+                />
+
+                {/* Landrace markers with animations */}
+                {Object.entries(landraceData).map(([code, data], index) => {
+                  let x = 0, y = 0;
+                  // Position markers based on country codes
+                  switch(code) {
+                    case 'MW': x = 500; y = 300; break; // Malawi
+                    case 'TH': x = 680; y = 180; break; // Thailand  
+                    case 'AF': x = 580; y = 150; break; // Afghanistan
+                    case 'CO': x = 250; y = 320; break; // Colombia
+                    case 'ZA': x = 480; y = 340; break; // South Africa
+                  }
                   
-                  {/* Strain name label */}
-                  <div className="absolute top-10 left-1/2 transform -translate-x-1/2 bg-black/80 text-battles-gold text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                    {strain.name}
-                  </div>
-                </div>
-              </button>
-            ))}
+                  return (
+                    <g key={code}>
+                      {/* Pulsing ring */}
+                      <circle
+                        cx={x}
+                        cy={y}
+                        r="20"
+                        fill="none"
+                        stroke="#ffd700"
+                        strokeWidth="2"
+                        opacity="0.6"
+                        className="animate-ping"
+                      />
+                      {/* Main marker */}
+                      <circle
+                        cx={x}
+                        cy={y}
+                        r="8"
+                        fill="#ffd700"
+                        stroke="#000"
+                        strokeWidth="2"
+                        className="cursor-pointer hover:scale-125 transition-transform duration-200"
+                        onClick={() => handleCountryClick(code)}
+                        onMouseEnter={() => handleCountryHover(code)}
+                        onMouseLeave={() => handleCountryHover(null)}
+                      />
+                      {/* Strain name on hover */}
+                      {hoveredCountry === code && (
+                        <text
+                          x={x}
+                          y={y - 25}
+                          textAnchor="middle"
+                          className="fill-battles-gold text-sm font-bold"
+                          style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}
+                        >
+                          {data.strainName}
+                        </text>
+                      )}
+                    </g>
+                  );
+                })}
+
+                {/* Grid lines for reference */}
+                <g opacity="0.2">
+                  <line x1="300" y1="0" x2="300" y2="500" stroke="#ffd700" strokeWidth="1" strokeDasharray="5,5" />
+                  <line x1="600" y1="0" x2="600" y2="500" stroke="#ffd700" strokeWidth="1" strokeDasharray="5,5" />
+                  <line x1="0" y1="250" x2="900" y2="250" stroke="#ffd700" strokeWidth="1" strokeDasharray="5,5" />
+                </g>
+
+                {/* Title */}
+                <text x="450" y="30" textAnchor="middle" className="fill-battles-gold text-lg font-bold">
+                  ANCIENT CANNABIS ORIGINS
+                </text>
+                
+                {/* Legend */}
+                <g transform="translate(20, 450)">
+                  <circle cx="10" cy="10" r="6" fill="#ffd700" stroke="#000" strokeWidth="1" />
+                  <text x="25" y="15" className="fill-battles-gold text-xs">Landrace Origin</text>
+                </g>
+              </svg>
+            </div>
           </div>
 
           {/* Selected strain details panel */}
-          {selectedStrain !== null && (
+          {selectedStrain !== null && selectedStrain < landraceStrains.length && (
             <div className="mt-6 bg-black/50 border border-battles-gold/30 rounded-lg p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center">
@@ -323,7 +415,7 @@ export default function HeirloomFlowerPage() {
 
           <div className="flex items-center justify-center mt-4 text-sm text-gray-400">
             <MapPin className="h-4 w-4 mr-2 text-battles-gold" />
-            <span>Click the golden markers to explore ancient cannabis genetics from around the world</span>
+            <span>Click on highlighted countries to explore ancient cannabis genetics from around the world</span>
           </div>
         </div>
       </div>
