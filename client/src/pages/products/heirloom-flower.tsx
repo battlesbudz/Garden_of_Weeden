@@ -314,12 +314,11 @@ export default function HeirloomFlowerPage() {
             </div>
 
             <div className="w-full" style={{ height: '500px' }}>
-              <svg 
-                ref={svgRef}
-                viewBox="0 0 1400 700" 
-                className="w-full h-full cursor-grab active:cursor-grabbing"
+              {/* Interactive world map with SVG overlay for markers */}
+              <div 
+                className="relative w-full h-full overflow-hidden rounded-lg cursor-grab active:cursor-grabbing"
                 style={{ 
-                  background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)',
+                  background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%)',
                   touchAction: 'none'
                 }}
                 onMouseDown={handleMouseDown}
@@ -331,6 +330,16 @@ export default function HeirloomFlowerPage() {
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
               >
+                {/* Professional world map SVG */}
+                <svg 
+                  ref={svgRef}
+                  viewBox="0 0 1400 700" 
+                  className="w-full h-full"
+                  style={{ 
+                    transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
+                    transformOrigin: 'center center'
+                  }}
+                >
                 <g 
                   transform={`translate(${transform.x}, ${transform.y}) scale(${transform.scale})`}
                   style={{ transformOrigin: 'center' }}
@@ -583,9 +592,9 @@ export default function HeirloomFlowerPage() {
                   <text y="8" x="-40" textAnchor="middle" className="fill-white text-sm">W</text>
                 </g>
                 </g>
-              </svg>
+                </svg>
+              </div>
             </div>
-          </div>
 
           {/* Selected strain details panel */}
           {selectedStrain !== null && selectedStrain < landraceStrains.length && (
@@ -1188,6 +1197,7 @@ export default function HeirloomFlowerPage() {
             </div>
           )}
         </div>
+      </div>
       </section>
 
       {/* Footer */}
