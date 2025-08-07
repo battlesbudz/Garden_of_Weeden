@@ -289,11 +289,11 @@ export default function HeirloomFlowerPage() {
             </div>
             <div>
               <div className="text-2xl font-bold text-battles-gold mb-2">Grown with Intention</div>
-              <p className="text-gray-300">Tended by hand in living soil — no shortcuts, ever.</p>
+              <p className="text-gray-300">Tended by hand in living soil.</p>
             </div>
             <div>
               <div className="text-2xl font-bold text-battles-gold mb-2">Crafted in Small Batches</div>
-              <p className="text-gray-300">Only 50 plants. Harvested with purpose, not pressure.</p>
+              <p className="text-gray-300">Only 50 plants.</p>
             </div>
           </div>
         </div>
