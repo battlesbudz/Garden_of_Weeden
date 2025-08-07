@@ -357,190 +357,132 @@ export default function HeirloomFlowerPage() {
                 {/* Ocean background */}
                 <rect width="100%" height="100%" fill="url(#ocean)" />
 
-                {/* NORTH AMERICA - Highly detailed accurate shape */}
+                {/* Simplified but recognizable world map continents */}
                 <g filter="url(#shadow)">
-                  {/* Alaska */}
-                  <path d="M 80 140 L 140 135 L 180 145 Q 190 155 180 165 L 140 170 L 100 165 Q 70 160 80 140 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
+                  {/* NORTH AMERICA */}
+                  <path id="north-america" d="M120,190 L190,180 L250,185 L320,190 L390,195 L450,200 L480,220 L470,250 L450,280 L420,310 L380,330 L350,340 L320,345 L290,340 L260,335 L230,330 L200,320 L170,310 L150,290 L140,260 L130,230 L120,200 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="2" 
+                        className="continent hover:brightness-110 transition-all duration-300" />
                   
-                  {/* Canada - Realistic jagged coastlines */}
-                  <path d="M 120 180 L 200 175 L 280 170 L 360 175 L 440 180 L 520 185 Q 530 195 520 205 L 480 210 L 440 215 L 400 220 Q 380 225 360 220 L 320 215 L 280 210 L 240 205 L 200 200 L 160 195 Q 140 190 120 180 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  
-                  {/* USA - Detailed coastlines with Florida */}
-                  <path d="M 160 240 L 240 235 L 320 240 L 400 245 L 480 250 Q 490 260 480 270 L 460 275 L 440 280 L 420 285 Q 410 295 400 290 L 380 285 L 360 280 L 340 275 L 320 270 L 300 265 L 280 260 L 260 255 L 240 250 L 220 245 Q 180 245 160 240 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  
-                  {/* Florida */}
-                  <path d="M 420 300 L 440 295 L 460 305 L 455 320 L 445 325 L 425 320 Q 415 310 420 300 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
-                  
-                  {/* Mexico with detailed shape */}
-                  <path d="M 200 310 L 280 305 L 360 315 Q 370 325 360 335 L 340 340 L 320 345 L 300 350 Q 280 355 260 350 L 240 345 L 220 340 Q 190 330 200 310 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  
-                  {/* Central America */}
-                  <path d="M 340 360 L 380 355 L 400 365 Q 405 375 400 385 L 380 390 L 360 385 Q 335 375 340 360 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
-                </g>
-
-                {/* SOUTH AMERICA - Accurate distinctive shape */}
-                <g filter="url(#shadow)">
-                  {/* Colombia/Venezuela - Landrace region */}
-                  <path d="M 380 400 L 440 395 L 480 405 L 500 420 Q 505 430 500 440 L 480 445 L 460 450 L 440 455 L 420 460 L 400 455 Q 375 445 380 400 Z" 
-                        fill={landraceData['CO'] ? "url(#landrace-land)" : "url(#land)"} 
-                        stroke={landraceData['CO'] ? "#fbbf24" : "#10b981"} 
+                  {/* SOUTH AMERICA */}
+                  <path id="south-america" d="M380,400 L420,395 L460,410 L480,440 L490,480 L495,520 L500,560 L505,600 L500,640 L490,680 L480,720 L470,760 L460,800 L450,820 L430,830 L410,820 L400,800 L390,760 L380,720 L370,680 L360,640 L355,600 L360,560 L365,520 L370,480 L375,440 L380,400 Z" 
+                        fill={hoveredCountry === 'CO' || landraceData['CO'] ? "url(#landrace-land)" : "url(#land)"} 
+                        stroke={hoveredCountry === 'CO' || landraceData['CO'] ? "#fbbf24" : "#10b981"} 
                         strokeWidth="3"
-                        className="cursor-pointer transition-all duration-300 hover:brightness-125"
-                        onClick={() => handleCountryClick('CO')} />
-                  
-                  {/* Brazil - Large detailed shape */}
-                  <path d="M 440 480 L 520 475 L 580 485 L 620 500 L 640 530 L 635 570 L 620 600 L 600 620 L 580 635 L 560 640 L 540 645 L 520 640 L 500 635 L 480 630 L 460 625 L 440 620 L 425 615 L 410 610 Q 400 600 405 585 L 410 570 L 415 555 L 420 540 L 425 525 L 430 510 L 435 495 Q 440 485 440 480 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  
-                  {/* Argentina - Long narrow shape */}
-                  <path d="M 460 650 L 500 645 L 520 655 L 525 680 L 520 710 L 515 740 L 510 770 L 505 800 L 500 820 L 495 835 L 485 845 L 475 850 L 465 845 L 460 835 L 455 820 L 450 800 L 445 770 L 440 740 L 435 710 L 430 680 Q 440 665 460 650 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  
-                  {/* Chile - Thin coastal strip */}
-                  <path d="M 420 670 L 430 665 L 435 690 L 440 720 L 445 750 L 450 780 L 455 810 L 460 835 L 455 845 L 445 850 L 435 845 L 430 835 L 425 810 L 420 780 L 415 750 L 410 720 L 405 690 Q 410 675 420 670 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
-                </g>
+                        className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
+                        onClick={() => handleCountryClick('CO')}
+                        onMouseEnter={() => handleCountryHover('CO')}
+                        onMouseLeave={() => handleCountryHover(null)} />
 
-                {/* AFRICA - Highly detailed iconic shape */}
-                <g filter="url(#shadow)">
-                  {/* North Africa - Morocco to Egypt */}
-                  <path d="M 680 280 L 780 275 L 880 285 L 920 295 Q 930 305 920 315 L 880 320 L 840 325 L 800 330 L 760 335 L 720 340 L 680 335 Q 670 325 675 305 Q 675 295 680 280 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
+                  {/* AFRICA */}
+                  <path id="africa" d="M680,280 L740,275 L800,280 L860,285 L920,300 L930,340 L925,380 L920,420 L915,460 L910,500 L905,540 L900,580 L890,620 L880,660 L860,680 L840,690 L800,695 L760,690 L720,680 L680,660 L660,620 L650,580 L655,540 L660,500 L665,460 L670,420 L675,380 L680,340 L685,320 L680,300 L680,280 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="2" 
+                        className="continent hover:brightness-110 transition-all duration-300" />
                   
-                  {/* West Africa - Distinctive bulge */}
-                  <path d="M 640 360 L 680 355 L 720 365 L 740 380 L 745 400 L 740 420 L 735 440 L 730 460 L 720 475 L 700 485 L 680 490 L 660 485 L 640 480 Q 630 470 635 450 L 640 430 L 645 410 L 650 390 Q 645 375 640 360 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  
-                  {/* East Africa - Including Malawi */}
-                  <path d="M 780 360 L 840 355 L 880 365 L 900 380 L 905 405 L 900 430 L 895 455 L 890 480 L 885 505 L 880 530 L 870 550 L 860 565 L 850 575 L 840 580 L 820 575 L 800 570 L 780 565 Q 770 555 775 535 L 780 515 L 785 495 L 790 475 L 795 455 L 800 435 L 805 415 L 810 395 Q 795 375 780 360 Z" 
-                        fill={landraceData['MW'] ? "url(#landrace-land)" : "url(#land)"} 
-                        stroke={landraceData['MW'] ? "#fbbf24" : "#10b981"} 
+                  {/* MALAWI region in East Africa */}
+                  <path id="malawi" d="M840,480 L860,475 L875,485 L880,505 L875,525 L860,535 L845,530 L835,515 L835,495 L840,480 Z" 
+                        fill={hoveredCountry === 'MW' || landraceData['MW'] ? "url(#landrace-land)" : "url(#land)"} 
+                        stroke={hoveredCountry === 'MW' || landraceData['MW'] ? "#fbbf24" : "#10b981"} 
                         strokeWidth="3"
-                        className="cursor-pointer transition-all duration-300 hover:brightness-125"
-                        onClick={() => handleCountryClick('MW')} />
-                  
-                  {/* South Africa - Distinctive southern tip */}
-                  <path d="M 740 600 L 800 595 L 840 605 L 860 620 L 865 640 L 860 655 L 850 665 L 835 670 L 820 675 L 800 680 L 780 675 L 760 670 L 740 665 Q 730 655 735 635 Q 735 615 740 600 Z" 
-                        fill={landraceData['ZA'] ? "url(#landrace-land)" : "url(#land)"} 
-                        stroke={landraceData['ZA'] ? "#fbbf24" : "#10b981"} 
+                        className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
+                        onClick={() => handleCountryClick('MW')}
+                        onMouseEnter={() => handleCountryHover('MW')}
+                        onMouseLeave={() => handleCountryHover(null)} />
+
+                  {/* SOUTH AFRICA */}
+                  <path id="south-africa" d="M780,640 L820,635 L860,645 L880,665 L875,685 L860,700 L840,705 L800,700 L760,685 L750,665 L755,645 L770,640 L780,640 Z" 
+                        fill={hoveredCountry === 'ZA' || landraceData['ZA'] ? "url(#landrace-land)" : "url(#land)"} 
+                        stroke={hoveredCountry === 'ZA' || landraceData['ZA'] ? "#fbbf24" : "#10b981"} 
                         strokeWidth="3"
-                        className="cursor-pointer transition-all duration-300 hover:brightness-125"
-                        onClick={() => handleCountryClick('ZA')} />
-                  
-                  {/* Madagascar */}
-                  <path d="M 920 580 L 940 575 L 945 600 L 940 625 L 935 640 L 925 645 L 915 640 Q 910 630 915 610 Q 915 595 920 580 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
-                </g>
+                        className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
+                        onClick={() => handleCountryClick('ZA')}
+                        onMouseEnter={() => handleCountryHover('ZA')}
+                        onMouseLeave={() => handleCountryHover(null)} />
 
-                {/* EUROPE - Detailed peninsulas and coastlines */}
-                <g filter="url(#shadow)">
-                  {/* Scandinavia */}
-                  <path d="M 740 160 L 780 155 L 800 170 L 805 190 L 800 210 L 790 220 L 775 225 L 760 220 L 745 215 Q 735 205 740 185 Q 740 175 740 160 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  
-                  {/* British Isles */}
-                  <path d="M 680 200 L 700 195 L 715 205 L 710 225 L 700 235 L 685 230 Q 675 220 680 200 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
-                  
-                  {/* Western Europe */}
-                  <path d="M 720 240 L 780 235 L 820 245 L 840 260 Q 845 270 840 280 L 820 285 L 800 290 L 780 295 L 760 290 L 740 285 Q 715 275 720 240 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  
-                  {/* Mediterranean peninsulas */}
-                  <path d="M 760 310 L 800 305 L 820 320 L 815 340 L 800 345 L 785 340 Q 755 330 760 310 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
-                </g>
+                  {/* EUROPE */}
+                  <path id="europe" d="M720,200 L780,195 L840,205 L880,220 L890,250 L885,280 L870,300 L850,310 L820,315 L790,310 L760,300 L730,285 L710,265 L705,235 L710,210 L720,200 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="2" 
+                        className="continent hover:brightness-110 transition-all duration-300" />
 
-                {/* ASIA - Massive detailed continent */}
-                <g filter="url(#shadow)">
-                  {/* Siberia/Russia */}
-                  <path d="M 860 160 L 1000 155 L 1140 165 L 1240 175 Q 1250 185 1240 195 L 1200 200 L 1160 205 L 1120 210 L 1080 215 L 1040 220 L 1000 225 L 960 230 L 920 235 L 880 240 Q 850 235 860 160 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  
-                  {/* Central Asia including Afghanistan */}
-                  <path d="M 880 260 L 940 255 L 980 265 L 1020 275 Q 1030 285 1020 295 L 980 300 L 940 305 L 900 310 Q 870 305 880 260 Z" 
-                        fill={landraceData['AF'] ? "url(#landrace-land)" : "url(#land)"} 
-                        stroke={landraceData['AF'] ? "#fbbf24" : "#10b981"} 
+                  {/* ASIA */}
+                  <path id="asia" d="M900,180 L1000,175 L1100,180 L1200,185 L1280,195 L1320,220 L1340,260 L1330,300 L1320,340 L1300,380 L1280,420 L1250,450 L1220,480 L1180,500 L1140,510 L1100,500 L1060,485 L1020,465 L980,440 L950,410 L925,375 L905,340 L890,300 L885,260 L890,220 L900,190 L900,180 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="2" 
+                        className="continent hover:brightness-110 transition-all duration-300" />
+
+                  {/* AFGHANISTAN region */}
+                  <path id="afghanistan" d="M950,280 L980,275 L1010,285 L1020,305 L1010,325 L980,330 L950,325 L940,305 L945,285 L950,280 Z" 
+                        fill={hoveredCountry === 'AF' || landraceData['AF'] ? "url(#landrace-land)" : "url(#land)"} 
+                        stroke={hoveredCountry === 'AF' || landraceData['AF'] ? "#fbbf24" : "#10b981"} 
                         strokeWidth="3"
-                        className="cursor-pointer transition-all duration-300 hover:brightness-125"
-                        onClick={() => handleCountryClick('AF')} />
-                  
-                  {/* China - Large detailed shape */}
-                  <path d="M 1040 240 L 1120 235 L 1180 245 L 1220 260 L 1240 280 L 1235 305 L 1220 325 L 1200 340 L 1180 355 L 1160 370 L 1140 375 L 1120 380 L 1100 375 L 1080 370 L 1060 365 Q 1035 355 1040 320 L 1045 300 L 1050 280 L 1055 260 Q 1045 250 1040 240 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  
-                  {/* India - Distinctive triangular peninsula */}
-                  <path d="M 980 340 L 1040 335 L 1080 350 L 1100 380 L 1095 420 L 1080 450 L 1060 470 L 1040 480 L 1020 485 L 1000 480 L 980 475 Q 970 465 975 445 L 980 425 L 985 405 L 990 385 Q 985 365 980 340 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  
-                  {/* Southeast Asia including Thailand */}
-                  <path d="M 1120 400 L 1180 395 L 1220 405 L 1240 425 L 1245 450 L 1240 475 L 1230 495 L 1215 510 L 1200 520 L 1180 525 L 1160 520 L 1140 515 Q 1115 505 1120 475 L 1125 455 L 1130 435 Q 1125 420 1120 400 Z" 
-                        fill={landraceData['TH'] ? "url(#landrace-land)" : "url(#land)"} 
-                        stroke={landraceData['TH'] ? "#fbbf24" : "#10b981"} 
+                        className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
+                        onClick={() => handleCountryClick('AF')}
+                        onMouseEnter={() => handleCountryHover('AF')}
+                        onMouseLeave={() => handleCountryHover(null)} />
+
+                  {/* THAILAND region */}
+                  <path id="thailand" d="M1180,460 L1200,455 L1220,465 L1230,485 L1225,505 L1205,510 L1185,505 L1175,485 L1180,465 L1180,460 Z" 
+                        fill={hoveredCountry === 'TH' || landraceData['TH'] ? "url(#landrace-land)" : "url(#land)"} 
+                        stroke={hoveredCountry === 'TH' || landraceData['TH'] ? "#fbbf24" : "#10b981"} 
                         strokeWidth="3"
-                        className="cursor-pointer transition-all duration-300 hover:brightness-125"
-                        onClick={() => handleCountryClick('TH')} />
-                  
-                  {/* Japan */}
-                  <path d="M 1280 320 L 1320 315 L 1340 330 L 1335 350 L 1320 355 L 1305 350 Q 1275 340 1280 320 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
-                  
-                  {/* Indonesia */}
-                  <path d="M 1180 540 L 1240 535 L 1280 545 L 1300 560 L 1295 580 L 1280 585 L 1260 590 L 1240 585 L 1220 580 L 1200 575 Q 1175 565 1180 540 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
+                        className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
+                        onClick={() => handleCountryClick('TH')}
+                        onMouseEnter={() => handleCountryHover('TH')}
+                        onMouseLeave={() => handleCountryHover(null)} />
+
+                  {/* AUSTRALIA */}
+                  <path id="australia" d="M1200,620 L1280,615 L1360,625 L1420,640 L1425,675 L1410,705 L1380,720 L1340,725 L1300,720 L1260,710 L1220,695 L1190,675 L1185,645 L1195,625 L1200,620 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="2" 
+                        className="continent hover:brightness-110 transition-all duration-300" />
                 </g>
 
-                {/* AUSTRALIA - Detailed recognizable shape */}
-                <g filter="url(#shadow)">
-                  <path d="M 1200 620 L 1300 615 L 1380 625 L 1420 640 L 1425 665 L 1420 685 L 1410 700 L 1395 710 L 1380 715 L 1360 720 L 1340 715 L 1320 710 L 1300 705 L 1280 700 L 1260 695 L 1240 690 L 1220 685 Q 1195 675 1200 645 Q 1200 635 1200 620 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" />
-                  
-                  {/* Tasmania */}
-                  <path d="M 1340 740 L 1360 735 L 1365 750 L 1360 760 L 1350 765 L 1340 760 Q 1335 750 1340 740 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
-                  
-                  {/* New Zealand */}
-                  <path d="M 1460 720 L 1480 715 L 1485 740 L 1480 760 L 1475 775 L 1465 780 L 1455 775 Q 1450 765 1455 745 Q 1455 735 1460 720 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" />
-                </g>
-
-                {/* ANTARCTICA - Detailed ice shelf */}
-                <rect x="0" y="670" width="1400" height="30" fill="url(#land)" opacity="0.9" />
-
-                {/* Landrace strain markers - Large and prominent */}
+                {/* Clean landrace strain markers */}
                 {Object.entries(landraceData).map(([code, data], index) => {
                   let x = 0, y = 0;
                   switch(code) {
-                    case 'MW': x = 840; y = 480; break; // Malawi - East Africa
-                    case 'TH': x = 1180; y = 460; break; // Thailand - Southeast Asia
-                    case 'AF': x = 950; y = 280; break; // Afghanistan - Central Asia  
-                    case 'CO': x = 430; y = 420; break; // Colombia - Northern South America
-                    case 'ZA': x = 800; y = 640; break; // South Africa
+                    case 'MW': x = 860; y = 505; break; // Malawi - East Africa
+                    case 'TH': x = 1205; y = 480; break; // Thailand - Southeast Asia
+                    case 'AF': x = 980; y = 305; break; // Afghanistan - Central Asia  
+                    case 'CO': x = 430; y = 520; break; // Colombia - Northern South America
+                    case 'ZA': x = 820; y = 670; break; // South Africa
                   }
                   
                   return (
                     <g key={code}>
-                      <circle cx={x} cy={y} r="35" fill="none" stroke="#fbbf24" strokeWidth="3" opacity="0.3" className="animate-ping" />
-                      <circle cx={x} cy={y} r="25" fill="none" stroke="#f59e0b" strokeWidth="2" opacity="0.5" />
-                      <circle cx={x} cy={y} r="15" fill="none" stroke="#fbbf24" strokeWidth="2" opacity="0.7" />
-                      <circle cx={x} cy={y} r="12" fill="#fbbf24" stroke="#ffffff" strokeWidth="3" 
-                              className="cursor-pointer hover:scale-125 transition-all duration-300 drop-shadow-lg"
+                      {/* Static marker with glow effect */}
+                      <circle cx={x} cy={y} r="20" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" strokeWidth="2" />
+                      <circle cx={x} cy={y} r="12" fill="#fbbf24" stroke="#ffffff" strokeWidth="2" 
+                              className="cursor-pointer hover:scale-110 transition-all duration-300 drop-shadow-lg"
                               onClick={() => handleCountryClick(code)} />
-                      <circle cx={x} cy={y} r="8" fill="#fef3c7" className="pointer-events-none" />
-                      <text x={x} y={y - 45} textAnchor="middle" className="fill-white text-lg font-bold"
-                            style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.9)', filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.8))' }}>
+                      <circle cx={x} cy={y} r="6" fill="#fef3c7" className="pointer-events-none" />
+                      
+                      {/* Strain name label */}
+                      <text x={x} y={y - 35} textAnchor="middle" className="fill-white text-sm font-bold pointer-events-none"
+                            style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.9)' }}>
                         {data.strainName}
                       </text>
-                      <text x={x} y={y - 25} textAnchor="middle" className="fill-yellow-200 text-sm font-medium"
+                      
+                      {/* Location label */}
+                      <text x={x} y={y - 20} textAnchor="middle" className="fill-yellow-200 text-xs font-medium pointer-events-none"
                             style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
                         {data.location.split(',')[0]}
                       </text>
+                      
+                      {/* Tooltip on hover */}
+                      {hoveredCountry === code && (
+                        <g>
+                          <rect x={x - 80} y={y + 25} width="160" height="60" 
+                                fill="rgba(0,0,0,0.9)" stroke="#fbbf24" strokeWidth="1" rx="5" />
+                          <text x={x} y={y + 45} textAnchor="middle" className="fill-battles-gold text-xs font-semibold">
+                            {data.strainName}
+                          </text>
+                          <text x={x} y={y + 60} textAnchor="middle" className="fill-white text-xs">
+                            THC: {data.thc} | CBD: {data.cbd}
+                          </text>
+                          <text x={x} y={y + 75} textAnchor="middle" className="fill-gray-300 text-xs">
+                            Click for details
+                          </text>
+                        </g>
+                      )}
                     </g>
                   );
                 })}
