@@ -210,7 +210,7 @@ export default function HeirloomFlowerPage() {
               Shop
             </Link>
             <span className="text-gray-600">/</span>
-            <span className="text-battles-gold font-semibold">Landrace Cannabis</span>
+            <span className="text-battles-gold font-semibold">Heirloom Flower</span>
           </nav>
         </div>
       </div>
@@ -221,7 +221,7 @@ export default function HeirloomFlowerPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-5xl md:text-6xl font-playfair font-bold mb-6">
-                <span className="text-battles-gold">Landrace</span> Cannabis
+                <span className="text-battles-gold">Heirloom</span> Flower
               </h1>
               <p className="text-2xl font-bold text-white mb-6">
                 The world's oldest cannabis, grown with modern reverence
