@@ -137,126 +137,136 @@ export default function HeirloomFlowerPage() {
     setEmail('');
   };
 
-  // Interactive map component with enhanced world map
-  const OriginMap = () => (
-    <div className="relative">
-      <div className="bg-gray-800 rounded-lg p-8 border border-battles-gold/20">
-        <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
-        <div className="relative bg-gradient-to-b from-gray-900 to-black rounded-lg h-96 overflow-hidden border border-gray-700">
-          {/* Enhanced world map background */}
-          <svg viewBox="0 0 800 400" className="w-full h-full opacity-40" preserveAspectRatio="xMidYMid meet">
-            {/* Continents outlined with more detail */}
+  // Redesigned interactive map component
+  const OriginMap = () => {
+    const handleMarkerClick = (index: number) => {
+      console.log('Marker clicked:', index);
+      setSelectedStrain(selectedStrain === index ? null : index);
+    };
+
+    return (
+      <div className="relative">
+        <div className="bg-gray-800 rounded-lg p-8 border border-battles-gold/20">
+          <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
+          <div className="relative bg-gray-900 rounded-lg h-96 border border-gray-700 overflow-hidden">
             
-            {/* North America */}
-            <path d="M120,80 Q140,70 160,85 Q180,75 200,90 L200,140 Q180,160 160,150 Q140,160 120,150 Z" 
-                  fill="none" stroke="#fbbf24" strokeWidth="1.5" />
-            
-            {/* South America */}
-            <path d="M180,180 Q200,170 220,185 Q210,220 200,260 Q190,280 180,270 Q170,250 175,220 Q170,200 180,180 Z" 
-                  fill="none" stroke="#fbbf24" strokeWidth="1.5" />
-            
-            {/* Europe */}
-            <path d="M350,60 Q370,55 390,65 Q410,60 430,70 L425,100 Q410,110 390,105 Q370,110 350,100 Z" 
-                  fill="none" stroke="#fbbf24" strokeWidth="1.5" />
-            
-            {/* Africa */}
-            <path d="M380,120 Q400,110 420,125 Q430,140 425,180 Q420,220 410,250 Q400,270 390,265 Q380,250 385,220 Q375,180 380,140 Q375,130 380,120 Z" 
-                  fill="none" stroke="#fbbf24" strokeWidth="1.5" />
-            
-            {/* Asia */}
-            <path d="M450,70 Q500,65 550,80 Q600,75 650,90 L645,130 Q620,140 580,135 Q540,140 500,135 Q470,140 450,130 Z" 
-                  fill="none" stroke="#fbbf24" strokeWidth="1.5" />
-            
-            {/* Australia */}
-            <path d="M580,250 Q620,245 660,260 L655,280 Q630,285 600,280 Q580,285 580,270 Z" 
-                  fill="none" stroke="#fbbf24" strokeWidth="1.5" />
-            
-            {/* Geographic grid lines */}
-            <g stroke="#fbbf24" strokeWidth="0.3" opacity="0.6">
-              <line x1="0" y1="100" x2="800" y2="100" />
-              <line x1="0" y1="200" x2="800" y2="200" />
-              <line x1="0" y1="300" x2="800" y2="300" />
-              <line x1="200" y1="0" x2="200" y2="400" />
-              <line x1="400" y1="0" x2="400" y2="400" />
-              <line x1="600" y1="0" x2="600" y2="400" />
-            </g>
-          </svg>
-          
-          {/* Interactive strain markers with enhanced positioning */}
-          {landraceStrains.map((strain, index) => (
-            <div
-              key={strain.name}
-              className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group transition-all duration-300 hover:scale-110"
-              style={{ left: `${strain.coordinates.x}%`, top: `${strain.coordinates.y}%` }}
-              onClick={() => setSelectedStrain(selectedStrain === index ? null : index)}
-            >
-              <div className="relative">
-                <div className="relative z-10">
-                  <MapPin className="h-7 w-7 text-battles-gold group-hover:text-yellow-300 transition-all duration-300 filter drop-shadow-lg" />
-                </div>
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-red-500 to-orange-500 rounded-full animate-pulse opacity-80"></div>
+            {/* Simplified but visible world map using CSS and basic shapes */}
+            <div className="absolute inset-0">
+              {/* Background pattern to simulate world map */}
+              <div className="w-full h-full relative">
+                {/* Continent shapes using CSS */}
+                <div className="absolute top-16 left-12 w-24 h-16 bg-battles-gold/20 rounded-lg transform rotate-12" style={{clipPath: 'polygon(20% 0%, 100% 20%, 80% 100%, 0% 80%)'}}></div>
+                <div className="absolute top-32 left-20 w-16 h-20 bg-battles-gold/15 rounded-lg transform -rotate-6" style={{clipPath: 'polygon(30% 0%, 100% 30%, 70% 100%, 0% 70%)'}}></div>
+                <div className="absolute top-12 left-60 w-32 h-20 bg-battles-gold/20 rounded-lg transform rotate-3" style={{clipPath: 'polygon(25% 0%, 100% 25%, 75% 100%, 0% 75%)'}}></div>
+                <div className="absolute top-20 left-80 w-40 h-24 bg-battles-gold/15 rounded-lg transform -rotate-2" style={{clipPath: 'polygon(15% 0%, 100% 15%, 85% 100%, 0% 85%)'}}></div>
+                <div className="absolute bottom-20 right-20 w-20 h-12 bg-battles-gold/20 rounded-lg transform rotate-45" style={{clipPath: 'polygon(40% 0%, 100% 40%, 60% 100%, 0% 60%)'}}></div>
                 
-                {/* Pulsing ring effect on hover */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border-2 border-battles-gold rounded-full opacity-0 group-hover:opacity-50 group-hover:animate-ping"></div>
+                {/* Grid lines for geographic reference */}
+                <div className="absolute inset-0">
+                  <div className="h-full w-px bg-battles-gold/10 absolute left-1/4"></div>
+                  <div className="h-full w-px bg-battles-gold/10 absolute left-1/2"></div>
+                  <div className="h-full w-px bg-battles-gold/10 absolute left-3/4"></div>
+                  <div className="w-full h-px bg-battles-gold/10 absolute top-1/4"></div>
+                  <div className="w-full h-px bg-battles-gold/10 absolute top-1/2"></div>
+                  <div className="w-full h-px bg-battles-gold/10 absolute top-3/4"></div>
+                </div>
               </div>
-              
-              {/* Enhanced tooltip with better positioning */}
-              {selectedStrain === index && (
-                <div className={`absolute ${index < 2 ? 'bottom-10' : 'top-10'} left-1/2 transform -translate-x-1/2 bg-black/95 backdrop-blur-sm border border-battles-gold rounded-xl p-5 w-72 z-20 shadow-2xl animate-in fade-in duration-300`}>
-                  <div className="flex items-center mb-3">
-                    <Leaf className="h-5 w-5 text-battles-gold mr-2" />
-                    <h4 className="font-bold text-battles-gold text-lg">{strain.name}</h4>
-                  </div>
-                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">{strain.notes}</p>
-                  <div className="grid grid-cols-3 gap-3 text-xs">
-                    <div className="bg-gray-800/50 rounded-lg p-2 text-center">
-                      <span className="text-battles-gold font-semibold block">THC</span>
-                      <div className="text-white font-bold">{strain.thc}</div>
-                    </div>
-                    <div className="bg-gray-800/50 rounded-lg p-2 text-center">
-                      <span className="text-battles-gold font-semibold block">CBD</span>
-                      <div className="text-white font-bold">{strain.cbd}</div>
-                    </div>
-                    <div className="bg-gray-800/50 rounded-lg p-2 text-center">
-                      <span className="text-battles-gold font-semibold block">Flower</span>
-                      <div className="text-white font-bold">{strain.flowering}</div>
-                    </div>
-                  </div>
-                  <div className="mt-3 pt-3 border-t border-gray-700">
-                    <p className="text-battles-gold text-xs font-medium flex items-center">
-                      <MapPin className="h-3 w-3 mr-1" />
-                      {strain.location}
-                    </p>
+            </div>
+            
+            {/* Interactive strain markers */}
+            {landraceStrains.map((strain, index) => (
+              <button
+                key={strain.name}
+                className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group focus:outline-none z-10"
+                style={{ 
+                  left: `${strain.coordinates.x}%`, 
+                  top: `${strain.coordinates.y}%` 
+                }}
+                onClick={() => handleMarkerClick(index)}
+                aria-label={`View ${strain.name} details`}
+              >
+                <div className="relative flex items-center justify-center">
+                  {/* Marker pin */}
+                  <div className="relative">
+                    <MapPin 
+                      className={`h-8 w-8 transition-all duration-300 ${
+                        selectedStrain === index 
+                          ? 'text-yellow-400 scale-125' 
+                          : 'text-battles-gold group-hover:text-yellow-300 group-hover:scale-110'
+                      }`}
+                    />
+                    {/* Pulsing indicator */}
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                    
+                    {/* Hover ring */}
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border-2 border-battles-gold rounded-full opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
                   </div>
                   
-                  {/* Tooltip arrow */}
-                  <div className={`absolute ${index < 2 ? 'top-full' : 'bottom-full'} left-1/2 transform -translate-x-1/2 w-0 h-0 ${index < 2 ? 'border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-battles-gold' : 'border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-battles-gold'}`}></div>
+                  {/* Strain name label */}
+                  <div className="absolute top-10 left-1/2 transform -translate-x-1/2 bg-black/80 text-battles-gold text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                    {strain.name}
+                  </div>
                 </div>
-              )}
-            </div>
-          ))}
-          
-          {/* Subtle animated background elements */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-4 left-4 w-2 h-2 bg-battles-gold rounded-full animate-pulse"></div>
-            <div className="absolute top-12 right-8 w-1 h-1 bg-battles-gold rounded-full animate-pulse animation-delay-1000"></div>
-            <div className="absolute bottom-8 left-12 w-1.5 h-1.5 bg-battles-gold rounded-full animate-pulse animation-delay-2000"></div>
-            <div className="absolute bottom-4 right-4 w-1 h-1 bg-battles-gold rounded-full animate-pulse animation-delay-3000"></div>
+              </button>
+            ))}
           </div>
-        </div>
-        <div className="flex items-center justify-center mt-4 space-x-6 text-sm">
-          <p className="text-gray-400 flex items-center">
+
+          {/* Selected strain details panel */}
+          {selectedStrain !== null && (
+            <div className="mt-6 bg-black/50 border border-battles-gold/30 rounded-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center">
+                  <Leaf className="h-6 w-6 text-battles-gold mr-3" />
+                  <h4 className="text-xl font-bold text-battles-gold">{landraceStrains[selectedStrain].name}</h4>
+                </div>
+                <button
+                  onClick={() => setSelectedStrain(null)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                  aria-label="Close strain details"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <p className="text-gray-300 mb-4 leading-relaxed">
+                    {landraceStrains[selectedStrain].notes}
+                  </p>
+                  <div className="flex items-center text-sm text-battles-gold mb-2">
+                    <MapPin className="h-4 w-4 mr-2" />
+                    <span>{landraceStrains[selectedStrain].location}</span>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="bg-gray-800/50 rounded-lg p-3 text-center">
+                    <div className="text-battles-gold font-semibold text-sm">THC</div>
+                    <div className="text-white font-bold text-lg">{landraceStrains[selectedStrain].thc}</div>
+                  </div>
+                  <div className="bg-gray-800/50 rounded-lg p-3 text-center">
+                    <div className="text-battles-gold font-semibold text-sm">CBD</div>
+                    <div className="text-white font-bold text-lg">{landraceStrains[selectedStrain].cbd}</div>
+                  </div>
+                  <div className="bg-gray-800/50 rounded-lg p-3 text-center">
+                    <div className="text-battles-gold font-semibold text-sm">Flowering</div>
+                    <div className="text-white font-bold text-sm">{landraceStrains[selectedStrain].flowering}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-center justify-center mt-4 text-sm text-gray-400">
             <MapPin className="h-4 w-4 mr-2 text-battles-gold" />
-            Click markers to explore ancient cannabis genetics
-          </p>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-gradient-to-r from-red-500 to-orange-500 rounded-full animate-pulse"></div>
-            <span className="text-gray-500 text-xs">Active Cultivation Sites</span>
+            <span>Click the golden markers to explore ancient cannabis genetics from around the world</span>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="min-h-screen bg-black text-white">
