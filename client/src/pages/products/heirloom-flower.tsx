@@ -292,8 +292,8 @@ export default function HeirloomFlowerPage() {
               <p className="text-gray-300">Landrace Genetics</p>
             </div>
             <div>
-              <div className="text-3xl font-bold text-battles-gold mb-2">Organic</div>
-              <p className="text-gray-300">Living Soil</p>
+              <div className="text-3xl font-bold text-battles-gold mb-2">50 Plants</div>
+              <p className="text-gray-300">Exclusive Small Batch</p>
             </div>
           </div>
         </div>
