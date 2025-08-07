@@ -9,7 +9,7 @@ import LoginPage from "@/pages/login";
 import Dashboard from "@/pages/dashboard";
 import Shop from "@/pages/shop";
 
-import Education from "@/pages/education";
+
 import EnhancedCommunityPage from "@/pages/enhanced-community";
 import ForumPostPage from "@/pages/forum-post";
 import InvestorPortal from "@/pages/investor-portal";
@@ -55,7 +55,7 @@ function Router() {
         <Route path="/shop" component={Shop} />
         <Route path="/investors" component={InvestorPortal} />
         <Route path="/investor-portal" component={InvestorPortal} />
-        <Route path="/education" component={Education} />
+
         <Route path="/community" component={EnhancedCommunityPage} />
         <Route path="/community/posts/:id" component={ForumPostPage} />
         <Route path="/investor-admin" component={InvestorAdmin} />

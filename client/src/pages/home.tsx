@@ -5,7 +5,7 @@ import ServicesSection from "@/components/services-section";
 import AboutSection from "@/components/about-section";
 import TeamSection from "@/components/team-section";
 import EventsSection from "@/components/events-section";
-import EducationSection from "@/components/education-section";
+
 import NewsletterSection from "@/components/newsletter-section";
 import Footer from "@/components/footer";
 import SEOHead from "@/components/seo/SEOHead";
@@ -48,7 +48,6 @@ export default function Home() {
       <AboutSection />
       <TeamSection />
       <EventsSection />
-      <EducationSection />
       <NewsletterSection />
       <Footer />
     </div>
