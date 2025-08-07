@@ -220,9 +220,6 @@ export default function HeirloomFlowerPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              <div className="inline-block bg-battles-gold/10 border border-battles-gold/30 rounded-full px-4 py-2 mb-4">
-                <span className="text-battles-gold font-semibold text-sm">AUTHENTIC • RARE • THERAPEUTIC</span>
-              </div>
               <h1 className="text-5xl md:text-6xl font-playfair font-bold mb-6">
                 <span className="text-battles-gold">Landrace</span> Cannabis
               </h1>
