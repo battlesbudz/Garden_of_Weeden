@@ -110,7 +110,7 @@ export default function HeirloomFlowerPage() {
   const { toast } = useToast();
   
   // Pan and zoom state
-  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
+  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 0.8 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const svgRef = useRef<SVGSVGElement>(null);
@@ -141,7 +141,7 @@ export default function HeirloomFlowerPage() {
   };
 
   const handleReset = () => {
-    setTransform({ x: 0, y: 0, scale: 1 });
+    setTransform({ x: 0, y: 0, scale: 0.8 });
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -314,7 +314,7 @@ export default function HeirloomFlowerPage() {
               </p>
             </div>
 
-            <div className="w-full" style={{ height: '500px' }}>
+            <div className="w-full" style={{ height: '600px' }}>
               {/* Interactive world map with image background and overlay markers */}
               <div 
                 className="relative w-full h-full overflow-hidden rounded-lg cursor-grab active:cursor-grabbing"
@@ -334,7 +334,7 @@ export default function HeirloomFlowerPage() {
                 <img 
                   src={worldMapImage}
                   alt="World Map - Winkel Triple Projection"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                   style={{ 
                     transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
                     transformOrigin: 'center center',
