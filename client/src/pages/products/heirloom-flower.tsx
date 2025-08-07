@@ -357,81 +357,130 @@ export default function HeirloomFlowerPage() {
                 {/* Ocean background */}
                 <rect width="100%" height="100%" fill="url(#ocean)" />
 
-                {/* Simplified but recognizable world map continents */}
+                {/* Accurate world map continents with recognizable shapes */}
                 <g filter="url(#shadow)">
-                  {/* NORTH AMERICA */}
-                  <path id="north-america" d="M120,190 L190,180 L250,185 L320,190 L390,195 L450,200 L480,220 L470,250 L450,280 L420,310 L380,330 L350,340 L320,345 L290,340 L260,335 L230,330 L200,320 L170,310 L150,290 L140,260 L130,230 L120,200 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" 
-                        className="continent hover:brightness-110 transition-all duration-300" />
+                  {/* NORTH AMERICA - Realistic shape with Canada, USA, Mexico */}
+                  <g id="north-america">
+                    {/* Canada */}
+                    <path d="M150,160 L200,150 L260,155 L320,160 L380,165 L440,170 L500,175 L540,185 L560,200 L555,220 L540,235 L520,245 L500,250 L480,255 L460,250 L440,245 L420,240 L400,235 L380,230 L360,225 L340,220 L320,215 L300,210 L280,205 L260,200 L240,195 L220,190 L200,185 L180,175 L160,170 L150,160 Z" 
+                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                          className="continent hover:brightness-110 transition-all duration-300" />
+                    
+                    {/* United States */}
+                    <path d="M180,260 L240,255 L300,260 L360,265 L420,270 L480,275 L520,285 L540,300 L535,320 L525,340 L510,355 L490,365 L470,370 L450,375 L430,370 L410,365 L390,360 L370,355 L350,350 L330,345 L310,340 L290,335 L270,330 L250,325 L230,315 L210,305 L190,290 L180,275 L180,260 Z" 
+                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                          className="continent hover:brightness-110 transition-all duration-300" />
+                    
+                    {/* Mexico */}
+                    <path d="M220,380 L280,375 L340,380 L380,390 L400,410 L395,430 L385,445 L370,455 L350,460 L330,455 L310,450 L290,445 L270,440 L250,430 L230,415 L220,395 L220,380 Z" 
+                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                          className="continent hover:brightness-110 transition-all duration-300" />
+                  </g>
                   
-                  {/* SOUTH AMERICA */}
-                  <path id="south-america" d="M380,400 L420,395 L460,410 L480,440 L490,480 L495,520 L500,560 L505,600 L500,640 L490,680 L480,720 L470,760 L460,800 L450,820 L430,830 L410,820 L400,800 L390,760 L380,720 L370,680 L360,640 L355,600 L360,560 L365,520 L370,480 L375,440 L380,400 Z" 
+                  {/* SOUTH AMERICA - Distinctive narrow shape with wider north */}
+                  <path id="south-america" d="M380,480 L420,475 L460,485 L480,505 L490,530 L495,560 L500,590 L505,620 L510,650 L515,680 L520,710 L525,740 L520,770 L510,795 L495,815 L475,825 L450,820 L430,810 L415,795 L405,775 L400,750 L395,720 L390,690 L385,660 L380,630 L375,600 L370,570 L365,540 L360,510 L365,485 L375,480 L380,480 Z" 
                         fill={hoveredCountry === 'CO' || landraceData['CO'] ? "url(#landrace-land)" : "url(#land)"} 
                         stroke={hoveredCountry === 'CO' || landraceData['CO'] ? "#fbbf24" : "#10b981"} 
-                        strokeWidth="3"
+                        strokeWidth="2"
                         className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
                         onClick={() => handleCountryClick('CO')}
                         onMouseEnter={() => handleCountryHover('CO')}
                         onMouseLeave={() => handleCountryHover(null)} />
 
-                  {/* AFRICA */}
-                  <path id="africa" d="M680,280 L740,275 L800,280 L860,285 L920,300 L930,340 L925,380 L920,420 L915,460 L910,500 L905,540 L900,580 L890,620 L880,660 L860,680 L840,690 L800,695 L760,690 L720,680 L680,660 L660,620 L650,580 L655,540 L660,500 L665,460 L670,420 L675,380 L680,340 L685,320 L680,300 L680,280 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" 
+                  {/* AFRICA - Iconic bulge and horn shape */}
+                  <path id="africa" d="M680,280 L720,275 L760,280 L800,285 L840,295 L880,310 L920,330 L940,360 L945,395 L940,430 L935,465 L930,500 L925,535 L920,570 L915,605 L905,635 L890,660 L870,680 L845,690 L815,695 L785,690 L755,680 L730,665 L710,645 L695,620 L685,590 L680,555 L675,520 L670,485 L665,450 L660,415 L655,380 L650,345 L655,315 L665,290 L680,280 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
                         className="continent hover:brightness-110 transition-all duration-300" />
                   
                   {/* MALAWI region in East Africa */}
-                  <path id="malawi" d="M840,480 L860,475 L875,485 L880,505 L875,525 L860,535 L845,530 L835,515 L835,495 L840,480 Z" 
+                  <path id="malawi" d="M850,480 L870,475 L885,485 L895,505 L890,525 L875,540 L860,545 L845,540 L835,525 L830,505 L835,485 L850,480 Z" 
                         fill={hoveredCountry === 'MW' || landraceData['MW'] ? "url(#landrace-land)" : "url(#land)"} 
                         stroke={hoveredCountry === 'MW' || landraceData['MW'] ? "#fbbf24" : "#10b981"} 
-                        strokeWidth="3"
+                        strokeWidth="2"
                         className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
                         onClick={() => handleCountryClick('MW')}
                         onMouseEnter={() => handleCountryHover('MW')}
                         onMouseLeave={() => handleCountryHover(null)} />
 
-                  {/* SOUTH AFRICA */}
-                  <path id="south-africa" d="M780,640 L820,635 L860,645 L880,665 L875,685 L860,700 L840,705 L800,700 L760,685 L750,665 L755,645 L770,640 L780,640 Z" 
+                  {/* SOUTH AFRICA tip */}
+                  <path id="south-africa" d="M780,640 L820,635 L860,645 L890,665 L895,685 L885,705 L865,715 L840,720 L815,715 L790,705 L770,690 L760,670 L765,650 L775,640 L780,640 Z" 
                         fill={hoveredCountry === 'ZA' || landraceData['ZA'] ? "url(#landrace-land)" : "url(#land)"} 
                         stroke={hoveredCountry === 'ZA' || landraceData['ZA'] ? "#fbbf24" : "#10b981"} 
-                        strokeWidth="3"
+                        strokeWidth="2"
                         className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
                         onClick={() => handleCountryClick('ZA')}
                         onMouseEnter={() => handleCountryHover('ZA')}
                         onMouseLeave={() => handleCountryHover(null)} />
 
-                  {/* EUROPE */}
-                  <path id="europe" d="M720,200 L780,195 L840,205 L880,220 L890,250 L885,280 L870,300 L850,310 L820,315 L790,310 L760,300 L730,285 L710,265 L705,235 L710,210 L720,200 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" 
-                        className="continent hover:brightness-110 transition-all duration-300" />
+                  {/* EUROPE - Jagged peninsulas and islands */}
+                  <g id="europe">
+                    {/* Scandinavia */}
+                    <path d="M740,140 L780,135 L810,150 L820,175 L815,200 L800,220 L780,235 L760,240 L740,235 L725,220 L720,200 L725,175 L735,155 L740,140 Z" 
+                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                          className="continent hover:brightness-110 transition-all duration-300" />
+                    
+                    {/* British Isles */}
+                    <path d="M680,200 L700,195 L720,205 L725,225 L720,245 L705,255 L685,250 L670,240 L665,220 L670,205 L680,200 Z" 
+                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                          className="continent hover:brightness-110 transition-all duration-300" />
+                    
+                    {/* Western/Central Europe */}
+                    <path d="M720,260 L780,255 L840,265 L870,280 L885,305 L880,330 L865,350 L845,365 L820,370 L795,365 L770,355 L745,340 L725,320 L715,295 L720,275 L720,260 Z" 
+                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                          className="continent hover:brightness-110 transition-all duration-300" />
+                  </g>
 
-                  {/* ASIA */}
-                  <path id="asia" d="M900,180 L1000,175 L1100,180 L1200,185 L1280,195 L1320,220 L1340,260 L1330,300 L1320,340 L1300,380 L1280,420 L1250,450 L1220,480 L1180,500 L1140,510 L1100,500 L1060,485 L1020,465 L980,440 L950,410 L925,375 L905,340 L890,300 L885,260 L890,220 L900,190 L900,180 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" 
-                        className="continent hover:brightness-110 transition-all duration-300" />
+                  {/* ASIA - Massive continent with distinct regions */}
+                  <g id="asia">
+                    {/* Siberia/Russia */}
+                    <path d="M890,150 L1000,145 L1120,150 L1240,155 L1350,165 L1380,185 L1375,210 L1360,235 L1340,250 L1320,260 L1300,265 L1280,270 L1260,275 L1240,280 L1220,285 L1200,290 L1180,295 L1160,300 L1140,305 L1120,310 L1100,315 L1080,320 L1060,325 L1040,330 L1020,335 L1000,340 L980,345 L960,350 L940,345 L920,335 L905,320 L895,300 L890,275 L885,250 L880,225 L875,200 L880,175 L890,160 L890,150 Z" 
+                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                          className="continent hover:brightness-110 transition-all duration-300" />
+                    
+                    {/* China */}
+                    <path d="M1040,340 L1120,335 L1180,345 L1220,360 L1240,385 L1235,415 L1220,440 L1200,460 L1180,475 L1160,485 L1140,490 L1120,485 L1100,475 L1080,460 L1065,440 L1055,415 L1050,385 L1045,360 L1040,340 Z" 
+                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                          className="continent hover:brightness-110 transition-all duration-300" />
+                    
+                    {/* India - Triangular peninsula */}
+                    <path d="M980,380 L1040,375 L1080,390 L1100,415 L1110,445 L1105,480 L1090,510 L1070,535 L1045,550 L1020,555 L995,550 L975,535 L960,510 L950,480 L955,445 L965,415 L975,390 L980,380 Z" 
+                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                          className="continent hover:brightness-110 transition-all duration-300" />
+                    
+                    {/* Southeast Asia */}
+                    <path d="M1120,490 L1180,485 L1220,495 L1240,515 L1250,540 L1245,565 L1230,585 L1210,600 L1185,605 L1160,600 L1140,585 L1125,565 L1115,540 L1115,515 L1120,495 L1120,490 Z" 
+                          fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                          className="continent hover:brightness-110 transition-all duration-300" />
+                  </g>
 
                   {/* AFGHANISTAN region */}
-                  <path id="afghanistan" d="M950,280 L980,275 L1010,285 L1020,305 L1010,325 L980,330 L950,325 L940,305 L945,285 L950,280 Z" 
+                  <path id="afghanistan" d="M950,280 L990,275 L1020,285 L1035,305 L1030,330 L1010,345 L985,350 L960,345 L940,330 L935,305 L940,285 L950,280 Z" 
                         fill={hoveredCountry === 'AF' || landraceData['AF'] ? "url(#landrace-land)" : "url(#land)"} 
                         stroke={hoveredCountry === 'AF' || landraceData['AF'] ? "#fbbf24" : "#10b981"} 
-                        strokeWidth="3"
+                        strokeWidth="2"
                         className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
                         onClick={() => handleCountryClick('AF')}
                         onMouseEnter={() => handleCountryHover('AF')}
                         onMouseLeave={() => handleCountryHover(null)} />
 
                   {/* THAILAND region */}
-                  <path id="thailand" d="M1180,460 L1200,455 L1220,465 L1230,485 L1225,505 L1205,510 L1185,505 L1175,485 L1180,465 L1180,460 Z" 
+                  <path id="thailand" d="M1180,460 L1210,455 L1230,465 L1240,485 L1245,505 L1235,525 L1215,535 L1195,530 L1175,515 L1170,495 L1175,475 L1180,460 Z" 
                         fill={hoveredCountry === 'TH' || landraceData['TH'] ? "url(#landrace-land)" : "url(#land)"} 
                         stroke={hoveredCountry === 'TH' || landraceData['TH'] ? "#fbbf24" : "#10b981"} 
-                        strokeWidth="3"
+                        strokeWidth="2"
                         className="continent cursor-pointer hover:brightness-125 transition-all duration-300"
                         onClick={() => handleCountryClick('TH')}
                         onMouseEnter={() => handleCountryHover('TH')}
                         onMouseLeave={() => handleCountryHover(null)} />
 
-                  {/* AUSTRALIA */}
-                  <path id="australia" d="M1200,620 L1280,615 L1360,625 L1420,640 L1425,675 L1410,705 L1380,720 L1340,725 L1300,720 L1260,710 L1220,695 L1190,675 L1185,645 L1195,625 L1200,620 Z" 
-                        fill="url(#land)" stroke="#10b981" strokeWidth="2" 
+                  {/* AUSTRALIA - Distinctive shape */}
+                  <path id="australia" d="M1200,620 L1280,615 L1360,625 L1420,640 L1450,665 L1445,690 L1430,710 L1405,725 L1375,730 L1340,725 L1305,715 L1270,700 L1240,680 L1215,655 L1195,630 L1200,620 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1.5" 
+                        className="continent hover:brightness-110 transition-all duration-300" />
+                  
+                  {/* New Zealand */}
+                  <path d="M1480,720 L1500,715 L1510,735 L1505,755 L1495,770 L1485,775 L1475,770 L1470,755 L1470,735 L1480,720 Z" 
+                        fill="url(#land)" stroke="#10b981" strokeWidth="1" 
                         className="continent hover:brightness-110 transition-all duration-300" />
                 </g>
 
