@@ -234,20 +234,20 @@ export default function HeirloomFlowerPage() {
               </p>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">5-20%</div>
-                  <div className="text-gray-300 text-sm font-medium">THC Range</div>
+                  <div className="text-battles-gold font-bold text-xl">12-18%</div>
+                  <div className="text-gray-300 text-sm font-medium">THC Content</div>
                 </div>
                 <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">Living</div>
-                  <div className="text-gray-300 text-sm font-medium">Soil Grown</div>
+                  <div className="text-battles-gold font-bold text-xl">14-18</div>
+                  <div className="text-gray-300 text-sm font-medium">Week Flower</div>
                 </div>
                 <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">1000+</div>
-                  <div className="text-gray-300 text-sm font-medium">Years Old</div>
+                  <div className="text-battles-gold font-bold text-xl">Organic</div>
+                  <div className="text-gray-300 text-sm font-medium">Living Soil</div>
                 </div>
                 <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">Pure</div>
-                  <div className="text-gray-300 text-sm font-medium">Landrace</div>
+                  <div className="text-battles-gold font-bold text-xl">Hand</div>
+                  <div className="text-gray-300 text-sm font-medium">Trimmed</div>
                 </div>
               </div>
               <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 mb-6">
