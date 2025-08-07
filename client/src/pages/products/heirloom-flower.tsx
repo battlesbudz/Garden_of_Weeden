@@ -7,6 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Navigation from '@/components/navigation';
 import cannabisFlower1 from "@assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg";
+import worldMapImage from "@assets/Winkel_triple_projection_SW_1754600003820.jpg";
 import SEOHead from '@/components/seo/SEOHead';
 import { getCanonicalUrl, getPageTitle, getProductSchema } from '@/utils/seo';
 
@@ -331,20 +332,34 @@ export default function HeirloomFlowerPage() {
               >
                 {/* Winkel Triple Projection World Map Image */}
                 <img 
-                  src="/attached_assets/Winkel_triple_projection_SW_1754600003820.jpg"
+                  src={worldMapImage}
                   alt="World Map - Winkel Triple Projection"
                   className="w-full h-full object-cover"
                   style={{ 
                     transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
-                    transformOrigin: 'center center'
+                    transformOrigin: 'center center',
+                    backgroundColor: '#1a1a2e' // Fallback background color
+                  }}
+                  onLoad={() => console.log('Image loaded successfully')}
+                  onError={(e) => console.error('Image failed to load:', e)}
+                />
+                
+                {/* Fallback background if image doesn't load */}
+                <div 
+                  className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-700 to-blue-900"
+                  style={{ 
+                    transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
+                    transformOrigin: 'center center',
+                    zIndex: -1
                   }}
                 />
                 
                 {/* SVG Overlay for Interactive Markers */}
                 <svg 
-                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  className="absolute inset-0 w-full h-full"
                   viewBox="0 0 1400 700"
                   style={{ 
+                    pointerEvents: 'none',
                     transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
                     transformOrigin: 'center center'
                   }}
@@ -373,29 +388,31 @@ export default function HeirloomFlowerPage() {
                     }
                     
                     return (
-                      <g key={code} className="pointer-events-auto">
+                      <g key={code} style={{ pointerEvents: 'auto' }}>
                         {/* Glowing strain marker with enhanced visibility */}
                         <circle cx={x} cy={y} r="30" fill="rgba(241, 196, 15, 0.1)" stroke="#f1c40f" strokeWidth="2" opacity="0.8" />
                         <circle cx={x} cy={y} r="20" fill="rgba(241, 196, 15, 0.3)" stroke="#f39c12" strokeWidth="3" />
                         <circle cx={x} cy={y} r="12" fill="#f1c40f" stroke="#ffffff" strokeWidth="3" 
                                 className="cursor-pointer hover:scale-125 transition-all duration-300 drop-shadow-2xl"
                                 onClick={() => handleCountryClick(code)} 
-                                filter="url(#glow)" />
-                        <circle cx={x} cy={y} r="6" fill="#fef9e7" className="pointer-events-none" />
+                                style={{ pointerEvents: 'auto', filter: 'drop-shadow(0 0 10px rgba(241, 196, 15, 0.8))' }} />
+                        <circle cx={x} cy={y} r="6" fill="#fef9e7" style={{ pointerEvents: 'none' }} />
                         
                         {/* Enhanced strain labels with better contrast */}
                         <text x={x} y={y - 50} textAnchor="middle" 
-                              className="fill-white text-lg font-bold pointer-events-none"
+                              className="fill-white text-lg font-bold"
                               style={{ 
                                 textShadow: '3px 3px 6px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.8)',
-                                filter: 'drop-shadow(0 0 8px rgba(241, 196, 15, 0.6))'
+                                filter: 'drop-shadow(0 0 8px rgba(241, 196, 15, 0.6))',
+                                pointerEvents: 'none'
                               }}>
                           {data.strainName}
                         </text>
                         <text x={x} y={y - 30} textAnchor="middle" 
-                              className="fill-yellow-200 text-sm font-semibold pointer-events-none"
+                              className="fill-yellow-200 text-sm font-semibold"
                               style={{ 
-                                textShadow: '2px 2px 4px rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.7)'
+                                textShadow: '2px 2px 4px rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.7)',
+                                pointerEvents: 'none'
                               }}>
                           {data.location.split(',')[0]}
                         </text>
