@@ -650,6 +650,7 @@ export default function HeirloomFlowerPage() {
           </div>
         </div>
       </div>
+    </div>
     );
   };
 
@@ -1197,7 +1198,6 @@ export default function HeirloomFlowerPage() {
             </div>
           )}
         </div>
-      </div>
       </section>
 
       {/* Footer */}
