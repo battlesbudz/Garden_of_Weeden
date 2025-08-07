@@ -1,5 +1,6 @@
 import { MapPin, Mail, Phone, AlertTriangle } from "lucide-react";
 import logoPath from "@assets/BattlesBudz_Logo_1752301078028.png";
+import { LocationLinksFooter } from '@/components/seo/LocationLinksGenerator';
 
 export default function Footer() {
   const scrollToSection = (sectionId: string) => {
@@ -109,6 +110,15 @@ export default function Footer() {
             <p>&copy; 2024 Battles Budz USA. All rights reserved.</p>
             <p className="mt-2 sm:mt-0">Veteran-Owned Cannabis Business</p>
           </div>
+        </div>
+      </div>
+      
+      {/* Location Links for SEO */}
+      <LocationLinksFooter />
+      
+      <div className="bg-black py-4 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400 text-sm">
+          <p>&copy; 2025 Battles Budz LLC. All rights reserved. | Veteran-Owned Cannabis Business | Gloversville, NY</p>
         </div>
       </div>
     </footer>

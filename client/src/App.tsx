@@ -27,6 +27,7 @@ import PrivacyPolicy from "./pages/privacy-policy";
 import TermsOfService from "./pages/terms-of-service";
 import AgeVerification from "./pages/age-verification";
 import KeywordLandingPage from "./pages/keyword-landing";
+import LocationPage from "./pages/location/[location]";
 import { AgeVerificationModal } from "@/components/user-guide/age-verification-modal";
 import { QuickStartModal } from "@/components/user-guide/quick-start-modal";
 import { UserGuideOverlay } from "@/components/user-guide/user-guide-overlay";
@@ -69,6 +70,9 @@ function Router() {
         <Route path="/battles-buds-cannabis-gloversville" component={KeywordLandingPage} />
         <Route path="/veteran-gloversville-cannabis" component={KeywordLandingPage} />
         <Route path="/justin-battles-cannabis" component={KeywordLandingPage} />
+        
+        {/* Location-Specific SEO Pages */}
+        <Route path="/location/:location" component={LocationPage} />
 
         <Route path="/enhanced-community" component={EnhancedCommunityPage} />
         <Route path="/privacy-policy" component={PrivacyPolicy} />
