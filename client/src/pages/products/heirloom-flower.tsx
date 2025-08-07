@@ -114,7 +114,7 @@ export default function HeirloomFlowerPage() {
     setIsSubscribed(true);
     toast({
       title: "Welcome to the Cultivation Club!",
-      description: "You're now guaranteed priority access to our Spring 2025 harvest.",
+      description: "You're now guaranteed priority access to our Spring 2026 harvest.",
     });
     setEmail('');
   };
@@ -410,7 +410,7 @@ export default function HeirloomFlowerPage() {
             Secure Your Allocation Now
           </h3>
           <p className="text-gray-300 mb-6">
-            Only {waitlistCount} spots remaining for our Spring 2025 harvest
+            Only {waitlistCount} spots remaining for our Spring 2026 harvest
           </p>
           
           {!isSubscribed && (
@@ -651,7 +651,7 @@ export default function HeirloomFlowerPage() {
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 mb-8 inline-block">
             <p className="text-red-400 font-semibold">
-              ⏰ Only 247 waitlist spots remaining for Spring 2025 harvest
+              ⏰ Only 247 waitlist spots remaining for Spring 2026 harvest
             </p>
           </div>
           
@@ -667,7 +667,7 @@ export default function HeirloomFlowerPage() {
             <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-8 max-w-md mx-auto">
               <Check className="h-16 w-16 text-green-500 mx-auto mb-6" />
               <h3 className="text-2xl font-semibold text-green-500 mb-4">Welcome to the List!</h3>
-              <p className="text-gray-300 mb-4">You're now guaranteed priority access to our Spring 2025 harvest.</p>
+              <p className="text-gray-300 mb-4">You're now guaranteed priority access to our Spring 2026 harvest.</p>
               <div className="bg-battles-gold/10 border border-battles-gold/30 rounded-lg p-4">
                 <p className="text-battles-gold font-semibold">Your Benefits:</p>
                 <ul className="text-gray-300 text-sm mt-2 space-y-1">
