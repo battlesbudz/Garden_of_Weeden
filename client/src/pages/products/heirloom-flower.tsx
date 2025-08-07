@@ -220,18 +220,8 @@ export default function HeirloomFlowerPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-playfair font-bold mb-8 leading-tight">
-                <div className="relative inline-block">
-                  <span className="bg-gradient-to-r from-battles-gold via-yellow-400 to-battles-gold bg-clip-text text-transparent animate-pulse">
-                    Heirloom
-                  </span>
-                  <div className="absolute -inset-1 bg-gradient-to-r from-battles-gold/20 to-yellow-400/20 blur-lg opacity-30 animate-pulse"></div>
-                </div>
-                <br />
-                <span className="text-white drop-shadow-2xl relative">
-                  Flower
-                  <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-battles-gold to-transparent opacity-60 animate-pulse"></div>
-                </span>
+              <h1 className="text-5xl md:text-6xl font-playfair font-bold mb-6">
+                <span className="text-battles-gold">Heirloom</span> Flower
               </h1>
               <p className="text-2xl font-bold text-white mb-6">
                 The world's oldest cannabis, grown with modern reverence
