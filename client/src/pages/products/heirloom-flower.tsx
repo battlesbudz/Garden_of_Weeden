@@ -240,34 +240,33 @@ export default function HeirloomFlowerPage() {
     if (e.touches.length === 2) {
       e.preventDefault();
       
-      // Only initialize if not already in a pinch gesture
-      if (!isPinching && !gestureStateRef.current.isActive) {
-        setIsPinching(true);
-        setIsDragging(false);
-        
-        const touch1 = e.touches[0];
-        const touch2 = e.touches[1];
-        
-        const distance = Math.sqrt(
-          Math.pow(touch2.clientX - touch1.clientX, 2) + 
-          Math.pow(touch2.clientY - touch1.clientY, 2)
-        );
-        
-        // Initialize gesture state with current distance as baseline
-        gestureStateRef.current = {
-          isActive: true,
-          startDistance: distance,
-          startScale: transform.scale
-        };
-        
-        console.log('Pinch started:', { 
-          distance: Math.round(distance), 
-          scale: transform.scale.toFixed(3)
-        });
-      }
-    } else if (e.touches.length === 1 && !isPinching) {
-      // Single touch - prepare for potential drag
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      
+      const distance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) + 
+        Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+      
+      // Always reinitialize for reliable tracking
+      setIsPinching(true);
       setIsDragging(false);
+      
+      gestureStateRef.current = {
+        isActive: true,
+        startDistance: distance,
+        startScale: transform.scale
+      };
+      
+      console.log('Pinch started:', { 
+        distance: Math.round(distance), 
+        scale: transform.scale.toFixed(3)
+      });
+    } else if (e.touches.length === 1) {
+      // Single touch - potential drag if not pinching
+      if (!isPinching) {
+        setIsDragging(false);
+      }
     }
   };
 
@@ -287,25 +286,19 @@ export default function HeirloomFlowerPage() {
       const startDistance = gestureStateRef.current.startDistance;
       const startScale = gestureStateRef.current.startScale;
       
-      // Calculate change in distance from start of gesture
-      const distanceChange = currentDistance - startDistance;
-      const sensitivity = 0.015; // Increased sensitivity for more responsive zoom
+      // Use simple ratio-based zoom for consistent behavior
+      const distanceRatio = currentDistance / startDistance;
       
-      // Apply linear zoom change based on distance change
-      // Negative change (pinching) = zoom in (increase scale)
-      // Positive change (spreading) = zoom out (decrease scale)
-      let targetScale = startScale - (distanceChange * sensitivity);
+      // Direct proportional zoom - natural pinch behavior
+      // When distance decreases (ratio < 1): zoom in (increase scale)  
+      // When distance increases (ratio > 1): zoom out (decrease scale)
+      let newScale = startScale / distanceRatio;
       
       // Clamp the scale to reasonable bounds
-      targetScale = Math.max(0.3, Math.min(4, targetScale));
-      
-      // Minimal smoothing for immediate response
-      const smoothingFactor = 0.6; // High responsiveness with slight smoothing
-      let newScale = transform.scale + (targetScale - transform.scale) * smoothingFactor;
+      newScale = Math.max(0.3, Math.min(4, newScale));
       
 
-      
-      // Update on ANY meaningful change for continuous zoom
+      // Update on ANY change for immediate continuous zoom
       if (Math.abs(newScale - transform.scale) > 0.001) {
         // Get container bounds for center calculation
         const rect = containerRef.current?.getBoundingClientRect();
