@@ -371,8 +371,8 @@ export default function HeirloomFlowerPage() {
                   <div className="text-gray-300 text-sm font-medium">Week Sativas</div>
                 </div>
                 <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">LED</div>
-                  <div className="text-gray-300 text-sm font-medium">Precision</div>
+                  <div className="text-battles-gold font-bold text-xl">Indoor</div>
+                  <div className="text-gray-300 text-sm font-medium">Cultivation</div>
                 </div>
                 <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
                   <div className="text-battles-gold font-bold text-xl">Living</div>
