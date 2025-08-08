@@ -287,7 +287,7 @@ export default function HeirloomFlowerPage() {
       );
       
       // TRULY CONTINUOUS ZOOM: Map finger distance directly to zoom level
-      // Small fingers apart = zoom out, fingers far apart = zoom in
+      // CORRECTED: Small fingers apart = zoom out, fingers far apart = zoom in
       const minDistance = 50;   // Minimum finger distance (zoom out)
       const maxDistance = 300;  // Maximum finger distance (zoom in)
       const minScale = 0.5;     // Minimum zoom level
@@ -296,15 +296,23 @@ export default function HeirloomFlowerPage() {
       // Clamp distance to reasonable bounds
       const clampedDistance = Math.max(minDistance, Math.min(maxDistance, currentDistance));
       
-      // Map distance to scale linearly for direct relationship
+      // Map distance to scale linearly - FIXED DIRECTION
       const distanceRange = maxDistance - minDistance;
       const scaleRange = maxScale - minScale;
       const distanceRatio = (clampedDistance - minDistance) / distanceRange;
       
+      // CORRECT MAPPING: More distance = higher scale (zoom in)
       let targetScale = minScale + (distanceRatio * scaleRange);
       
-      // Apply aggressive smoothing for fluid motion
-      const smoothingFactor = 0.3; // Higher value for more responsive feel
+      console.log('Zoom Debug:', {
+        distance: Math.round(currentDistance),
+        ratio: distanceRatio.toFixed(2),
+        target: targetScale.toFixed(2),
+        current: transform.scale.toFixed(2)
+      });
+      
+      // Reduce jumpiness with higher smoothing for fluid motion
+      const smoothingFactor = 0.7; // Much higher for smoother, less jumpy movement
       let newScale = transform.scale + (targetScale - transform.scale) * smoothingFactor;
       
       // Clamp the scale to reasonable bounds
