@@ -121,6 +121,7 @@ export default function HeirloomFlowerPage() {
   // Touch/pinch zoom state
   const [isPinching, setIsPinching] = useState(false);
   const pinchStartRef = useRef({ distance: 0, scale: 1, centerX: 0, centerY: 0 });
+  const lastPinchTime = useRef(0);
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -262,6 +263,11 @@ export default function HeirloomFlowerPage() {
     if (e.touches.length === 2 && isPinching) {
       e.preventDefault();
       
+      // Throttle pinch events for better performance but still responsive
+      const now = Date.now();
+      if (now - lastPinchTime.current < 5) return; // Very minimal throttling
+      lastPinchTime.current = now;
+      
       const touch1 = e.touches[0];
       const touch2 = e.touches[1];
       
@@ -272,8 +278,8 @@ export default function HeirloomFlowerPage() {
       
       // More responsive pinch scaling
       const scaleChange = distance / pinchStartRef.current.distance;
-      // Amplify the scale change for better responsiveness
-      const amplifiedChange = 1 + (scaleChange - 1) * 1.5;
+      // Much higher amplification for better touch responsiveness
+      const amplifiedChange = 1 + (scaleChange - 1) * 4;
       const newScale = Math.max(0.3, Math.min(4, pinchStartRef.current.scale * amplifiedChange));
       
       // Get container bounds for center calculation
