@@ -17,7 +17,7 @@ const landraceStrains = [
   {
     name: "Malawi Gold",
     location: "Malawi, Southeast Africa",
-    coordinates: { x: 58, y: 65 }, // Eastern Africa
+    coordinates: { x: 55, y: 68 }, // Eastern Africa - Malawi position
     notes: "Energetic, cerebral, spicy aroma with soaring effects",
     thc: "14-18%",
     cbd: "2-4%",
@@ -26,7 +26,7 @@ const landraceStrains = [
   {
     name: "Thai Stick",
     location: "Northern Thailand",
-    coordinates: { x: 72, y: 55 }, // Southeast Asia
+    coordinates: { x: 71, y: 52 }, // Southeast Asia - Thailand position
     notes: "Long flowering, citrus incense profile with creative clarity",
     thc: "12-16%",
     cbd: "3-6%",
@@ -35,7 +35,7 @@ const landraceStrains = [
   {
     name: "Afghan Kush",
     location: "Hindu Kush Mountains, Afghanistan",
-    coordinates: { x: 64, y: 48 }, // Central Asia
+    coordinates: { x: 62, y: 45 }, // Central Asia - Afghanistan position
     notes: "Broad-leaf, hash-heavy, calming body effects",
     thc: "15-20%",
     cbd: "4-8%",
@@ -44,7 +44,7 @@ const landraceStrains = [
   {
     name: "Colombian Gold",
     location: "Santa Marta Mountains, Colombia",
-    coordinates: { x: 28, y: 58 }, // Northern South America
+    coordinates: { x: 24, y: 55 }, // Northern South America - Colombia position
     notes: "Uplifting sativa with golden pistils and sweet earth tones",
     thc: "13-17%",
     cbd: "2-5%",
@@ -53,7 +53,7 @@ const landraceStrains = [
   {
     name: "Aceh",
     location: "Sumatra, Indonesia", 
-    coordinates: { x: 74, y: 62 }, // Indonesia archipelago
+    coordinates: { x: 73, y: 60 }, // Indonesia archipelago - Sumatra position
     notes: "Earthy, woody flavor with balanced relaxing effects",
     thc: "16-22%",
     cbd: "3-7%",
@@ -62,7 +62,7 @@ const landraceStrains = [
   {
     name: "Durban Poison",
     location: "Durban, South Africa",
-    coordinates: { x: 56, y: 72 }, // Southern Africa coast
+    coordinates: { x: 54, y: 74 }, // Southern Africa coast - Durban position
     notes: "Sweet anise aroma with energizing, clear-headed effects",
     thc: "15-25%",
     cbd: "1-3%",
@@ -123,217 +123,11 @@ export default function HeirloomFlowerPage() {
     inStock: false
   });
 
-  // Zoom controls component using react-zoom-pan-pinch
 
 
-  // Simplified mouse and touch handlers
-  const handlePointerDown = (e: React.PointerEvent) => {
-    // Don't handle pointer events during pinch gestures
-    if (isPinching) return;
-    
-    e.preventDefault();
-    setIsDragging(true);
-    dragStartRef.current = {
-      x: transform.x,
-      y: transform.y,
-      clientX: e.clientX,
-      clientY: e.clientY
-    };
-    
-    // Capture pointer for smooth dragging
-    if (containerRef.current) {
-      containerRef.current.setPointerCapture(e.pointerId);
-    }
-  };
 
-  const handlePointerMove = (e: React.PointerEvent) => {
-    // Don't handle pointer events during pinch gestures
-    if (!isDragging || isPinching) return;
-    e.preventDefault();
-    
-    const deltaX = e.clientX - dragStartRef.current.clientX;
-    const deltaY = e.clientY - dragStartRef.current.clientY;
-    
-    setTransform(prev => ({
-      ...prev,
-      x: dragStartRef.current.x + deltaX,
-      y: dragStartRef.current.y + deltaY
-    }));
-  };
 
-  const handlePointerUp = (e: React.PointerEvent) => {
-    setIsDragging(false);
-    if (containerRef.current) {
-      containerRef.current.releasePointerCapture(e.pointerId);
-    }
-  };
 
-  // Mouse move is now handled globally - no need for container-specific handler
-
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    
-    // Throttle wheel events to prevent glitchy behavior
-    const now = Date.now();
-    if (now - lastWheelTime.current < 8) return; // ~120fps limit for more responsiveness
-    lastWheelTime.current = now;
-    
-    // Get the mouse position relative to the container
-    const rect = e.currentTarget.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    
-    // Calculate zoom factor with better responsiveness
-    const zoomIntensity = Math.min(Math.abs(e.deltaY) / 100, 1) * 0.2;
-    const zoomFactor = e.deltaY > 0 ? (1 - zoomIntensity) : (1 + zoomIntensity);
-    const newScale = Math.max(0.3, Math.min(4, transform.scale * zoomFactor));
-    
-    // Only update if scale actually changes
-    if (Math.abs(newScale - transform.scale) < 0.001) return;
-    
-    // Calculate the zoom center offset
-    const scaleChange = newScale - transform.scale;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    // Adjust position to zoom towards mouse cursor
-    const newX = transform.x - (mouseX - centerX) * (scaleChange / transform.scale);
-    const newY = transform.y - (mouseY - centerY) * (scaleChange / transform.scale);
-    
-    setTransform({
-      x: newX,
-      y: newY,
-      scale: newScale
-    });
-  };
-
-  // Touch event handlers for pinch zoom
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length === 2) {
-      e.preventDefault();
-      
-      const touch1 = e.touches[0];
-      const touch2 = e.touches[1];
-      
-      const distance = Math.sqrt(
-        Math.pow(touch2.clientX - touch1.clientX, 2) + 
-        Math.pow(touch2.clientY - touch1.clientY, 2)
-      );
-      
-      // Only initialize if not already pinching to prevent restart spam
-      if (!isPinching) {
-        setIsPinching(true);
-        setIsDragging(false);
-        
-        gestureStateRef.current = {
-          isActive: true,
-          previousDistance: distance,
-          currentScale: transform.scale,
-          lastZoomDirection: 0
-        };
-        
-        console.log('Pinch started:', { 
-          distance: Math.round(distance), 
-          scale: transform.scale.toFixed(3)
-        });
-      }
-    } else if (e.touches.length === 1) {
-      // Single touch - potential drag if not pinching
-      if (!isPinching) {
-        setIsDragging(false);
-      }
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length === 2 && isPinching && gestureStateRef.current.isActive) {
-      e.preventDefault();
-      
-      const touch1 = e.touches[0];
-      const touch2 = e.touches[1];
-      
-      const currentDistance = Math.sqrt(
-        Math.pow(touch2.clientX - touch1.clientX, 2) + 
-        Math.pow(touch2.clientY - touch1.clientY, 2)
-      );
-      
-      // CONTINUOUS TRACKING: Compare to previous frame, not start
-      const previousDistance = gestureStateRef.current.previousDistance;
-      const distanceChange = currentDistance - previousDistance;
-      
-      // Apply incremental zoom for meaningful movement only
-      if (Math.abs(distanceChange) > 0.5) { // Filter out noise/jitter
-        // Calculate zoom factor with clamped sensitivity to prevent jumps
-        // Positive change (spreading) = zoom in, negative (pinching) = zoom out
-        const clampedChange = Math.max(-10, Math.min(10, distanceChange)); // Limit extreme changes
-        const currentDirection = Math.sign(clampedChange);
-        
-        // Apply directional smoothing to prevent erratic reversals
-        const lastDirection = gestureStateRef.current.lastZoomDirection;
-        if (lastDirection !== 0 && currentDirection !== lastDirection) {
-          // Skip this frame if direction suddenly reverses to prevent jitter
-          return;
-        }
-        
-        const sensitivity = 0.008; // Balanced sensitivity for stable response
-        const zoomFactor = 1 + (clampedChange * sensitivity);
-        
-        // Apply zoom to current scale
-        let newScale = gestureStateRef.current.currentScale * zoomFactor;
-        
-        // Clamp the scale to reasonable bounds
-        newScale = Math.max(0.3, Math.min(4, newScale));
-        
-        // Get container bounds for center calculation
-        const rect = containerRef.current?.getBoundingClientRect();
-        if (!rect) return;
-        
-        // Calculate zoom center offset
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const pinchCenterX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
-        const pinchCenterY = (touch1.clientY + touch2.clientY) / 2 - rect.top;
-        
-        // Adjust position to zoom towards pinch center
-        const scaleRatioChange = newScale / transform.scale;
-        const newX = transform.x - (pinchCenterX - centerX) * (scaleRatioChange - 1);
-        const newY = transform.y - (pinchCenterY - centerY) * (scaleRatioChange - 1);
-        
-        // Update transform state
-        setTransform({
-          x: newX,
-          y: newY,
-          scale: newScale
-        });
-        
-        // Update tracking for next frame
-        gestureStateRef.current.previousDistance = currentDistance;
-        gestureStateRef.current.currentScale = newScale;
-        gestureStateRef.current.lastZoomDirection = currentDirection;
-        
-        console.log('Continuous zoom:', {
-          change: distanceChange.toFixed(1),
-          factor: zoomFactor.toFixed(3),
-          scale: newScale.toFixed(3)
-        });
-      }
-    }
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (e.touches.length < 2) {
-      console.log('Gesture ended, final scale:', transform.scale.toFixed(3));
-      // Complete reset to prevent state conflicts
-      setIsPinching(false);
-      setIsDragging(false);
-      gestureStateRef.current = { 
-        isActive: false, 
-        previousDistance: 0, 
-        currentScale: transform.scale,
-        lastZoomDirection: 0
-      };
-    }
-  };
 
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -383,7 +177,10 @@ export default function HeirloomFlowerPage() {
                 wrapperClass="!w-full !h-96"
                 contentClass="!w-full !h-full"
               >
-                <div className="relative w-full h-full min-w-[800px] min-h-[400px]">
+                <div 
+                  className="relative w-full h-full min-w-[800px] min-h-[400px]"
+                  onClick={() => setSelectedStrain(null)}
+                >
                   <img
                     src={worldMapImage}
                     alt="World Map with Cannabis Origins"
@@ -395,18 +192,20 @@ export default function HeirloomFlowerPage() {
                   {landraceStrains.map((strain, index) => (
                     <div
                       key={strain.name}
-                      className={`absolute w-4 h-4 -ml-2 -mt-2 cursor-pointer transition-all duration-200 ${
+                      className={`absolute w-4 h-4 -ml-2 -mt-2 cursor-pointer transition-all duration-200 z-20 ${
                         selectedStrain === index 
-                          ? 'w-6 h-6 -ml-3 -mt-3 z-10' 
+                          ? 'w-6 h-6 -ml-3 -mt-3' 
                           : 'hover:w-5 hover:h-5 hover:-ml-2.5 hover:-mt-2.5'
                       }`}
                       style={{
                         left: `${strain.coordinates.x}%`,
                         top: `${strain.coordinates.y}%`,
+                        transform: 'translate(-50%, -50%)'
                       }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setSelectedStrain(index);
+                        e.preventDefault();
+                        setSelectedStrain(selectedStrain === index ? null : index);
                       }}
                     >
                       <div className={`w-full h-full rounded-full border-2 border-white shadow-lg ${
@@ -414,9 +213,49 @@ export default function HeirloomFlowerPage() {
                           ? 'bg-battles-gold animate-pulse'
                           : 'bg-yellow-500 hover:bg-battles-gold'
                       }`} />
+                      
+                      {/* Strain Info Popup Overlay */}
                       {selectedStrain === index && (
-                        <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-black/90 text-white text-xs px-2 py-1 rounded whitespace-nowrap border border-battles-gold/50">
-                          {strain.name}
+                        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-black/95 backdrop-blur-sm text-white rounded-lg p-4 min-w-[280px] border border-battles-gold/50 shadow-xl z-30">
+                          <div className="flex items-start justify-between mb-3">
+                            <div>
+                              <h4 className="text-lg font-semibold text-battles-gold mb-1">
+                                {strain.name}
+                              </h4>
+                              <p className="text-gray-300 text-sm">{strain.location}</p>
+                            </div>
+                            <button 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedStrain(null);
+                              }}
+                              className="text-gray-400 hover:text-white text-lg"
+                            >
+                              ×
+                            </button>
+                          </div>
+                          
+                          <div className="flex gap-2 mb-3">
+                            <div className="text-center bg-black/50 rounded px-2 py-1 min-w-[50px]">
+                              <div className="text-battles-gold font-semibold text-xs">THC</div>
+                              <div className="text-white text-xs">{strain.thc}</div>
+                            </div>
+                            <div className="text-center bg-black/50 rounded px-2 py-1 min-w-[50px]">
+                              <div className="text-battles-gold font-semibold text-xs">CBD</div>
+                              <div className="text-white text-xs">{strain.cbd}</div>
+                            </div>
+                            <div className="text-center bg-black/50 rounded px-2 py-1 min-w-[60px]">
+                              <div className="text-battles-gold font-semibold text-xs">Flower</div>
+                              <div className="text-white text-xs">{strain.flowering}</div>
+                            </div>
+                          </div>
+                          
+                          <p className="text-gray-300 text-sm leading-relaxed">
+                            {strain.notes}
+                          </p>
+                          
+                          {/* Arrow pointing to marker */}
+                          <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-black/95 border-l border-t border-battles-gold/50 rotate-45"></div>
                         </div>
                       )}
                     </div>
@@ -441,40 +280,9 @@ export default function HeirloomFlowerPage() {
           {/* Instructions */}
           <div className="flex items-center justify-center mt-4 text-sm text-gray-400">
             <MapPin className="h-4 w-4 mr-2 text-battles-gold" />
-            <span>Click markers to explore strain details • Use pinch gestures or zoom controls for smooth navigation</span>
+            <span>Click markers to explore strain details • Use pinch gestures to zoom and pan smoothly</span>
           </div>
         </div>
-        
-        {/* Strain Information Panel */}
-        {selectedStrain !== null && (
-          <div className="mt-6 bg-gray-900 rounded-lg p-6 border border-battles-gold/20">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h4 className="text-xl font-semibold text-battles-gold">
-                  {landraceStrains[selectedStrain].name}
-                </h4>
-                <p className="text-gray-400">{landraceStrains[selectedStrain].location}</p>
-              </div>
-              <div className="flex gap-2">
-                <div className="text-center bg-black/50 rounded-lg px-3 py-2 min-w-[60px]">
-                  <div className="text-battles-gold font-semibold text-sm">THC</div>
-                  <div className="text-white text-xs">{landraceStrains[selectedStrain].thc}</div>
-                </div>
-                <div className="text-center bg-black/50 rounded-lg px-3 py-2 min-w-[60px]">
-                  <div className="text-battles-gold font-semibold text-sm">CBD</div>
-                  <div className="text-white text-xs">{landraceStrains[selectedStrain].cbd}</div>
-                </div>
-                <div className="text-center bg-black/50 rounded-lg px-3 py-2 min-w-[80px]">
-                  <div className="text-battles-gold font-semibold text-sm">Flower</div>
-                  <div className="text-white text-xs">{landraceStrains[selectedStrain].flowering}</div>
-                </div>
-              </div>
-            </div>
-            <p className="text-gray-300 leading-relaxed">
-              {landraceStrains[selectedStrain].notes}
-            </p>
-          </div>
-        )}
       </div>
     );
   };
