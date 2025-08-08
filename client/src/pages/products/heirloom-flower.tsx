@@ -248,19 +248,25 @@ export default function HeirloomFlowerPage() {
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
-      const centerX = (touch1.clientX + touch2.clientX) / 2;
-      const centerY = (touch1.clientY + touch2.clientY) / 2;
-      
-      // Only set the reference once per gesture
-      pinchStartRef.current = {
-        distance,
-        scale: transform.scale,
-        centerX,
-        centerY
-      };
-      lastPinchDistance.current = distance;
-      
-      console.log('Pinch started with distance:', distance);
+      // Only start pinch if fingers are reasonably far apart (prevents micro-gestures)
+      if (distance > 50) {
+        const centerX = (touch1.clientX + touch2.clientX) / 2;
+        const centerY = (touch1.clientY + touch2.clientY) / 2;
+        
+        // Only set the reference once per gesture
+        pinchStartRef.current = {
+          distance,
+          scale: transform.scale,
+          centerX,
+          centerY
+        };
+        lastPinchDistance.current = distance;
+        
+        console.log('Pinch started with distance:', Math.round(distance));
+      } else {
+        // Reset pinching if distance too small
+        setIsPinching(false);
+      }
     }
   };
 
@@ -279,18 +285,24 @@ export default function HeirloomFlowerPage() {
       // Calculate zoom based on distance ratio for more stable behavior
       const distanceRatio = currentDistance / pinchStartRef.current.distance;
       
-      // Apply more sensitive and accurate scaling
+      // Ignore extreme ratio changes that indicate gesture detection errors
+      if (distanceRatio > 5 || distanceRatio < 0.2) {
+        console.log('Ignoring extreme distance ratio:', distanceRatio);
+        return; // Skip this update
+      }
+      
+      // Apply more sensitive and accurate scaling with smaller amplification
       let scaleMultiplier = distanceRatio;
       
       // Add sensitivity threshold to prevent accidental direction switches
-      const changeThreshold = 0.05; // 5% minimum change required
+      const changeThreshold = 0.1; // 10% minimum change required for clearer detection
       
       if (distanceRatio > (1 + changeThreshold)) {
-        // Clear zoom in - amplify moderately
-        scaleMultiplier = 1 + (distanceRatio - 1) * 1.2;
+        // Clear zoom in - moderate amplification
+        scaleMultiplier = 1 + (distanceRatio - 1) * 0.8;
       } else if (distanceRatio < (1 - changeThreshold)) {
-        // Clear zoom out - amplify moderately  
-        scaleMultiplier = Math.max(0.2, 1 - (1 - distanceRatio) * 1.2);
+        // Clear zoom out - moderate amplification  
+        scaleMultiplier = Math.max(0.3, 1 - (1 - distanceRatio) * 0.8);
       } else {
         // Small changes - use direct ratio to prevent jumps
         scaleMultiplier = distanceRatio;
