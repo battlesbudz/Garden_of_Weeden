@@ -127,7 +127,8 @@ export default function HeirloomFlowerPage() {
   const gestureStateRef = useRef({ 
     isActive: false, 
     previousDistance: 0,
-    currentScale: 2 // Start at current scale
+    currentScale: 2, // Start at current scale
+    lastZoomDirection: 0 // Track zoom direction for stability
   });
 
   const productStructuredData = getProductSchema({
@@ -260,7 +261,8 @@ export default function HeirloomFlowerPage() {
         gestureStateRef.current = {
           isActive: true,
           previousDistance: distance,
-          currentScale: transform.scale
+          currentScale: transform.scale,
+          lastZoomDirection: 0
         };
         
         console.log('Pinch started:', { 
@@ -292,12 +294,22 @@ export default function HeirloomFlowerPage() {
       const previousDistance = gestureStateRef.current.previousDistance;
       const distanceChange = currentDistance - previousDistance;
       
-      // Apply incremental zoom for every pixel of movement
-      if (Math.abs(distanceChange) > 0.005) { // Maximum sensitivity for immediate response
-        // Calculate zoom factor based on distance change
+      // Apply incremental zoom for meaningful movement only
+      if (Math.abs(distanceChange) > 0.5) { // Filter out noise/jitter
+        // Calculate zoom factor with clamped sensitivity to prevent jumps
         // Positive change (spreading) = zoom in, negative (pinching) = zoom out
-        const sensitivity = 0.02; // Much higher sensitivity for fast response
-        const zoomFactor = 1 + (distanceChange * sensitivity);
+        const clampedChange = Math.max(-10, Math.min(10, distanceChange)); // Limit extreme changes
+        const currentDirection = Math.sign(clampedChange);
+        
+        // Apply directional smoothing to prevent erratic reversals
+        const lastDirection = gestureStateRef.current.lastZoomDirection;
+        if (lastDirection !== 0 && currentDirection !== lastDirection) {
+          // Skip this frame if direction suddenly reverses to prevent jitter
+          return;
+        }
+        
+        const sensitivity = 0.008; // Balanced sensitivity for stable response
+        const zoomFactor = 1 + (clampedChange * sensitivity);
         
         // Apply zoom to current scale
         let newScale = gestureStateRef.current.currentScale * zoomFactor;
@@ -330,6 +342,7 @@ export default function HeirloomFlowerPage() {
         // Update tracking for next frame
         gestureStateRef.current.previousDistance = currentDistance;
         gestureStateRef.current.currentScale = newScale;
+        gestureStateRef.current.lastZoomDirection = currentDirection;
         
         console.log('Continuous zoom:', {
           change: distanceChange.toFixed(1),
@@ -349,7 +362,8 @@ export default function HeirloomFlowerPage() {
       gestureStateRef.current = { 
         isActive: false, 
         previousDistance: 0, 
-        currentScale: transform.scale 
+        currentScale: transform.scale,
+        lastZoomDirection: 0
       };
     }
   };
