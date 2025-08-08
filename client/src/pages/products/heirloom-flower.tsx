@@ -289,7 +289,7 @@ export default function HeirloomFlowerPage() {
       
       // Calculate relative change from start of gesture
       const distanceRatio = currentDistance / startDistance;
-      const sensitivity = 1.2; // Moderate sensitivity for stable zoom
+      const sensitivity = 1.5; // Increased sensitivity for more responsive zoom
       
       // Apply zoom relative to starting point (CORRECT direction)
       // Larger distance ratio = larger scale (zoom in)
@@ -299,11 +299,18 @@ export default function HeirloomFlowerPage() {
       // Clamp the scale to reasonable bounds
       newScale = Math.max(0.3, Math.min(4, newScale));
       
-      // Apply smoothing to reduce jerkiness
-      const smoothingFactor = 0.8; // High smoothing for stability
+      // Reduce smoothing for more immediate response
+      const smoothingFactor = 0.3; // Lower smoothing for more responsive feel
       newScale = transform.scale + (newScale - transform.scale) * smoothingFactor;
       
-      // Update on meaningful changes only
+      console.log('Zoom move:', {
+        distance: Math.round(currentDistance),
+        ratio: distanceRatio.toFixed(2),
+        newScale: newScale.toFixed(2),
+        currentScale: transform.scale.toFixed(2)
+      });
+      
+      // Update on ANY meaningful change for continuous zoom
       if (Math.abs(newScale - transform.scale) > 0.001) {
         // Get container bounds for center calculation
         const rect = containerRef.current?.getBoundingClientRect();
@@ -327,6 +334,12 @@ export default function HeirloomFlowerPage() {
           scale: newScale
         });
       }
+    } else {
+      console.log('Touch move conditions not met:', {
+        touchCount: e.touches.length,
+        isPinching,
+        gestureActive: gestureStateRef.current.isActive
+      });
     }
   };
 
