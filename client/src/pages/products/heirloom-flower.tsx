@@ -160,10 +160,10 @@ export default function HeirloomFlowerPage() {
           {/* Professional Interactive World Map with react-zoom-pan-pinch */}
           <div className="relative bg-slate-800 rounded-lg overflow-hidden border border-battles-gold/30">
             <TransformWrapper
-              initialScale={1.2}
+              initialScale={0.9}
               initialPositionX={0}
               initialPositionY={0}
-              minScale={0.5}
+              minScale={0.4}
               maxScale={4}
               limitToBounds={false}
               centerOnInit={true}
@@ -216,46 +216,46 @@ export default function HeirloomFlowerPage() {
                       
                       {/* Strain Info Popup Overlay */}
                       {selectedStrain === index && (
-                        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-black/95 backdrop-blur-sm text-white rounded-lg p-4 min-w-[280px] border border-battles-gold/50 shadow-xl z-30">
-                          <div className="flex items-start justify-between mb-3">
+                        <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-black/95 backdrop-blur-sm text-white rounded-lg p-3 w-[220px] border border-battles-gold/50 shadow-xl z-30">
+                          <div className="flex items-start justify-between mb-2">
                             <div>
-                              <h4 className="text-lg font-semibold text-battles-gold mb-1">
+                              <h4 className="text-sm font-semibold text-battles-gold mb-1">
                                 {strain.name}
                               </h4>
-                              <p className="text-gray-300 text-sm">{strain.location}</p>
+                              <p className="text-gray-300 text-xs">{strain.location}</p>
                             </div>
                             <button 
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedStrain(null);
                               }}
-                              className="text-gray-400 hover:text-white text-lg"
+                              className="text-gray-400 hover:text-white text-sm leading-none"
                             >
                               ×
                             </button>
                           </div>
                           
-                          <div className="flex gap-2 mb-3">
-                            <div className="text-center bg-black/50 rounded px-2 py-1 min-w-[50px]">
+                          <div className="flex gap-1 mb-2">
+                            <div className="text-center bg-black/50 rounded px-1.5 py-1 flex-1">
                               <div className="text-battles-gold font-semibold text-xs">THC</div>
                               <div className="text-white text-xs">{strain.thc}</div>
                             </div>
-                            <div className="text-center bg-black/50 rounded px-2 py-1 min-w-[50px]">
+                            <div className="text-center bg-black/50 rounded px-1.5 py-1 flex-1">
                               <div className="text-battles-gold font-semibold text-xs">CBD</div>
                               <div className="text-white text-xs">{strain.cbd}</div>
                             </div>
-                            <div className="text-center bg-black/50 rounded px-2 py-1 min-w-[60px]">
+                            <div className="text-center bg-black/50 rounded px-1.5 py-1 flex-1">
                               <div className="text-battles-gold font-semibold text-xs">Flower</div>
                               <div className="text-white text-xs">{strain.flowering}</div>
                             </div>
                           </div>
                           
-                          <p className="text-gray-300 text-sm leading-relaxed">
+                          <p className="text-gray-300 text-xs leading-relaxed">
                             {strain.notes}
                           </p>
                           
                           {/* Arrow pointing to marker */}
-                          <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-black/95 border-l border-t border-battles-gold/50 rotate-45"></div>
+                          <div className="absolute -top-1.5 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-black/95 border-l border-t border-battles-gold/50 rotate-45"></div>
                         </div>
                       )}
                     </div>
