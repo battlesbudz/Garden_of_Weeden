@@ -124,7 +124,11 @@ export default function HeirloomFlowerPage() {
   const lastPinchTime = useRef(0);
   const lastPinchDistance = useRef(0);
   const continuousZoomRef = useRef({ lastDistance: 0, lastScale: 1 });
-  const gestureStateRef = useRef({ isActive: false, startDistance: 0, startScale: 1 });
+  const gestureStateRef = useRef({ 
+    isActive: false, 
+    previousDistance: 0,
+    currentScale: 2 // Start at current scale
+  });
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -248,22 +252,20 @@ export default function HeirloomFlowerPage() {
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
-      // Only initialize if not already pinching to prevent restart spam
-      if (!isPinching) {
-        setIsPinching(true);
-        setIsDragging(false);
-        
-        gestureStateRef.current = {
-          isActive: true,
-          startDistance: distance,
-          startScale: transform.scale
-        };
-        
-        console.log('Pinch started:', { 
-          distance: Math.round(distance), 
-          scale: transform.scale.toFixed(3)
-        });
-      }
+      // Initialize continuous tracking
+      setIsPinching(true);
+      setIsDragging(false);
+      
+      gestureStateRef.current = {
+        isActive: true,
+        previousDistance: distance,
+        currentScale: transform.scale
+      };
+      
+      console.log('Pinch started:', { 
+        distance: Math.round(distance), 
+        scale: transform.scale.toFixed(3)
+      });
     } else if (e.touches.length === 1) {
       // Single touch - potential drag if not pinching
       if (!isPinching) {
@@ -284,24 +286,23 @@ export default function HeirloomFlowerPage() {
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
-      // Use RELATIVE zoom based on gesture start distance for consistency
-      const startDistance = gestureStateRef.current.startDistance;
-      const startScale = gestureStateRef.current.startScale;
+      // CONTINUOUS TRACKING: Compare to previous frame, not start
+      const previousDistance = gestureStateRef.current.previousDistance;
+      const distanceChange = currentDistance - previousDistance;
       
-      // Use simple ratio-based zoom for correct behavior
-      const distanceRatio = currentDistance / startDistance;
-      
-      // Fixed zoom direction: 
-      // When distance increases (spreading fingers): zoom in (increase scale)  
-      // When distance decreases (pinching fingers): zoom out (decrease scale)
-      let newScale = startScale * distanceRatio;
-      
-      // Clamp the scale to reasonable bounds
-      newScale = Math.max(0.3, Math.min(4, newScale));
-      
-
-      // Update on ANY change for immediate continuous zoom
-      if (Math.abs(newScale - transform.scale) > 0.001) {
+      // Apply incremental zoom for every pixel of movement
+      if (Math.abs(distanceChange) > 0.01) { // Ultra-sensitive for continuous response
+        // Calculate zoom factor based on distance change
+        // Positive change (spreading) = zoom in, negative (pinching) = zoom out
+        const sensitivity = 0.006; // Higher sensitivity for more responsive zoom
+        const zoomFactor = 1 + (distanceChange * sensitivity);
+        
+        // Apply zoom to current scale
+        let newScale = gestureStateRef.current.currentScale * zoomFactor;
+        
+        // Clamp the scale to reasonable bounds
+        newScale = Math.max(0.3, Math.min(4, newScale));
+        
         // Get container bounds for center calculation
         const rect = containerRef.current?.getBoundingClientRect();
         if (!rect) return;
@@ -323,6 +324,16 @@ export default function HeirloomFlowerPage() {
           y: newY,
           scale: newScale
         });
+        
+        // Update tracking for next frame
+        gestureStateRef.current.previousDistance = currentDistance;
+        gestureStateRef.current.currentScale = newScale;
+        
+        console.log('Continuous zoom:', {
+          change: distanceChange.toFixed(1),
+          factor: zoomFactor.toFixed(3),
+          scale: newScale.toFixed(3)
+        });
       }
     }
   };
@@ -333,7 +344,11 @@ export default function HeirloomFlowerPage() {
       // Complete reset to prevent state conflicts
       setIsPinching(false);
       setIsDragging(false);
-      gestureStateRef.current = { isActive: false, startDistance: 0, startScale: 1 };
+      gestureStateRef.current = { 
+        isActive: false, 
+        previousDistance: 0, 
+        currentScale: transform.scale 
+      };
     }
   };
 
