@@ -95,7 +95,7 @@ const cultivationMethods = [
   {
     icon: Settings,
     title: "Artisanal Craft Methods",
-    description: "Hand-trimmed, slow-cured, small-batch cultivation. IBL genetics preserved through traditional selection methods."
+    description: "Hand-trimmed, slow-cured, small-batch cultivation. Pure genetics preserved through traditional selection methods."
   }
 ];
 
@@ -359,7 +359,7 @@ export default function HeirloomFlowerPage() {
                 Our genetic preservation project features OG strains — pure sativa and indica expressions untouched by hybridization, cultivated in climate-controlled living soil beds under full-spectrum LEDs.
               </p>
               <p className="text-lg text-gray-400 mb-6">
-                Fire genetics from the Hippie Trail era: Preserved. Authentic. Connoisseur-grade.
+                Fire genetics from legendary regions: Preserved. Authentic. Connoisseur-grade.
               </p>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
@@ -420,7 +420,7 @@ export default function HeirloomFlowerPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-2xl font-bold text-battles-gold mb-2">Genetic Conservation</div>
-              <p className="text-gray-300">IBL genetics preserved from extinction, untouched by hybridization.</p>
+              <p className="text-gray-300">Pure genetics preserved from extinction, untouched by hybridization.</p>
             </div>
             <div>
               <div className="text-2xl font-bold text-battles-gold mb-2">Indoor Precision</div>
@@ -440,7 +440,7 @@ export default function HeirloomFlowerPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-battles-gold mb-4">Global Landrace Origins</h2>
             <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-              Authentic cultivars from the Hippie Trail — preserved genetics that shaped modern cannabis culture
+              Authentic cultivars from legendary regions — preserved genetics that shaped modern cannabis culture
             </p>
           </div>
           {StableMapComponent}
@@ -463,7 +463,7 @@ export default function HeirloomFlowerPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-battles-gold mb-2">100% Pure Genetics</h3>
-                  <p className="text-gray-300">IBL (Inbred Line) cultivars preserved in original form, never crossed or hybridized. True F1 genetics from nature.</p>
+                  <p className="text-gray-300">Original cultivars preserved in their authentic form, never crossed or hybridized. Pure genetics as nature intended.</p>
                 </div>
               </div>
               
@@ -472,8 +472,8 @@ export default function HeirloomFlowerPage() {
                   <Users className="h-6 w-6 text-battles-gold" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Hippie Trail Heritage</h3>
-                  <p className="text-gray-300">Seeds collected during the 1970s Hash Trail through Afghanistan, Thailand, Morocco. Living genetic history.</p>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Cultural Heritage</h3>
+                  <p className="text-gray-300">Traditional varieties from legendary hash-making regions. Authentic genetics with deep cultural roots.</p>
                 </div>
               </div>
               
@@ -592,7 +592,7 @@ export default function HeirloomFlowerPage() {
                   <h3 className="text-xl font-semibold text-battles-gold mb-3">Genetic Conservation Project</h3>
                   <p className="text-gray-300 leading-relaxed">
                     Many of these cultivars are extinct in native regions due to hybridization and climate change. 
-                    We're preserving fire genetics through IBL seed banking and phenotype selection.
+                    We're preserving fire genetics through seed banking and careful phenotype selection.
                   </p>
                 </div>
               </div>
@@ -702,8 +702,8 @@ export default function HeirloomFlowerPage() {
                   </div>
                 </div>
                 <blockquote className="text-gray-300 italic mb-4">
-                  "True IBL genetics with chemotypes you can't find in modern hybrids. 
-                  The LED spectrum preservation of these terpenes is remarkable — pure OG strains."
+                  "True pure genetics with chemotypes you can't find in modern hybrids. 
+                  The LED spectrum preservation of these terpenes is remarkable — authentic OG strains."
                 </blockquote>
                 <div className="border-t border-gray-800 pt-4">
                   <cite className="text-battles-gold font-semibold">Dr. Jennifer K.</cite>
