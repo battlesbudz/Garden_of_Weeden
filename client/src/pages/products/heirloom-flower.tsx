@@ -35,7 +35,7 @@ const landraceStrains = [
   {
     name: "Moroccan Hash Plant",
     location: "Rif Mountains, Morocco", 
-    coordinates: { x: 960, y: 320 }, // Morocco Rif Mountains: 35°N, 4°W - positioned on landmass
+    coordinates: { x: 1000, y: 380 }, // Morocco Rif Mountains: 35°N, 4°W - positioned on Moroccan landmass
     notes: "Traditional hash variety with earthy, spiced resin production",
     thc: "12-18%",
     cbd: "3-6%",
