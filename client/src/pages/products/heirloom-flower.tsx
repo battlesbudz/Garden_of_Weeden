@@ -289,7 +289,7 @@ export default function HeirloomFlowerPage() {
       
       // Calculate change in distance from start of gesture
       const distanceChange = currentDistance - startDistance;
-      const sensitivity = 0.008; // Fine-tuned sensitivity for stable zoom
+      const sensitivity = 0.015; // Increased sensitivity for more responsive zoom
       
       // Apply linear zoom change based on distance change
       // Negative change (pinching) = zoom in (increase scale)
@@ -299,8 +299,8 @@ export default function HeirloomFlowerPage() {
       // Clamp the scale to reasonable bounds
       targetScale = Math.max(0.3, Math.min(4, targetScale));
       
-      // Apply smoothing for stable continuous zoom
-      const smoothingFactor = 0.15; // Moderate smoothing for stability
+      // Minimal smoothing for immediate response
+      const smoothingFactor = 0.6; // High responsiveness with slight smoothing
       let newScale = transform.scale + (targetScale - transform.scale) * smoothingFactor;
       
 
