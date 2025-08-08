@@ -235,7 +235,7 @@ export default function HeirloomFlowerPage() {
 
   // Touch event handlers for pinch zoom
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length === 2) {
+    if (e.touches.length === 2 && !isPinching) { // Only set if not already pinching
       e.preventDefault();
       setIsPinching(true);
       setIsDragging(false);
@@ -251,6 +251,7 @@ export default function HeirloomFlowerPage() {
       const centerX = (touch1.clientX + touch2.clientX) / 2;
       const centerY = (touch1.clientY + touch2.clientY) / 2;
       
+      // Only set the reference once per gesture
       pinchStartRef.current = {
         distance,
         scale: transform.scale,
@@ -258,6 +259,8 @@ export default function HeirloomFlowerPage() {
         centerY
       };
       lastPinchDistance.current = distance;
+      
+      console.log('Pinch started with distance:', distance);
     }
   };
 
@@ -280,7 +283,7 @@ export default function HeirloomFlowerPage() {
       console.log('Pinch zoom:', { currentDistance, startDistance: pinchStartRef.current.distance, totalDistanceChange });
       
       // Calculate new scale based on total change - this gives continuous zooming
-      const zoomFactor = 1 + (totalDistanceChange * 0.01); // Much more sensitive continuous zoom
+      const zoomFactor = 1 + (totalDistanceChange * 0.05); // Extremely sensitive continuous zoom
       let newScale = pinchStartRef.current.scale * zoomFactor;
       
       // Clamp the scale
