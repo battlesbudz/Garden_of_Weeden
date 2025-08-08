@@ -44,7 +44,7 @@ const landraceStrains = [
   {
     name: "Colombian Gold",
     location: "Santa Marta Mountains, Colombia",
-    coordinates: { x: 550, y: 580 }, // Colombia Santa Marta: 11.24°N, 74.20°W - northern coast
+    coordinates: { x: 580, y: 550 }, // Colombia Santa Marta: 11.24°N, 74.20°W - positioned on northern Colombian coast
     notes: "Uplifting sativa with golden pistils and sweet earth tones",
     thc: "13-17%",
     cbd: "2-5%",
