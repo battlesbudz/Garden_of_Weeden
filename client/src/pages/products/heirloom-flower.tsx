@@ -276,42 +276,50 @@ export default function HeirloomFlowerPage() {
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
-      // Calculate total distance change from pinch start for continuous zoom
-      const totalDistanceChange = currentDistance - pinchStartRef.current.distance;
+      // Calculate zoom based on distance ratio for more stable behavior
+      const distanceRatio = currentDistance / pinchStartRef.current.distance;
       
-      // Debug logging
-      console.log('Pinch zoom:', { currentDistance, startDistance: pinchStartRef.current.distance, totalDistanceChange });
+      // Apply moderate scaling with limits to prevent extreme jumps
+      let scaleMultiplier = distanceRatio;
+      if (distanceRatio > 1) {
+        // Zooming in - limit max zoom per gesture
+        scaleMultiplier = 1 + (distanceRatio - 1) * 1.5;
+      } else {
+        // Zooming out - limit min zoom per gesture  
+        scaleMultiplier = Math.max(0.5, distanceRatio);
+      }
       
-      // Calculate new scale based on total change - much more dramatic zoom
-      const zoomMultiplier = 0.15; // Very high sensitivity 
-      const zoomFactor = 1 + (totalDistanceChange * zoomMultiplier);
-      let newScale = pinchStartRef.current.scale * zoomFactor;
+      let newScale = pinchStartRef.current.scale * scaleMultiplier;
       
-      console.log('Zoom calculation:', { totalDistanceChange, zoomFactor, currentScale: transform.scale, newScale });
+      console.log('Zoom:', { distanceRatio, scaleMultiplier, baseScale: pinchStartRef.current.scale, newScale });
       
       // Clamp the scale
       newScale = Math.max(0.3, Math.min(4, newScale));
       
-      // Get container bounds for center calculation
-      const rect = containerRef.current?.getBoundingClientRect();
-      if (!rect) return;
-      
-      // Calculate zoom center offset
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const pinchCenterX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
-      const pinchCenterY = (touch1.clientY + touch2.clientY) / 2 - rect.top;
-      
-      // Adjust position to zoom towards pinch center
-      const scaleRatioChange = newScale / transform.scale;
-      const newX = transform.x - (pinchCenterX - centerX) * (scaleRatioChange - 1);
-      const newY = transform.y - (pinchCenterY - centerY) * (scaleRatioChange - 1);
-      
-      setTransform({
-        x: newX,
-        y: newY,
-        scale: newScale
-      });
+      // Only update if scale changed meaningfully to prevent unnecessary renders
+      if (Math.abs(newScale - transform.scale) > 0.01) {
+        // Get container bounds for center calculation
+        const rect = containerRef.current?.getBoundingClientRect();
+        if (!rect) return;
+        
+        // Calculate zoom center offset
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const pinchCenterX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
+        const pinchCenterY = (touch1.clientY + touch2.clientY) / 2 - rect.top;
+        
+        // Adjust position to zoom towards pinch center
+        const scaleRatioChange = newScale / transform.scale;
+        const newX = transform.x - (pinchCenterX - centerX) * (scaleRatioChange - 1);
+        const newY = transform.y - (pinchCenterY - centerY) * (scaleRatioChange - 1);
+        
+        // Immediate state update for responsive feel
+        setTransform({
+          x: newX,
+          y: newY,
+          scale: newScale
+        });
+      }
     }
   };
 
