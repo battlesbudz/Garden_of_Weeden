@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'wouter';
-import { ArrowLeft, Check, Leaf, Layers, Sun, Settings, MapPin, FileText, Award, Users, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
-import { TransformWrapper, TransformComponent, useControls } from 'react-zoom-pan-pinch';
+import { ArrowLeft, Check, Leaf, Layers, Sun, Settings, MapPin, FileText, Award, Users } from 'lucide-react';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
@@ -17,7 +17,7 @@ const landraceStrains = [
   {
     name: "Malawi Gold",
     location: "Malawi, Southeast Africa",
-    coordinates: { x: 52, y: 72 }, // More accurate position for Malawi
+    coordinates: { x: 58, y: 65 }, // Eastern Africa
     notes: "Energetic, cerebral, spicy aroma with soaring effects",
     thc: "14-18%",
     cbd: "2-4%",
@@ -26,7 +26,7 @@ const landraceStrains = [
   {
     name: "Thai Stick",
     location: "Northern Thailand",
-    coordinates: { x: 68, y: 55 }, // More accurate position for Thailand
+    coordinates: { x: 72, y: 55 }, // Southeast Asia
     notes: "Long flowering, citrus incense profile with creative clarity",
     thc: "12-16%",
     cbd: "3-6%",
@@ -35,7 +35,7 @@ const landraceStrains = [
   {
     name: "Afghan Kush",
     location: "Hindu Kush Mountains, Afghanistan",
-    coordinates: { x: 58, y: 42 }, // More accurate position for Afghanistan
+    coordinates: { x: 64, y: 48 }, // Central Asia
     notes: "Broad-leaf, hash-heavy, calming body effects",
     thc: "15-20%",
     cbd: "4-8%",
@@ -44,7 +44,7 @@ const landraceStrains = [
   {
     name: "Colombian Gold",
     location: "Santa Marta Mountains, Colombia",
-    coordinates: { x: 22, y: 68 }, // More accurate position for Colombia
+    coordinates: { x: 28, y: 58 }, // Northern South America
     notes: "Uplifting sativa with golden pistils and sweet earth tones",
     thc: "13-17%",
     cbd: "2-5%",
@@ -53,7 +53,7 @@ const landraceStrains = [
   {
     name: "Aceh",
     location: "Sumatra, Indonesia", 
-    coordinates: { x: 72, y: 78 }, // Indonesia position
+    coordinates: { x: 74, y: 62 }, // Indonesia archipelago
     notes: "Earthy, woody flavor with balanced relaxing effects",
     thc: "16-22%",
     cbd: "3-7%",
@@ -62,7 +62,7 @@ const landraceStrains = [
   {
     name: "Durban Poison",
     location: "Durban, South Africa",
-    coordinates: { x: 48, y: 82 }, // South Africa position
+    coordinates: { x: 56, y: 72 }, // Southern Africa coast
     notes: "Sweet anise aroma with energizing, clear-headed effects",
     thc: "15-25%",
     cbd: "1-3%",
@@ -124,38 +124,7 @@ export default function HeirloomFlowerPage() {
   });
 
   // Zoom controls component using react-zoom-pan-pinch
-  const ZoomControls = () => {
-    const { zoomIn, zoomOut, resetTransform } = useControls();
-    
-    return (
-      <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
-        <Button
-          size="sm"
-          variant="outline"
-          className="bg-black/20 backdrop-blur-sm border-gold/30 text-white hover:bg-gold/20"
-          onClick={() => zoomIn()}
-        >
-          <ZoomIn className="h-4 w-4" />
-        </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          className="bg-black/20 backdrop-blur-sm border-gold/30 text-white hover:bg-gold/20"
-          onClick={() => zoomOut()}
-        >
-          <ZoomOut className="h-4 w-4" />
-        </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          className="bg-black/20 backdrop-blur-sm border-gold/30 text-white hover:bg-gold/20"
-          onClick={() => resetTransform()}
-        >
-          <RotateCcw className="h-4 w-4" />
-        </Button>
-      </div>
-    );
-  };
+
 
   // Simplified mouse and touch handlers
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -397,10 +366,10 @@ export default function HeirloomFlowerPage() {
           {/* Professional Interactive World Map with react-zoom-pan-pinch */}
           <div className="relative bg-slate-800 rounded-lg overflow-hidden border border-battles-gold/30">
             <TransformWrapper
-              initialScale={1.8}
+              initialScale={1.2}
               initialPositionX={0}
-              initialPositionY={-50}
-              minScale={0.8}
+              initialPositionY={0}
+              minScale={0.5}
               maxScale={4}
               limitToBounds={false}
               centerOnInit={true}
@@ -409,8 +378,6 @@ export default function HeirloomFlowerPage() {
               doubleClick={{ disabled: false }}
               panning={{ velocityDisabled: true }}
             >
-              {/* Zoom Controls using useControls hook */}
-              <ZoomControls />
               
               <TransformComponent
                 wrapperClass="!w-full !h-96"
