@@ -240,40 +240,36 @@ export default function HeirloomFlowerPage() {
     if (e.touches.length === 2) {
       e.preventDefault();
       
-      // ALWAYS reset and start fresh - ignore isPinching state
-      setIsPinching(true);
-      setIsDragging(false);
-      
-      const touch1 = e.touches[0];
-      const touch2 = e.touches[1];
-      
-      const distance = Math.sqrt(
-        Math.pow(touch2.clientX - touch1.clientX, 2) + 
-        Math.pow(touch2.clientY - touch1.clientY, 2)
-      );
-      
-      // Only start pinch if fingers are reasonably far apart
-      if (distance > 40) {
-        const centerX = (touch1.clientX + touch2.clientX) / 2;
-        const centerY = (touch1.clientY + touch2.clientY) / 2;
+      // Only initialize if not already pinching
+      if (!isPinching) {
+        setIsPinching(true);
+        setIsDragging(false);
         
-        // Use the CURRENT transform.scale for accurate tracking
-        const currentScale = transform.scale;
+        const touch1 = e.touches[0];
+        const touch2 = e.touches[1];
         
-        // Initialize gesture state with stable tracking
-        gestureStateRef.current = {
-          isActive: true,
-          startDistance: distance,
-          startScale: currentScale
-        };
+        const distance = Math.sqrt(
+          Math.pow(touch2.clientX - touch1.clientX, 2) + 
+          Math.pow(touch2.clientY - touch1.clientY, 2)
+        );
         
-        console.log('Pinch gesture started:', { 
-          distance: Math.round(distance), 
-          scale: currentScale.toFixed(3)
-        });
-      } else {
-        setIsPinching(false);
-        gestureStateRef.current = { isActive: false, startDistance: 0, startScale: 1 };
+        // Only start pinch if fingers are reasonably far apart
+        if (distance > 40) {
+          // Initialize gesture state for REAL-TIME continuous tracking
+          gestureStateRef.current = {
+            isActive: true,
+            startDistance: distance,
+            startScale: transform.scale
+          };
+          
+          console.log('Continuous pinch started:', { 
+            distance: Math.round(distance), 
+            scale: transform.scale.toFixed(3)
+          });
+        } else {
+          setIsPinching(false);
+          gestureStateRef.current = { isActive: false, startDistance: 0, startScale: 1 };
+        }
       }
     }
   };
@@ -290,24 +286,32 @@ export default function HeirloomFlowerPage() {
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
-      // Use ratio-based zoom for stability
-      const startDistance = gestureStateRef.current.startDistance;
-      const startScale = gestureStateRef.current.startScale;
+      // TRULY CONTINUOUS ZOOM: Map finger distance directly to zoom level
+      // Small fingers apart = zoom out, fingers far apart = zoom in
+      const minDistance = 50;   // Minimum finger distance (zoom out)
+      const maxDistance = 300;  // Maximum finger distance (zoom in)
+      const minScale = 0.5;     // Minimum zoom level
+      const maxScale = 4.0;     // Maximum zoom level
       
-      // Calculate scale ratio - this is much more stable than delta-based
-      const distanceRatio = currentDistance / startDistance;
+      // Clamp distance to reasonable bounds
+      const clampedDistance = Math.max(minDistance, Math.min(maxDistance, currentDistance));
       
-      // Apply smooth zoom scaling with increased sensitivity
-      const zoomFactor = 1.5; // Increased sensitivity for more responsive zoom
-      const scaleMultiplier = 1 + (distanceRatio - 1) * zoomFactor;
+      // Map distance to scale linearly for direct relationship
+      const distanceRange = maxDistance - minDistance;
+      const scaleRange = maxScale - minScale;
+      const distanceRatio = (clampedDistance - minDistance) / distanceRange;
       
-      let newScale = startScale * scaleMultiplier;
+      let targetScale = minScale + (distanceRatio * scaleRange);
+      
+      // Apply aggressive smoothing for fluid motion
+      const smoothingFactor = 0.3; // Higher value for more responsive feel
+      let newScale = transform.scale + (targetScale - transform.scale) * smoothingFactor;
       
       // Clamp the scale to reasonable bounds
       newScale = Math.max(0.3, Math.min(4, newScale));
       
-      // Only update if scale changed meaningfully (reduced threshold for better responsiveness)
-      if (Math.abs(newScale - transform.scale) > 0.005) {
+      // Update on ANY change for buttery smooth continuous zoom
+      if (Math.abs(newScale - transform.scale) > 0.0001) {
         // Get container bounds for center calculation
         const rect = containerRef.current?.getBoundingClientRect();
         if (!rect) return;
@@ -323,7 +327,7 @@ export default function HeirloomFlowerPage() {
         const newX = transform.x - (pinchCenterX - centerX) * (scaleRatioChange - 1);
         const newY = transform.y - (pinchCenterY - centerY) * (scaleRatioChange - 1);
         
-        // Update transform state
+        // Update transform state for smooth continuous zoom
         setTransform({
           x: newX,
           y: newY,
