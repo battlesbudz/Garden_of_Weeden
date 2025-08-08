@@ -114,8 +114,12 @@ export default function HeirloomFlowerPage() {
   const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   
-  // Prevent map reset by using a stable key and memoization
-  const mapInstanceKey = useMemo(() => 'stable-map-instance', []);
+  // State to preserve transform between re-renders
+  const [transformState, setTransformState] = useState({
+    scale: 0.9,
+    positionX: 0,
+    positionY: 0
+  });
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -153,8 +157,8 @@ export default function HeirloomFlowerPage() {
     setEmail('');
   };
 
-  // Memoized map component to prevent re-renders and preserve zoom/pan state
-  const OriginMap = useMemo(() => (
+  // Map component with stable TransformWrapper to preserve zoom/pan state
+  const OriginMap = () => (
       <div className="relative">
         <div className="bg-gray-800 rounded-lg p-8 border border-battles-gold/20">
           <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
@@ -162,18 +166,25 @@ export default function HeirloomFlowerPage() {
           {/* Professional Interactive World Map with react-zoom-pan-pinch */}
           <div className="relative bg-slate-800 rounded-lg overflow-hidden border border-battles-gold/30">
             <TransformWrapper
-              initialScale={0.9}
-              initialPositionX={0}
-              initialPositionY={0}
+              initialScale={transformState.scale}
+              initialPositionX={transformState.positionX}
+              initialPositionY={transformState.positionY}
               minScale={0.4}
               maxScale={4}
               limitToBounds={false}
-              centerOnInit={true}
+              centerOnInit={false}
               wheel={{ step: 0.15 }}
               pinch={{ step: 8 }}
               doubleClick={{ disabled: false }}
               panning={{ velocityDisabled: true }}
               disablePadding={true}
+              onTransformed={(ref, state) => {
+                setTransformState({
+                  scale: state.scale,
+                  positionX: state.positionX,
+                  positionY: state.positionY
+                });
+              }}
             >
               
               <TransformComponent
@@ -287,7 +298,7 @@ export default function HeirloomFlowerPage() {
           </div>
         </div>
       </div>
-  ), []); // Empty dependency array to prevent re-renders
+  );
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -419,7 +430,7 @@ export default function HeirloomFlowerPage() {
               Explore the sacred genetics that have evolved naturally across the globe for thousands of years
             </p>
           </div>
-          {OriginMap}
+          <OriginMap />
         </div>
       </section>
 
