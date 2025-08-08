@@ -113,6 +113,9 @@ export default function HeirloomFlowerPage() {
   // Map interaction state
   const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  
+  // Prevent map reset by tracking transform state
+  const [mapKey] = useState('map-instance'); // Static key to prevent reinitialization
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -160,6 +163,7 @@ export default function HeirloomFlowerPage() {
           {/* Professional Interactive World Map with react-zoom-pan-pinch */}
           <div className="relative bg-slate-800 rounded-lg overflow-hidden border border-battles-gold/30">
             <TransformWrapper
+              key={mapKey}
               initialScale={0.9}
               initialPositionX={0}
               initialPositionY={0}
@@ -171,6 +175,7 @@ export default function HeirloomFlowerPage() {
               pinch={{ step: 8 }}
               doubleClick={{ disabled: false }}
               panning={{ velocityDisabled: true }}
+              disablePadding={true}
             >
               
               <TransformComponent
