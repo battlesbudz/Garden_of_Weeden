@@ -252,20 +252,22 @@ export default function HeirloomFlowerPage() {
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
-      // Initialize continuous tracking
-      setIsPinching(true);
-      setIsDragging(false);
-      
-      gestureStateRef.current = {
-        isActive: true,
-        previousDistance: distance,
-        currentScale: transform.scale
-      };
-      
-      console.log('Pinch started:', { 
-        distance: Math.round(distance), 
-        scale: transform.scale.toFixed(3)
-      });
+      // Only initialize if not already pinching to prevent restart spam
+      if (!isPinching) {
+        setIsPinching(true);
+        setIsDragging(false);
+        
+        gestureStateRef.current = {
+          isActive: true,
+          previousDistance: distance,
+          currentScale: transform.scale
+        };
+        
+        console.log('Pinch started:', { 
+          distance: Math.round(distance), 
+          scale: transform.scale.toFixed(3)
+        });
+      }
     } else if (e.touches.length === 1) {
       // Single touch - potential drag if not pinching
       if (!isPinching) {
@@ -291,10 +293,10 @@ export default function HeirloomFlowerPage() {
       const distanceChange = currentDistance - previousDistance;
       
       // Apply incremental zoom for every pixel of movement
-      if (Math.abs(distanceChange) > 0.01) { // Ultra-sensitive for continuous response
+      if (Math.abs(distanceChange) > 0.005) { // Maximum sensitivity for immediate response
         // Calculate zoom factor based on distance change
         // Positive change (spreading) = zoom in, negative (pinching) = zoom out
-        const sensitivity = 0.006; // Higher sensitivity for more responsive zoom
+        const sensitivity = 0.02; // Much higher sensitivity for fast response
         const zoomFactor = 1 + (distanceChange * sensitivity);
         
         // Apply zoom to current scale
