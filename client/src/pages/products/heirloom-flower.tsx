@@ -135,14 +135,14 @@ export default function HeirloomFlowerPage() {
   const handleZoomIn = () => {
     setTransform(prev => ({
       ...prev,
-      scale: Math.min(prev.scale * 1.15, 4)
+      scale: Math.min(prev.scale * 1.5, 4)
     }));
   };
 
   const handleZoomOut = () => {
     setTransform(prev => ({
       ...prev,
-      scale: Math.max(prev.scale / 1.15, 0.3)
+      scale: Math.max(prev.scale / 1.5, 0.3)
     }));
   };
 
@@ -199,7 +199,7 @@ export default function HeirloomFlowerPage() {
     
     // Throttle wheel events to prevent glitchy behavior
     const now = Date.now();
-    if (now - lastWheelTime.current < 16) return; // ~60fps limit
+    if (now - lastWheelTime.current < 8) return; // ~120fps limit for more responsiveness
     lastWheelTime.current = now;
     
     // Get the mouse position relative to the container
@@ -207,8 +207,8 @@ export default function HeirloomFlowerPage() {
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
     
-    // Calculate zoom factor with smoother scaling - use deltaY magnitude for better control
-    const zoomIntensity = Math.min(Math.abs(e.deltaY) / 100, 1) * 0.1;
+    // Calculate zoom factor with better responsiveness
+    const zoomIntensity = Math.min(Math.abs(e.deltaY) / 100, 1) * 0.2;
     const zoomFactor = e.deltaY > 0 ? (1 - zoomIntensity) : (1 + zoomIntensity);
     const newScale = Math.max(0.3, Math.min(4, transform.scale * zoomFactor));
     
@@ -270,8 +270,11 @@ export default function HeirloomFlowerPage() {
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
+      // More responsive pinch scaling
       const scaleChange = distance / pinchStartRef.current.distance;
-      const newScale = Math.max(0.3, Math.min(4, pinchStartRef.current.scale * scaleChange));
+      // Amplify the scale change for better responsiveness
+      const amplifiedChange = 1 + (scaleChange - 1) * 1.5;
+      const newScale = Math.max(0.3, Math.min(4, pinchStartRef.current.scale * amplifiedChange));
       
       // Get container bounds for center calculation
       const rect = containerRef.current?.getBoundingClientRect();
