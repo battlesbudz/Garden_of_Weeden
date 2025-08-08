@@ -230,56 +230,50 @@ export default function HeirloomFlowerPage() {
                           ? 'bg-battles-gold animate-pulse'
                           : 'bg-yellow-500 hover:bg-battles-gold'
                       }`} />
-                      
-                      {/* Strain Info Popup Overlay */}
-                      {selectedStrain === index && (
-                        <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-black/95 backdrop-blur-sm text-white rounded-lg p-3 w-[220px] border border-battles-gold/50 shadow-xl z-30">
-                          <div className="flex items-start justify-between mb-2">
-                            <div>
-                              <h4 className="text-sm font-semibold text-battles-gold mb-1">
-                                {strain.name}
-                              </h4>
-                              <p className="text-gray-300 text-xs">{strain.location}</p>
-                            </div>
-                            <button 
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedStrain(null);
-                              }}
-                              className="text-gray-400 hover:text-white text-sm leading-none"
-                            >
-                              ×
-                            </button>
-                          </div>
-                          
-                          <div className="flex gap-1 mb-2">
-                            <div className="text-center bg-black/50 rounded px-1.5 py-1 flex-1">
-                              <div className="text-battles-gold font-semibold text-xs">THC</div>
-                              <div className="text-white text-xs">{strain.thc}</div>
-                            </div>
-                            <div className="text-center bg-black/50 rounded px-1.5 py-1 flex-1">
-                              <div className="text-battles-gold font-semibold text-xs">CBD</div>
-                              <div className="text-white text-xs">{strain.cbd}</div>
-                            </div>
-                            <div className="text-center bg-black/50 rounded px-1.5 py-1 flex-1">
-                              <div className="text-battles-gold font-semibold text-xs">Flower</div>
-                              <div className="text-white text-xs">{strain.flowering}</div>
-                            </div>
-                          </div>
-                          
-                          <p className="text-gray-300 text-xs leading-relaxed">
-                            {strain.notes}
-                          </p>
-                          
-                          {/* Arrow pointing to marker */}
-                          <div className="absolute -top-1.5 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-black/95 border-l border-t border-battles-gold/50 rotate-45"></div>
-                        </div>
-                      )}
                     </div>
                   ))}
                 </div>
               </TransformComponent>
             </TransformWrapper>
+
+            {/* Fixed Strain Info Popup - Outside Transform */}
+            {selectedStrain !== null && (
+              <div className="absolute top-4 right-4 bg-black/95 backdrop-blur-sm text-white rounded-lg p-4 w-[280px] border border-battles-gold/50 shadow-xl z-50">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <h4 className="text-lg font-semibold text-battles-gold mb-1">
+                      {landraceStrains[selectedStrain].name}
+                    </h4>
+                    <p className="text-gray-300 text-sm">{landraceStrains[selectedStrain].location}</p>
+                  </div>
+                  <button 
+                    onClick={() => setSelectedStrain(null)}
+                    className="text-gray-400 hover:text-white text-lg leading-none"
+                  >
+                    ×
+                  </button>
+                </div>
+                
+                <div className="flex gap-2 mb-3">
+                  <div className="text-center bg-black/50 rounded px-2 py-2 flex-1">
+                    <div className="text-battles-gold font-semibold text-xs">THC</div>
+                    <div className="text-white text-sm">{landraceStrains[selectedStrain].thc}</div>
+                  </div>
+                  <div className="text-center bg-black/50 rounded px-2 py-2 flex-1">
+                    <div className="text-battles-gold font-semibold text-xs">CBD</div>
+                    <div className="text-white text-sm">{landraceStrains[selectedStrain].cbd}</div>
+                  </div>
+                  <div className="text-center bg-black/50 rounded px-2 py-2 flex-1">
+                    <div className="text-battles-gold font-semibold text-xs">Flowering</div>
+                    <div className="text-white text-sm">{landraceStrains[selectedStrain].flowering}</div>
+                  </div>
+                </div>
+                
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  {landraceStrains[selectedStrain].notes}
+                </p>
+              </div>
+            )}
 
             {/* Legend */}
             <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-sm rounded-lg p-3 text-xs text-white border border-battles-gold/30">
