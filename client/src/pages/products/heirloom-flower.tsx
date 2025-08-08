@@ -179,12 +179,14 @@ export default function HeirloomFlowerPage() {
               pinch={{ step: 8 }}
               doubleClick={{ disabled: false }}
               panning={{ 
-                velocityDisabled: true,
-                limitToBounds: true,
-                paddingSize: 50
+                velocityDisabled: true
               }}
               alignmentAnimation={{ disabled: false }}
               disablePadding={false}
+              minPositionX={-400}
+              maxPositionX={400}
+              minPositionY={-200}
+              maxPositionY={200}
               onTransformed={(ref, state) => {
                 transformRef.current = {
                   scale: state.scale,
