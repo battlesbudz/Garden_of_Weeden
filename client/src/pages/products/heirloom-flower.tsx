@@ -12,12 +12,12 @@ import worldMapImage from "@assets/Winkel_triple_projection_SW_1754600003820.jpg
 import SEOHead from '@/components/seo/SEOHead';
 import { getCanonicalUrl, getPageTitle, getProductSchema } from '@/utils/seo';
 
-// Landrace strain data with geographically accurate coordinates
+// Landrace strain data with accurate continental coordinates on Winkel Triple projection
 const landraceStrains = [
   {
     name: "Malawi Gold",
     location: "Malawi, Southeast Africa",
-    coordinates: { x: 55, y: 68 }, // Eastern Africa - Malawi position
+    coordinates: { x: 54, y: 65 }, // Southeast Africa - Malawi inland position
     notes: "Energetic, cerebral, spicy aroma with soaring effects",
     thc: "14-18%",
     cbd: "2-4%",
@@ -26,7 +26,7 @@ const landraceStrains = [
   {
     name: "Thai Stick",
     location: "Northern Thailand",
-    coordinates: { x: 71, y: 52 }, // Southeast Asia - Thailand position
+    coordinates: { x: 70, y: 48 }, // Southeast Asia - Northern Thailand mainland
     notes: "Long flowering, citrus incense profile with creative clarity",
     thc: "12-16%",
     cbd: "3-6%",
@@ -35,7 +35,7 @@ const landraceStrains = [
   {
     name: "Afghan Kush",
     location: "Hindu Kush Mountains, Afghanistan",
-    coordinates: { x: 62, y: 45 }, // Central Asia - Afghanistan position
+    coordinates: { x: 63, y: 42 }, // Central Asia - Afghanistan mountainous region
     notes: "Broad-leaf, hash-heavy, calming body effects",
     thc: "15-20%",
     cbd: "4-8%",
@@ -44,7 +44,7 @@ const landraceStrains = [
   {
     name: "Colombian Gold",
     location: "Santa Marta Mountains, Colombia",
-    coordinates: { x: 24, y: 55 }, // Northern South America - Colombia position
+    coordinates: { x: 25, y: 52 }, // Northern South America - Colombian mountains
     notes: "Uplifting sativa with golden pistils and sweet earth tones",
     thc: "13-17%",
     cbd: "2-5%",
@@ -53,7 +53,7 @@ const landraceStrains = [
   {
     name: "Aceh",
     location: "Sumatra, Indonesia", 
-    coordinates: { x: 73, y: 60 }, // Indonesia archipelago - Sumatra position
+    coordinates: { x: 72, y: 58 }, // Southeast Asia - Sumatra island
     notes: "Earthy, woody flavor with balanced relaxing effects",
     thc: "16-22%",
     cbd: "3-7%",
@@ -62,10 +62,37 @@ const landraceStrains = [
   {
     name: "Durban Poison",
     location: "Durban, South Africa",
-    coordinates: { x: 54, y: 74 }, // Southern Africa coast - Durban position
+    coordinates: { x: 53, y: 70 }, // Southern Africa - Eastern coast near Durban
     notes: "Sweet anise aroma with energizing, clear-headed effects",
     thc: "15-25%",
     cbd: "1-3%",
+    flowering: "8-9 weeks"
+  },
+  {
+    name: "Moroccan Hash Plant",
+    location: "Rif Mountains, Morocco",
+    coordinates: { x: 46, y: 38 }, // North Africa - Moroccan mountains
+    notes: "Traditional hash variety with earthy, spiced resin production",
+    thc: "12-18%",
+    cbd: "3-6%",
+    flowering: "9-11 weeks"
+  },
+  {
+    name: "Jamaican Lamb's Bread",
+    location: "Blue Mountains, Jamaica",
+    coordinates: { x: 22, y: 48 }, // Caribbean - Jamaica island
+    notes: "Uplifting sativa with tropical fruit and pine aromatics",
+    thc: "16-21%",
+    cbd: "1-4%",
+    flowering: "11-13 weeks"
+  },
+  {
+    name: "Hindu Kush",
+    location: "Pakistan-Afghanistan Border",
+    coordinates: { x: 64, y: 41 }, // Central Asia - Hindu Kush range
+    notes: "Ancient indica with deep relaxation and hash-making heritage",
+    thc: "18-22%",
+    cbd: "5-9%",
     flowering: "8-9 weeks"
   }
 ];
