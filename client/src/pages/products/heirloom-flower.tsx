@@ -237,46 +237,66 @@ export default function HeirloomFlowerPage() {
 
   // Touch event handlers for pinch zoom
   const handleTouchStart = (e: React.TouchEvent) => {
+    console.log('🟡 TOUCH START EVENT:', {
+      touchCount: e.touches.length,
+      isPinching: isPinching,
+      currentTransformScale: transform.scale.toFixed(3),
+      gestureActive: gestureStateRef.current.isActive
+    });
+
     if (e.touches.length === 2) {
       e.preventDefault();
       
-      // If not already pinching, start a new gesture
-      if (!isPinching) {
-        setIsPinching(true);
-        setIsDragging(false);
+      // ALWAYS reset and start fresh - ignore isPinching state
+      console.log('🔵 STARTING NEW PINCH GESTURE');
+      setIsPinching(true);
+      setIsDragging(false);
+      
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      
+      const distance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) + 
+        Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+      
+      // Only start pinch if fingers are reasonably far apart
+      if (distance > 40) {
+        const centerX = (touch1.clientX + touch2.clientX) / 2;
+        const centerY = (touch1.clientY + touch2.clientY) / 2;
         
-        const touch1 = e.touches[0];
-        const touch2 = e.touches[1];
+        // CRITICAL: Use the CURRENT transform.scale, not any cached value
+        const currentScale = transform.scale;
         
-        const distance = Math.sqrt(
-          Math.pow(touch2.clientX - touch1.clientX, 2) + 
-          Math.pow(touch2.clientY - touch1.clientY, 2)
-        );
+        // Initialize gesture state with stable tracking
+        gestureStateRef.current = {
+          isActive: true,
+          startDistance: distance,
+          startScale: currentScale  // This MUST be the current actual scale
+        };
         
-        // Only start pinch if fingers are reasonably far apart
-        if (distance > 40) {
-          const centerX = (touch1.clientX + touch2.clientX) / 2;
-          const centerY = (touch1.clientY + touch2.clientY) / 2;
-          
-          // Initialize gesture state with stable tracking
-          gestureStateRef.current = {
-            isActive: true,
-            startDistance: distance,
-            startScale: transform.scale
-          };
-          
-          console.log('Pinch gesture started:', { 
-            startDistance: Math.round(distance), 
-            startScale: transform.scale.toFixed(3) 
-          });
-        } else {
-          setIsPinching(false);
-        }
+        console.log('✅ PINCH GESTURE INITIALIZED:', { 
+          startDistance: Math.round(distance), 
+          startScale: currentScale.toFixed(3),
+          actualTransformScale: transform.scale.toFixed(3),
+          scalesMatch: Math.abs(currentScale - transform.scale) < 0.001
+        });
+      } else {
+        console.log('❌ PINCH REJECTED - distance too small:', Math.round(distance));
+        setIsPinching(false);
+        gestureStateRef.current = { isActive: false, startDistance: 0, startScale: 1 };
       }
     }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
+    console.log('🟠 TOUCH MOVE EVENT:', {
+      touchCount: e.touches.length,
+      isPinching: isPinching,
+      gestureActive: gestureStateRef.current.isActive,
+      currentTransformScale: transform.scale.toFixed(3)
+    });
+
     if (e.touches.length === 2 && isPinching && gestureStateRef.current.isActive) {
       e.preventDefault();
       
@@ -291,6 +311,16 @@ export default function HeirloomFlowerPage() {
       // Use ratio-based zoom for stability
       const startDistance = gestureStateRef.current.startDistance;
       const startScale = gestureStateRef.current.startScale;
+      const actualCurrentScale = transform.scale;
+      
+      // CRITICAL DEBUG: Check if our stored startScale matches reality
+      console.log('🔍 SCALE DEBUGGING:', {
+        storedStartScale: startScale.toFixed(3),
+        actualCurrentScale: actualCurrentScale.toFixed(3),
+        scaleDrift: Math.abs(startScale - actualCurrentScale).toFixed(3),
+        startDistance: Math.round(startDistance),
+        currentDistance: Math.round(currentDistance)
+      });
       
       // Calculate scale ratio - this is much more stable than delta-based
       const distanceRatio = currentDistance / startDistance;
@@ -304,17 +334,25 @@ export default function HeirloomFlowerPage() {
       // Clamp the scale to reasonable bounds
       newScale = Math.max(0.3, Math.min(4, newScale));
       
-      console.log('Stable Zoom:', { 
+      console.log('🔢 ZOOM CALCULATION:', { 
         currentDistance: Math.round(currentDistance), 
         startDistance: Math.round(startDistance),
         distanceRatio: distanceRatio.toFixed(3), 
         scaleMultiplier: scaleMultiplier.toFixed(3), 
         startScale: startScale.toFixed(3), 
-        newScale: newScale.toFixed(3) 
+        newScale: newScale.toFixed(3),
+        actualCurrentScale: actualCurrentScale.toFixed(3),
+        scaleDifference: (newScale - actualCurrentScale).toFixed(3)
       });
       
       // Only update if scale changed meaningfully
       if (Math.abs(newScale - transform.scale) > 0.01) {
+        console.log('📊 APPLYING SCALE UPDATE:', {
+          from: transform.scale.toFixed(3),
+          to: newScale.toFixed(3),
+          change: (newScale - transform.scale).toFixed(3)
+        });
+        
         // Get container bounds for center calculation
         const rect = containerRef.current?.getBoundingClientRect();
         if (!rect) return;
@@ -336,16 +374,38 @@ export default function HeirloomFlowerPage() {
           y: newY,
           scale: newScale
         });
+      } else {
+        console.log('⏭️ SKIPPING UPDATE - change too small:', Math.abs(newScale - transform.scale).toFixed(4));
       }
+    } else {
+      console.log('❌ TOUCH MOVE CONDITIONS NOT MET:', {
+        touchCount: e.touches.length,
+        isPinching,
+        gestureActive: gestureStateRef.current.isActive
+      });
     }
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
+    console.log('🔴 TOUCH END EVENT:', {
+      touchCount: e.touches.length,
+      isPinching: isPinching,
+      gestureActive: gestureStateRef.current.isActive,
+      finalScale: transform.scale.toFixed(3)
+    });
+
     if (e.touches.length < 2 && isPinching) {
-      console.log('Pinch gesture ended, final scale:', transform.scale.toFixed(3));
+      console.log('🏁 ENDING PINCH GESTURE:', {
+        finalScale: transform.scale.toFixed(3),
+        originalStartScale: gestureStateRef.current.startScale.toFixed(3),
+        scaleChange: (transform.scale - gestureStateRef.current.startScale).toFixed(3)
+      });
+      
       setIsPinching(false);
-      // Reset gesture state
+      // Reset gesture state COMPLETELY
       gestureStateRef.current = { isActive: false, startDistance: 0, startScale: 1 };
+      
+      console.log('✅ GESTURE STATE RESET COMPLETE');
     }
   };
 
