@@ -114,8 +114,8 @@ export default function HeirloomFlowerPage() {
   const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   
-  // State to preserve transform between re-renders
-  const [transformState, setTransformState] = useState({
+  // Use ref to store transform state without causing re-renders
+  const transformRef = useRef({
     scale: 0.9,
     positionX: 0,
     positionY: 0
@@ -166,25 +166,19 @@ export default function HeirloomFlowerPage() {
           {/* Professional Interactive World Map with react-zoom-pan-pinch */}
           <div className="relative bg-slate-800 rounded-lg overflow-hidden border border-battles-gold/30">
             <TransformWrapper
-              initialScale={transformState.scale}
-              initialPositionX={transformState.positionX}
-              initialPositionY={transformState.positionY}
+              key="map-transform-wrapper"
+              initialScale={0.9}
+              initialPositionX={0}
+              initialPositionY={0}
               minScale={0.4}
               maxScale={4}
               limitToBounds={false}
-              centerOnInit={false}
+              centerOnInit={true}
               wheel={{ step: 0.15 }}
               pinch={{ step: 8 }}
               doubleClick={{ disabled: false }}
               panning={{ velocityDisabled: true }}
               disablePadding={true}
-              onTransformed={(ref, state) => {
-                setTransformState({
-                  scale: state.scale,
-                  positionX: state.positionX,
-                  positionY: state.positionY
-                });
-              }}
             >
               
               <TransformComponent
