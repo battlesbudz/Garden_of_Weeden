@@ -112,56 +112,11 @@ export default function HeirloomFlowerPage() {
   // Pan and zoom state
   const [transform, setTransform] = useState({ x: 0, y: 0, scale: 0.8 });
   const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const dragStartRef = useRef({ x: 0, y: 0, clientX: 0, clientY: 0 });
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
   const lastWheelTime = useRef(0);
-  
-  // Use refs to avoid stale closures
-  const dragStartRef = useRef(dragStart);
-  dragStartRef.current = dragStart;
-  
-  // Global event handlers for smooth dragging
-  useEffect(() => {
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const newX = e.clientX - dragStartRef.current.x;
-      const newY = e.clientY - dragStartRef.current.y;
-      setTransform(prev => ({ ...prev, x: newX, y: newY }));
-    };
-
-    const handleGlobalMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    const handleGlobalTouchMove = (e: TouchEvent) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const touch = e.touches[0];
-      const newX = touch.clientX - dragStartRef.current.x;
-      const newY = touch.clientY - dragStartRef.current.y;
-      setTransform(prev => ({ ...prev, x: newX, y: newY }));
-    };
-
-    const handleGlobalTouchEnd = () => {
-      setIsDragging(false);
-    };
-
-    if (isDragging) {
-      document.addEventListener('mousemove', handleGlobalMouseMove, { passive: false });
-      document.addEventListener('mouseup', handleGlobalMouseUp);
-      document.addEventListener('touchmove', handleGlobalTouchMove, { passive: false });
-      document.addEventListener('touchend', handleGlobalTouchEnd);
-    }
-
-    return () => {
-      document.removeEventListener('mousemove', handleGlobalMouseMove);
-      document.removeEventListener('mouseup', handleGlobalMouseUp);
-      document.removeEventListener('touchmove', handleGlobalTouchMove);
-      document.removeEventListener('touchend', handleGlobalTouchEnd);
-    };
-  }, [isDragging]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -191,10 +146,42 @@ export default function HeirloomFlowerPage() {
     setTransform({ x: 0, y: 0, scale: 0.8 });
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  // Simplified mouse and touch handlers
+  const handlePointerDown = (e: React.PointerEvent) => {
     e.preventDefault();
     setIsDragging(true);
-    setDragStart({ x: e.clientX - transform.x, y: e.clientY - transform.y });
+    dragStartRef.current = {
+      x: transform.x,
+      y: transform.y,
+      clientX: e.clientX,
+      clientY: e.clientY
+    };
+    
+    // Capture pointer for smooth dragging
+    if (containerRef.current) {
+      containerRef.current.setPointerCapture(e.pointerId);
+    }
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    
+    const deltaX = e.clientX - dragStartRef.current.clientX;
+    const deltaY = e.clientY - dragStartRef.current.clientY;
+    
+    setTransform(prev => ({
+      ...prev,
+      x: dragStartRef.current.x + deltaX,
+      y: dragStartRef.current.y + deltaY
+    }));
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    setIsDragging(false);
+    if (containerRef.current) {
+      containerRef.current.releasePointerCapture(e.pointerId);
+    }
   };
 
   // Mouse move is now handled globally - no need for container-specific handler
@@ -236,25 +223,7 @@ export default function HeirloomFlowerPage() {
     });
   };
 
-  // Simplified touch support focusing on single-finger pan first
-  const handleTouchStart = (e: React.TouchEvent) => {
-    e.preventDefault();
-    if (e.touches.length === 1) {
-      const touch = e.touches[0];
-      setIsDragging(true);
-      setDragStart({ x: touch.clientX - transform.x, y: touch.clientY - transform.y });
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    // This is handled by global event listener now
-    return;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    // This is handled by global event listener now
-    return;
-  };
+  // No need for separate touch handlers - pointer events handle both mouse and touch
 
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -383,6 +352,7 @@ export default function HeirloomFlowerPage() {
             <div className="w-full" style={{ height: '600px' }}>
               {/* Interactive world map with image background and overlay markers */}
               <div 
+                ref={containerRef}
                 className="relative w-full h-full overflow-hidden rounded-lg cursor-grab active:cursor-grabbing"
                 style={{ 
                   touchAction: 'none',
@@ -390,11 +360,11 @@ export default function HeirloomFlowerPage() {
                   WebkitUserSelect: 'none',
                   WebkitTouchCallout: 'none'
                 }}
-                onMouseDown={handleMouseDown}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+                onPointerCancel={handlePointerUp}
                 onWheel={handleWheel}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
               >
                 {/* Container for all transformed elements */}
                 <div
@@ -443,14 +413,14 @@ export default function HeirloomFlowerPage() {
                   {/* Landrace strain markers positioned over the image */}
                   {Object.entries(landraceData).map(([code, data], index) => {
                     let x = 0, y = 0;
-                    // Properly calibrated coordinates for Winkel Triple projection
-                    // Based on 1400x700 viewBox matching the projection
+                    // Precisely calibrated to Winkel Triple projection landmasses
+                    // Based on actual map image coordinates (1400x700 viewBox)
                     switch(code) {
-                      case 'MW': x = 810; y = 430; break; // Malawi - Southeast Africa (approx 34°E, 13°S)
-                      case 'TH': x = 1070; y = 340; break; // Thailand - Southeast Asia (approx 100°E, 15°N)
-                      case 'AF': x = 930; y = 280; break; // Afghanistan - Central Asia (approx 69°E, 33°N)
-                      case 'CO': x = 360; y = 410; break; // Colombia - South America (approx 74°W, 4°N)
-                      case 'ZA': x = 780; y = 500; break; // South Africa (approx 24°E, 29°S)
+                      case 'MW': x = 780; y = 430; break; // Malawi - Eastern Africa
+                      case 'TH': x = 1070; y = 380; break; // Thailand - SE Asia peninsula  
+                      case 'AF': x = 910; y = 320; break; // Afghanistan - Central Asia
+                      case 'CO': x = 320; y = 380; break; // Colombia - NW South America
+                      case 'ZA': x = 750; y = 520; break; // South Africa - southern Africa
                     }
                     
                     return (
