@@ -248,20 +248,22 @@ export default function HeirloomFlowerPage() {
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
-      // Always reinitialize for reliable tracking
-      setIsPinching(true);
-      setIsDragging(false);
-      
-      gestureStateRef.current = {
-        isActive: true,
-        startDistance: distance,
-        startScale: transform.scale
-      };
-      
-      console.log('Pinch started:', { 
-        distance: Math.round(distance), 
-        scale: transform.scale.toFixed(3)
-      });
+      // Only initialize if not already pinching to prevent restart spam
+      if (!isPinching) {
+        setIsPinching(true);
+        setIsDragging(false);
+        
+        gestureStateRef.current = {
+          isActive: true,
+          startDistance: distance,
+          startScale: transform.scale
+        };
+        
+        console.log('Pinch started:', { 
+          distance: Math.round(distance), 
+          scale: transform.scale.toFixed(3)
+        });
+      }
     } else if (e.touches.length === 1) {
       // Single touch - potential drag if not pinching
       if (!isPinching) {
@@ -286,13 +288,13 @@ export default function HeirloomFlowerPage() {
       const startDistance = gestureStateRef.current.startDistance;
       const startScale = gestureStateRef.current.startScale;
       
-      // Use simple ratio-based zoom for consistent behavior
+      // Use simple ratio-based zoom for correct behavior
       const distanceRatio = currentDistance / startDistance;
       
-      // Direct proportional zoom - natural pinch behavior
-      // When distance decreases (ratio < 1): zoom in (increase scale)  
-      // When distance increases (ratio > 1): zoom out (decrease scale)
-      let newScale = startScale / distanceRatio;
+      // Fixed zoom direction: 
+      // When distance increases (spreading fingers): zoom in (increase scale)  
+      // When distance decreases (pinching fingers): zoom out (decrease scale)
+      let newScale = startScale * distanceRatio;
       
       // Clamp the scale to reasonable bounds
       newScale = Math.max(0.3, Math.min(4, newScale));
