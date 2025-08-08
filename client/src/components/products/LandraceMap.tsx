@@ -1,6 +1,7 @@
 import { useState, useRef, useMemo } from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import worldMapImage from "@assets/Winkel_triple_projection_SW_1754600003820.jpg";
+import StrainDetails from './StrainDetails';
 
 interface LandraceStrain {
   name: string;
@@ -36,6 +37,13 @@ export default function LandraceMap({ strains, selectedStrain, onStrainSelect }:
         <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
         
         <div className="relative bg-slate-800 rounded-lg overflow-hidden border border-battles-gold/30">
+          {/* Strain Details Overlay */}
+          {selectedStrain !== null && (
+            <StrainDetails 
+              strain={strains[selectedStrain]} 
+              onClose={() => onStrainSelect(null)}
+            />
+          )}
           <TransformWrapper
             key="map-transform-wrapper"
             initialScale={transformRef.current.hasBeenSet ? transformRef.current.scale : 0.9}

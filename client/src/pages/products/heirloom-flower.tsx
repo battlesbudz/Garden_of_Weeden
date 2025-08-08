@@ -6,7 +6,7 @@ import Navigation from '@/components/navigation';
 import LandraceMap from '@/components/products/LandraceMap';
 import CultivationMethods from '@/components/products/CultivationMethods';
 import WaitlistForm from '@/components/products/WaitlistForm';
-import StrainDetails from '@/components/products/StrainDetails';
+
 import cannabisFlower1 from "@assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg";
 import SEOHead from '@/components/seo/SEOHead';
 import { getCanonicalUrl, getPageTitle, getProductSchema } from '@/utils/seo';
@@ -157,18 +157,6 @@ export default function HeirloomFlowerPage() {
             />
           </div>
         </section>
-
-        {/* Selected Strain Details */}
-        {selectedStrain !== null && (
-          <section className="py-16 px-4 bg-gray-900/50">
-            <div className="max-w-4xl mx-auto">
-              <StrainDetails 
-                strain={landraceStrains[selectedStrain]} 
-                onClose={() => setSelectedStrain(null)}
-              />
-            </div>
-          </section>
-        )}
 
         {/* Cultivation Methods */}
         <section className="py-16 px-4">
