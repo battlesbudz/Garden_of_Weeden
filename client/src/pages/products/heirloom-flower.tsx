@@ -353,6 +353,52 @@ export default function HeirloomFlowerPage() {
               </p>
             </div>
 
+            {/* Selected strain details overlay - positioned over the map */}
+            {selectedStrain !== null && selectedStrain < landraceStrains.length && (
+              <div className="absolute top-4 left-4 z-20 bg-black/95 border border-battles-gold/50 rounded-lg p-4 max-w-sm backdrop-blur-sm">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center">
+                    <Leaf className="h-5 w-5 text-battles-gold mr-2" />
+                    <h4 className="text-lg font-bold text-battles-gold">{landraceStrains[selectedStrain].name}</h4>
+                  </div>
+                  <button
+                    onClick={() => setSelectedStrain(null)}
+                    className="text-gray-400 hover:text-white transition-colors ml-2"
+                    aria-label="Close strain details"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                
+                <div className="space-y-3">
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    {landraceStrains[selectedStrain].notes}
+                  </p>
+                  <div className="flex items-center text-xs text-battles-gold">
+                    <MapPin className="h-3 w-3 mr-1" />
+                    <span>{landraceStrains[selectedStrain].location}</span>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="bg-gray-800/50 rounded-lg p-2 text-center">
+                      <div className="text-battles-gold font-semibold text-xs">THC</div>
+                      <div className="text-white font-bold text-sm">{landraceStrains[selectedStrain].thc}</div>
+                    </div>
+                    <div className="bg-gray-800/50 rounded-lg p-2 text-center">
+                      <div className="text-battles-gold font-semibold text-xs">CBD</div>
+                      <div className="text-white font-bold text-sm">{landraceStrains[selectedStrain].cbd}</div>
+                    </div>
+                    <div className="bg-gray-800/50 rounded-lg p-2 text-center">
+                      <div className="text-battles-gold font-semibold text-xs">Flowering</div>
+                      <div className="text-white font-bold text-xs">{landraceStrains[selectedStrain].flowering}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="w-full" style={{ height: '280px' }}>
               {/* Interactive world map with image background and overlay markers */}
               <div 
@@ -464,53 +510,7 @@ export default function HeirloomFlowerPage() {
               </div>
             </div>
 
-          {/* Selected strain details panel */}
-          {selectedStrain !== null && selectedStrain < landraceStrains.length && (
-            <div className="mt-6 bg-black/50 border border-battles-gold/30 rounded-lg p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center">
-                  <Leaf className="h-6 w-6 text-battles-gold mr-3" />
-                  <h4 className="text-xl font-bold text-battles-gold">{landraceStrains[selectedStrain].name}</h4>
-                </div>
-                <button
-                  onClick={() => setSelectedStrain(null)}
-                  className="text-gray-400 hover:text-white transition-colors"
-                  aria-label="Close strain details"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <p className="text-gray-300 mb-4 leading-relaxed">
-                    {landraceStrains[selectedStrain].notes}
-                  </p>
-                  <div className="flex items-center text-sm text-battles-gold mb-2">
-                    <MapPin className="h-4 w-4 mr-2" />
-                    <span>{landraceStrains[selectedStrain].location}</span>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="bg-gray-800/50 rounded-lg p-3 text-center">
-                    <div className="text-battles-gold font-semibold text-sm">THC</div>
-                    <div className="text-white font-bold text-lg">{landraceStrains[selectedStrain].thc}</div>
-                  </div>
-                  <div className="bg-gray-800/50 rounded-lg p-3 text-center">
-                    <div className="text-battles-gold font-semibold text-sm">CBD</div>
-                    <div className="text-white font-bold text-lg">{landraceStrains[selectedStrain].cbd}</div>
-                  </div>
-                  <div className="bg-gray-800/50 rounded-lg p-3 text-center">
-                    <div className="text-battles-gold font-semibold text-sm">Flowering</div>
-                    <div className="text-white font-bold text-sm">{landraceStrains[selectedStrain].flowering}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+
 
           <div className="flex items-center justify-center mt-4 text-sm text-gray-400">
             <MapPin className="h-4 w-4 mr-2 text-battles-gold" />
