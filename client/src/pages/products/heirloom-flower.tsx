@@ -240,37 +240,32 @@ export default function HeirloomFlowerPage() {
     if (e.touches.length === 2) {
       e.preventDefault();
       
-      // Only initialize if not already pinching
-      if (!isPinching) {
-        setIsPinching(true);
-        setIsDragging(false);
-        
-        const touch1 = e.touches[0];
-        const touch2 = e.touches[1];
-        
-        const distance = Math.sqrt(
-          Math.pow(touch2.clientX - touch1.clientX, 2) + 
-          Math.pow(touch2.clientY - touch1.clientY, 2)
-        );
-        
-        // Only start pinch if fingers are reasonably far apart
-        if (distance > 40) {
-          // Initialize gesture state for REAL-TIME continuous tracking
-          gestureStateRef.current = {
-            isActive: true,
-            startDistance: distance,
-            startScale: transform.scale
-          };
-          
-          console.log('Continuous pinch started:', { 
-            distance: Math.round(distance), 
-            scale: transform.scale.toFixed(3)
-          });
-        } else {
-          setIsPinching(false);
-          gestureStateRef.current = { isActive: false, startDistance: 0, startScale: 1 };
-        }
-      }
+      // Always reset state to ensure clean gesture start
+      setIsPinching(true);
+      setIsDragging(false);
+      
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      
+      const distance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) + 
+        Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+      
+      // Initialize gesture state with current distance as baseline
+      gestureStateRef.current = {
+        isActive: true,
+        startDistance: distance,
+        startScale: transform.scale
+      };
+      
+      console.log('Fresh pinch started:', { 
+        distance: Math.round(distance), 
+        scale: transform.scale.toFixed(3)
+      });
+    } else if (e.touches.length === 1 && !isPinching) {
+      // Single touch - prepare for potential drag
+      setIsDragging(false);
     }
   };
 
@@ -286,33 +281,26 @@ export default function HeirloomFlowerPage() {
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
-      // TRULY CONTINUOUS ZOOM: Map finger distance to zoom level
-      // INVERTED LOGIC: Small distance = zoom in, large distance = zoom out
-      const minDistance = 50;   // Minimum finger distance (zoom in)  
-      const maxDistance = 300;  // Maximum finger distance (zoom out)
-      const minScale = 0.5;     // Minimum zoom level
-      const maxScale = 4.0;     // Maximum zoom level
+      // Use RELATIVE zoom based on gesture start distance for consistency
+      const startDistance = gestureStateRef.current.startDistance;
+      const startScale = gestureStateRef.current.startScale;
       
-      // Clamp distance to reasonable bounds
-      const clampedDistance = Math.max(minDistance, Math.min(maxDistance, currentDistance));
+      // Calculate relative change from start of gesture
+      const distanceRatio = currentDistance / startDistance;
+      const sensitivity = 1.2; // Moderate sensitivity for stable zoom
       
-      // Map distance to scale with INVERTED relationship
-      const distanceRange = maxDistance - minDistance;
-      const scaleRange = maxScale - minScale;
-      const distanceRatio = (clampedDistance - minDistance) / distanceRange;
-      
-      // INVERTED MAPPING: Less distance = higher scale (zoom in), More distance = lower scale (zoom out)
-      let targetScale = maxScale - (distanceRatio * scaleRange);
-      
-      // Reduce jumpiness with higher smoothing for fluid motion
-      const smoothingFactor = 0.7; // Much higher for smoother, less jumpy movement
-      let newScale = transform.scale + (targetScale - transform.scale) * smoothingFactor;
+      // Apply zoom relative to starting point (INVERTED for natural feel)
+      let newScale = startScale / Math.pow(distanceRatio, sensitivity);
       
       // Clamp the scale to reasonable bounds
       newScale = Math.max(0.3, Math.min(4, newScale));
       
-      // Update on ANY change for buttery smooth continuous zoom
-      if (Math.abs(newScale - transform.scale) > 0.0001) {
+      // Apply smoothing to reduce jerkiness
+      const smoothingFactor = 0.8; // High smoothing for stability
+      newScale = transform.scale + (newScale - transform.scale) * smoothingFactor;
+      
+      // Update on meaningful changes only
+      if (Math.abs(newScale - transform.scale) > 0.001) {
         // Get container bounds for center calculation
         const rect = containerRef.current?.getBoundingClientRect();
         if (!rect) return;
@@ -328,7 +316,7 @@ export default function HeirloomFlowerPage() {
         const newX = transform.x - (pinchCenterX - centerX) * (scaleRatioChange - 1);
         const newY = transform.y - (pinchCenterY - centerY) * (scaleRatioChange - 1);
         
-        // Update transform state for smooth continuous zoom
+        // Update transform state
         setTransform({
           x: newX,
           y: newY,
@@ -339,10 +327,11 @@ export default function HeirloomFlowerPage() {
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if (e.touches.length < 2 && isPinching) {
-      console.log('Pinch gesture ended, final scale:', transform.scale.toFixed(3));
+    if (e.touches.length < 2) {
+      console.log('Gesture ended, final scale:', transform.scale.toFixed(3));
+      // Complete reset to prevent state conflicts
       setIsPinching(false);
-      // Reset gesture state completely
+      setIsDragging(false);
       gestureStateRef.current = { isActive: false, startDistance: 0, startScale: 1 };
     }
   };
