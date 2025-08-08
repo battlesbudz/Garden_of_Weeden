@@ -277,13 +277,13 @@ export default function HeirloomFlowerPage() {
       const distanceChange = currentDistance - lastPinchDistance.current;
       
       // Only update if there's a meaningful change (reduce jitter)
-      if (Math.abs(distanceChange) < 3) return;
+      if (Math.abs(distanceChange) < 1) return;
       
       // Update tracking
       lastPinchDistance.current = currentDistance;
       
-      // Calculate zoom step based on distance change - more predictable
-      const zoomStep = distanceChange * 0.008; // Consistent zoom rate
+      // Calculate zoom step based on distance change - much more sensitive
+      const zoomStep = distanceChange * 0.025; // Much higher zoom rate
       let newScale = transform.scale + zoomStep;
       
       // Clamp the scale
