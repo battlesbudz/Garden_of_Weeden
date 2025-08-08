@@ -423,7 +423,7 @@ export default function HeirloomFlowerPage() {
               <p className="text-gray-300">Pure genetics preserved from extinction, untouched by hybridization.</p>
             </div>
             <div>
-              <div className="text-2xl font-bold text-battles-gold mb-2">Indoor Precision</div>
+              <div className="text-2xl font-bold text-battles-gold mb-2">Indoor Cultivation</div>
               <p className="text-gray-300">Climate-controlled, full-spectrum LED cultivation in living soil beds.</p>
             </div>
             <div>
