@@ -35,7 +35,7 @@ const landraceStrains = [
   {
     name: "Moroccan Hash Plant",
     location: "Rif Mountains, Morocco", 
-    coordinates: { x: 980, y: 340 }, // Morocco - using grid lines, ~5°W, ~34°N
+    coordinates: { x: 960, y: 320 }, // Morocco Rif Mountains: 35°N, 4°W - positioned on landmass
     notes: "Traditional hash variety with earthy, spiced resin production",
     thc: "12-18%",
     cbd: "3-6%",
@@ -44,7 +44,7 @@ const landraceStrains = [
   {
     name: "Colombian Gold",
     location: "Santa Marta Mountains, Colombia",
-    coordinates: { x: 580, y: 570 }, // Colombia - using grid lines, ~74°W, ~11°N
+    coordinates: { x: 550, y: 580 }, // Colombia Santa Marta: 11.24°N, 74.20°W - northern coast
     notes: "Uplifting sativa with golden pistils and sweet earth tones",
     thc: "13-17%",
     cbd: "2-5%",
