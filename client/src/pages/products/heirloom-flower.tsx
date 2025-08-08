@@ -157,8 +157,8 @@ export default function HeirloomFlowerPage() {
     setEmail('');
   };
 
-  // Map component with stable TransformWrapper to preserve zoom/pan state
-  const OriginMap = () => (
+  // Create a memoized map component outside the render cycle
+  const StableMapComponent = useMemo(() => (
       <div className="relative">
         <div className="bg-gray-800 rounded-lg p-8 border border-battles-gold/20">
           <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
@@ -292,7 +292,7 @@ export default function HeirloomFlowerPage() {
           </div>
         </div>
       </div>
-  );
+  ), []);
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -424,7 +424,7 @@ export default function HeirloomFlowerPage() {
               Explore the sacred genetics that have evolved naturally across the globe for thousands of years
             </p>
           </div>
-          <OriginMap />
+          {StableMapComponent}
         </div>
       </section>
 
