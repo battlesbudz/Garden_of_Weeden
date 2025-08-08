@@ -12,93 +12,99 @@ import worldMapImage from "@assets/Winkel_triple_projection_SW_1754600003820.jpg
 import SEOHead from '@/components/seo/SEOHead';
 import { getCanonicalUrl, getPageTitle, getProductSchema } from '@/utils/seo';
 
-// Landrace strain data - Precise coordinates measured on 2058x1262px Winkel Triple projection
+// Pure landrace cultivar data - Preserved genetics from their native terroir
 const landraceStrains = [
   {
     name: "Afghan Kush",
     location: "Hindu Kush Mountains, Afghanistan",
     coordinates: { x: 1340, y: 410 }, // Afghanistan - using grid lines, ~65°E, ~35°N
-    notes: "Broad-leaf, hash-heavy, calming body effects",
+    notes: "Broad-leaf indica, traditional hash cultivar with deep body relaxation",
     thc: "15-20%",
     cbd: "4-8%",
-    flowering: "8-10 weeks"
+    flowering: "8-10 weeks",
+    chemotype: "Type II - Balanced"
   },
   {
     name: "Thai Stick", 
     location: "Northern Thailand",
     coordinates: { x: 1480, y: 520 }, // Thailand - using grid lines, ~100°E, ~18°N
-    notes: "Long flowering, citrus incense profile with creative clarity",
+    notes: "Pure equatorial sativa, citrus-incense terpene profile with true head high",
     thc: "12-16%",
     cbd: "3-6%",
-    flowering: "14-18 weeks"
+    flowering: "14-18 weeks",
+    chemotype: "Type I - THC Dominant"
   },
   {
     name: "Moroccan Hash Plant",
     location: "Rif Mountains, Morocco", 
     coordinates: { x: 1000, y: 380 }, // Morocco Rif Mountains: 35°N, 4°W - positioned on Moroccan landmass
-    notes: "Traditional hash variety with earthy, spiced resin production",
+    notes: "Traditional hash-making variety, earthy-spiced resin production",
     thc: "12-18%",
     cbd: "3-6%",
-    flowering: "9-11 weeks"
+    flowering: "9-11 weeks",
+    chemotype: "Type II - Balanced"
   },
   {
     name: "Colombian Gold",
     location: "Santa Marta Mountains, Colombia",
     coordinates: { x: 580, y: 550 }, // Colombia Santa Marta: 11.24°N, 74.20°W - positioned on northern Colombian coast
-    notes: "Uplifting sativa with golden pistils and sweet earth tones",
+    notes: "Legendary equatorial sativa with golden pistils, sweet earth terpenes",
     thc: "13-17%",
     cbd: "2-5%",
-    flowering: "12-16 weeks"
+    flowering: "12-16 weeks",
+    chemotype: "Type I - THC Dominant"
   },
   {
     name: "Malawi Gold",
     location: "Malawi, Southeast Africa",
     coordinates: { x: 1180, y: 700 }, // Malawi - using grid lines, ~34°E, ~13°S
-    notes: "Energetic, cerebral, spicy aroma with soaring effects",
+    notes: "Pure African sativa, racey cerebral effects with spicy-floral profile",
     thc: "14-18%",
     cbd: "2-4%",
-    flowering: "16-20 weeks"
+    flowering: "16-20 weeks",
+    chemotype: "Type I - THC Dominant"
   },
   {
     name: "Durban Poison",
     location: "Durban, South Africa",
     coordinates: { x: 1140, y: 800 }, // South Africa - using grid lines, ~31°E, ~30°S
-    notes: "Sweet anise aroma with energizing, clear-headed effects",
+    notes: "100% sativa with anise-licorice terpenes, energizing clear-headed expression",
     thc: "15-25%",
     cbd: "1-3%",
-    flowering: "8-9 weeks"
+    flowering: "8-9 weeks",
+    chemotype: "Type I - THC Dominant"
   }
 ];
 
 const cultivationMethods = [
   {
     icon: Leaf,
-    title: "Organic Living Soil",
-    description: "Microbial-rich soil built from composted matter and worm castings that naturally feeds our plants through beneficial microorganisms."
+    title: "Living Soil Beds",
+    description: "Microbial-rich no-till beds replicating native terroir. Our soil food web preserves authentic terpene expressions and cannabinoid profiles."
   },
   {
     icon: Layers,
-    title: "No-Till Beds",
-    description: "We never disturb the soil layers, respecting the natural soil food web and preserving beneficial mycorrhizal networks."
+    title: "Full-Spectrum LEDs",
+    description: "Precision light spectrums matching equatorial sun cycles. 13/11 photoperiods for true sativa flowering expressions."
   },
   {
     icon: Sun,
-    title: "Equatorial Genetics",
-    description: "Long daylight-flowering strains with unique photoperiod responses that produce complex cannabinoid profiles."
+    title: "Climate-Controlled Preservation",
+    description: "Year-round cultivation of tropical sativas impossible outdoors. Protected genetic conservation from contamination and climate change."
   },
   {
     icon: Settings,
-    title: "Traditional Practices",
-    description: "Hand-trimmed, sun-fed, and ritualistically grown with intention, honoring ancient cultivation wisdom."
+    title: "Artisanal Craft Methods",
+    description: "Hand-trimmed, slow-cured, small-batch cultivation. IBL genetics preserved through traditional selection methods."
   }
 ];
 
 const productFormats = [
   {
-    name: "Whole Flower (5g)",
+    name: "Artisanal Flower (5g)",
     image: cannabisFlower1,
-    notes: "Earthy, spiced, high CBG content",
-    price: "Pre-Launch Pricing"
+    notes: "Fire genetics, loud terpenes, connoisseur-grade",
+    price: "Collector Pricing TBD"
   }
 ];
 
@@ -344,33 +350,33 @@ export default function HeirloomFlowerPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-5xl md:text-6xl font-playfair font-bold mb-6">
-                <span className="text-battles-gold">Heirloom</span> Flower
+                <span className="text-battles-gold">Preserved</span> Genetics
               </h1>
               <p className="text-2xl font-bold text-white mb-6">
-                The world's oldest cannabis, grown with modern reverence
+                Authentic landrace cultivars. Indoor precision. Living soil tradition.
               </p>
               <p className="text-xl text-gray-300 mb-4 leading-relaxed">
-                Our Heirloom Collection features rare landrace strains — preserved from their native climates, grown in organic living soil, and hand-harvested in small batches.
+                Our genetic preservation project features OG strains — pure sativa and indica expressions untouched by hybridization, cultivated in climate-controlled living soil beds under full-spectrum LEDs.
               </p>
               <p className="text-lg text-gray-400 mb-6">
-                These are the ancestors of modern cannabis: Unspoiled. Potent. Spiritually rooted.
+                Fire genetics from the Hippie Trail era: Preserved. Authentic. Connoisseur-grade.
               </p>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">5-20%</div>
-                  <div className="text-gray-300 text-sm font-medium">THC Content</div>
+                  <div className="text-battles-gold font-bold text-xl">100%</div>
+                  <div className="text-gray-300 text-sm font-medium">Pure Genetics</div>
                 </div>
                 <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">12-24+</div>
-                  <div className="text-gray-300 text-sm font-medium">Week Flower</div>
+                  <div className="text-battles-gold font-bold text-xl">16-20</div>
+                  <div className="text-gray-300 text-sm font-medium">Week Sativas</div>
                 </div>
                 <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">Organic</div>
-                  <div className="text-gray-300 text-sm font-medium">Living Soil</div>
+                  <div className="text-battles-gold font-bold text-xl">LED</div>
+                  <div className="text-gray-300 text-sm font-medium">Precision</div>
                 </div>
                 <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">Hand</div>
-                  <div className="text-gray-300 text-sm font-medium">Trimmed</div>
+                  <div className="text-battles-gold font-bold text-xl">Living</div>
+                  <div className="text-gray-300 text-sm font-medium">Soil Beds</div>
                 </div>
               </div>
               <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 mb-6">
@@ -413,16 +419,16 @@ export default function HeirloomFlowerPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-2xl font-bold text-battles-gold mb-2">Preserved by Time</div>
-              <p className="text-gray-300">Each cultivar is an heirloom, untouched by modern breeding.</p>
+              <div className="text-2xl font-bold text-battles-gold mb-2">Genetic Conservation</div>
+              <p className="text-gray-300">IBL genetics preserved from extinction, untouched by hybridization.</p>
             </div>
             <div>
-              <div className="text-2xl font-bold text-battles-gold mb-2">Grown with Intention</div>
-              <p className="text-gray-300">Tended by hand in living soil.</p>
+              <div className="text-2xl font-bold text-battles-gold mb-2">Indoor Precision</div>
+              <p className="text-gray-300">Climate-controlled, full-spectrum LED cultivation in living soil beds.</p>
             </div>
             <div>
-              <div className="text-2xl font-bold text-battles-gold mb-2">Crafted in Small Batches</div>
-              <p className="text-gray-300">Only 50 plants.</p>
+              <div className="text-2xl font-bold text-battles-gold mb-2">Artisanal Craft</div>
+              <p className="text-gray-300">50 plants max. Hand-selected phenotypes. Connoisseur quality.</p>
             </div>
           </div>
         </div>
@@ -432,9 +438,9 @@ export default function HeirloomFlowerPage() {
       <section className="py-16 bg-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-battles-gold mb-4">Ancient Cannabis Origins</h2>
+            <h2 className="text-3xl font-bold text-battles-gold mb-4">Global Landrace Origins</h2>
             <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-              Explore the sacred genetics that have evolved naturally across the globe for thousands of years
+              Authentic cultivars from the Hippie Trail — preserved genetics that shaped modern cannabis culture
             </p>
           </div>
           {StableMapComponent}
@@ -444,9 +450,9 @@ export default function HeirloomFlowerPage() {
       {/* Landrace Education */}
       <section className="py-16 bg-gray-900">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-battles-gold mb-4 text-center">Why Landrace Cannabis Matters</h2>
+          <h2 className="text-3xl font-bold text-battles-gold mb-4 text-center">Why Pure Genetics Matter</h2>
           <p className="text-lg text-gray-400 text-center mb-12 max-w-3xl mx-auto">
-            While others chase high THC numbers, we preserve what nature perfected over millennia
+            While modern hybrids chase extreme THC, we preserve authentic landrace expressions with true entourage effects
           </p>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -456,8 +462,8 @@ export default function HeirloomFlowerPage() {
                   <Award className="h-6 w-6 text-battles-gold" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Unaltered by Hybridization</h3>
-                  <p className="text-gray-300">Pure genetic lineage preserved in its original form, unchanged by modern breeding practices.</p>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">100% Pure Genetics</h3>
+                  <p className="text-gray-300">IBL (Inbred Line) cultivars preserved in original form, never crossed or hybridized. True F1 genetics from nature.</p>
                 </div>
               </div>
               
@@ -466,8 +472,8 @@ export default function HeirloomFlowerPage() {
                   <Users className="h-6 w-6 text-battles-gold" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Deep Cultural Heritage</h3>
-                  <p className="text-gray-300">Rooted in traditional use across generations, carrying the wisdom of ancient cultivation practices.</p>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Hippie Trail Heritage</h3>
+                  <p className="text-gray-300">Seeds collected during the 1970s Hash Trail through Afghanistan, Thailand, Morocco. Living genetic history.</p>
                 </div>
               </div>
               
@@ -476,8 +482,8 @@ export default function HeirloomFlowerPage() {
                   <Leaf className="h-6 w-6 text-battles-gold" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Richer Cannabinoid Profiles</h3>
-                  <p className="text-gray-300">Complex terpene expressions and balanced cannabinoid ratios create the authentic entourage effect.</p>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">True Entourage Effect</h3>
+                  <p className="text-gray-300">Complex terpene profiles preserved through LED spectrum control. Balanced THC:CBD ratios nature intended.</p>
                 </div>
               </div>
               
@@ -486,8 +492,8 @@ export default function HeirloomFlowerPage() {
                   <Sun className="h-6 w-6 text-battles-gold" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Equatorial Growth Patterns</h3>
-                  <p className="text-gray-300">Long-flowering narrow-leaf varieties adapted to consistent light cycles produce unique effects.</p>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">True Sativa Expression</h3>
+                  <p className="text-gray-300">Long-flowering equatorial cultivars under 13/11 photoperiods. Narrow-leaf drug type with extended flowering.</p>
                 </div>
               </div>
             </div>
@@ -501,9 +507,9 @@ export default function HeirloomFlowerPage() {
       <section className="py-16 bg-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-battles-gold mb-4">Our Cultivation Approach</h2>
+            <h2 className="text-3xl font-bold text-battles-gold mb-4">Indoor LED Precision Meets Living Soil Tradition</h2>
             <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-              Traditional practices meet modern precision in our organic cultivation methods
+              Climate-controlled preservation of equatorial genetics — Year-round tropical sativa cultivation impossible outdoors
             </p>
           </div>
           
@@ -567,26 +573,26 @@ export default function HeirloomFlowerPage() {
             <div>
               <div className="space-y-6">
                 <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-                  <h3 className="text-xl font-semibold text-battles-gold mb-3">Ancient Genetics, Modern Problems</h3>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-3">OG Strains vs Modern Hybrids</h3>
                   <p className="text-gray-300 leading-relaxed">
-                    Modern hybrids focus on extreme THC levels that often cause anxiety and paranoia. 
-                    Our landrace genetics offer the balanced, clear-headed effects that cannabis was meant to provide.
+                    While modern genetics chase 30%+ THC causing anxiety and paranoia, our preserved landraces deliver 
+                    balanced effects with authentic terpene profiles. True head high without the racey edge.
                   </p>
                 </div>
                 
                 <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-                  <h3 className="text-xl font-semibold text-battles-gold mb-3">The Entourage Advantage</h3>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-3">Living Soil + LED Spectrum</h3>
                   <p className="text-gray-300 leading-relaxed">
-                    With 12-18% THC plus high CBD, CBG, and rare terpenes, you get therapeutic benefits 
-                    without the overwhelming high. It's cannabis that works with your body, not against it.
+                    Our living soil beds maintain native terroir while full-spectrum LEDs replicate equatorial sun cycles. 
+                    13/11 photoperiods trigger true sativa expressions impossible with outdoor cultivation.
                   </p>
                 </div>
 
                 <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-                  <h3 className="text-xl font-semibold text-battles-gold mb-3">Exclusive Access</h3>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-3">Genetic Conservation Project</h3>
                   <p className="text-gray-300 leading-relaxed">
-                    These genetics are rare - many are extinct in their native regions. 
-                    We're one of the few cultivators preserving these authentic strains in North America.
+                    Many of these cultivars are extinct in native regions due to hybridization and climate change. 
+                    We're preserving fire genetics through IBL seed banking and phenotype selection.
                   </p>
                 </div>
               </div>
@@ -645,9 +651,9 @@ export default function HeirloomFlowerPage() {
       <section className="py-16 bg-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-battles-gold mb-4">What Connoisseurs Are Saying</h2>
+            <h2 className="text-3xl font-bold text-battles-gold mb-4">Community Reviews</h2>
             <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-              Experience the difference that authentic landrace genetics make
+              Real feedback from collectors who know fire genetics
             </p>
           </div>
           
@@ -660,12 +666,12 @@ export default function HeirloomFlowerPage() {
                   </div>
                 </div>
                 <blockquote className="text-gray-300 italic mb-4">
-                  "The most spiritual cannabis I've ever tried. Like a window to the past. 
-                  The clarity and creativity it provides is unlike anything from modern dispensaries."
+                  "This is real gas. Pure landrace with that authentic head high you can't find anymore. 
+                  The terpene profile is loud — true equatorial sativa expression."
                 </blockquote>
                 <div className="border-t border-gray-800 pt-4">
                   <cite className="text-battles-gold font-semibold">Sarah M.</cite>
-                  <p className="text-gray-400 text-sm">Cannabis Consultant, 15+ years experience</p>
+                  <p className="text-gray-400 text-sm">Forum Moderator, ICMag Landrace Preservation</p>
                 </div>
               </CardContent>
             </Card>
@@ -678,12 +684,12 @@ export default function HeirloomFlowerPage() {
                   </div>
                 </div>
                 <blockquote className="text-gray-300 italic mb-4">
-                  "Nothing touches these heirlooms. The flavor, the vibe, the effect—it's perfect. 
-                  Finally found cannabis that doesn't give me anxiety but still delivers."
+                  "Fire genetics preserved right. The living soil beds really bring out those old-school terpenes. 
+                  No anxiety, just clean head high like the Thai Sticks from the 70s."
                 </blockquote>
                 <div className="border-t border-gray-800 pt-4">
                   <cite className="text-battles-gold font-semibold">Mike D.</cite>
-                  <p className="text-gray-400 text-sm">Retired Veteran, Medical Patient</p>
+                  <p className="text-gray-400 text-sm">Seed Collector, 20+ Years Growing</p>
                 </div>
               </CardContent>
             </Card>
@@ -696,12 +702,12 @@ export default function HeirloomFlowerPage() {
                   </div>
                 </div>
                 <blockquote className="text-gray-300 italic mb-4">
-                  "As a terpene researcher, I can confirm these profiles are absolutely unique. 
-                  This is what cannabis was before we bred the complexity out of it."
+                  "True IBL genetics with chemotypes you can't find in modern hybrids. 
+                  The LED spectrum preservation of these terpenes is remarkable — pure OG strains."
                 </blockquote>
                 <div className="border-t border-gray-800 pt-4">
                   <cite className="text-battles-gold font-semibold">Dr. Jennifer K.</cite>
-                  <p className="text-gray-400 text-sm">Cannabis Research Scientist</p>
+                  <p className="text-gray-400 text-sm">Phenotype Hunter, Genetic Preservation</p>
                 </div>
               </CardContent>
             </Card>
@@ -716,10 +722,10 @@ export default function HeirloomFlowerPage() {
           <p className="text-gray-400 text-center mb-12">Everything you need to know about securing your spot</p>
           <div className="space-y-6">
             <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">When will these be available?</h3>
+              <h3 className="text-xl font-semibold text-battles-gold mb-3">When does this fire drop?</h3>
               <p className="text-gray-300">
-                Our next harvest completes in Spring 2025. Waitlist members get 48-hour priority access before public release. 
-                With only 50 plants per batch, spots typically sell out within hours.
+                Next harvest completes Spring 2026. Collectors get 48-hour priority access. 
+                Only 50 plants of these preserved genetics per cycle — true connoisseur allocation.
               </p>
             </div>
             
