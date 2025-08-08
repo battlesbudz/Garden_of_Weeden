@@ -288,13 +288,9 @@ export default function HeirloomFlowerPage() {
 
             {/* Legend */}
             <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-sm rounded-lg p-3 text-xs text-white border border-battles-gold/30">
-              <div className="flex items-center space-x-2 mb-2">
+              <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-yellow-500 rounded-full border border-white"></div>
                 <span>Landrace Origins</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-battles-gold rounded-full border border-white"></div>
-                <span>Selected Strain</span>
               </div>
             </div>
           </div>
