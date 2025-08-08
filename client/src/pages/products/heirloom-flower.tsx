@@ -353,7 +353,7 @@ export default function HeirloomFlowerPage() {
               </p>
             </div>
 
-            <div className="w-full" style={{ height: '600px' }}>
+            <div className="w-full" style={{ height: '400px' }}>
               {/* Interactive world map with image background and overlay markers */}
               <div 
                 ref={containerRef}
@@ -398,7 +398,7 @@ export default function HeirloomFlowerPage() {
                   {/* SVG Overlay for Interactive Markers */}
                   <svg 
                     className="absolute inset-0 w-full h-full"
-                    viewBox="0 0 1400 700"
+                    viewBox="0 0 1400 467"
                     style={{ 
                       pointerEvents: 'auto'
                     }}
@@ -417,14 +417,13 @@ export default function HeirloomFlowerPage() {
                   {/* Landrace strain markers positioned over the image */}
                   {Object.entries(landraceData).map(([code, data], index) => {
                     let x = 0, y = 0;
-                    // Accurate grid-based positioning counting from center (0° longitude at x=700)
-                    // Each major grid is ~20° longitude (140px) and ~20° latitude (70px)
+                    // Coordinates adjusted for 400px height (1400x467 viewBox)
                     switch(code) {
-                      case 'MW': x = 805; y = 415; break; // Malawi - Lake Malawi region, Eastern Africa
-                      case 'TH': x = 1040; y = 340; break; // Thailand - Thai peninsula, SE Asia  
-                      case 'AF': x = 905; y = 290; break; // Afghanistan - Hindu Kush mountains
-                      case 'CO': x = 270; y = 370; break; // Colombia - Northwestern South America
-                      case 'ZA': x = 770; y = 490; break; // South Africa - Cape region
+                      case 'MW': x = 805; y = 280; break; // Malawi - Lake Malawi region, Eastern Africa
+                      case 'TH': x = 1040; y = 225; break; // Thailand - Thai peninsula, SE Asia  
+                      case 'AF': x = 905; y = 195; break; // Afghanistan - Hindu Kush mountains
+                      case 'CO': x = 270; y = 245; break; // Colombia - Northwestern South America
+                      case 'ZA': x = 770; y = 325; break; // South Africa - Cape region
                     }
                     
                     return (
@@ -461,8 +460,8 @@ export default function HeirloomFlowerPage() {
                   })}
 
                   {/* Title overlay */}
-                  <text x="700" y="50" textAnchor="middle" 
-                        className="fill-white text-3xl font-bold pointer-events-none"
+                  <text x="700" y="40" textAnchor="middle" 
+                        className="fill-white text-2xl font-bold pointer-events-none"
                         style={{ 
                           textShadow: '4px 4px 8px rgba(0,0,0,0.9), 0 0 15px rgba(0,0,0,0.8)',
                           filter: 'drop-shadow(0 0 10px rgba(241, 196, 15, 0.4))'
@@ -471,7 +470,7 @@ export default function HeirloomFlowerPage() {
                   </text>
                   
                   {/* Enhanced legend with better visibility */}
-                  <g transform="translate(50, 580)" className="pointer-events-none">
+                  <g transform="translate(50, 380)" className="pointer-events-none">
                     <rect x="0" y="0" width="320" height="90" fill="rgba(0,0,0,0.85)" rx="12" 
                           stroke="#f1c40f" strokeWidth="3" filter="url(#glow)" />
                     <circle cx="25" cy="25" r="12" fill="#f1c40f" stroke="#fff" strokeWidth="3" />
