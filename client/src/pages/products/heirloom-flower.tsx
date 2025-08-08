@@ -296,9 +296,13 @@ export default function HeirloomFlowerPage() {
 
     const handleCountryClick = (countryCode: string) => {
       if (landraceData[countryCode]) {
-        const index = Object.keys(landraceData).indexOf(countryCode);
-        setSelectedStrain(index);
-        console.log('Country clicked:', countryCode, landraceData[countryCode].strainName);
+        // Find the corresponding strain in landraceStrains array
+        const strainName = landraceData[countryCode].strainName;
+        const strainIndex = landraceStrains.findIndex(s => s.name === strainName);
+        if (strainIndex !== -1) {
+          setSelectedStrain(strainIndex);
+          console.log('Country clicked:', countryCode, strainName, 'Index:', strainIndex);
+        }
       }
     };
 
@@ -396,7 +400,7 @@ export default function HeirloomFlowerPage() {
                     className="absolute inset-0 w-full h-full"
                     viewBox="0 0 1400 700"
                     style={{ 
-                      pointerEvents: 'none'
+                      pointerEvents: 'auto'
                     }}
                   >
                   <defs>
@@ -413,14 +417,14 @@ export default function HeirloomFlowerPage() {
                   {/* Landrace strain markers positioned over the image */}
                   {Object.entries(landraceData).map(([code, data], index) => {
                     let x = 0, y = 0;
-                    // Precisely calibrated to Winkel Triple projection landmasses
-                    // Based on actual map image coordinates (1400x700 viewBox)
+                    // Accurate grid-based positioning counting from center (0° longitude at x=700)
+                    // Each major grid is ~20° longitude (140px) and ~20° latitude (70px)
                     switch(code) {
-                      case 'MW': x = 780; y = 430; break; // Malawi - Eastern Africa
-                      case 'TH': x = 1070; y = 380; break; // Thailand - SE Asia peninsula  
-                      case 'AF': x = 910; y = 320; break; // Afghanistan - Central Asia
-                      case 'CO': x = 320; y = 380; break; // Colombia - NW South America
-                      case 'ZA': x = 750; y = 520; break; // South Africa - southern Africa
+                      case 'MW': x = 805; y = 415; break; // Malawi - Lake Malawi region, Eastern Africa
+                      case 'TH': x = 1040; y = 340; break; // Thailand - Thai peninsula, SE Asia  
+                      case 'AF': x = 905; y = 290; break; // Afghanistan - Hindu Kush mountains
+                      case 'CO': x = 270; y = 370; break; // Colombia - Northwestern South America
+                      case 'ZA': x = 770; y = 490; break; // South Africa - Cape region
                     }
                     
                     return (
