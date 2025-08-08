@@ -273,18 +273,12 @@ export default function HeirloomFlowerPage() {
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
-      // Calculate the distance change from last position
-      const distanceChange = currentDistance - lastPinchDistance.current;
+      // Calculate total distance change from pinch start for continuous zoom
+      const totalDistanceChange = currentDistance - pinchStartRef.current.distance;
       
-      // Only update if there's a meaningful change (reduce jitter)
-      if (Math.abs(distanceChange) < 1) return;
-      
-      // Update tracking
-      lastPinchDistance.current = currentDistance;
-      
-      // Calculate zoom step based on distance change - much more sensitive
-      const zoomStep = distanceChange * 0.025; // Much higher zoom rate
-      let newScale = transform.scale + zoomStep;
+      // Calculate new scale based on total change - this gives continuous zooming
+      const zoomFactor = 1 + (totalDistanceChange * 0.003); // Very sensitive continuous zoom
+      let newScale = pinchStartRef.current.scale * zoomFactor;
       
       // Clamp the scale
       newScale = Math.max(0.3, Math.min(4, newScale));
