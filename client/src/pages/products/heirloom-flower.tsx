@@ -422,7 +422,7 @@ export default function HeirloomFlowerPage() {
                       case 'MW': x = 800; y = 220; break; // Malawi - Eastern Africa landmass
                       case 'TH': x = 1060; y = 175; break; // Thailand - Southeast Asia peninsula  
                       case 'AF': x = 920; y = 155; break; // Afghanistan - Central Asian highlands
-                      case 'CO': x = 350; y = 195; break; // Colombia - Northwestern South America coast
+                      case 'CO': x = 500; y = 180; break; // Colombia - Northwestern South America coast
                       case 'ZA': x = 780; y = 270; break; // South Africa - Southern tip of Africa
                     }
                     
