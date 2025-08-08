@@ -11,12 +11,12 @@ import cannabisFlower1 from "@assets/Screenshot_20250713_025017_Gallery_17523894
 import SEOHead from '@/components/seo/SEOHead';
 import { getCanonicalUrl, getPageTitle, getProductSchema } from '@/utils/seo';
 
-// Pure landrace cultivar data
+// Pure landrace cultivar data - Preserved genetics from their native terroir
 const landraceStrains = [
   {
     name: "Afghan Kush",
     location: "Hindu Kush Mountains, Afghanistan",
-    coordinates: { x: 1340, y: 410 },
+    coordinates: { x: 1340, y: 410 }, // Afghanistan coordinates
     notes: "Broad-leaf indica, traditional hash cultivar with deep body relaxation",
     thc: "15-20%",
     cbd: "4-8%",
@@ -26,7 +26,7 @@ const landraceStrains = [
   {
     name: "Thai Stick", 
     location: "Northern Thailand",
-    coordinates: { x: 1480, y: 520 },
+    coordinates: { x: 1480, y: 520 }, // Thailand coordinates
     notes: "Pure equatorial sativa, citrus-incense terpene profile with true head high",
     thc: "12-16%",
     cbd: "3-6%",
@@ -36,7 +36,7 @@ const landraceStrains = [
   {
     name: "Moroccan Hash Plant",
     location: "Rif Mountains, Morocco", 
-    coordinates: { x: 1000, y: 380 },
+    coordinates: { x: 1000, y: 380 }, // Morocco coordinates
     notes: "Traditional hash-making variety, earthy-spiced resin production",
     thc: "12-18%",
     cbd: "3-6%",
@@ -46,7 +46,7 @@ const landraceStrains = [
   {
     name: "Colombian Gold",
     location: "Santa Marta Mountains, Colombia",
-    coordinates: { x: 580, y: 550 },
+    coordinates: { x: 580, y: 550 }, // Colombia coordinates
     notes: "Legendary equatorial sativa with golden pistils, sweet earth terpenes",
     thc: "13-17%",
     cbd: "2-5%",
@@ -56,7 +56,7 @@ const landraceStrains = [
   {
     name: "Malawi Gold",
     location: "Malawi, Southeast Africa",
-    coordinates: { x: 1180, y: 700 },
+    coordinates: { x: 1180, y: 700 }, // Malawi coordinates
     notes: "Pure African sativa, racey cerebral effects with spicy-floral profile",
     thc: "14-18%",
     cbd: "2-4%",
@@ -66,387 +66,291 @@ const landraceStrains = [
   {
     name: "Durban Poison",
     location: "Durban, South Africa",
-    coordinates: { x: 1140, y: 800 },
+    coordinates: { x: 1140, y: 800 }, // South Africa coordinates
     notes: "100% sativa with anise-licorice terpenes, energizing clear-headed expression",
-    thc: "15-25%",
+    thc: "15-19%",
     cbd: "1-3%",
-    flowering: "8-9 weeks",
+    flowering: "8-10 weeks",
     chemotype: "Type I - THC Dominant"
   }
 ];
 
-const cultivationMethods = [
-  {
-    icon: Leaf,
-    title: "Living Soil Beds",
-    description: "Microbial-rich no-till beds replicating native terroir. Our soil food web preserves authentic terpene expressions and cannabinoid profiles."
-  },
-  {
-    icon: Layers,
-    title: "Full-Spectrum LEDs",
-    description: "Precision light spectrums matching equatorial sun cycles. 13/11 photoperiods for true sativa flowering expressions."
-  },
-  {
-    icon: Sun,
-    title: "Climate-Controlled Preservation",
-    description: "Year-round cultivation of tropical sativas impossible outdoors. Protected genetic conservation from contamination and climate change."
-  },
-  {
-    icon: Settings,
-    title: "Artisanal Craft Methods",
-    description: "Hand-trimmed, slow-cured, small-batch cultivation. Pure genetics preserved through traditional selection methods."
-  }
-];
-
 export default function HeirloomFlowerPage() {
-  const [isSubscribed, setIsSubscribed] = useState(false);
   const [selectedStrain, setSelectedStrain] = useState<number | null>(null);
-  const [waitlistCount, setWaitlistCount] = useState(247);
 
-  const productStructuredData = getProductSchema({
-    name: "Heirloom Cannabis Flower - Premium Landrace Strains",
-    description: "Premium heirloom cannabis flower cultivated using traditional organic methods from authentic landrace genetics.",
-    price: "TBD",
-    category: "Cannabis Flower",
-    imageUrl: cannabisFlower1,
-    inStock: false
+  const pageTitle = getPageTitle("Heirloom Flower - Pure Landrace Cannabis Genetics");
+  const canonicalUrl = getCanonicalUrl("/products/heirloom-flower");
+  const productSchema = getProductSchema({
+    name: "Heirloom Flower Collection",
+    description: "Authentic landrace cannabis genetics preserved through careful indoor cultivation and living soil methods",
+    category: "Cannabis Genetics",
+    price: "Contact for Pricing",
+    inStock: true
   });
 
-  const handleWaitlistJoin = (email: string) => {
-    setWaitlistCount(prev => Math.max(prev - 1, 0));
-    setIsSubscribed(true);
-  };
-
   return (
-    <div className="min-h-screen bg-black text-white">
-      <SEOHead 
-        title={getPageTitle("Heirloom Cannabis Flower - Premium Landrace Strains")}
-        description="Premium heirloom cannabis flower cultivated using traditional organic methods from authentic landrace genetics. Indoor cultivation with living soil for genetic preservation."
-        canonicalUrl={getCanonicalUrl("/products/heirloom-flower")}
-        structuredData={productStructuredData}
-        openGraph={{
-          title: "Heirloom Cannabis Flower - Premium Landrace Strains | Battles Budz",
-          description: "Premium heirloom cannabis flower cultivated using traditional organic methods from authentic landrace genetics.",
-          image: cannabisFlower1,
-          type: "product"
-        }}
+    <>
+      <SEOHead
+        title={pageTitle}
+        description="Discover authentic landrace cannabis genetics preserved through indoor cultivation and living soil. Experience pure equatorial sativas and traditional indica varieties from their original terroir."
+        keywords={["landrace cannabis", "pure genetics", "equatorial sativa", "traditional indica", "living soil cannabis", "indoor cultivation", "cannabis terroir", "authentic strains"]}
+        canonicalUrl={canonicalUrl}
+        structuredData={productSchema}
       />
       
-      <Navigation />
-      
-      {/* Breadcrumb */}
-      <div className="bg-gray-900 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center space-x-3 text-sm">
-            <Link href="/" className="text-gray-400 hover:text-battles-gold transition-colors">
-              Home
-            </Link>
-            <span className="text-gray-600">/</span>
-            <Link href="/shop" className="text-gray-400 hover:text-battles-gold transition-colors">
-              Shop
-            </Link>
-            <span className="text-gray-600">/</span>
-            <span className="text-battles-gold font-semibold">Heirloom Flower</span>
-          </nav>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <section className="pt-16 pb-16 bg-gradient-to-b from-black to-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left">
-              <h1 className="text-5xl md:text-6xl font-playfair font-bold mb-6">
-                <span className="text-battles-gold">Preserved</span> Genetics
-              </h1>
-              <p className="text-2xl font-bold text-white mb-6">
-                Authentic landrace cultivars. Indoor cultivation. Living soil tradition.
-              </p>
-              <p className="text-xl text-gray-300 mb-4 leading-relaxed">
-                Our genetic preservation project features OG strains — pure sativa and indica expressions untouched by hybridization, cultivated in climate-controlled living soil beds under full-spectrum LEDs.
-              </p>
-              <p className="text-lg text-gray-400 mb-6">
-                Fire genetics from legendary regions: Preserved. Authentic. Connoisseur-grade.
-              </p>
-              
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">100%</div>
-                  <div className="text-gray-300 text-sm font-medium">Pure Genetics</div>
-                </div>
-                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">16-20</div>
-                  <div className="text-gray-300 text-sm font-medium">Week Sativas</div>
-                </div>
-                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">Indoor</div>
-                  <div className="text-gray-300 text-sm font-medium">Cultivation</div>
-                </div>
-                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-battles-gold/30 rounded-xl px-4 py-4 text-center hover:border-battles-gold/50 transition-all">
-                  <div className="text-battles-gold font-bold text-xl">Living</div>
-                  <div className="text-gray-300 text-sm font-medium">Soil Beds</div>
-                </div>
-              </div>
-              
-              <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 mb-6">
-                <p className="text-red-400 font-semibold text-center">
-                  ⚠️ Limited Cultivation - Only 50 plants per harvest
-                </p>
-              </div>
-              
-              <WaitlistForm onSubmit={handleWaitlistJoin} />
-              
-              <p className="text-gray-400 text-sm mt-3 text-center lg:text-left">
-                📧 Get notified when the harvest is ready
-              </p>
+      <div className="min-h-screen bg-black text-white">
+        <Navigation />
+        
+        {/* Hero Section */}
+        <section className="pt-20 pb-16 px-4 bg-gradient-to-b from-black via-gray-900 to-black">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-8">
+              <Link to="/products" className="text-battles-gold hover:text-battles-gold/80 transition-colors flex items-center gap-2 mb-6">
+                <ArrowLeft className="w-4 h-4" />
+                Back to Products
+              </Link>
             </div>
             
-            <div className="flex justify-center">
-              <img
-                src={cannabisFlower1}
-                alt="Heirloom Flower"
-                className="w-full max-w-md h-auto object-cover rounded-lg"
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-battles-gold to-yellow-500 bg-clip-text text-transparent">
+                  Heirloom Flower
+                </h1>
+                <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
+                  Authentic landrace genetics preserved through controlled indoor cultivation
+                </p>
+                <div className="space-y-4 text-lg text-gray-400">
+                  <div className="flex items-center gap-3">
+                    <Leaf className="text-battles-gold w-5 h-5" />
+                    <span>Pure equatorial sativas and traditional indicas</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Sun className="text-battles-gold w-5 h-5" />
+                    <span>Indoor cultivation preserving original terroir expression</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Layers className="text-battles-gold w-5 h-5" />
+                    <span>Living soil methods maintaining authentic profiles</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="relative">
+                <img 
+                  src={cannabisFlower1} 
+                  alt="Premium heirloom cannabis flower showing trichome density"
+                  className="rounded-2xl shadow-2xl border border-battles-gold/20"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-2xl"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Landrace Map Section */}
+        <section className="py-16 px-4">
+          <div className="max-w-6xl mx-auto">
+            <LandraceMap 
+              strains={landraceStrains}
+              selectedStrain={selectedStrain}
+              onStrainSelect={setSelectedStrain}
+            />
+          </div>
+        </section>
+
+        {/* Selected Strain Details */}
+        {selectedStrain !== null && (
+          <section className="py-16 px-4 bg-gray-900/50">
+            <div className="max-w-4xl mx-auto">
+              <StrainDetails 
+                strain={landraceStrains[selectedStrain]} 
+                onClose={() => setSelectedStrain(null)}
               />
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
+        )}
 
-      {/* Values Section */}
-      <section className="py-12 bg-battles-gold/5 border-y border-battles-gold/20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-2xl font-bold text-battles-gold mb-2">Genetic Conservation</div>
-              <p className="text-gray-300">Pure genetics preserved from extinction, untouched by hybridization.</p>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-battles-gold mb-2">Indoor Cultivation</div>
-              <p className="text-gray-300">Climate-controlled, full-spectrum LED cultivation in living soil beds.</p>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-battles-gold mb-2">Artisanal Craft</div>
-              <p className="text-gray-300">50 plants max. Hand-selected phenotypes. Connoisseur quality.</p>
-            </div>
+        {/* Cultivation Methods */}
+        <section className="py-16 px-4">
+          <div className="max-w-6xl mx-auto">
+            <CultivationMethods methods={[
+              {
+                icon: Sun,
+                title: "Indoor Cultivation",
+                description: "Precise environmental control recreates optimal growing conditions for each landrace variety, ensuring consistent expression of genetic traits."
+              },
+              {
+                icon: Layers,
+                title: "Living Soil Methods", 
+                description: "Organic soil biology creates symbiotic relationships with roots, enhancing nutrient uptake and terpene production naturally."
+              },
+              {
+                icon: Settings,
+                title: "Environmental Precision",
+                description: "Controlled humidity, temperature, and photoperiods allow us to replicate the native conditions each strain evolved in."
+              },
+              {
+                icon: Award,
+                title: "Genetic Preservation",
+                description: "Protected indoor environment prevents contamination while maintaining the authentic characteristics of pure landrace genetics."
+              }
+            ]} />
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Interactive Origin Map */}
-      <section className="py-16 bg-black">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-battles-gold mb-4">Global Landrace Origins</h2>
-            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-              Authentic cultivars from legendary regions — preserved genetics that shaped modern cannabis culture
-            </p>
-          </div>
-          
-          <LandraceMap 
-            strains={landraceStrains}
-            selectedStrain={selectedStrain}
-            onStrainSelect={setSelectedStrain}
-          />
-          
-          {selectedStrain !== null && (
-            <StrainDetails 
-              strain={landraceStrains[selectedStrain]}
-              onClose={() => setSelectedStrain(null)}
-            />
-          )}
-        </div>
-      </section>
-
-      {/* Landrace Education */}
-      <section className="py-16 bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-battles-gold mb-4 text-center">Why Pure Genetics Matter</h2>
-          <p className="text-lg text-gray-400 text-center mb-12 max-w-3xl mx-auto">
-            While modern hybrids chase extreme THC, we preserve authentic landrace expressions with true entourage effects
-          </p>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
-                  <Award className="h-6 w-6 text-battles-gold" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-battles-gold mb-2">100% Pure Genetics</h3>
-                  <p className="text-gray-300">Original cultivars preserved in their authentic form, never crossed or hybridized. Pure genetics as nature intended.</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
-                  <Users className="h-6 w-6 text-battles-gold" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Cultural Heritage</h3>
-                  <p className="text-gray-300">Traditional varieties from legendary hash-making regions. Authentic genetics with deep cultural roots.</p>
-                </div>
-              </div>
-            </div>
+        {/* Cannabis Terminology Guide */}
+        <section className="py-16 px-4 bg-gray-900/30">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-battles-gold mb-8 text-center">
+              Understanding Cannabis Genetics
+            </h2>
             
-            <div className="space-y-4">
-              <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-                <h3 className="text-xl font-semibold text-battles-gold mb-3">Indoor Advantage</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  Our controlled environment allows year-round cultivation of 16-20 week equatorial sativas impossible to finish outdoors. 
-                  Full-spectrum LEDs replicate native sun cycles while living soil preserves authentic terpene expressions.
-                </p>
-              </div>
-
-              <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-                <h3 className="text-xl font-semibold text-battles-gold mb-3">Genetic Conservation Project</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  Many of these cultivars are extinct in native regions due to hybridization and climate change. 
-                  We're preserving fire genetics through seed banking and careful phenotype selection.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Cultivation Methods */}
-      <CultivationMethods methods={cultivationMethods} />
-
-      {/* Product Information */}
-      <section className="py-16 bg-black">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <h2 className="text-3xl font-bold text-battles-gold mb-6">Product Details</h2>
-              <Card className="bg-gray-900 border-battles-gold/20">
+            <div className="grid md:grid-cols-2 gap-8">
+              <Card className="bg-gray-800/50 border-battles-gold/20">
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-battles-gold mb-4">Artisanal Flower (5g)</h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center py-2 border-b border-gray-800">
-                      <span className="text-gray-300">Quality</span>
-                      <span className="text-battles-gold font-semibold">Connoisseur-Grade</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2 border-b border-gray-800">
-                      <span className="text-gray-300">Processing</span>
-                      <span className="text-battles-gold font-semibold">Hand-Trimmed</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2 border-b border-gray-800">
-                      <span className="text-gray-300">Curing</span>
-                      <span className="text-battles-gold font-semibold">Slow-Cured</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2">
-                      <span className="text-gray-300">Batch Size</span>
-                      <span className="text-battles-gold font-semibold">50 Plants Only</span>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-8 pt-6 border-t border-gray-800">
-                    <p className="text-center text-gray-400 mb-4">Ready to secure your spot?</p>
-                    <WaitlistForm 
-                      onSubmit={handleWaitlistJoin}
-                      buttonText="Get Priority Access"
-                      className="w-full"
-                    />
-                  </div>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-4">Landrace Varieties</h3>
+                  <p className="text-gray-300 mb-4">
+                    Pure cannabis genetics that evolved naturally in specific geographic regions over thousands of years.
+                  </p>
+                  <ul className="space-y-2 text-gray-400">
+                    <li>• No human hybridization or breeding intervention</li>
+                    <li>• Adapted to local climate and growing conditions</li>
+                    <li>• Unique terpene profiles reflecting their terroir</li>
+                    <li>• Genetic foundation for modern cannabis varieties</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gray-800/50 border-battles-gold/20">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold text-battles-gold mb-4">Equatorial Sativas</h3>
+                  <p className="text-gray-300 mb-4">
+                    Cannabis varieties that originated near the equator, adapted to consistent 12/12 light cycles.
+                  </p>
+                  <ul className="space-y-2 text-gray-400">
+                    <li>• Longer flowering periods (12-20 weeks)</li>
+                    <li>• Tall, stretchy growth patterns</li>
+                    <li>• Cerebral, energizing effects</li>
+                    <li>• Complex terpene profiles with citrus, spice notes</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gray-800/50 border-battles-gold/20">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold text-battles-gold mb-4">Traditional Indicas</h3>
+                  <p className="text-gray-300 mb-4">
+                    Cannabis varieties from mountainous regions, particularly the Hindu Kush range.
+                  </p>
+                  <ul className="space-y-2 text-gray-400">
+                    <li>• Shorter flowering periods (6-10 weeks)</li>
+                    <li>• Compact, bushy growth structure</li>
+                    <li>• Body-focused, relaxing effects</li>
+                    <li>• Earthy, hashy terpene expressions</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gray-800/50 border-battles-gold/20">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold text-battles-gold mb-4">Cannabis Chemotypes</h3>
+                  <p className="text-gray-300 mb-4">
+                    Classification system based on cannabinoid ratios rather than indica/sativa morphology.
+                  </p>
+                  <ul className="space-y-2 text-gray-400">
+                    <li>• Type I: THC-dominant (&gt;0.3% THC, &lt;0.3% CBD)</li>
+                    <li>• Type II: Balanced (THC and CBD both &gt;0.3%)</li>
+                    <li>• Type III: CBD-dominant (&lt;0.3% THC, &gt;0.3% CBD)</li>
+                    <li>• More accurate than traditional classifications</li>
+                  </ul>
                 </CardContent>
               </Card>
             </div>
-            
-            <div className="space-y-6">
-              <img
-                src={cannabisFlower1}
-                alt="Premium Cannabis Flower"
-                className="w-full h-64 object-cover rounded-lg"
-              />
-              <div className="bg-gray-900 p-6 rounded-lg border border-battles-gold/20">
-                <h3 className="text-xl font-semibold text-battles-gold mb-3">What Makes It Special</h3>
-                <ul className="space-y-2 text-gray-300">
-                  <li>• Pure landrace genetics, never hybridized</li>
-                  <li>• 12+ months organic cultivation cycle</li>
-                  <li>• Hand-selected phenotypes from seed</li>
-                  <li>• Living soil terroir preservation</li>
-                  <li>• Limited 50-plant batches</li>
-                </ul>
-              </div>
-            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* FAQ Section */}
-      <section className="py-16 bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-battles-gold mb-4 text-center">Common Questions</h2>
-          <p className="text-gray-400 text-center mb-12">Everything you need to know about securing your spot</p>
-          
-          <div className="space-y-6">
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">When does this fire drop?</h3>
-              <p className="text-gray-300">
-                Next harvest completes Spring 2026. Collectors get 48-hour priority access. 
-                Only 50 plants of these preserved genetics per cycle — true connoisseur allocation.
-              </p>
-            </div>
+        {/* Why Indoor Cultivation Section */}
+        <section className="py-16 px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-battles-gold mb-8">
+              Why Indoor Cultivation for Landrace Preservation?
+            </h2>
             
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">Why join the waitlist now?</h3>
-              <p className="text-gray-300">
-                Waitlist members get exclusive benefits: 48-hour early access, 15% discount on first purchase, 
-                detailed cultivation updates, and guaranteed allocation from each small batch harvest.
-              </p>
-            </div>
-
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">What makes this worth the wait?</h3>
-              <p className="text-gray-300">
-                These aren't mass-produced hybrids. Each plant gets 12+ months of organic care. The genetics are rare - 
-                some are extinct in their native regions. You're getting access to cannabis history that most people will never experience.
-              </p>
-            </div>
-
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">How do I know this is different from other "premium" cannabis?</h3>
-              <p className="text-gray-300">
-                Simple: try our sample when available. The clear-headed effects, complex flavors, and lack of anxiety speak for themselves. 
-                Plus, we provide full cultivation documentation and genetic lineage for complete transparency.
-              </p>
-            </div>
-          </div>
-          
-          {!isSubscribed && (
-            <div className="mt-12 text-center">
-              <div className="bg-battles-gold/10 border border-battles-gold/30 rounded-lg p-6 mb-8">
-                <h3 className="text-xl font-semibold text-battles-gold mb-3">Limited Time: Early Bird Benefits</h3>
-                <p className="text-gray-300 mb-4">
-                  Join the waitlist in the next 72 hours and receive an exclusive cultivation report plus 15% off your first order.
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              <div className="space-y-4">
+                <Settings className="w-12 h-12 text-battles-gold mx-auto" />
+                <h3 className="text-xl font-semibold">Precise Environmental Control</h3>
+                <p className="text-gray-400">
+                  Indoor cultivation allows us to recreate the specific environmental conditions each landrace evolved in, from humidity levels to photoperiods.
                 </p>
-                <div className="text-battles-gold font-semibold">{waitlistCount} spots remaining</div>
               </div>
               
-              <WaitlistForm 
-                onSubmit={handleWaitlistJoin}
-                buttonText="Secure My Priority Access"
-                placeholder="Enter your email for exclusive access"
-                className="max-w-md mx-auto"
-                large
-              />
+              <div className="space-y-4">
+                <Award className="w-12 h-12 text-battles-gold mx-auto" />
+                <h3 className="text-xl font-semibold">Genetic Preservation</h3>
+                <p className="text-gray-400">
+                  Protected environment prevents contamination from modern hybrid pollen, maintaining the genetic integrity of pure landrace lines.
+                </p>
+              </div>
               
-              <p className="text-gray-400 text-sm mt-4">
-                No spam, unsubscribe anytime. We respect your privacy.
+              <div className="space-y-4">
+                <Users className="w-12 h-12 text-battles-gold mx-auto" />
+                <h3 className="text-xl font-semibold">Consistent Expression</h3>
+                <p className="text-gray-400">
+                  Stable growing conditions allow the true terroir characteristics to express consistently, showcasing authentic genetic profiles.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-gray-800/50 rounded-xl p-8 border border-battles-gold/20">
+              <h3 className="text-2xl font-semibold text-battles-gold mb-4">Living Soil Advantage</h3>
+              <p className="text-lg text-gray-300 mb-6">
+                Our living soil approach creates a thriving ecosystem that mirrors the natural soil biology these genetics co-evolved with over millennia.
+              </p>
+              <div className="grid md:grid-cols-2 gap-6 text-left">
+                <div>
+                  <h4 className="font-semibold text-battles-gold mb-2">Microbial Diversity</h4>
+                  <p className="text-gray-400">
+                    Beneficial bacteria and fungi form symbiotic relationships with roots, enhancing nutrient uptake and terpene production.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-battles-gold mb-2">Natural Nutrient Cycling</h4>
+                  <p className="text-gray-400">
+                    Organic matter breakdown provides slow-release nutrition that supports the plant's natural growth rhythms.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Waitlist Section */}
+        <section className="py-16 px-4 bg-gray-900/50">
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-battles-gold mb-4">Join the Heirloom Collection Waitlist</h2>
+            <p className="text-gray-300 mb-8">Be the first to access our landrace genetics when they become available. Limited quantities ensure genetic preservation and quality.</p>
+            <WaitlistForm 
+              placeholder="Enter your email for heirloom access"
+              buttonText="Join Heirloom Waitlist"
+              large={true}
+            />
+          </div>
+        </section>
+
+        {/* Educational Note */}
+        <section className="py-12 px-4 bg-gray-900/30">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="bg-yellow-900/20 border border-yellow-700/30 rounded-lg p-6">
+              <h3 className="text-xl font-semibold text-yellow-400 mb-3">Educational Content</h3>
+              <p className="text-gray-300">
+                This information is provided for educational purposes about cannabis genetics and cultivation methods. 
+                All products comply with applicable state and local regulations where legally available.
               </p>
             </div>
-          )}
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-8 bg-gray-900 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-400">
-            <span className="text-battles-gold font-semibold">21+ Only</span> – Cannabis products pending release
-          </p>
-        </div>
-      </footer>
-    </div>
+          </div>
+        </section>
+      </div>
+    </>
   );
 }

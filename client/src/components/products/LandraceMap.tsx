@@ -37,95 +37,77 @@ export default function LandraceMap({ strains, selectedStrain, onStrainSelect }:
         
         <div className="relative bg-slate-800 rounded-lg overflow-hidden border border-battles-gold/30">
           <TransformWrapper
-            initialScale={0.9}
-            minScale={0.5}
-            maxScale={3}
-            centerOnInit={true}
-            wheel={{ step: 0.1 }}
-            pinch={{ step: 0.1 }}
+            key="map-transform-wrapper"
+            initialScale={transformRef.current.hasBeenSet ? transformRef.current.scale : 0.9}
+            initialPositionX={transformRef.current.hasBeenSet ? transformRef.current.positionX : 0}
+            initialPositionY={transformRef.current.hasBeenSet ? transformRef.current.positionY : 0}
+            minScale={0.4}
+            maxScale={4}
+            limitToBounds={false}
+            centerOnInit={!transformRef.current.hasBeenSet}
+            wheel={{ step: 0.15 }}
+            pinch={{ step: 8 }}
             doubleClick={{ disabled: false }}
-            limitToBounds={true}
-            smooth={true}
+            panning={{ 
+              velocityDisabled: true
+            }}
+            alignmentAnimation={{ disabled: false }}
+            disablePadding={true}
+            onTransformed={(ref, state) => {
+              transformRef.current = {
+                scale: state.scale,
+                positionX: state.positionX,
+                positionY: state.positionY,
+                hasBeenSet: true
+              };
+            }}
           >
-            <TransformComponent>
-              <div className="relative">
+            <TransformComponent
+              wrapperClass="!w-full !h-96"
+              contentClass="!w-full !h-full"
+            >
+              <div 
+                className="relative w-full h-full min-w-[800px] min-h-[400px]"
+                onClick={() => onStrainSelect(null)}
+              >
                 <img
                   src={worldMapImage}
-                  alt="World Map showing landrace cannabis origins"
-                  className="w-full h-auto"
-                  style={{ minWidth: '800px', minHeight: '500px' }}
+                  alt="World Map with Cannabis Origins"
+                  className="w-full h-full object-cover"
+                  draggable={false}
                 />
                 
-                <svg
-                  ref={svgRef}
-                  className="absolute inset-0 w-full h-full pointer-events-auto"
-                  viewBox="0 0 1600 900"
-                  preserveAspectRatio="xMidYMid meet"
-                >
-                  {strains.map((strain, index) => (
-                    <g key={index}>
-                      <circle
-                        cx={strain.coordinates.x}
-                        cy={strain.coordinates.y}
-                        r={selectedStrain === index ? "12" : "8"}
-                        fill={selectedStrain === index ? "#FFD700" : "#D4AF37"}
-                        stroke="#000"
-                        strokeWidth="2"
-                        className="cursor-pointer transition-all duration-300 hover:r-12 hover:fill-yellow-400 drop-shadow-lg"
-                        onClick={() => onStrainSelect(selectedStrain === index ? null : index)}
-                        onMouseEnter={(e) => {
-                          const rect = svgRef.current?.getBoundingClientRect();
-                          if (rect) {
-                            setTooltip({
-                              x: e.clientX - rect.left,
-                              y: e.clientY - rect.top - 10,
-                              content: `${strain.name} - ${strain.location}`
-                            });
-                          }
-                        }}
-                        onMouseLeave={() => setTooltip(null)}
-                      />
-                      
-                      {selectedStrain === index && (
-                        <g>
-                          <circle
-                            cx={strain.coordinates.x}
-                            cy={strain.coordinates.y}
-                            r="20"
-                            fill="none"
-                            stroke="#FFD700"
-                            strokeWidth="2"
-                            opacity="0.6"
-                            className="animate-ping"
-                          />
-                        </g>
-                      )}
-                    </g>
-                  ))}
-                  
-                  {tooltip && (
-                    <g>
-                      <rect
-                        x={tooltip.x - 60}
-                        y={tooltip.y - 25}
-                        width="120"
-                        height="20"
-                        fill="rgba(0,0,0,0.8)"
-                        rx="4"
-                      />
-                      <text
-                        x={tooltip.x}
-                        y={tooltip.y - 10}
-                        textAnchor="middle"
-                        fill="#FFD700"
-                        fontSize="12"
-                        fontWeight="bold"
-                      >
-                        {tooltip.content}
-                      </text>
-                    </g>
-                  )}
-                </svg>
+                {/* Strain Location Markers */}
+                {strains.map((strain, index) => (
+                  <div
+                    key={strain.name}
+                    className={`absolute w-4 h-4 -ml-2 -mt-2 cursor-pointer transition-all duration-200 z-20 ${
+                      selectedStrain === index 
+                        ? 'w-6 h-6 -ml-3 -mt-3' 
+                        : 'hover:w-5 hover:h-5 hover:-ml-2.5 hover:-mt-2.5'
+                    }`}
+                    style={{
+                      left: `${(strain.coordinates.x / 2058) * 100}%`,
+                      top: `${(strain.coordinates.y / 1262) * 100}%`,
+                      transform: 'translate(-50%, -50%)'
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      onStrainSelect(selectedStrain === index ? null : index);
+                    }}
+                  >
+                    <div className={`w-full h-full rounded-full border-2 border-white shadow-lg ${
+                      selectedStrain === index 
+                        ? 'bg-battles-gold animate-pulse' 
+                        : 'bg-battles-gold/80 hover:bg-battles-gold'
+                    }`} />
+                    
+                    {selectedStrain === index && (
+                      <div className="absolute inset-0 rounded-full border-2 border-battles-gold animate-ping opacity-75" />
+                    )}
+                  </div>
+                ))}
               </div>
             </TransformComponent>
           </TransformWrapper>
