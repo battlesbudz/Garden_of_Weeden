@@ -122,23 +122,42 @@ export default function HeirloomFlowerPage() {
     const handleGlobalMouseMove = (e: MouseEvent) => {
       if (!isDragging) return;
       e.preventDefault();
+      console.log('Global mouse move - dragging');
       const newX = e.clientX - dragStart.x;
       const newY = e.clientY - dragStart.y;
       setTransform(prev => ({ ...prev, x: newX, y: newY }));
     };
 
     const handleGlobalMouseUp = () => {
+      console.log('Global mouse up - ending drag');
+      setIsDragging(false);
+    };
+
+    const handleGlobalTouchMove = (e: TouchEvent) => {
+      if (!isDragging || e.touches.length !== 1) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      const newX = touch.clientX - dragStart.x;
+      const newY = touch.clientY - dragStart.y;
+      setTransform(prev => ({ ...prev, x: newX, y: newY }));
+    };
+
+    const handleGlobalTouchEnd = () => {
       setIsDragging(false);
     };
 
     if (isDragging) {
-      document.addEventListener('mousemove', handleGlobalMouseMove);
+      document.addEventListener('mousemove', handleGlobalMouseMove, { passive: false });
       document.addEventListener('mouseup', handleGlobalMouseUp);
+      document.addEventListener('touchmove', handleGlobalTouchMove, { passive: false });
+      document.addEventListener('touchend', handleGlobalTouchEnd);
     }
 
     return () => {
       document.removeEventListener('mousemove', handleGlobalMouseMove);
       document.removeEventListener('mouseup', handleGlobalMouseUp);
+      document.removeEventListener('touchmove', handleGlobalTouchMove);
+      document.removeEventListener('touchend', handleGlobalTouchEnd);
     };
   }, [isDragging, dragStart]);
 
@@ -172,6 +191,7 @@ export default function HeirloomFlowerPage() {
 
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
+    console.log('Mouse down - starting drag');
     setIsDragging(true);
     setDragStart({ x: e.clientX - transform.x, y: e.clientY - transform.y });
   };
@@ -215,106 +235,24 @@ export default function HeirloomFlowerPage() {
     });
   };
 
-  // Enhanced touch support for mobile with pinch-to-zoom
-  const lastTouchDistance = useRef<number | null>(null);
-  const lastTouchCenter = useRef<{ x: number, y: number } | null>(null);
-
-  const getTouchDistance = (touches: React.TouchList) => {
-    if (touches.length < 2) return null;
-    const touch1 = touches[0];
-    const touch2 = touches[1];
-    return Math.sqrt(
-      Math.pow(touch2.clientX - touch1.clientX, 2) + 
-      Math.pow(touch2.clientY - touch1.clientY, 2)
-    );
-  };
-
-  const getTouchCenter = (touches: React.TouchList) => {
-    if (touches.length < 2) return null;
-    const touch1 = touches[0];
-    const touch2 = touches[1];
-    return {
-      x: (touch1.clientX + touch2.clientX) / 2,
-      y: (touch1.clientY + touch2.clientY) / 2
-    };
-  };
-
+  // Simplified touch support focusing on single-finger pan first
   const handleTouchStart = (e: React.TouchEvent) => {
     e.preventDefault();
-    
     if (e.touches.length === 1) {
-      // Single touch - start panning
       const touch = e.touches[0];
       setIsDragging(true);
       setDragStart({ x: touch.clientX - transform.x, y: touch.clientY - transform.y });
-      lastTouchDistance.current = null;
-      lastTouchCenter.current = null;
-    } else if (e.touches.length === 2) {
-      // Two fingers - prepare for pinch zoom
-      setIsDragging(false);
-      lastTouchDistance.current = getTouchDistance(e.touches);
-      lastTouchCenter.current = getTouchCenter(e.touches);
     }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    e.preventDefault();
-    
-    if (e.touches.length === 1 && isDragging) {
-      // Single finger panning
-      const touch = e.touches[0];
-      const newX = touch.clientX - dragStart.x;
-      const newY = touch.clientY - dragStart.y;
-      setTransform(prev => ({ ...prev, x: newX, y: newY }));
-    } else if (e.touches.length === 2 && lastTouchDistance.current && lastTouchCenter.current) {
-      // Two finger pinch-to-zoom
-      const currentDistance = getTouchDistance(e.touches);
-      const currentCenter = getTouchCenter(e.touches);
-      
-      if (currentDistance && currentCenter) {
-        // Calculate scale change
-        const scaleChange = currentDistance / lastTouchDistance.current;
-        const newScale = Math.max(0.3, Math.min(4, transform.scale * scaleChange));
-        
-        // Calculate position adjustment to zoom towards pinch center
-        const rect = e.currentTarget.getBoundingClientRect();
-        const pinchCenterX = currentCenter.x - rect.left;
-        const pinchCenterY = currentCenter.y - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const deltaScale = newScale - transform.scale;
-        const newX = transform.x - (pinchCenterX - centerX) * (deltaScale / transform.scale);
-        const newY = transform.y - (pinchCenterY - centerY) * (deltaScale / transform.scale);
-        
-        setTransform({
-          x: newX,
-          y: newY,
-          scale: newScale
-        });
-        
-        lastTouchDistance.current = currentDistance;
-        lastTouchCenter.current = currentCenter;
-      }
-    }
+    // This is handled by global event listener now
+    return;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    e.preventDefault();
-    
-    if (e.touches.length === 0) {
-      // All fingers lifted
-      setIsDragging(false);
-      lastTouchDistance.current = null;
-      lastTouchCenter.current = null;
-    } else if (e.touches.length === 1) {
-      // One finger remaining - switch back to pan mode
-      const touch = e.touches[0];
-      setIsDragging(true);
-      setDragStart({ x: touch.clientX - transform.x, y: touch.clientY - transform.y });
-      lastTouchDistance.current = null;
-      lastTouchCenter.current = null;
-    }
+    // This is handled by global event listener now
+    return;
   };
 
   const handleEmailSubmit = (e: React.FormEvent) => {
@@ -505,13 +443,13 @@ export default function HeirloomFlowerPage() {
                   {/* Landrace strain markers positioned over the image */}
                   {Object.entries(landraceData).map(([code, data], index) => {
                     let x = 0, y = 0;
-                    // Coordinate mapping to the Winkel Triple projection image
+                    // Adjusted coordinates for Winkel Triple projection image
                     switch(code) {
-                      case 'MW': x = 765; y = 480; break; // Malawi - East Africa
-                      case 'TH': x = 1050; y = 420; break; // Thailand - Southeast Asia 
-                      case 'AF': x = 820; y = 280; break; // Afghanistan - Central Asia
-                      case 'CO': x = 320; y = 480; break; // Colombia - South America
-                      case 'ZA': x = 700; y = 580; break; // South Africa
+                      case 'MW': x = 920; y = 420; break; // Malawi - East Africa (moved east and up)
+                      case 'TH': x = 1180; y = 360; break; // Thailand - Southeast Asia (moved further east)
+                      case 'AF': x = 1000; y = 290; break; // Afghanistan - Central Asia (moved east)
+                      case 'CO': x = 420; y = 450; break; // Colombia - South America (moved east and up)
+                      case 'ZA': x = 900; y = 520; break; // South Africa (adjusted position)
                     }
                     
                     return (
