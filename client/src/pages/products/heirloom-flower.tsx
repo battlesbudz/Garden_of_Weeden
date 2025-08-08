@@ -279,19 +279,33 @@ export default function HeirloomFlowerPage() {
       // Calculate zoom based on distance ratio for more stable behavior
       const distanceRatio = currentDistance / pinchStartRef.current.distance;
       
-      // Apply scaling with proper zoom out support
+      // Apply more sensitive and accurate scaling
       let scaleMultiplier = distanceRatio;
-      if (distanceRatio > 1) {
-        // Zooming in - amplify the zoom for better responsiveness
-        scaleMultiplier = 1 + (distanceRatio - 1) * 2;
+      
+      // Add sensitivity threshold to prevent accidental direction switches
+      const changeThreshold = 0.05; // 5% minimum change required
+      
+      if (distanceRatio > (1 + changeThreshold)) {
+        // Clear zoom in - amplify moderately
+        scaleMultiplier = 1 + (distanceRatio - 1) * 1.2;
+      } else if (distanceRatio < (1 - changeThreshold)) {
+        // Clear zoom out - amplify moderately  
+        scaleMultiplier = Math.max(0.2, 1 - (1 - distanceRatio) * 1.2);
       } else {
-        // Zooming out - allow full zoom out with amplification
-        scaleMultiplier = Math.max(0.1, 1 - (1 - distanceRatio) * 2);
+        // Small changes - use direct ratio to prevent jumps
+        scaleMultiplier = distanceRatio;
       }
       
       let newScale = pinchStartRef.current.scale * scaleMultiplier;
       
-      console.log('Zoom:', { distanceRatio, scaleMultiplier, baseScale: pinchStartRef.current.scale, newScale });
+      console.log('Zoom:', { 
+        currentDistance: Math.round(currentDistance), 
+        startDistance: Math.round(pinchStartRef.current.distance),
+        distanceRatio: distanceRatio.toFixed(3), 
+        scaleMultiplier: scaleMultiplier.toFixed(3), 
+        baseScale: pinchStartRef.current.scale.toFixed(3), 
+        newScale: newScale.toFixed(3) 
+      });
       
       // Clamp the scale
       newScale = Math.max(0.3, Math.min(4, newScale));
