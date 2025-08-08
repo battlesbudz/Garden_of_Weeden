@@ -12,12 +12,12 @@ import worldMapImage from "@assets/Winkel_triple_projection_SW_1754600003820.jpg
 import SEOHead from '@/components/seo/SEOHead';
 import { getCanonicalUrl, getPageTitle, getProductSchema } from '@/utils/seo';
 
-// Landrace strain data - Testing coordinate positioning on actual displayed map
+// Landrace strain data - Coordinates mapped directly to Winkel Triple projection image
 const landraceStrains = [
   {
     name: "Afghan Kush",
     location: "Hindu Kush Mountains, Afghanistan",
-    coordinates: { x: 66, y: 32 }, // Central Asia - Afghanistan mountains
+    coordinates: { x: 630, y: 250 }, // Pixel coordinates on 1000px wide map - Afghanistan
     notes: "Broad-leaf, hash-heavy, calming body effects",
     thc: "15-20%",
     cbd: "4-8%",
@@ -26,7 +26,7 @@ const landraceStrains = [
   {
     name: "Thai Stick", 
     location: "Northern Thailand",
-    coordinates: { x: 73, y: 40 }, // Southeast Asia - Thailand
+    coordinates: { x: 720, y: 320 }, // Pixel coordinates - Thailand
     notes: "Long flowering, citrus incense profile with creative clarity",
     thc: "12-16%",
     cbd: "3-6%",
@@ -35,7 +35,7 @@ const landraceStrains = [
   {
     name: "Moroccan Hash Plant",
     location: "Rif Mountains, Morocco", 
-    coordinates: { x: 47, y: 25 }, // Northwest Africa - Morocco
+    coordinates: { x: 470, y: 200 }, // Pixel coordinates - Morocco
     notes: "Traditional hash variety with earthy, spiced resin production",
     thc: "12-18%",
     cbd: "3-6%",
@@ -44,7 +44,7 @@ const landraceStrains = [
   {
     name: "Colombian Gold",
     location: "Santa Marta Mountains, Colombia",
-    coordinates: { x: 28, y: 48 }, // Northern South America - Colombia
+    coordinates: { x: 280, y: 380 }, // Pixel coordinates - Colombia
     notes: "Uplifting sativa with golden pistils and sweet earth tones",
     thc: "13-17%",
     cbd: "2-5%",
@@ -53,7 +53,7 @@ const landraceStrains = [
   {
     name: "Malawi Gold",
     location: "Malawi, Southeast Africa",
-    coordinates: { x: 57, y: 55 }, // Southeast Africa - Malawi
+    coordinates: { x: 560, y: 440 }, // Pixel coordinates - Malawi
     notes: "Energetic, cerebral, spicy aroma with soaring effects",
     thc: "14-18%",
     cbd: "2-4%",
@@ -62,7 +62,7 @@ const landraceStrains = [
   {
     name: "Durban Poison",
     location: "Durban, South Africa",
-    coordinates: { x: 55, y: 62 }, // Southern Africa - South Africa
+    coordinates: { x: 540, y: 500 }, // Pixel coordinates - South Africa
     notes: "Sweet anise aroma with energizing, clear-headed effects",
     thc: "15-25%",
     cbd: "1-3%",
@@ -215,8 +215,8 @@ export default function HeirloomFlowerPage() {
                           : 'hover:w-5 hover:h-5 hover:-ml-2.5 hover:-mt-2.5'
                       }`}
                       style={{
-                        left: `${strain.coordinates.x}%`,
-                        top: `${strain.coordinates.y}%`,
+                        left: `${(strain.coordinates.x / 1000) * 100}%`,
+                        top: `${(strain.coordinates.y / 600) * 100}%`,
                         transform: 'translate(-50%, -50%)'
                       }}
                       onClick={(e) => {
