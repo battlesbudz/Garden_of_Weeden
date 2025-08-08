@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback, memo } from 'react';
 import { Link } from 'wouter';
 import { ArrowLeft, Check, Leaf, Layers, Sun, Settings, MapPin, FileText, Award, Users } from 'lucide-react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
@@ -114,8 +114,8 @@ export default function HeirloomFlowerPage() {
   const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   
-  // Prevent map reset by tracking transform state
-  const [mapKey] = useState('map-instance'); // Static key to prevent reinitialization
+  // Prevent map reset by using a stable key and memoization
+  const mapInstanceKey = useMemo(() => 'stable-map-instance', []);
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -153,9 +153,8 @@ export default function HeirloomFlowerPage() {
     setEmail('');
   };
 
-  // Clean, professional interactive map using react-zoom-pan-pinch
-  const OriginMap = () => {
-    return (
+  // Memoized map component to prevent re-renders and preserve zoom/pan state
+  const OriginMap = useMemo(() => (
       <div className="relative">
         <div className="bg-gray-800 rounded-lg p-8 border border-battles-gold/20">
           <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
@@ -163,7 +162,6 @@ export default function HeirloomFlowerPage() {
           {/* Professional Interactive World Map with react-zoom-pan-pinch */}
           <div className="relative bg-slate-800 rounded-lg overflow-hidden border border-battles-gold/30">
             <TransformWrapper
-              key={mapKey}
               initialScale={0.9}
               initialPositionX={0}
               initialPositionY={0}
@@ -289,8 +287,7 @@ export default function HeirloomFlowerPage() {
           </div>
         </div>
       </div>
-    );
-  };
+  ), []); // Empty dependency array to prevent re-renders
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -422,7 +419,7 @@ export default function HeirloomFlowerPage() {
               Explore the sacred genetics that have evolved naturally across the globe for thousands of years
             </p>
           </div>
-          <OriginMap />
+          {OriginMap}
         </div>
       </section>
 
