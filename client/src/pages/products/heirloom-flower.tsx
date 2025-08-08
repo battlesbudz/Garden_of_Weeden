@@ -117,28 +117,30 @@ export default function HeirloomFlowerPage() {
   const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
   const lastWheelTime = useRef(0);
   
-  // Global mouse move handler to handle dragging outside the container
+  // Use refs to avoid stale closures
+  const dragStartRef = useRef(dragStart);
+  dragStartRef.current = dragStart;
+  
+  // Global event handlers for smooth dragging
   useEffect(() => {
     const handleGlobalMouseMove = (e: MouseEvent) => {
       if (!isDragging) return;
       e.preventDefault();
-      console.log('Global mouse move - dragging');
-      const newX = e.clientX - dragStart.x;
-      const newY = e.clientY - dragStart.y;
+      const newX = e.clientX - dragStartRef.current.x;
+      const newY = e.clientY - dragStartRef.current.y;
       setTransform(prev => ({ ...prev, x: newX, y: newY }));
     };
 
     const handleGlobalMouseUp = () => {
-      console.log('Global mouse up - ending drag');
       setIsDragging(false);
     };
 
     const handleGlobalTouchMove = (e: TouchEvent) => {
-      if (!isDragging || e.touches.length !== 1) return;
+      if (!isDragging) return;
       e.preventDefault();
       const touch = e.touches[0];
-      const newX = touch.clientX - dragStart.x;
-      const newY = touch.clientY - dragStart.y;
+      const newX = touch.clientX - dragStartRef.current.x;
+      const newY = touch.clientY - dragStartRef.current.y;
       setTransform(prev => ({ ...prev, x: newX, y: newY }));
     };
 
@@ -159,7 +161,7 @@ export default function HeirloomFlowerPage() {
       document.removeEventListener('touchmove', handleGlobalTouchMove);
       document.removeEventListener('touchend', handleGlobalTouchEnd);
     };
-  }, [isDragging, dragStart]);
+  }, [isDragging]);
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -191,7 +193,6 @@ export default function HeirloomFlowerPage() {
 
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log('Mouse down - starting drag');
     setIsDragging(true);
     setDragStart({ x: e.clientX - transform.x, y: e.clientY - transform.y });
   };
@@ -395,40 +396,39 @@ export default function HeirloomFlowerPage() {
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
               >
-                {/* Winkel Triple Projection World Map Image */}
-                <img 
-                  src={worldMapImage}
-                  alt="World Map - Winkel Triple Projection"
-                  className="w-full h-full object-contain"
+                {/* Container for all transformed elements */}
+                <div
                   style={{ 
                     transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
                     transformOrigin: 'center center',
-                    backgroundColor: '#1a1a2e' // Fallback background color
-                  }}
-                  onLoad={() => console.log('Image loaded successfully')}
-                  onError={(e) => console.error('Image failed to load:', e)}
-                />
-                
-                {/* Fallback background if image doesn't load */}
-                <div 
-                  className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-700 to-blue-900"
-                  style={{ 
-                    transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
-                    transformOrigin: 'center center',
-                    zIndex: -1
-                  }}
-                />
-                
-                {/* SVG Overlay for Interactive Markers */}
-                <svg 
-                  className="absolute inset-0 w-full h-full"
-                  viewBox="0 0 1400 700"
-                  style={{ 
-                    pointerEvents: 'none',
-                    transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
-                    transformOrigin: 'center center'
+                    width: '100%',
+                    height: '100%',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0
                   }}
                 >
+                  {/* Winkel Triple Projection World Map Image */}
+                  <img 
+                    src={worldMapImage}
+                    alt="World Map - Winkel Triple Projection"
+                    className="w-full h-full object-contain"
+                    style={{ 
+                      backgroundColor: '#1a1a2e',
+                      pointerEvents: 'none'
+                    }}
+                    onLoad={() => console.log('Image loaded successfully')}
+                    onError={(e) => console.error('Image failed to load:', e)}
+                  />
+                
+                  {/* SVG Overlay for Interactive Markers */}
+                  <svg 
+                    className="absolute inset-0 w-full h-full"
+                    viewBox="0 0 1400 700"
+                    style={{ 
+                      pointerEvents: 'none'
+                    }}
+                  >
                   <defs>
                     {/* Landrace glow effect */}
                     <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
@@ -443,13 +443,14 @@ export default function HeirloomFlowerPage() {
                   {/* Landrace strain markers positioned over the image */}
                   {Object.entries(landraceData).map(([code, data], index) => {
                     let x = 0, y = 0;
-                    // Adjusted coordinates for Winkel Triple projection image
+                    // Properly calibrated coordinates for Winkel Triple projection
+                    // Based on 1400x700 viewBox matching the projection
                     switch(code) {
-                      case 'MW': x = 920; y = 420; break; // Malawi - East Africa (moved east and up)
-                      case 'TH': x = 1180; y = 360; break; // Thailand - Southeast Asia (moved further east)
-                      case 'AF': x = 1000; y = 290; break; // Afghanistan - Central Asia (moved east)
-                      case 'CO': x = 420; y = 450; break; // Colombia - South America (moved east and up)
-                      case 'ZA': x = 900; y = 520; break; // South Africa (adjusted position)
+                      case 'MW': x = 810; y = 430; break; // Malawi - Southeast Africa (approx 34°E, 13°S)
+                      case 'TH': x = 1070; y = 340; break; // Thailand - Southeast Asia (approx 100°E, 15°N)
+                      case 'AF': x = 930; y = 280; break; // Afghanistan - Central Asia (approx 69°E, 33°N)
+                      case 'CO': x = 360; y = 410; break; // Colombia - South America (approx 74°W, 4°N)
+                      case 'ZA': x = 780; y = 500; break; // South Africa (approx 24°E, 29°S)
                     }
                     
                     return (
@@ -505,41 +506,8 @@ export default function HeirloomFlowerPage() {
                     <text x="25" y="75" className="fill-gray-300 text-sm">Pan & zoom to explore the world</text>
                   </g>
 
-                {/* Landrace strain markers with authentic positioning */}
-                {Object.entries(landraceData).map(([code, data], index) => {
-                  let x = 0, y = 0;
-                  switch(code) {
-                    case 'MW': x = 765; y = 535; break; // Malawi - East Africa
-                    case 'TH': x = 1080; y = 560; break; // Thailand - Southeast Asia 
-                    case 'AF': x = 850; y = 390; break; // Afghanistan - Central Asia
-                    case 'CO': x = 360; y = 680; break; // Colombia - South America
-                    case 'ZA': x = 690; y = 720; break; // South Africa
-                  }
-                  
-                  return (
-                    <g key={code}>
-                      {/* Glowing strain marker */}
-                      <circle cx={x} cy={y} r="25" fill="rgba(241, 196, 15, 0.15)" stroke="#f1c40f" strokeWidth="1" opacity="0.6" />
-                      <circle cx={x} cy={y} r="15" fill="rgba(241, 196, 15, 0.4)" stroke="#f39c12" strokeWidth="2" />
-                      <circle cx={x} cy={y} r="8" fill="#f1c40f" stroke="#ffffff" strokeWidth="2" 
-                              className="cursor-pointer hover:scale-110 transition-all duration-300 drop-shadow-lg"
-                              onClick={() => handleCountryClick(code)} />
-                      <circle cx={x} cy={y} r="3" fill="#fef9e7" className="pointer-events-none" />
-                      
-                      {/* Strain labels with authentic typography */}
-                      <text x={x} y={y - 40} textAnchor="middle" className="fill-white text-sm font-bold pointer-events-none"
-                            style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.9)' }}>
-                        {data.strainName}
-                      </text>
-                      <text x={x} y={y - 25} textAnchor="middle" className="fill-yellow-200 text-xs font-medium pointer-events-none"
-                            style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
-                        {data.location.split(',')[0]}
-                      </text>
-                    </g>
-                  );
-                })}
-
-                </svg>
+                  </svg>
+                </div>
               </div>
             </div>
 
