@@ -474,13 +474,14 @@ export default function HeirloomFlowerPage() {
                     
                     return (
                       <g key={code} style={{ pointerEvents: 'auto' }}>
-                        {/* Small glowing strain marker */}
-                        <circle cx={x} cy={y} r="8" fill="rgba(241, 196, 15, 0.2)" stroke="#f1c40f" strokeWidth="1" opacity="0.6" />
-                        <circle cx={x} cy={y} r="5" fill="#f1c40f" stroke="#ffffff" strokeWidth="2" 
-                                className="cursor-pointer hover:scale-150 transition-all duration-300"
+                        {/* Enhanced prominent strain marker */}
+                        <circle cx={x} cy={y} r="12" fill="rgba(241, 196, 15, 0.15)" stroke="#f1c40f" strokeWidth="2" opacity="0.8" />
+                        <circle cx={x} cy={y} r="8" fill="rgba(241, 196, 15, 0.4)" stroke="#f39c12" strokeWidth="2" />
+                        <circle cx={x} cy={y} r="6" fill="#f1c40f" stroke="#ffffff" strokeWidth="3" 
+                                className="cursor-pointer hover:scale-125 transition-all duration-300"
                                 onClick={() => handleCountryClick(code)} 
-                                style={{ pointerEvents: 'auto', filter: 'drop-shadow(0 0 6px rgba(241, 196, 15, 0.8))' }} />
-                        <circle cx={x} cy={y} r="2" fill="#fef9e7" style={{ pointerEvents: 'none' }} />
+                                style={{ pointerEvents: 'auto', filter: 'drop-shadow(0 0 8px rgba(241, 196, 15, 0.9))' }} />
+                        <circle cx={x} cy={y} r="3" fill="#fef9e7" style={{ pointerEvents: 'none' }} />
                       </g>
                     );
                   })}
