@@ -123,6 +123,7 @@ export default function HeirloomFlowerPage() {
   const pinchStartRef = useRef({ distance: 0, scale: 1, centerX: 0, centerY: 0 });
   const lastPinchTime = useRef(0);
   const lastPinchDistance = useRef(0);
+  const continuousZoomRef = useRef({ lastDistance: 0, lastScale: 1 });
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -249,17 +250,24 @@ export default function HeirloomFlowerPage() {
       );
       
       // Only start pinch if fingers are reasonably far apart (prevents micro-gestures)
-      if (distance > 50) {
+      if (distance > 30) {
         const centerX = (touch1.clientX + touch2.clientX) / 2;
         const centerY = (touch1.clientY + touch2.clientY) / 2;
         
-        // Only set the reference once per gesture
+        // Set initial references for continuous zoom
         pinchStartRef.current = {
           distance,
           scale: transform.scale,
           centerX,
           centerY
         };
+        
+        // Initialize continuous zoom tracking
+        continuousZoomRef.current = {
+          lastDistance: distance,
+          lastScale: transform.scale
+        };
+        
         lastPinchDistance.current = distance;
         
         console.log('Pinch started with distance:', Math.round(distance));
@@ -282,48 +290,33 @@ export default function HeirloomFlowerPage() {
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
-      // Calculate zoom based on distance ratio for more stable behavior
-      const distanceRatio = currentDistance / pinchStartRef.current.distance;
+      // Continuous zoom: calculate scale change based on distance delta from last position
+      const lastDistance = continuousZoomRef.current.lastDistance;
+      const distanceDelta = currentDistance - lastDistance;
       
-      // Ignore extreme ratio changes that indicate gesture detection errors
-      if (distanceRatio > 5 || distanceRatio < 0.2) {
-        console.log('Ignoring extreme distance ratio:', distanceRatio);
-        return; // Skip this update
-      }
+      // Sensitivity factor for zoom responsiveness (adjust as needed)
+      const zoomSensitivity = 0.003; // Lower value = less sensitive, higher = more sensitive
       
-      // Apply more sensitive and accurate scaling with smaller amplification
-      let scaleMultiplier = distanceRatio;
+      // Calculate scale delta based on distance change
+      const scaleDelta = distanceDelta * zoomSensitivity;
       
-      // Add sensitivity threshold to prevent accidental direction switches
-      const changeThreshold = 0.1; // 10% minimum change required for clearer detection
+      // Apply scale change to current scale for continuous zoom
+      let newScale = continuousZoomRef.current.lastScale + scaleDelta;
       
-      if (distanceRatio > (1 + changeThreshold)) {
-        // Clear zoom in - moderate amplification
-        scaleMultiplier = 1 + (distanceRatio - 1) * 0.8;
-      } else if (distanceRatio < (1 - changeThreshold)) {
-        // Clear zoom out - moderate amplification  
-        scaleMultiplier = Math.max(0.3, 1 - (1 - distanceRatio) * 0.8);
-      } else {
-        // Small changes - use direct ratio to prevent jumps
-        scaleMultiplier = distanceRatio;
-      }
+      // Clamp the scale to reasonable bounds
+      newScale = Math.max(0.3, Math.min(4, newScale));
       
-      let newScale = pinchStartRef.current.scale * scaleMultiplier;
-      
-      console.log('Zoom:', { 
+      console.log('Continuous Zoom:', { 
         currentDistance: Math.round(currentDistance), 
-        startDistance: Math.round(pinchStartRef.current.distance),
-        distanceRatio: distanceRatio.toFixed(3), 
-        scaleMultiplier: scaleMultiplier.toFixed(3), 
-        baseScale: pinchStartRef.current.scale.toFixed(3), 
+        lastDistance: Math.round(lastDistance),
+        distanceDelta: Math.round(distanceDelta), 
+        scaleDelta: scaleDelta.toFixed(4), 
+        currentScale: transform.scale.toFixed(3), 
         newScale: newScale.toFixed(3) 
       });
       
-      // Clamp the scale
-      newScale = Math.max(0.3, Math.min(4, newScale));
-      
       // Only update if scale changed meaningfully to prevent unnecessary renders
-      if (Math.abs(newScale - transform.scale) > 0.01) {
+      if (Math.abs(newScale - transform.scale) > 0.005) {
         // Get container bounds for center calculation
         const rect = containerRef.current?.getBoundingClientRect();
         if (!rect) return;
@@ -339,12 +332,21 @@ export default function HeirloomFlowerPage() {
         const newX = transform.x - (pinchCenterX - centerX) * (scaleRatioChange - 1);
         const newY = transform.y - (pinchCenterY - centerY) * (scaleRatioChange - 1);
         
-        // Immediate state update for responsive feel
+        // Update transform state
         setTransform({
           x: newX,
           y: newY,
           scale: newScale
         });
+        
+        // Update continuous zoom tracking for next iteration
+        continuousZoomRef.current = {
+          lastDistance: currentDistance,
+          lastScale: newScale
+        };
+      } else {
+        // Still update the last distance even if we don't change scale
+        continuousZoomRef.current.lastDistance = currentDistance;
       }
     }
   };
@@ -352,6 +354,8 @@ export default function HeirloomFlowerPage() {
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (e.touches.length < 2) {
       setIsPinching(false);
+      // Reset continuous zoom tracking when gesture ends
+      continuousZoomRef.current = { lastDistance: 0, lastScale: transform.scale };
     }
   };
 
@@ -548,6 +552,7 @@ export default function HeirloomFlowerPage() {
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
+                onTouchCancel={handleTouchEnd}
               >
                 {/* Container for all transformed elements */}
                 <div
