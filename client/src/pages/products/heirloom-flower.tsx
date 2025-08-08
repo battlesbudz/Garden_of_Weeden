@@ -124,6 +124,7 @@ export default function HeirloomFlowerPage() {
   const lastPinchTime = useRef(0);
   const lastPinchDistance = useRef(0);
   const continuousZoomRef = useRef({ lastDistance: 0, lastScale: 1 });
+  const gestureStateRef = useRef({ isActive: false, startDistance: 0, startScale: 1 });
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -252,33 +253,23 @@ export default function HeirloomFlowerPage() {
           Math.pow(touch2.clientY - touch1.clientY, 2)
         );
         
-        // Only start pinch if fingers are reasonably far apart (prevents micro-gestures)
-        if (distance > 30) {
+        // Only start pinch if fingers are reasonably far apart
+        if (distance > 40) {
           const centerX = (touch1.clientX + touch2.clientX) / 2;
           const centerY = (touch1.clientY + touch2.clientY) / 2;
           
-          // Set initial references for continuous zoom
-          pinchStartRef.current = {
-            distance,
-            scale: transform.scale,
-            centerX,
-            centerY
+          // Initialize gesture state with stable tracking
+          gestureStateRef.current = {
+            isActive: true,
+            startDistance: distance,
+            startScale: transform.scale
           };
           
-          // Initialize continuous zoom tracking with CURRENT scale
-          continuousZoomRef.current = {
-            lastDistance: distance,
-            lastScale: transform.scale  // Use current scale, not previous gesture's scale
-          };
-          
-          lastPinchDistance.current = distance;
-          
-          console.log('New pinch gesture started:', { 
-            distance: Math.round(distance), 
-            currentScale: transform.scale.toFixed(3) 
+          console.log('Pinch gesture started:', { 
+            startDistance: Math.round(distance), 
+            startScale: transform.scale.toFixed(3) 
           });
         } else {
-          // Reset pinching if distance too small
           setIsPinching(false);
         }
       }
@@ -286,7 +277,7 @@ export default function HeirloomFlowerPage() {
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length === 2 && isPinching) {
+    if (e.touches.length === 2 && isPinching && gestureStateRef.current.isActive) {
       e.preventDefault();
       
       const touch1 = e.touches[0];
@@ -297,47 +288,33 @@ export default function HeirloomFlowerPage() {
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
-      // Skip if this is the very first move or tracking isn't initialized
-      if (continuousZoomRef.current.lastDistance === 0) {
-        continuousZoomRef.current = {
-          lastDistance: currentDistance,
-          lastScale: transform.scale
-        };
-        return;
-      }
+      // Use ratio-based zoom for stability
+      const startDistance = gestureStateRef.current.startDistance;
+      const startScale = gestureStateRef.current.startScale;
       
-      // Continuous zoom: calculate scale change based on distance delta from last position
-      const lastDistance = continuousZoomRef.current.lastDistance;
-      const distanceDelta = currentDistance - lastDistance;
+      // Calculate scale ratio - this is much more stable than delta-based
+      const distanceRatio = currentDistance / startDistance;
       
-      // Skip tiny movements to avoid jitter
-      if (Math.abs(distanceDelta) < 2) {
-        return;
-      }
+      // Apply smooth zoom scaling with dampening
+      const zoomFactor = 0.8; // Dampening factor to prevent over-sensitivity
+      const scaleMultiplier = 1 + (distanceRatio - 1) * zoomFactor;
       
-      // Sensitivity factor for zoom responsiveness
-      const zoomSensitivity = 0.004; // Slightly increased for better responsiveness
-      
-      // Calculate scale delta based on distance change
-      const scaleDelta = distanceDelta * zoomSensitivity;
-      
-      // Apply scale change to current transform scale (not stored scale)
-      let newScale = transform.scale + scaleDelta;
+      let newScale = startScale * scaleMultiplier;
       
       // Clamp the scale to reasonable bounds
       newScale = Math.max(0.3, Math.min(4, newScale));
       
-      console.log('Continuous Zoom:', { 
+      console.log('Stable Zoom:', { 
         currentDistance: Math.round(currentDistance), 
-        lastDistance: Math.round(lastDistance),
-        distanceDelta: Math.round(distanceDelta), 
-        scaleDelta: scaleDelta.toFixed(4), 
-        currentScale: transform.scale.toFixed(3), 
+        startDistance: Math.round(startDistance),
+        distanceRatio: distanceRatio.toFixed(3), 
+        scaleMultiplier: scaleMultiplier.toFixed(3), 
+        startScale: startScale.toFixed(3), 
         newScale: newScale.toFixed(3) 
       });
       
       // Only update if scale changed meaningfully
-      if (Math.abs(newScale - transform.scale) > 0.005) {
+      if (Math.abs(newScale - transform.scale) > 0.01) {
         // Get container bounds for center calculation
         const rect = containerRef.current?.getBoundingClientRect();
         if (!rect) return;
@@ -360,21 +337,15 @@ export default function HeirloomFlowerPage() {
           scale: newScale
         });
       }
-      
-      // Always update tracking for next iteration
-      continuousZoomRef.current = {
-        lastDistance: currentDistance,
-        lastScale: newScale
-      };
     }
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (e.touches.length < 2 && isPinching) {
-      console.log('Pinch gesture ended, current scale:', transform.scale.toFixed(3));
+      console.log('Pinch gesture ended, final scale:', transform.scale.toFixed(3));
       setIsPinching(false);
-      // Clear continuous zoom tracking completely when gesture ends
-      continuousZoomRef.current = { lastDistance: 0, lastScale: 0 };
+      // Reset gesture state
+      gestureStateRef.current = { isActive: false, startDistance: 0, startScale: 1 };
     }
   };
 
