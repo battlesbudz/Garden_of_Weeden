@@ -647,73 +647,7 @@ export default function HeirloomFlowerPage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 bg-black">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-battles-gold mb-4">Community Reviews</h2>
-            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-              Real feedback from collectors who know fire genetics
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="bg-gray-900 border-battles-gold/20">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  <div className="flex text-yellow-400">
-                    {"★".repeat(5)}
-                  </div>
-                </div>
-                <blockquote className="text-gray-300 italic mb-4">
-                  "This is real gas. Pure landrace with that authentic head high you can't find anymore. 
-                  The terpene profile is loud — true equatorial sativa expression."
-                </blockquote>
-                <div className="border-t border-gray-800 pt-4">
-                  <cite className="text-battles-gold font-semibold">Sarah M.</cite>
-                  <p className="text-gray-400 text-sm">Forum Moderator, ICMag Landrace Preservation</p>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gray-900 border-battles-gold/20">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  <div className="flex text-yellow-400">
-                    {"★".repeat(5)}
-                  </div>
-                </div>
-                <blockquote className="text-gray-300 italic mb-4">
-                  "Fire genetics preserved right. The living soil beds really bring out those old-school terpenes. 
-                  No anxiety, just clean head high like the Thai Sticks from the 70s."
-                </blockquote>
-                <div className="border-t border-gray-800 pt-4">
-                  <cite className="text-battles-gold font-semibold">Mike D.</cite>
-                  <p className="text-gray-400 text-sm">Seed Collector, 20+ Years Growing</p>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gray-900 border-battles-gold/20">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  <div className="flex text-yellow-400">
-                    {"★".repeat(5)}
-                  </div>
-                </div>
-                <blockquote className="text-gray-300 italic mb-4">
-                  "True pure genetics with chemotypes you can't find in modern hybrids. 
-                  The LED spectrum preservation of these terpenes is remarkable — authentic OG strains."
-                </blockquote>
-                <div className="border-t border-gray-800 pt-4">
-                  <cite className="text-battles-gold font-semibold">Dr. Jennifer K.</cite>
-                  <p className="text-gray-400 text-sm">Phenotype Hunter, Genetic Preservation</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
+
 
       {/* FAQ Section */}
       <section className="py-16 bg-gray-900">
