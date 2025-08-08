@@ -118,7 +118,8 @@ export default function HeirloomFlowerPage() {
   const transformRef = useRef({
     scale: 0.9,
     positionX: 0,
-    positionY: 0
+    positionY: 0,
+    hasBeenSet: false
   });
 
   const productStructuredData = getProductSchema({
@@ -167,18 +168,26 @@ export default function HeirloomFlowerPage() {
           <div className="relative bg-slate-800 rounded-lg overflow-hidden border border-battles-gold/30">
             <TransformWrapper
               key="map-transform-wrapper"
-              initialScale={0.9}
-              initialPositionX={0}
-              initialPositionY={0}
+              initialScale={transformRef.current.hasBeenSet ? transformRef.current.scale : 0.9}
+              initialPositionX={transformRef.current.hasBeenSet ? transformRef.current.positionX : 0}
+              initialPositionY={transformRef.current.hasBeenSet ? transformRef.current.positionY : 0}
               minScale={0.4}
               maxScale={4}
               limitToBounds={false}
-              centerOnInit={true}
+              centerOnInit={!transformRef.current.hasBeenSet}
               wheel={{ step: 0.15 }}
               pinch={{ step: 8 }}
               doubleClick={{ disabled: false }}
               panning={{ velocityDisabled: true }}
               disablePadding={true}
+              onTransformed={(ref, state) => {
+                transformRef.current = {
+                  scale: state.scale,
+                  positionX: state.positionX,
+                  positionY: state.positionY,
+                  hasBeenSet: true
+                };
+              }}
             >
               
               <TransformComponent
@@ -292,7 +301,7 @@ export default function HeirloomFlowerPage() {
           </div>
         </div>
       </div>
-  ), []);
+  ), [selectedStrain]);
 
   return (
     <div className="min-h-screen bg-black text-white">
