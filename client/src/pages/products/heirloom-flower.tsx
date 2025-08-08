@@ -419,42 +419,22 @@ export default function HeirloomFlowerPage() {
                     let x = 0, y = 0;
                     // Precisely positioned on land using Winkel Triple grid coordinates
                     switch(code) {
-                      case 'MW': x = 800; y = 220; break; // Malawi - Eastern Africa landmass
-                      case 'TH': x = 1060; y = 175; break; // Thailand - Southeast Asia peninsula  
-                      case 'AF': x = 920; y = 155; break; // Afghanistan - Central Asian highlands
-                      case 'CO': x = 500; y = 180; break; // Colombia - Northwestern South America coast
-                      case 'ZA': x = 780; y = 270; break; // South Africa - Southern tip of Africa
+                      case 'MW': x = 820; y = 230; break; // Malawi - Eastern Africa landmass
+                      case 'TH': x = 1040; y = 185; break; // Thailand - Southeast Asia peninsula  
+                      case 'AF': x = 940; y = 165; break; // Afghanistan - Central Asian highlands
+                      case 'CO': x = 480; y = 185; break; // Colombia - Northwestern South America
+                      case 'ZA': x = 800; y = 280; break; // South Africa - Southern tip of Africa
                     }
                     
                     return (
                       <g key={code} style={{ pointerEvents: 'auto' }}>
-                        {/* Glowing strain marker with enhanced visibility */}
-                        <circle cx={x} cy={y} r="30" fill="rgba(241, 196, 15, 0.1)" stroke="#f1c40f" strokeWidth="2" opacity="0.8" />
-                        <circle cx={x} cy={y} r="20" fill="rgba(241, 196, 15, 0.3)" stroke="#f39c12" strokeWidth="3" />
-                        <circle cx={x} cy={y} r="12" fill="#f1c40f" stroke="#ffffff" strokeWidth="3" 
-                                className="cursor-pointer hover:scale-125 transition-all duration-300 drop-shadow-2xl"
+                        {/* Small glowing strain marker */}
+                        <circle cx={x} cy={y} r="8" fill="rgba(241, 196, 15, 0.2)" stroke="#f1c40f" strokeWidth="1" opacity="0.6" />
+                        <circle cx={x} cy={y} r="5" fill="#f1c40f" stroke="#ffffff" strokeWidth="2" 
+                                className="cursor-pointer hover:scale-150 transition-all duration-300"
                                 onClick={() => handleCountryClick(code)} 
-                                style={{ pointerEvents: 'auto', filter: 'drop-shadow(0 0 10px rgba(241, 196, 15, 0.8))' }} />
-                        <circle cx={x} cy={y} r="6" fill="#fef9e7" style={{ pointerEvents: 'none' }} />
-                        
-                        {/* Enhanced strain labels with better contrast */}
-                        <text x={x} y={y - 50} textAnchor="middle" 
-                              className="fill-white text-lg font-bold"
-                              style={{ 
-                                textShadow: '3px 3px 6px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.8)',
-                                filter: 'drop-shadow(0 0 8px rgba(241, 196, 15, 0.6))',
-                                pointerEvents: 'none'
-                              }}>
-                          {data.strainName}
-                        </text>
-                        <text x={x} y={y - 30} textAnchor="middle" 
-                              className="fill-yellow-200 text-sm font-semibold"
-                              style={{ 
-                                textShadow: '2px 2px 4px rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.7)',
-                                pointerEvents: 'none'
-                              }}>
-                          {data.location.split(',')[0]}
-                        </text>
+                                style={{ pointerEvents: 'auto', filter: 'drop-shadow(0 0 6px rgba(241, 196, 15, 0.8))' }} />
+                        <circle cx={x} cy={y} r="2" fill="#fef9e7" style={{ pointerEvents: 'none' }} />
                       </g>
                     );
                   })}
