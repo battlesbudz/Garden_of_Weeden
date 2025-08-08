@@ -122,6 +122,7 @@ export default function HeirloomFlowerPage() {
   const [isPinching, setIsPinching] = useState(false);
   const pinchStartRef = useRef({ distance: 0, scale: 1, centerX: 0, centerY: 0 });
   const lastPinchTime = useRef(0);
+  const lastPinchDistance = useRef(0);
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -256,6 +257,7 @@ export default function HeirloomFlowerPage() {
         centerX,
         centerY
       };
+      lastPinchDistance.current = distance;
     }
   };
 
@@ -263,24 +265,29 @@ export default function HeirloomFlowerPage() {
     if (e.touches.length === 2 && isPinching) {
       e.preventDefault();
       
-      // Throttle pinch events for better performance but still responsive
-      const now = Date.now();
-      if (now - lastPinchTime.current < 5) return; // Very minimal throttling
-      lastPinchTime.current = now;
-      
       const touch1 = e.touches[0];
       const touch2 = e.touches[1];
       
-      const distance = Math.sqrt(
+      const currentDistance = Math.sqrt(
         Math.pow(touch2.clientX - touch1.clientX, 2) + 
         Math.pow(touch2.clientY - touch1.clientY, 2)
       );
       
-      // More responsive pinch scaling
-      const scaleChange = distance / pinchStartRef.current.distance;
-      // Much higher amplification for better touch responsiveness
-      const amplifiedChange = 1 + (scaleChange - 1) * 4;
-      const newScale = Math.max(0.3, Math.min(4, pinchStartRef.current.scale * amplifiedChange));
+      // Calculate the distance change from last position
+      const distanceChange = currentDistance - lastPinchDistance.current;
+      
+      // Only update if there's a meaningful change (reduce jitter)
+      if (Math.abs(distanceChange) < 3) return;
+      
+      // Update tracking
+      lastPinchDistance.current = currentDistance;
+      
+      // Calculate zoom step based on distance change - more predictable
+      const zoomStep = distanceChange * 0.008; // Consistent zoom rate
+      let newScale = transform.scale + zoomStep;
+      
+      // Clamp the scale
+      newScale = Math.max(0.3, Math.min(4, newScale));
       
       // Get container bounds for center calculation
       const rect = containerRef.current?.getBoundingClientRect();
@@ -293,9 +300,9 @@ export default function HeirloomFlowerPage() {
       const pinchCenterY = (touch1.clientY + touch2.clientY) / 2 - rect.top;
       
       // Adjust position to zoom towards pinch center
-      const scaleRatio = newScale / transform.scale;
-      const newX = transform.x - (pinchCenterX - centerX) * (scaleRatio - 1);
-      const newY = transform.y - (pinchCenterY - centerY) * (scaleRatio - 1);
+      const scaleRatioChange = newScale / transform.scale;
+      const newX = transform.x - (pinchCenterX - centerX) * (scaleRatioChange - 1);
+      const newY = transform.y - (pinchCenterY - centerY) * (scaleRatioChange - 1);
       
       setTransform({
         x: newX,
