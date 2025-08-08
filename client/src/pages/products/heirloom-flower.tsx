@@ -117,6 +117,10 @@ export default function HeirloomFlowerPage() {
   const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
   const lastWheelTime = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Touch/pinch zoom state
+  const [isPinching, setIsPinching] = useState(false);
+  const pinchStartRef = useRef({ distance: 0, scale: 1, centerX: 0, centerY: 0 });
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -148,6 +152,9 @@ export default function HeirloomFlowerPage() {
 
   // Simplified mouse and touch handlers
   const handlePointerDown = (e: React.PointerEvent) => {
+    // Don't handle pointer events during pinch gestures
+    if (isPinching) return;
+    
     e.preventDefault();
     setIsDragging(true);
     dragStartRef.current = {
@@ -164,7 +171,8 @@ export default function HeirloomFlowerPage() {
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging) return;
+    // Don't handle pointer events during pinch gestures
+    if (!isDragging || isPinching) return;
     e.preventDefault();
     
     const deltaX = e.clientX - dragStartRef.current.clientX;
@@ -223,7 +231,76 @@ export default function HeirloomFlowerPage() {
     });
   };
 
-  // No need for separate touch handlers - pointer events handle both mouse and touch
+  // Touch event handlers for pinch zoom
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      setIsPinching(true);
+      setIsDragging(false);
+      
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      
+      const distance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) + 
+        Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+      
+      const centerX = (touch1.clientX + touch2.clientX) / 2;
+      const centerY = (touch1.clientY + touch2.clientY) / 2;
+      
+      pinchStartRef.current = {
+        distance,
+        scale: transform.scale,
+        centerX,
+        centerY
+      };
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length === 2 && isPinching) {
+      e.preventDefault();
+      
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      
+      const distance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) + 
+        Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+      
+      const scaleChange = distance / pinchStartRef.current.distance;
+      const newScale = Math.max(0.3, Math.min(4, pinchStartRef.current.scale * scaleChange));
+      
+      // Get container bounds for center calculation
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      
+      // Calculate zoom center offset
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const pinchCenterX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
+      const pinchCenterY = (touch1.clientY + touch2.clientY) / 2 - rect.top;
+      
+      // Adjust position to zoom towards pinch center
+      const scaleRatio = newScale / transform.scale;
+      const newX = transform.x - (pinchCenterX - centerX) * (scaleRatio - 1);
+      const newY = transform.y - (pinchCenterY - centerY) * (scaleRatio - 1);
+      
+      setTransform({
+        x: newX,
+        y: newY,
+        scale: newScale
+      });
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (e.touches.length < 2) {
+      setIsPinching(false);
+    }
+  };
 
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -415,6 +492,9 @@ export default function HeirloomFlowerPage() {
                 onPointerUp={handlePointerUp}
                 onPointerCancel={handlePointerUp}
                 onWheel={handleWheel}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
               >
                 {/* Container for all transformed elements */}
                 <div
