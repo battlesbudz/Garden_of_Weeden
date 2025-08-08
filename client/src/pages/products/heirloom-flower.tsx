@@ -240,29 +240,31 @@ export default function HeirloomFlowerPage() {
     if (e.touches.length === 2) {
       e.preventDefault();
       
-      // Always reset state to ensure clean gesture start
-      setIsPinching(true);
-      setIsDragging(false);
-      
-      const touch1 = e.touches[0];
-      const touch2 = e.touches[1];
-      
-      const distance = Math.sqrt(
-        Math.pow(touch2.clientX - touch1.clientX, 2) + 
-        Math.pow(touch2.clientY - touch1.clientY, 2)
-      );
-      
-      // Initialize gesture state with current distance as baseline
-      gestureStateRef.current = {
-        isActive: true,
-        startDistance: distance,
-        startScale: transform.scale
-      };
-      
-      console.log('Fresh pinch started:', { 
-        distance: Math.round(distance), 
-        scale: transform.scale.toFixed(3)
-      });
+      // Only initialize if not already in a pinch gesture
+      if (!isPinching && !gestureStateRef.current.isActive) {
+        setIsPinching(true);
+        setIsDragging(false);
+        
+        const touch1 = e.touches[0];
+        const touch2 = e.touches[1];
+        
+        const distance = Math.sqrt(
+          Math.pow(touch2.clientX - touch1.clientX, 2) + 
+          Math.pow(touch2.clientY - touch1.clientY, 2)
+        );
+        
+        // Initialize gesture state with current distance as baseline
+        gestureStateRef.current = {
+          isActive: true,
+          startDistance: distance,
+          startScale: transform.scale
+        };
+        
+        console.log('Pinch started:', { 
+          distance: Math.round(distance), 
+          scale: transform.scale.toFixed(3)
+        });
+      }
     } else if (e.touches.length === 1 && !isPinching) {
       // Single touch - prepare for potential drag
       setIsDragging(false);
@@ -289,8 +291,10 @@ export default function HeirloomFlowerPage() {
       const distanceRatio = currentDistance / startDistance;
       const sensitivity = 1.2; // Moderate sensitivity for stable zoom
       
-      // Apply zoom relative to starting point (INVERTED for natural feel)
-      let newScale = startScale / Math.pow(distanceRatio, sensitivity);
+      // Apply zoom relative to starting point (CORRECT direction)
+      // Larger distance ratio = larger scale (zoom in)
+      // Smaller distance ratio = smaller scale (zoom out)
+      let newScale = startScale * Math.pow(distanceRatio, sensitivity);
       
       // Clamp the scale to reasonable bounds
       newScale = Math.max(0.3, Math.min(4, newScale));
