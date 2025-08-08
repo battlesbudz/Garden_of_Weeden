@@ -12,88 +12,61 @@ import worldMapImage from "@assets/Winkel_triple_projection_SW_1754600003820.jpg
 import SEOHead from '@/components/seo/SEOHead';
 import { getCanonicalUrl, getPageTitle, getProductSchema } from '@/utils/seo';
 
-// Landrace strain data with precise Winkel Triple projection coordinates on landmasses
+// Landrace strain data - coordinates calibrated for UI display at 0.9 scale
 const landraceStrains = [
-  {
-    name: "Malawi Gold",
-    location: "Malawi, Southeast Africa",
-    coordinates: { x: 57, y: 62 }, // East Africa - Malawi inland
-    notes: "Energetic, cerebral, spicy aroma with soaring effects",
-    thc: "14-18%",
-    cbd: "2-4%",
-    flowering: "16-20 weeks"
-  },
-  {
-    name: "Thai Stick",
-    location: "Northern Thailand",
-    coordinates: { x: 72, y: 45 }, // Southeast Asia - Thailand mainland
-    notes: "Long flowering, citrus incense profile with creative clarity",
-    thc: "12-16%",
-    cbd: "3-6%",
-    flowering: "14-18 weeks"
-  },
   {
     name: "Afghan Kush",
     location: "Hindu Kush Mountains, Afghanistan",
-    coordinates: { x: 65, y: 38 }, // Central Asia - Afghanistan mountains
+    coordinates: { x: 67, y: 35 }, // Central Asia - Afghanistan inland
     notes: "Broad-leaf, hash-heavy, calming body effects",
     thc: "15-20%",
     cbd: "4-8%",
     flowering: "8-10 weeks"
   },
   {
-    name: "Colombian Gold",
-    location: "Santa Marta Mountains, Colombia",
-    coordinates: { x: 28, y: 55 }, // Northern South America - Colombia
-    notes: "Uplifting sativa with golden pistils and sweet earth tones",
-    thc: "13-17%",
-    cbd: "2-5%",
-    flowering: "12-16 weeks"
-  },
-  {
-    name: "Aceh",
-    location: "Sumatra, Indonesia", 
-    coordinates: { x: 74, y: 55 }, // Southeast Asia - Sumatra island
-    notes: "Earthy, woody flavor with balanced relaxing effects",
-    thc: "16-22%",
-    cbd: "3-7%",
-    flowering: "10-12 weeks"
-  },
-  {
-    name: "Durban Poison",
-    location: "Durban, South Africa",
-    coordinates: { x: 55, y: 68 }, // Southern Africa - East coast
-    notes: "Sweet anise aroma with energizing, clear-headed effects",
-    thc: "15-25%",
-    cbd: "1-3%",
-    flowering: "8-9 weeks"
+    name: "Thai Stick", 
+    location: "Northern Thailand",
+    coordinates: { x: 75, y: 42 }, // Southeast Asia - Thailand mainland center
+    notes: "Long flowering, citrus incense profile with creative clarity",
+    thc: "12-16%",
+    cbd: "3-6%",
+    flowering: "14-18 weeks"
   },
   {
     name: "Moroccan Hash Plant",
-    location: "Rif Mountains, Morocco",
-    coordinates: { x: 48, y: 32 }, // North Africa - Morocco
+    location: "Rif Mountains, Morocco", 
+    coordinates: { x: 46, y: 28 }, // Northwest Africa - Morocco interior
     notes: "Traditional hash variety with earthy, spiced resin production",
     thc: "12-18%",
     cbd: "3-6%",
     flowering: "9-11 weeks"
   },
   {
-    name: "Jamaican Lamb's Bread",
-    location: "Blue Mountains, Jamaica",
-    coordinates: { x: 25, y: 46 }, // Caribbean - Jamaica
-    notes: "Uplifting sativa with tropical fruit and pine aromatics",
-    thc: "16-21%",
-    cbd: "1-4%",
-    flowering: "11-13 weeks"
+    name: "Colombian Gold",
+    location: "Santa Marta Mountains, Colombia",
+    coordinates: { x: 30, y: 52 }, // Northern South America - Colombia center
+    notes: "Uplifting sativa with golden pistils and sweet earth tones",
+    thc: "13-17%",
+    cbd: "2-5%",
+    flowering: "12-16 weeks"
   },
   {
-    name: "Mexican Oaxacan",
-    location: "Oaxaca, Mexico",
-    coordinates: { x: 20, y: 46 }, // North America - Southern Mexico
-    notes: "High-altitude sativa with pine and citrus complex",
-    thc: "14-19%",
-    cbd: "2-5%",
-    flowering: "12-14 weeks"
+    name: "Malawi Gold",
+    location: "Malawi, Southeast Africa",
+    coordinates: { x: 58, y: 58 }, // Southeast Africa - Malawi center
+    notes: "Energetic, cerebral, spicy aroma with soaring effects",
+    thc: "14-18%",
+    cbd: "2-4%",
+    flowering: "16-20 weeks"
+  },
+  {
+    name: "Durban Poison",
+    location: "Durban, South Africa",
+    coordinates: { x: 56, y: 65 }, // Southern Africa - inland from coast
+    notes: "Sweet anise aroma with energizing, clear-headed effects",
+    thc: "15-25%",
+    cbd: "1-3%",
+    flowering: "8-9 weeks"
   }
 ];
 
