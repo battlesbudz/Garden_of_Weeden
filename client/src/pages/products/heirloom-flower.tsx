@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'wouter';
 import { ArrowLeft, Check, Leaf, Layers, Sun, Settings, MapPin, FileText, Award, Users, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
+import { TransformWrapper, TransformComponent, useControls } from 'react-zoom-pan-pinch';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
@@ -109,27 +110,9 @@ export default function HeirloomFlowerPage() {
   const [waitlistCount, setWaitlistCount] = useState(247);
   const { toast } = useToast();
   
-  // Pan and zoom state - start with 2x zoom centered on map
-  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 2 });
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStartRef = useRef({ x: 0, y: 0, clientX: 0, clientY: 0 });
-  const svgRef = useRef<SVGSVGElement>(null);
+  // Map interaction state
   const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
-  const lastWheelTime = useRef(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Touch/pinch zoom state
-  const [isPinching, setIsPinching] = useState(false);
-  const pinchStartRef = useRef({ distance: 0, scale: 1, centerX: 0, centerY: 0 });
-  const lastPinchTime = useRef(0);
-  const lastPinchDistance = useRef(0);
-  const continuousZoomRef = useRef({ lastDistance: 0, lastScale: 1 });
-  const gestureStateRef = useRef({ 
-    isActive: false, 
-    previousDistance: 0,
-    currentScale: 2, // Start at current scale
-    lastZoomDirection: 0 // Track zoom direction for stability
-  });
+  const svgRef = useRef<SVGSVGElement>(null);
 
   const productStructuredData = getProductSchema({
     name: "Heirloom Cannabis Flower - Premium Landrace Strains",
@@ -140,23 +123,38 @@ export default function HeirloomFlowerPage() {
     inStock: false
   });
 
-  // Pan and zoom functions
-  const handleZoomIn = () => {
-    setTransform(prev => ({
-      ...prev,
-      scale: Math.min(prev.scale * 1.5, 4)
-    }));
-  };
-
-  const handleZoomOut = () => {
-    setTransform(prev => ({
-      ...prev,
-      scale: Math.max(prev.scale / 1.5, 0.3)
-    }));
-  };
-
-  const handleReset = () => {
-    setTransform({ x: 0, y: 0, scale: 2 });
+  // Zoom controls component using react-zoom-pan-pinch
+  const ZoomControls = () => {
+    const { zoomIn, zoomOut, resetTransform } = useControls();
+    
+    return (
+      <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
+        <Button
+          size="sm"
+          variant="outline"
+          className="bg-black/20 backdrop-blur-sm border-gold/30 text-white hover:bg-gold/20"
+          onClick={() => zoomIn()}
+        >
+          <ZoomIn className="h-4 w-4" />
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          className="bg-black/20 backdrop-blur-sm border-gold/30 text-white hover:bg-gold/20"
+          onClick={() => zoomOut()}
+        >
+          <ZoomOut className="h-4 w-4" />
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          className="bg-black/20 backdrop-blur-sm border-gold/30 text-white hover:bg-gold/20"
+          onClick={() => resetTransform()}
+        >
+          <RotateCcw className="h-4 w-4" />
+        </Button>
+      </div>
+    );
   };
 
   // Simplified mouse and touch handlers
@@ -389,284 +387,128 @@ export default function HeirloomFlowerPage() {
     setEmail('');
   };
 
-  // Clean interactive world map using SVG from SimpleMaps
+  // Clean, professional interactive map using react-zoom-pan-pinch
   const OriginMap = () => {
-    const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
-    
-    // Country code mapping for landrace strains
-    const landraceData: { [key: string]: any } = {
-      'MW': { // Malawi
-        strainName: 'Malawi Gold',
-        location: 'Malawi, Southeast Africa',
-        notes: 'Energetic, cerebral, spicy aroma with soaring effects',
-        thc: '14-18%',
-        cbd: '2-4%',
-        flowering: '16-20 weeks'
-      },
-      'TH': { // Thailand
-        strainName: 'Thai Stick',
-        location: 'Northern Thailand',
-        notes: 'Long flowering, citrus incense profile with creative clarity',
-        thc: '12-16%',
-        cbd: '3-6%',
-        flowering: '14-18 weeks'
-      },
-      'AF': { // Afghanistan
-        strainName: 'Afghan Kush',
-        location: 'Hindu Kush Mountains, Afghanistan',
-        notes: 'Broad-leaf, hash-heavy, calming body effects',
-        thc: '15-20%',
-        cbd: '4-8%',
-        flowering: '8-10 weeks'
-      },
-      'CO': { // Colombia
-        strainName: 'Colombian Gold',
-        location: 'Santa Marta Mountains, Colombia',
-        notes: 'Uplifting sativa with golden pistils and sweet earth tones',
-        thc: '13-17%',
-        cbd: '2-5%',
-        flowering: '12-16 weeks'
-      },
-      'ZA': { // South Africa
-        strainName: 'Durban Poison',
-        location: 'Durban, South Africa',
-        notes: 'Sweet anise aroma with energizing, clear-headed effects',
-        thc: '15-25%',
-        cbd: '1-3%',
-        flowering: '8-9 weeks'
-      }
-    };
-
-    const handleCountryClick = (countryCode: string) => {
-      if (landraceData[countryCode]) {
-        // Find the corresponding strain in landraceStrains array
-        const strainName = landraceData[countryCode].strainName;
-        const strainIndex = landraceStrains.findIndex(s => s.name === strainName);
-        if (strainIndex !== -1) {
-          setSelectedStrain(strainIndex);
-          console.log('Country clicked:', countryCode, strainName, 'Index:', strainIndex);
-        }
-      }
-    };
-
-    const handleCountryHover = (countryCode: string | null) => {
-      setHoveredCountry(countryCode);
-    };
-
     return (
       <div className="relative">
         <div className="bg-gray-800 rounded-lg p-8 border border-battles-gold/20">
           <h3 className="text-2xl font-bold text-battles-gold mb-6 text-center">Global Landrace Origins</h3>
           
-          {/* Enhanced Interactive World Map with Pan/Zoom */}
-          <div className="relative bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
-            {/* Map Controls */}
-            <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
-              <Button
-                onClick={handleZoomIn}
-                size="sm"
-                variant="outline"
-                className="bg-black/80 border-battles-gold/30 text-battles-gold hover:bg-battles-gold/20 w-10 h-10 p-0"
+          {/* Professional Interactive World Map with react-zoom-pan-pinch */}
+          <div className="relative bg-slate-800 rounded-lg overflow-hidden border border-battles-gold/30">
+            <TransformWrapper
+              initialScale={1.8}
+              initialPositionX={0}
+              initialPositionY={-50}
+              minScale={0.8}
+              maxScale={4}
+              limitToBounds={false}
+              centerOnInit={true}
+              wheel={{ step: 0.15 }}
+              pinch={{ step: 8 }}
+              doubleClick={{ disabled: false }}
+              panning={{ velocityDisabled: true }}
+            >
+              {/* Zoom Controls using useControls hook */}
+              <ZoomControls />
+              
+              <TransformComponent
+                wrapperClass="!w-full !h-96"
+                contentClass="!w-full !h-full"
               >
-                <ZoomIn className="h-4 w-4" />
-              </Button>
-              <Button
-                onClick={handleZoomOut}
-                size="sm"
-                variant="outline"
-                className="bg-black/80 border-battles-gold/30 text-battles-gold hover:bg-battles-gold/20 w-10 h-10 p-0"
-              >
-                <ZoomOut className="h-4 w-4" />
-              </Button>
-              <Button
-                onClick={handleReset}
-                size="sm"
-                variant="outline"
-                className="bg-black/80 border-battles-gold/30 text-battles-gold hover:bg-battles-gold/20 w-10 h-10 p-0"
-              >
-                <RotateCcw className="h-4 w-4" />
-              </Button>
-            </div>
-
-            {/* Map Instructions */}
-            <div className="absolute bottom-4 left-4 z-10 bg-black/80 border border-battles-gold/30 rounded px-3 py-1">
-              <p className="text-battles-gold text-xs">
-                <span className="hidden sm:inline">🖱️ Click & drag to pan • 🔍 Scroll to zoom • 📍 Click markers for details</span>
-                <span className="sm:hidden">👆 Tap & drag to pan • 🤏 Pinch to zoom • 📍 Tap markers for details</span>
-              </p>
-            </div>
-
-            {/* Selected strain details overlay - positioned over the map */}
-            {selectedStrain !== null && selectedStrain < landraceStrains.length && (
-              <div className="absolute top-4 left-4 z-20 bg-black/95 border border-battles-gold/50 rounded-lg p-4 max-w-sm backdrop-blur-sm">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center">
-                    <Leaf className="h-5 w-5 text-battles-gold mr-2" />
-                    <h4 className="text-lg font-bold text-battles-gold">{landraceStrains[selectedStrain].name}</h4>
-                  </div>
-                  <button
-                    onClick={() => setSelectedStrain(null)}
-                    className="text-gray-400 hover:text-white transition-colors ml-2"
-                    aria-label="Close strain details"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                
-                <div className="space-y-3">
-                  <p className="text-gray-300 text-sm leading-relaxed">
-                    {landraceStrains[selectedStrain].notes}
-                  </p>
-                  <div className="flex items-center text-xs text-battles-gold">
-                    <MapPin className="h-3 w-3 mr-1" />
-                    <span>{landraceStrains[selectedStrain].location}</span>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="bg-gray-800/50 rounded-lg p-2 text-center">
-                      <div className="text-battles-gold font-semibold text-xs">THC</div>
-                      <div className="text-white font-bold text-sm">{landraceStrains[selectedStrain].thc}</div>
-                    </div>
-                    <div className="bg-gray-800/50 rounded-lg p-2 text-center">
-                      <div className="text-battles-gold font-semibold text-xs">CBD</div>
-                      <div className="text-white font-bold text-sm">{landraceStrains[selectedStrain].cbd}</div>
-                    </div>
-                    <div className="bg-gray-800/50 rounded-lg p-2 text-center">
-                      <div className="text-battles-gold font-semibold text-xs">Flowering</div>
-                      <div className="text-white font-bold text-xs">{landraceStrains[selectedStrain].flowering}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <div className="w-full" style={{ height: '280px' }}>
-              {/* Interactive world map with image background and overlay markers */}
-              <div 
-                ref={containerRef}
-                className="relative w-full h-full overflow-hidden rounded-lg cursor-grab active:cursor-grabbing"
-                style={{ 
-                  touchAction: 'none',
-                  userSelect: 'none',
-                  WebkitUserSelect: 'none',
-                  WebkitTouchCallout: 'none'
-                }}
-                onPointerDown={handlePointerDown}
-                onPointerMove={handlePointerMove}
-                onPointerUp={handlePointerUp}
-                onPointerCancel={handlePointerUp}
-                onWheel={handleWheel}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-                onTouchCancel={handleTouchEnd}
-              >
-                {/* Container for all transformed elements */}
-                <div
-                  style={{ 
-                    transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
-                    transformOrigin: 'center center',
-                    width: '100%',
-                    height: '100%',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0
-                  }}
-                >
-                  {/* Winkel Triple Projection World Map Image */}
-                  <img 
+                <div className="relative w-full h-full min-w-[800px] min-h-[400px]">
+                  <img
                     src={worldMapImage}
-                    alt="World Map - Winkel Triple Projection"
-                    className="w-full h-full object-contain"
-                    style={{ 
-                      backgroundColor: '#1a1a2e',
-                      pointerEvents: 'none'
-                    }}
-                    onLoad={() => console.log('Image loaded successfully')}
-                    onError={(e) => console.error('Image failed to load:', e)}
+                    alt="World Map with Cannabis Origins"
+                    className="w-full h-full object-cover"
+                    draggable={false}
                   />
-                
-                  {/* SVG Overlay for Interactive Markers */}
-                  <svg 
-                    className="absolute inset-0 w-full h-full"
-                    viewBox="100 80 1200 280"
-                    style={{ 
-                      pointerEvents: 'auto'
-                    }}
-                  >
-                  <defs>
-                    {/* Landrace glow effect */}
-                    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
-                      <feMerge> 
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                      </feMerge>
-                    </filter>
-                  </defs>
-
-                  {/* Landrace strain markers positioned over the image */}
-                  {Object.entries(landraceData).map(([code, data], index) => {
-                    let x = 0, y = 0;
-                    // Precisely positioned on land using Winkel Triple grid coordinates
-                    switch(code) {
-                      case 'MW': x = 820; y = 230; break; // Malawi - Eastern Africa landmass
-                      case 'TH': x = 1040; y = 185; break; // Thailand - Southeast Asia peninsula  
-                      case 'AF': x = 940; y = 165; break; // Afghanistan - Central Asian highlands
-                      case 'CO': x = 480; y = 185; break; // Colombia - Northwestern South America
-                      case 'ZA': x = 800; y = 280; break; // South Africa - Southern tip of Africa
-                    }
-                    
-                    return (
-                      <g key={code} style={{ pointerEvents: 'auto' }}>
-                        {/* Enhanced prominent strain marker */}
-                        <circle cx={x} cy={y} r="12" fill="rgba(241, 196, 15, 0.15)" stroke="#f1c40f" strokeWidth="2" opacity="0.8" />
-                        <circle cx={x} cy={y} r="8" fill="rgba(241, 196, 15, 0.4)" stroke="#f39c12" strokeWidth="2" />
-                        <circle cx={x} cy={y} r="6" fill="#f1c40f" stroke="#ffffff" strokeWidth="3" 
-                                className="cursor-pointer hover:scale-125 transition-all duration-300"
-                                onClick={() => handleCountryClick(code)} 
-                                style={{ pointerEvents: 'auto', filter: 'drop-shadow(0 0 8px rgba(241, 196, 15, 0.9))' }} />
-                        <circle cx={x} cy={y} r="3" fill="#fef9e7" style={{ pointerEvents: 'none' }} />
-                      </g>
-                    );
-                  })}
-
-                  {/* Title overlay */}
-                  <text x="700" y="110" textAnchor="middle" 
-                        className="fill-white text-xl font-bold pointer-events-none"
-                        style={{ 
-                          textShadow: '4px 4px 8px rgba(0,0,0,0.9), 0 0 15px rgba(0,0,0,0.8)',
-                          filter: 'drop-shadow(0 0 10px rgba(241, 196, 15, 0.4))'
-                        }}>
-                    GLOBAL LANDRACE CANNABIS ORIGINS
-                  </text>
                   
-                  {/* Enhanced legend with better visibility */}
-                  <g transform="translate(120, 320)" className="pointer-events-none">
-                    <rect x="0" y="0" width="320" height="90" fill="rgba(0,0,0,0.85)" rx="12" 
-                          stroke="#f1c40f" strokeWidth="3" filter="url(#glow)" />
-                    <circle cx="25" cy="25" r="12" fill="#f1c40f" stroke="#fff" strokeWidth="3" />
-                    <text x="50" y="32" className="fill-white text-lg font-bold">Ancient Landrace Origins</text>
-                    <text x="25" y="55" className="fill-yellow-200 text-base font-medium">Click markers to explore strain heritage</text>
-                    <text x="25" y="75" className="fill-gray-300 text-sm">Pan & zoom to explore the world</text>
-                  </g>
-
-                  </svg>
+                  {/* Strain Location Markers */}
+                  {landraceStrains.map((strain, index) => (
+                    <div
+                      key={strain.name}
+                      className={`absolute w-4 h-4 -ml-2 -mt-2 cursor-pointer transition-all duration-200 ${
+                        selectedStrain === index 
+                          ? 'w-6 h-6 -ml-3 -mt-3 z-10' 
+                          : 'hover:w-5 hover:h-5 hover:-ml-2.5 hover:-mt-2.5'
+                      }`}
+                      style={{
+                        left: `${strain.coordinates.x}%`,
+                        top: `${strain.coordinates.y}%`,
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedStrain(index);
+                      }}
+                    >
+                      <div className={`w-full h-full rounded-full border-2 border-white shadow-lg ${
+                        selectedStrain === index
+                          ? 'bg-battles-gold animate-pulse'
+                          : 'bg-yellow-500 hover:bg-battles-gold'
+                      }`} />
+                      {selectedStrain === index && (
+                        <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-black/90 text-white text-xs px-2 py-1 rounded whitespace-nowrap border border-battles-gold/50">
+                          {strain.name}
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
+              </TransformComponent>
+            </TransformWrapper>
+
+            {/* Legend */}
+            <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-sm rounded-lg p-3 text-xs text-white border border-battles-gold/30">
+              <div className="flex items-center space-x-2 mb-2">
+                <div className="w-3 h-3 bg-yellow-500 rounded-full border border-white"></div>
+                <span>Landrace Origins</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-battles-gold rounded-full border border-white"></div>
+                <span>Selected Strain</span>
               </div>
             </div>
+          </div>
 
-
-
+          {/* Instructions */}
           <div className="flex items-center justify-center mt-4 text-sm text-gray-400">
             <MapPin className="h-4 w-4 mr-2 text-battles-gold" />
-            <span>Click on highlighted countries to explore ancient cannabis genetics from around the world</span>
+            <span>Click markers to explore strain details • Use pinch gestures or zoom controls for smooth navigation</span>
           </div>
         </div>
+        
+        {/* Strain Information Panel */}
+        {selectedStrain !== null && (
+          <div className="mt-6 bg-gray-900 rounded-lg p-6 border border-battles-gold/20">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h4 className="text-xl font-semibold text-battles-gold">
+                  {landraceStrains[selectedStrain].name}
+                </h4>
+                <p className="text-gray-400">{landraceStrains[selectedStrain].location}</p>
+              </div>
+              <div className="flex gap-2">
+                <div className="text-center bg-black/50 rounded-lg px-3 py-2 min-w-[60px]">
+                  <div className="text-battles-gold font-semibold text-sm">THC</div>
+                  <div className="text-white text-xs">{landraceStrains[selectedStrain].thc}</div>
+                </div>
+                <div className="text-center bg-black/50 rounded-lg px-3 py-2 min-w-[60px]">
+                  <div className="text-battles-gold font-semibold text-sm">CBD</div>
+                  <div className="text-white text-xs">{landraceStrains[selectedStrain].cbd}</div>
+                </div>
+                <div className="text-center bg-black/50 rounded-lg px-3 py-2 min-w-[80px]">
+                  <div className="text-battles-gold font-semibold text-sm">Flower</div>
+                  <div className="text-white text-xs">{landraceStrains[selectedStrain].flowering}</div>
+                </div>
+              </div>
+            </div>
+            <p className="text-gray-300 leading-relaxed">
+              {landraceStrains[selectedStrain].notes}
+            </p>
+          </div>
+        )}
       </div>
-    </div>
     );
   };
 
