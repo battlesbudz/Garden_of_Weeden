@@ -109,8 +109,8 @@ export default function HeirloomFlowerPage() {
   const [waitlistCount, setWaitlistCount] = useState(247);
   const { toast } = useToast();
   
-  // Pan and zoom state - start with 6x zoom for better detail
-  const [transform, setTransform] = useState({ x: -1400, y: -400, scale: 6 });
+  // Pan and zoom state - start with 2x zoom centered on map
+  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 2 });
   const [isDragging, setIsDragging] = useState(false);
   const dragStartRef = useRef({ x: 0, y: 0, clientX: 0, clientY: 0 });
   const svgRef = useRef<SVGSVGElement>(null);
@@ -143,7 +143,7 @@ export default function HeirloomFlowerPage() {
   };
 
   const handleReset = () => {
-    setTransform({ x: -1400, y: -400, scale: 6 });
+    setTransform({ x: 0, y: 0, scale: 2 });
   };
 
   // Simplified mouse and touch handlers
