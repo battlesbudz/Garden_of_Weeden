@@ -276,8 +276,11 @@ export default function HeirloomFlowerPage() {
       // Calculate total distance change from pinch start for continuous zoom
       const totalDistanceChange = currentDistance - pinchStartRef.current.distance;
       
+      // Debug logging
+      console.log('Pinch zoom:', { currentDistance, startDistance: pinchStartRef.current.distance, totalDistanceChange });
+      
       // Calculate new scale based on total change - this gives continuous zooming
-      const zoomFactor = 1 + (totalDistanceChange * 0.003); // Very sensitive continuous zoom
+      const zoomFactor = 1 + (totalDistanceChange * 0.01); // Much more sensitive continuous zoom
       let newScale = pinchStartRef.current.scale * zoomFactor;
       
       // Clamp the scale
