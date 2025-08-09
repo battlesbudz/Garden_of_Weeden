@@ -12,6 +12,26 @@ import worldMapImage from "@assets/Winkel_triple_projection_SW_1754600003820.jpg
 import SEOHead from '@/components/seo/SEOHead';
 import { getCanonicalUrl, getPageTitle, getProductSchema } from '@/utils/seo';
 
+// FAQ Questions Data
+const faqQuestions = [
+  {
+    question: "When does this fire drop?",
+    answer: "Next harvest completes Spring 2026. Collectors get 48-hour priority access. Only 50 plants of these preserved genetics per cycle — true connoisseur allocation."
+  },
+  {
+    question: "Why join the waitlist now?",
+    answer: "Waitlist members get exclusive benefits: 48-hour early access, 15% discount on first purchase, detailed cultivation updates, and guaranteed allocation from each small batch harvest."
+  },
+  {
+    question: "What makes this worth the wait?",
+    answer: "These aren't mass-produced hybrids. Each plant gets 12+ months of organic care. The genetics are rare - some are extinct in their native regions. You're getting access to cannabis history that most people will never experience."
+  },
+  {
+    question: "How do I know this is different from other \"premium\" cannabis?",
+    answer: "Simple: try our sample when available. The clear-headed effects, complex flavors, and lack of anxiety speak for themselves. Plus, we provide full cultivation documentation and genetic lineage for complete transparency."
+  }
+];
+
 // Pure landrace cultivar data - Preserved genetics from their native terroir
 const landraceStrains = [
   {
@@ -655,37 +675,14 @@ export default function HeirloomFlowerPage() {
           <h2 className="text-3xl font-bold text-battles-gold mb-4 text-center">Common Questions</h2>
           <p className="text-gray-400 text-center mb-12">Everything you need to know about securing your spot</p>
           <div className="space-y-6">
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">When does this fire drop?</h3>
-              <p className="text-gray-300">
-                Next harvest completes Spring 2026. Collectors get 48-hour priority access. 
-                Only 50 plants of these preserved genetics per cycle — true connoisseur allocation.
-              </p>
-            </div>
-            
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">Why join the waitlist now?</h3>
-              <p className="text-gray-300">
-                Waitlist members get exclusive benefits: 48-hour early access, 15% discount on first purchase, 
-                detailed cultivation updates, and guaranteed allocation from each small batch harvest.
-              </p>
-            </div>
-
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">What makes this worth the wait?</h3>
-              <p className="text-gray-300">
-                These aren't mass-produced hybrids. Each plant gets 12+ months of organic care. The genetics are rare - 
-                some are extinct in their native regions. You're getting access to cannabis history that most people will never experience.
-              </p>
-            </div>
-
-            <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">How do I know this is different from other "premium" cannabis?</h3>
-              <p className="text-gray-300">
-                Simple: try our sample when available. The clear-headed effects, complex flavors, and lack of anxiety speak for themselves. 
-                Plus, we provide full cultivation documentation and genetic lineage for complete transparency.
-              </p>
-            </div>
+            {faqQuestions.map((faq, index) => (
+              <div key={index} className="bg-black p-6 rounded-lg border border-battles-gold/20">
+                <h3 className="text-xl font-semibold text-battles-gold mb-3">{faq.question}</h3>
+                <p className="text-gray-300">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
           </div>
           
           <div className="mt-12 text-center">
