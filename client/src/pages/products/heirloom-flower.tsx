@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo, useCallback, memo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback, memo } from 'react';
 import { Link } from 'wouter';
 import { ArrowLeft, Check, Leaf, Layers, Sun, Settings, MapPin, FileText, Award, Users } from 'lucide-react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
@@ -434,25 +434,7 @@ export default function HeirloomFlowerPage() {
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="py-12 bg-battles-gold/5 border-y border-battles-gold/20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-2xl font-bold text-battles-gold mb-2">Genetic Conservation</div>
-              <p className="text-gray-300">Pure genetics preserved from extinction, untouched by hybridization.</p>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-battles-gold mb-2">Indoor Cultivation</div>
-              <p className="text-gray-300">Climate-controlled, full-spectrum LED cultivation in living soil beds.</p>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-battles-gold mb-2">Artisanal Craft</div>
-              <p className="text-gray-300">50 plants max. Hand-selected phenotypes. Connoisseur quality.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Interactive Origin Map */}
       <section className="py-16 bg-black">
@@ -467,61 +449,7 @@ export default function HeirloomFlowerPage() {
         </div>
       </section>
 
-      {/* Landrace Education */}
-      <section className="py-16 bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-battles-gold mb-4 text-center">Why Pure Genetics Matter</h2>
-          <p className="text-lg text-gray-400 text-center mb-12 max-w-3xl mx-auto">
-            While modern hybrids chase extreme THC, we preserve authentic landrace expressions with true entourage effects
-          </p>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
-                  <Award className="h-6 w-6 text-battles-gold" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-battles-gold mb-2">100% Pure Genetics</h3>
-                  <p className="text-gray-300">Original cultivars preserved in their authentic form, never crossed or hybridized. Pure genetics as nature intended.</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
-                  <Users className="h-6 w-6 text-battles-gold" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Cultural Heritage</h3>
-                  <p className="text-gray-300">Traditional varieties from legendary hash-making regions. Authentic genetics with deep cultural roots.</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
-                  <Leaf className="h-6 w-6 text-battles-gold" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-battles-gold mb-2">True Entourage Effect</h3>
-                  <p className="text-gray-300">Complex terpene profiles preserved through LED spectrum control. Balanced THC:CBD ratios nature intended.</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
-                  <Sun className="h-6 w-6 text-battles-gold" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-battles-gold mb-2">True Sativa Expression</h3>
-                  <p className="text-gray-300">Long-flowering equatorial cultivars under 13/11 photoperiods. Narrow-leaf drug type with extended flowering.</p>
-                </div>
-              </div>
-            </div>
-            
 
-          </div>
-        </div>
-      </section>
 
       {/* Cultivation Methods */}
       <section className="py-16 bg-black">
@@ -558,67 +486,51 @@ export default function HeirloomFlowerPage() {
 
 
 
-      {/* Quick Email Capture Mid-Page */}
-      <section className="py-12 bg-gradient-to-r from-battles-gold/10 to-yellow-600/10">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h3 className="text-2xl font-bold text-battles-gold mb-4">
-            Secure Your Allocation Now
-          </h3>
-          <p className="text-gray-300 mb-6">
-            Only {waitlistCount} spots remaining for our Spring 2026 harvest
-          </p>
-          
-          {!isSubscribed && (
-            <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <Input
-                type="email"
-                placeholder="Your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-                required
-              />
-              <Button type="submit" className="bg-battles-gold text-battles-black hover:bg-yellow-400 font-semibold px-8">
-                Join Now
-              </Button>
-            </form>
-          )}
-        </div>
-      </section>
 
-      {/* Why This Special - Enhanced */}
+
+      {/* Pure Genetics & Product Details */}
       <section className="py-16 bg-gray-900">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-battles-gold mb-4 text-center">Why Pure Genetics Matter</h2>
+          <p className="text-lg text-gray-400 text-center mb-12 max-w-3xl mx-auto">
+            While modern hybrids chase extreme THC, we preserve authentic landrace expressions with true entourage effects
+          </p>
+          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="space-y-6">
-                <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-                  <h3 className="text-xl font-semibold text-battles-gold mb-3">OG Strains vs Modern Hybrids</h3>
-                  <p className="text-gray-300 leading-relaxed">
-                    While modern genetics chase 30%+ THC causing anxiety and paranoia, our preserved landraces deliver 
-                    balanced effects with authentic terpene profiles. True head high without the racey edge.
-                  </p>
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
+                  <Award className="h-6 w-6 text-battles-gold" />
                 </div>
-                
-                <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-                  <h3 className="text-xl font-semibold text-battles-gold mb-3">Living Soil + LED Spectrum</h3>
-                  <p className="text-gray-300 leading-relaxed">
-                    Our living soil beds maintain native terroir while full-spectrum LEDs replicate equatorial sun cycles. 
-                    13/11 photoperiods trigger true sativa expressions impossible with outdoor cultivation.
-                  </p>
+                <div>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">OG Strains vs Modern Hybrids</h3>
+                  <p className="text-gray-300">While modern genetics chase 30%+ THC causing anxiety, our preserved landraces deliver balanced effects with authentic terpene profiles.</p>
                 </div>
-
-                <div className="bg-black p-6 rounded-lg border border-battles-gold/20">
-                  <h3 className="text-xl font-semibold text-battles-gold mb-3">Genetic Conservation Project</h3>
-                  <p className="text-gray-300 leading-relaxed">
-                    Many of these cultivars are extinct in native regions due to hybridization and climate change. 
-                    We're preserving fire genetics through seed banking and careful phenotype selection.
-                  </p>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
+                  <Leaf className="h-6 w-6 text-battles-gold" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Living Soil + LED Spectrum</h3>
+                  <p className="text-gray-300">Our living soil beds maintain native terroir while full-spectrum LEDs replicate equatorial sun cycles for true sativa expressions.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-battles-gold/20 rounded-lg flex items-center justify-center">
+                  <Sun className="h-6 w-6 text-battles-gold" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-battles-gold mb-2">Genetic Conservation</h3>
+                  <p className="text-gray-300">Many cultivars are extinct in native regions. We're preserving fire genetics through seed banking and careful phenotype selection.</p>
                 </div>
               </div>
             </div>
+            
             <div className="bg-black p-8 rounded-lg border border-battles-gold/20">
-              <h3 className="text-2xl font-semibold text-battles-gold mb-6 text-center">What You're Getting</h3>
+              <h3 className="text-2xl font-semibold text-battles-gold mb-6 text-center">Product Specifications</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center py-2 border-b border-gray-800">
                   <span className="text-gray-300">THC Content</span>
@@ -629,38 +541,17 @@ export default function HeirloomFlowerPage() {
                   <span className="text-battles-gold font-semibold">3-8%</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-800">
-                  <span className="text-gray-300">Cultivation Method</span>
+                  <span className="text-gray-300">Cultivation</span>
                   <span className="text-battles-gold font-semibold">Organic No-Till</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-800">
                   <span className="text-gray-300">Flowering Time</span>
-                  <span className="text-battles-gold font-semibold">12+ Weeks</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-800">
-                  <span className="text-gray-300">Format</span>
-                  <span className="text-battles-gold font-semibold">Pre-rolls & Blunts</span>
+                  <span className="text-battles-gold font-semibold">12-20 Weeks</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
                   <span className="text-gray-300">Batch Size</span>
                   <span className="text-battles-gold font-semibold">50 Plants Only</span>
                 </div>
-              </div>
-              
-              <div className="mt-8 pt-6 border-t border-gray-800">
-                <p className="text-center text-gray-400 mb-4">Ready to secure your spot?</p>
-                <form onSubmit={handleEmailSubmit} className="space-y-3">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-gray-800 border-battles-gold/30 text-white placeholder-gray-400"
-                    required
-                  />
-                  <Button type="submit" className="w-full bg-battles-gold text-battles-black hover:bg-yellow-400 font-semibold">
-                    Get Priority Access
-                  </Button>
-                </form>
               </div>
             </div>
           </div>
@@ -686,27 +577,12 @@ export default function HeirloomFlowerPage() {
           </div>
           
           <div className="mt-12 text-center">
-            <div className="bg-battles-gold/10 border border-battles-gold/30 rounded-lg p-6 mb-8">
+            <div className="bg-battles-gold/10 border border-battles-gold/30 rounded-lg p-6">
               <h3 className="text-xl font-semibold text-battles-gold mb-3">Limited Time: Early Bird Benefits</h3>
-              <p className="text-gray-300 mb-4">
-                Join the waitlist in the next 72 hours and receive an exclusive cultivation report plus 15% off your first order.
+              <p className="text-gray-300">
+                Join the waitlist for exclusive cultivation reports and 15% off your first order.
               </p>
-              <div className="text-battles-gold font-semibold">247 spots remaining</div>
             </div>
-            
-            <form onSubmit={handleEmailSubmit} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
-              <Input
-                type="email"
-                placeholder="Enter your email for early access"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 bg-gray-800 border-battles-gold/30 text-white placeholder-gray-400 h-12"
-                required
-              />
-              <Button type="submit" className="bg-battles-gold text-battles-black hover:bg-yellow-400 font-semibold h-12 px-8">
-                Secure My Spot
-              </Button>
-            </form>
           </div>
         </div>
       </section>
@@ -722,11 +598,10 @@ export default function HeirloomFlowerPage() {
           </div>
           
           <h2 className="text-4xl md:text-5xl font-playfair font-bold text-battles-gold mb-6">
-            Don't Miss Cannabis History
+            Secure Your Cannabis History
           </h2>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join 247+ connoisseurs securing priority access to authentic landrace genetics. 
-            These strains may never be available again.
+            Authentic landrace genetics from legendary regions. Limited cultivation ensures exclusivity.
           </p>
           
           {isSubscribed ? (
@@ -746,27 +621,6 @@ export default function HeirloomFlowerPage() {
             </div>
           ) : (
             <div className="max-w-lg mx-auto">
-              <div className="bg-battles-gold/10 border border-battles-gold/30 rounded-lg p-6 mb-6">
-                <h3 className="text-xl font-semibold text-battles-gold mb-3">Exclusive Waitlist Benefits</h3>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="text-center">
-                    <div className="text-battles-gold font-bold">48 Hours</div>
-                    <div className="text-gray-400">Early Access</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-battles-gold font-bold">15% Off</div>
-                    <div className="text-gray-400">First Purchase</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-battles-gold font-bold">Updates</div>
-                    <div className="text-gray-400">Cultivation Process</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-battles-gold font-bold">Guaranteed</div>
-                    <div className="text-gray-400">Allocation</div>
-                  </div>
-                </div>
-              </div>
               
               <form onSubmit={handleEmailSubmit} className="space-y-4">
                 <Input
