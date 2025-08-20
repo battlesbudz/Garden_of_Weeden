@@ -18,7 +18,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       <SEOHead
         title="Battles Budz Cannabis Dispensary Gloversville NY - Veteran Owned Premium Cannabis"
         description="Battles Budz - Premier veteran-owned cannabis dispensary in Gloversville, NY. Premium cannabis flower, edibles, vapes and consumption lounge. Founded by U.S. Military Veteran Justin Battles."
