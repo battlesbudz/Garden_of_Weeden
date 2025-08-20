@@ -12,7 +12,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center text-center overflow-hidden pt-16 bg-gray-50"
+      className="relative min-h-screen flex items-center justify-center text-center overflow-hidden pt-16 bg-black"
     >
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Logo */}
@@ -30,13 +30,13 @@ export default function HeroSection() {
             Crafting Community
           </span>
           <br />
-          <span className="text-battles-black mt-2 inline-block">
+          <span className="text-white mt-2 inline-block">
             and Cannabis
           </span>
         </h1>
 
         {/* Supporting text */}
-        <p className="text-lg md:text-xl lg:text-2xl mb-10 max-w-3xl mx-auto font-light text-battles-gray animate-fade-in-up animation-delay-200">
+        <p className="text-lg md:text-xl lg:text-2xl mb-10 max-w-3xl mx-auto font-light text-gray-300 animate-fade-in-up animation-delay-200">
           Veteran-owned premium cannabis cultivation, processing, and consumption
           experiences in the heart of New York's Mohawk Valley.
         </p>
