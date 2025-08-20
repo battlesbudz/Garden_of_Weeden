@@ -12,10 +12,10 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center text-center overflow-hidden pt-16"
+      className="relative min-h-screen flex items-center justify-center text-center overflow-hidden pt-16 bg-black"
     >
       {/* Solid gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-battles-black via-gray-900 to-battles-black" />
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
       
       {/* Subtle pattern overlay for texture */}
       <div className="absolute inset-0 opacity-10">
@@ -36,7 +36,7 @@ export default function HeroSection() {
 
         {/* New Tagline */}
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold mb-8 animate-fade-in-up">
-          <span className="bg-gradient-to-r from-battles-gold via-yellow-400 to-battles-gold bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 bg-clip-text text-transparent">
             Crafting Community
           </span>
           <br />
@@ -55,13 +55,13 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400">
           <button
             onClick={() => scrollToSection("retail")}
-            className="bg-gradient-to-r from-battles-gold to-yellow-400 text-battles-black px-10 py-4 rounded-lg font-semibold text-lg hover:shadow-lg hover:shadow-battles-gold/30 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
+            className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-black px-10 py-4 rounded-lg font-semibold text-lg hover:shadow-lg hover:shadow-yellow-500/30 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
           >
             Explore Products
           </button>
           <button
             onClick={() => scrollToSection("newsletter")}
-            className="border-2 border-battles-gold text-battles-gold px-10 py-4 rounded-lg font-semibold text-lg hover:bg-battles-gold hover:text-battles-black hover:shadow-lg hover:shadow-battles-gold/30 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
+            className="border-2 border-yellow-500 text-yellow-500 px-10 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-500 hover:text-black hover:shadow-lg hover:shadow-yellow-500/30 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
           >
             Get Launch Updates
           </button>
@@ -69,7 +69,7 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-battles-gold animate-bounce">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-yellow-500 animate-bounce">
         <ChevronDown className="h-8 w-8" />
       </div>
     </section>
