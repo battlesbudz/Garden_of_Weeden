@@ -12,27 +12,41 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-black -mt-16"
+      className="relative min-h-screen flex flex-col items-center justify-center text-center bg-black -mt-16"
+      style={{ margin: 0, padding: 0 }}
     >
-      <div className="relative z-10 w-full">
+      <div className="relative z-10 w-screen" style={{ margin: 0, padding: 0 }}>
         {/* Logo */}
-        <div className="animate-fade-in">
+        <div className="animate-fade-in" style={{ margin: 0, padding: 0 }}>
           <img
             src={logoPath}
             alt="Battles Budz Logo"
             className="w-full h-auto drop-shadow-2xl block"
-            style={{ margin: 0, padding: 0 }}
+            style={{ 
+              margin: 0, 
+              padding: 0,
+              display: 'block',
+              width: '100vw',
+              maxWidth: 'none'
+            }}
           />
         </div>
 
         {/* New Tagline */}
-        <div className="animate-fade-in-up px-4" style={{ marginTop: '-20px' }}>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold mb-8">
+        <div 
+          className="animate-fade-in-up px-4" 
+          style={{ 
+            marginTop: '-5px',
+            margin: '0',
+            padding: '0 16px'
+          }}
+        >
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold mb-8" style={{ margin: 0, lineHeight: 1 }}>
             <span className="text-battles-gold">
               Crafting Community
             </span>
             <br />
-            <span className="text-white mt-2 inline-block">
+            <span className="text-white inline-block">
               and Cannabis
             </span>
           </h1>
