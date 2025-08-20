@@ -12,8 +12,8 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-start text-center bg-black -mt-96"
-      style={{ margin: 0, padding: 0 }}
+      className="relative min-h-screen flex flex-col items-center justify-start text-center bg-black"
+      style={{ margin: 0, padding: 0, marginTop: '-150vh' }}
     >
       <div className="relative z-10 w-screen" style={{ margin: 0, padding: 0 }}>
         {/* Logo */}
