@@ -37,7 +37,7 @@ export default function HeroSection() {
         <div 
           className="animate-fade-in-up px-4" 
           style={{ 
-            marginTop: '-150px',
+            marginTop: '-160px',
             padding: '0 16px'
           }}
         >
