@@ -12,20 +12,21 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-black"
+      className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-black -mt-16"
     >
-      <div className="relative z-10 w-full px-2">
+      <div className="relative z-10 w-full">
         {/* Logo */}
         <div className="animate-fade-in">
           <img
             src={logoPath}
             alt="Battles Budz Logo"
-            className="w-full h-auto drop-shadow-2xl"
+            className="w-full h-auto drop-shadow-2xl block"
+            style={{ margin: 0, padding: 0 }}
           />
         </div>
 
         {/* New Tagline */}
-        <div className="animate-fade-in-up" style={{ marginTop: '-10px' }}>
+        <div className="animate-fade-in-up px-4" style={{ marginTop: '-20px' }}>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold mb-8">
             <span className="text-battles-gold">
               Crafting Community
