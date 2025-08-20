@@ -12,18 +12,23 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center text-center bg-black overflow-hidden"
-      style={{ paddingTop: '80px' }}
+      className="relative min-h-screen flex flex-col items-center justify-start text-center bg-black"
+      style={{ margin: 0, padding: 0, marginTop: '-100px' }}
     >
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
+      <div className="relative z-10 w-screen" style={{ margin: 0, padding: 0 }}>
         {/* Logo */}
-        <div className="animate-fade-in flex justify-center">
+        <div className="animate-fade-in" style={{ margin: 0, padding: 0 }}>
           <img
             src={logoPath}
             alt="Battles Budz Logo"
-            className="drop-shadow-2xl block w-full max-w-2xl h-auto"
+            className="drop-shadow-2xl block"
             style={{ 
-              display: 'block'
+              margin: 0, 
+              padding: 0,
+              display: 'block',
+              width: '150vw',
+              maxWidth: 'none',
+              transform: 'translateX(-25vw)'
             }}
           />
         </div>
@@ -32,10 +37,11 @@ export default function HeroSection() {
         <div 
           className="animate-fade-in-up px-4" 
           style={{ 
-            marginTop: '-60px'
+            marginTop: '-180px',
+            padding: '0 16px'
           }}
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold mb-8" style={{ lineHeight: 1 }}>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold mb-8" style={{ margin: 0, lineHeight: 1 }}>
             <span className="text-battles-gold">
               Crafting Community
             </span>

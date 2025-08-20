@@ -50,16 +50,16 @@ export default function Navigation() {
 
   return (
     <nav
-      className="fixed w-full top-0 z-50 bg-black border-b border-yellow-500/20 overflow-hidden"
+      className="fixed w-full top-0 z-50 bg-black border-b border-yellow-500/20"
       style={{ backgroundColor: '#000000' }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
             <img
               src={logoPath}
               alt="Battles Budz Logo"
-              className="h-12 w-auto"
+              className="h-28 w-auto"
             />
             <span className="ml-4 text-battles-gold font-bold text-xl flex items-center">
               BATTLES BUDZ
