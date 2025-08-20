@@ -21,13 +21,14 @@ export default function HeroSection() {
           <img
             src={logoPath}
             alt="Battles Budz Logo"
-            className="w-full h-auto drop-shadow-2xl block"
+            className="drop-shadow-2xl block"
             style={{ 
               margin: 0, 
               padding: 0,
               display: 'block',
-              width: '100vw',
-              maxWidth: 'none'
+              width: '120vw',
+              maxWidth: 'none',
+              transform: 'translateX(-10vw)'
             }}
           />
         </div>
