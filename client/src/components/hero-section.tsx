@@ -20,7 +20,7 @@ export default function HeroSection() {
           <img
             src={logoPath}
             alt="Battles Budz Logo"
-            className="h-48 md:h-64 lg:h-72 w-auto mx-auto drop-shadow-2xl"
+            className="h-80 md:h-96 lg:h-[32rem] xl:h-[36rem] w-auto mx-auto drop-shadow-2xl max-w-full"
           />
         </div>
 
