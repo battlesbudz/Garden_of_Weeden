@@ -12,7 +12,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-start text-center bg-black -mt-64"
+      className="relative min-h-screen flex flex-col items-center justify-start text-center bg-black -mt-96"
       style={{ margin: 0, padding: 0 }}
     >
       <div className="relative z-10 w-screen" style={{ margin: 0, padding: 0 }}>
@@ -37,7 +37,7 @@ export default function HeroSection() {
         <div 
           className="animate-fade-in-up px-4" 
           style={{ 
-            marginTop: '-80px',
+            marginTop: '-120px',
             padding: '0 16px'
           }}
         >
