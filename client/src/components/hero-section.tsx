@@ -16,11 +16,11 @@ export default function HeroSection() {
     >
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <div className="mb-4 animate-fade-in">
+        <div className="animate-fade-in" style={{ marginBottom: '8px' }}>
           <img
             src={logoPath}
             alt="Battles Budz Logo"
-            className="h-96 md:h-[28rem] lg:h-[36rem] xl:h-[40rem] w-auto mx-auto drop-shadow-2xl max-w-full"
+            className="w-full h-auto mx-auto drop-shadow-2xl"
           />
         </div>
 
