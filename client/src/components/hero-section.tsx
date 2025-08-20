@@ -12,7 +12,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-start text-center bg-black -mt-32"
+      className="relative min-h-screen flex flex-col items-center justify-start text-center bg-black -mt-64"
       style={{ margin: 0, padding: 0 }}
     >
       <div className="relative z-10 w-screen" style={{ margin: 0, padding: 0 }}>
