@@ -23,12 +23,11 @@ export default function HeroSection() {
             alt="Battles Budz Logo"
             className="drop-shadow-2xl block"
             style={{ 
-              margin: 0, 
+              margin: '0 auto', 
               padding: 0,
               display: 'block',
               width: '100vw',
-              maxWidth: 'none',
-              transform: 'translateX(-25vw)'
+              maxWidth: 'none'
             }}
           />
         </div>
