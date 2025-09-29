@@ -23,7 +23,7 @@ export function LocationLinksFooter() {
           ))}
         </div>
         <p className="text-center text-gray-400 text-sm mt-4">
-          Veteran-owned cannabis dispensary serving Erie County, Niagara County, Monroe County, and Western New York
+          Veteran-owned cannabis dispensary serving Erie County, Niagara County, and Western New York suburbs
         </p>
       </div>
     </section>

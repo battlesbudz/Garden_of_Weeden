@@ -67,43 +67,6 @@ export const westernNYLocations: LocationSEOData[] = [
     priority: 1.0
   },
   {
-    slug: "rochester",
-    city: "Rochester",
-    county: "Monroe County", 
-    state: "NY",
-    zipCodes: ["14601", "14602", "14603", "14604", "14605"],
-    population: 211328,
-    demographics: "College town with tech professionals and diverse community",
-    distance: "75 miles from Buffalo",
-    seoTitle: "Cannabis Near Rochester NY - Battles Budz Dispensary 75 Miles Away",
-    seoDescription: "Premium cannabis dispensary serving Rochester, NY area. Battles Budz in Buffalo offers veteran-owned cannabis products, 75 miles from Rochester. Worth the drive for quality.",
-    keywords: [
-      "cannabis near Rochester NY",
-      "Rochester marijuana dispensary nearby",
-      "cannabis delivery Rochester NY",
-      "Monroe County cannabis shop",
-      "premium cannabis Rochester area"
-    ],
-    localCompetitors: ["Existing Rochester dispensaries"],
-    uniqueContent: {
-      intro: "Serving Rochester residents with premium veteran-owned cannabis, worth the scenic drive to Buffalo.",
-      benefits: [
-        "1.5 hour drive to premium cannabis experience",
-        "Veteran-owned business supporting local veterans",
-        "Educational programs for Rochester cannabis newcomers",
-        "Higher quality than mass-market dispensaries"
-      ],
-      localFacts: [
-        "University town with growing cannabis acceptance",
-        "Tech hub with professionals seeking premium products",
-        "Strong connection to Western NY cannabis culture"
-      ],
-      callToAction: "Join our mailing list for Rochester area updates and grand opening announcements."
-    },
-    lastModified: "2025-01-07",
-    priority: 0.8
-  },
-  {
     slug: "niagara-falls",
     city: "Niagara Falls",
     county: "Niagara County",
@@ -176,42 +139,160 @@ export const westernNYLocations: LocationSEOData[] = [
     priority: 0.6
   },
   {
-    slug: "jamestown",
-    city: "Jamestown",
-    county: "Chautauqua County", 
+    slug: "cheektowaga",
+    city: "Cheektowaga",
+    county: "Erie County",
     state: "NY",
-    zipCodes: ["14701", "14702"],
-    population: 28712,
-    demographics: "Small city, working-class community, rural WNY character",
-    distance: "65 miles from Buffalo",
-    seoTitle: "Cannabis Tourism Jamestown NY - Battles Budz Veteran-Owned Dispensary Experience",
-    seoDescription: "Jamestown cannabis tourism destination. Experience veteran-owned Battles Budz dispensary in Buffalo. Premium cannabis and consumption lounge worth the scenic drive through WNY.",
+    zipCodes: ["14225", "14227", "14211"],
+    population: 88226,
+    demographics: "Large suburban community, diverse working families, strong veteran presence",
+    distance: "10 miles from Buffalo",
+    seoTitle: "Cannabis Dispensary Near Cheektowaga NY - Battles Budz Premium Cannabis",
+    seoDescription: "Premium cannabis dispensary serving Cheektowaga, NY area. Battles Budz in Buffalo offers veteran-owned cannabis products, 10 miles from Cheektowaga. Quick drive for quality.",
     keywords: [
-      "cannabis tourism Jamestown NY",
-      "Jamestown cannabis day trip",
-      "veteran owned dispensary near Jamestown",
-      "premium cannabis Jamestown area",
-      "Chautauqua County cannabis"
+      "cannabis near Cheektowaga NY",
+      "Cheektowaga marijuana dispensary nearby",
+      "veteran owned dispensary Cheektowaga",
+      "Erie County cannabis shop",
+      "Buffalo suburbs cannabis"
     ],
-    localCompetitors: ["Limited local options"],
+    localCompetitors: ["Chain dispensaries", "Corporate cannabis stores"],
     uniqueContent: {
-      intro: "Jamestown's cannabis tourists discover authentic veteran-owned experiences at Battles Budz - a scenic 1-hour drive to premium cannabis and consumption lounge.",
+      intro: "Cheektowaga residents enjoy premium veteran-owned cannabis just 15 minutes away in downtown Buffalo.",
       benefits: [
-        "Cannabis tourism destination with consumption lounge",
-        "Authentic veteran-owned business story",
-        "Educational cannabis experiences for rural WNY users",
-        "Premium products for discerning users",
-        "Scenic drive through beautiful Western NY"
+        "Quick 15-minute drive to premium cannabis",
+        "Personal service from veteran owner Justin Battles",
+        "Supporting local veteran entrepreneurship",
+        "Educational cannabis programs for families",
+        "Consumption lounge for safe, social use"
       ],
       localFacts: [
-        "Rural WNY community seeking veteran-owned businesses",
-        "Growing cannabis tourism from Chautauqua County",
-        "Appreciation for authentic local cannabis businesses"
+        "Largest suburb in Erie County with 88,000+ residents",
+        "Strong veteran community seeking authentic businesses",
+        "Growing appreciation for premium cannabis quality",
+        "Easy access via Transit Road and Walden Avenue"
       ],
-      callToAction: "Plan your cannabis tourism trip from Jamestown to experience authentic veteran-owned cannabis at Battles Budz."
+      callToAction: "Experience veteran-owned cannabis quality at Battles Budz, serving your Cheektowaga community."
     },
     lastModified: "2025-01-07",
-    priority: 0.5
+    priority: 0.8
+  },
+  {
+    slug: "amherst",
+    city: "Amherst",
+    county: "Erie County",
+    state: "NY",
+    zipCodes: ["14226", "14221", "14228"],
+    population: 129200,
+    demographics: "Affluent college town, UB students and professionals, educated community",
+    distance: "15 miles from Buffalo",
+    seoTitle: "Cannabis Dispensary Near Amherst NY - Battles Budz University Premium Cannabis",
+    seoDescription: "Premium cannabis dispensary serving Amherst, NY and UB area. Battles Budz in Buffalo offers veteran-owned cannabis products, 15 miles from Amherst. Quality for discerning users.",
+    keywords: [
+      "cannabis near Amherst NY",
+      "Amherst marijuana dispensary nearby",
+      "UB cannabis dispensary",
+      "University Buffalo cannabis",
+      "premium cannabis Amherst NY"
+    ],
+    localCompetitors: ["University-area dispensaries", "Chain stores"],
+    uniqueContent: {
+      intro: "Amherst professionals and UB community discover premium veteran-owned cannabis experiences, just 20 minutes away in Buffalo.",
+      benefits: [
+        "20-minute drive to premium cannabis experience",
+        "Educational focus perfect for university community",
+        "Veteran-owned authenticity and quality standards",
+        "Consumption lounge for responsible social use",
+        "Premium products for discerning professionals"
+      ],
+      localFacts: [
+        "Home to University at Buffalo with 30,000+ students",
+        "Affluent community with highest educated demographics",
+        "Progressive attitudes toward cannabis wellness",
+        "Easy access via I-290 and Maple Road"
+      ],
+      callToAction: "Discover veteran-owned cannabis quality at Battles Budz - education and excellence combined."
+    },
+    lastModified: "2025-01-07",
+    priority: 0.7
+  },
+  {
+    slug: "west-seneca",
+    city: "West Seneca",
+    county: "Erie County",
+    state: "NY",
+    zipCodes: ["14224", "14206"],
+    population: 45920,
+    demographics: "Family-oriented suburban community, working professionals, strong local pride",
+    distance: "12 miles from Buffalo",
+    seoTitle: "Cannabis Dispensary Near West Seneca NY - Battles Budz Family-Friendly Cannabis",
+    seoDescription: "Premium cannabis dispensary serving West Seneca, NY families. Battles Budz in Buffalo offers veteran-owned cannabis products, 12 miles from West Seneca. Community-focused quality.",
+    keywords: [
+      "cannabis near West Seneca NY",
+      "West Seneca marijuana dispensary nearby",
+      "family friendly cannabis West Seneca",
+      "veteran owned dispensary West Seneca",
+      "Erie County cannabis"
+    ],
+    localCompetitors: ["Big box dispensaries", "Chain cannabis stores"],
+    uniqueContent: {
+      intro: "West Seneca families trust veteran-owned Battles Budz for premium cannabis experiences, just 18 minutes away in Buffalo.",
+      benefits: [
+        "18-minute drive to veteran-owned cannabis quality",
+        "Family-oriented educational approach",
+        "Community-focused business supporting local veterans",
+        "Safe consumption lounge environment",
+        "Personal service from neighborhood business owner"
+      ],
+      localFacts: [
+        "Strong family community with local business support",
+        "Growing acceptance of cannabis wellness benefits",
+        "Veteran community seeking authentic businesses",
+        "Easy access via Seneca Street and Route 400"
+      ],
+      callToAction: "Experience community-focused veteran-owned cannabis at Battles Budz, serving West Seneca families."
+    },
+    lastModified: "2025-01-07",
+    priority: 0.7
+  },
+  {
+    slug: "orchard-park",
+    city: "Orchard Park",
+    county: "Erie County",
+    state: "NY",
+    zipCodes: ["14127", "14224"],
+    population: 29054,
+    demographics: "Affluent suburb, Bills fans, professionals and families, strong community pride",
+    distance: "20 miles from Buffalo",
+    seoTitle: "Cannabis Dispensary Near Orchard Park NY - Battles Budz Bills Country Cannabis",
+    seoDescription: "Premium cannabis dispensary serving Orchard Park, NY and Bills fans. Battles Budz in Buffalo offers veteran-owned cannabis products, 20 miles from Orchard Park. Game day quality.",
+    keywords: [
+      "cannabis near Orchard Park NY",
+      "Orchard Park marijuana dispensary nearby",
+      "Bills game cannabis",
+      "veteran owned dispensary Orchard Park",
+      "premium cannabis Bills country"
+    ],
+    localCompetitors: ["Highpoint dispensaries", "Chain stores"],
+    uniqueContent: {
+      intro: "Orchard Park residents and Bills fans experience premium veteran-owned cannabis, just 25 minutes away in downtown Buffalo.",
+      benefits: [
+        "25-minute drive to premium cannabis quality",
+        "Perfect for Bills game day celebrations",
+        "Veteran-owned business with military precision",
+        "Consumption lounge for social game watching",
+        "Premium products for affluent community standards"
+      ],
+      localFacts: [
+        "Home of Buffalo Bills and passionate sports community",
+        "Affluent suburb with discerning consumer preferences",
+        "Strong veteran support and military appreciation",
+        "Easy access via Route 219 and Abbott Road"
+      ],
+      callToAction: "Experience championship-quality veteran-owned cannabis at Battles Budz - perfect for Bills Country."
+    },
+    lastModified: "2025-01-07",
+    priority: 0.6
   }
 ];
 
