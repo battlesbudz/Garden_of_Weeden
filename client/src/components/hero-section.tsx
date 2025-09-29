@@ -16,19 +16,19 @@ export default function HeroSection() {
     >
       <div className="relative z-10 w-screen" style={{ margin: 0, padding: 0 }}>
         {/* Logo */}
-        <div className="animate-fade-in flex justify-center px-4 pt-16 pb-4">
+        <div className="animate-fade-in flex justify-center px-4 pt-8 pb-1">
           <img
             src={logoPath}
             alt="Battles Budz Logo"
-            className="drop-shadow-2xl w-full max-w-md md:max-w-lg lg:max-w-xl h-auto"
+            className="drop-shadow-2xl w-full max-w-lg md:max-w-xl lg:max-w-2xl h-auto"
           />
         </div>
 
         {/* New Tagline */}
         <div 
-          className="animate-fade-in-up px-4 mt-8" 
+          className="animate-fade-in-up px-4 mt-2" 
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold mb-8" style={{ margin: 0, lineHeight: 1 }}>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-playfair font-bold mb-3" style={{ margin: 0, lineHeight: 1 }}>
             <span className="text-battles-gold">
               Crafting Community
             </span>
@@ -40,7 +40,7 @@ export default function HeroSection() {
         </div>
 
         {/* Supporting text */}
-        <p className="text-lg md:text-xl lg:text-2xl mb-10 max-w-3xl mx-auto font-light text-gray-300 animate-fade-in-up animation-delay-200">
+        <p className="text-lg md:text-xl lg:text-2xl mb-4 max-w-3xl mx-auto font-light text-gray-300 animate-fade-in-up animation-delay-200">
           Veteran-owned premium cannabis cultivation, processing, and consumption
           experiences in the heart of Western New York.
         </p>
