@@ -289,7 +289,7 @@ export function UserGuideOverlay({ isOpen, onClose, onComplete }: UserGuideOverl
       </div>
       
       {/* Highlighting Styles */}
-      <style jsx global>{`
+      <style>{`
         .guide-highlight {
           position: relative;
           z-index: 51 !important;

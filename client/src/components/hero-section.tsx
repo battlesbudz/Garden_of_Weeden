@@ -55,7 +55,7 @@ export default function HeroSection() {
         {/* Supporting text */}
         <p className="text-lg md:text-xl lg:text-2xl mb-10 max-w-3xl mx-auto font-light text-gray-300 animate-fade-in-up animation-delay-200">
           Veteran-owned premium cannabis cultivation, processing, and consumption
-          experiences in the heart of New York's Mohawk Valley.
+          experiences in the heart of Western New York.
         </p>
 
         {/* CTA Buttons */}

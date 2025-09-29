@@ -70,7 +70,7 @@ export default function VideoHeroSection({
 
         <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light">
           Veteran-owned premium cannabis cultivation, processing, and consumption
-          experiences in the heart of New York's Mohawk Valley.
+          experiences in the heart of Western New York.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

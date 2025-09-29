@@ -11,7 +11,7 @@ export default function AboutSection() {
     {
       icon: Heart,
       title: "Community-Focused",
-      description: "Building connections and supporting our local Mohawk Valley community.",
+      description: "Building connections and supporting our local Western New York community.",
     },
     {
       icon: Leaf,
