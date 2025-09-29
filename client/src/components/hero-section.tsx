@@ -26,9 +26,9 @@ export default function HeroSection() {
               margin: 0, 
               padding: 0,
               display: 'block',
-              width: '150vw',
+              width: '50vw',
               maxWidth: 'none',
-              transform: 'translateX(-25vw)'
+              transform: 'translateX(-8vw)'
             }}
           />
         </div>
