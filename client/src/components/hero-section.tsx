@@ -13,33 +13,20 @@ export default function HeroSection() {
     <section
       id="home"
       className="relative min-h-screen flex flex-col items-center justify-start text-center bg-black overflow-x-hidden"
-      style={{ margin: 0, padding: 0, marginTop: '-100px' }}
     >
       <div className="relative z-10 w-screen" style={{ margin: 0, padding: 0 }}>
         {/* Logo */}
-        <div className="animate-fade-in" style={{ margin: 0, padding: 0 }}>
+        <div className="animate-fade-in flex justify-center px-4 pt-16 pb-4">
           <img
             src={logoPath}
             alt="Battles Budz Logo"
-            className="drop-shadow-2xl block"
-            style={{ 
-              margin: 0, 
-              padding: 0,
-              display: 'block',
-              width: '120vw',
-              maxWidth: 'none',
-              transform: 'translateX(-10vw)'
-            }}
+            className="drop-shadow-2xl w-full max-w-md md:max-w-lg lg:max-w-xl h-auto"
           />
         </div>
 
         {/* New Tagline */}
         <div 
-          className="animate-fade-in-up px-4" 
-          style={{ 
-            marginTop: '-180px',
-            padding: '0 16px'
-          }}
+          className="animate-fade-in-up px-4 mt-8" 
         >
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold mb-8" style={{ margin: 0, lineHeight: 1 }}>
             <span className="text-battles-gold">
