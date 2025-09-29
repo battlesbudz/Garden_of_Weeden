@@ -3,16 +3,16 @@
 export const SITE_CONFIG = {
   name: "Battles Budz",
   tagline: "Premium Cannabis Experience",
-  description: "Premium cannabis cultivation, processing, and consumption experiences in Gloversville, NY. Veteran-owned microbusiness offering retail cannabis, consumption lounge, and educational events.",
+  description: "Premium cannabis cultivation, processing, and consumption experiences in Buffalo, NY. Veteran-owned microbusiness offering retail cannabis, consumption lounge, and educational events.",
   url: import.meta.env.VITE_SITE_URL || "https://battlesbudz.replit.app",
   businessName: "Battles Budz LLC",
   location: {
-    city: "Gloversville",
+    city: "Buffalo",
     state: "NY",
-    address: "Gloversville, NY 12078",
+    address: "333 Franklin St, Buffalo NY, 14202",
     coordinates: {
-      latitude: 43.0534,
-      longitude: -74.3434
+      latitude: 42.8864,
+      longitude: -78.8784
     }
   },
   contact: {
@@ -143,26 +143,26 @@ export function getBreadcrumbSchema(breadcrumbs: Array<{ name: string; url: stri
 // Cannabis-specific keywords by page type
 export const CANNABIS_KEYWORDS = {
   home: [
-    "cannabis dispensary Gloversville NY",
-    "premium cannabis Gloversville",
+    "cannabis dispensary Buffalo NY",
+    "premium cannabis Buffalo",
     "veteran owned cannabis business",
     "consumption lounge New York",
     "cannabis cultivation NY",
     "cannabis processing facility",
-    "legal cannabis Gloversville",
+    "legal cannabis Buffalo",
     "cannabis retail store",
     "cannabis education classes",
     "cannabis community events"
   ],
   shop: [
-    "buy cannabis Gloversville",
+    "buy cannabis Buffalo",
     "cannabis products NY",
     "premium cannabis flower",
     "cannabis edibles",
     "cannabis vapes",
     "cannabis concentrates",
     "legal cannabis purchase",
-    "cannabis delivery Gloversville",
+    "cannabis delivery Buffalo",
     "cannabis merchandise",
     "cannabis accessories"
   ],
@@ -179,7 +179,7 @@ export const CANNABIS_KEYWORDS = {
     "cannabis business education"
   ],
   community: [
-    "cannabis community Gloversville",
+    "cannabis community Buffalo",
     "cannabis events NY",
     "cannabis meetups",
     "cannabis discussion forum",
