@@ -13,27 +13,27 @@ export default function SchemaMarkup({ type }: SchemaMarkupProps) {
           "@type": ["Organization", "LocalBusiness"],
           "name": "Battles Budz LLC",
           "alternateName": "Battles Budz",
-          "description": "Veteran-owned cannabis microbusiness offering premium cannabis cultivation, processing, and consumption experiences in Gloversville, New York.",
+          "description": "Veteran-owned cannabis microbusiness offering premium cannabis cultivation, processing, and consumption experiences in Buffalo, New York.",
           "url": "https://battlesbudz.replit.app",
           "logo": "https://battlesbudz.replit.app/logo.png",
           "image": "https://battlesbudz.replit.app/og-image.jpg",
           "address": {
             "@type": "PostalAddress",
-            "addressLocality": "Gloversville",
+            "addressLocality": "Buffalo",
             "addressRegion": "NY",
             "addressCountry": "US"
           },
           "geo": {
             "@type": "GeoCoordinates",
-            "latitude": "43.0534",
-            "longitude": "-74.3493"
+            "latitude": "42.8864",
+            "longitude": "-78.8784"
           },
           "areaServed": {
             "@type": "GeoCircle",
             "geoMidpoint": {
               "@type": "GeoCoordinates",
-              "latitude": "43.0534",
-              "longitude": "-74.3493"
+              "latitude": "42.8864",
+              "longitude": "-78.8784"
             },
             "geoRadius": "50000"
           },
@@ -50,7 +50,7 @@ export default function SchemaMarkup({ type }: SchemaMarkupProps) {
             "cannabis cultivation", 
             "consumption lounge",
             "premium cannabis",
-            "Gloversville NY",
+            "Buffalo NY",
             "New York cannabis",
             "cannabis microbusiness",
             "cannabis retail",
@@ -60,8 +60,8 @@ export default function SchemaMarkup({ type }: SchemaMarkupProps) {
             "@type": "GeoCircle",
             "geoMidpoint": {
               "@type": "GeoCoordinates", 
-              "latitude": "43.0534",
-              "longitude": "-74.3493"
+              "latitude": "42.8864",
+              "longitude": "-78.8784"
             },
             "geoRadius": "80000"
           },

@@ -27,13 +27,13 @@ export default function Footer() {
             </div>
             <p className="text-gray-400 mb-4 max-w-md">
               Premium cannabis cultivation, processing, and consumption
-              experiences in Gloversville, New York. Veteran-owned and
+              experiences in Buffalo, New York. Veteran-owned and
               community-focused.
             </p>
             <div className="text-gray-400 space-y-2">
               <p className="flex items-center">
                 <MapPin className="text-battles-gold mr-2 h-4 w-4" />
-                Gloversville, NY 12078
+                333 Franklin St, Buffalo NY, 14202
               </p>
               <p className="flex items-center">
                 <Mail className="text-battles-gold mr-2 h-4 w-4" />
@@ -117,7 +117,7 @@ export default function Footer() {
       
       <div className="bg-black py-4 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400 text-sm">
-          <p>&copy; 2025 Battles Budz LLC. All rights reserved. | Veteran-Owned Cannabis Business | Gloversville, NY</p>
+          <p>&copy; 2025 Battles Budz LLC. All rights reserved. | Veteran-Owned Cannabis Business | Buffalo, NY</p>
         </div>
       </div>
     </footer>

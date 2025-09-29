@@ -7,18 +7,18 @@ export default function AboutBattlesBudzPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <SEOHead
-        title="About Battles Budz - Veteran-Owned Cannabis Dispensary Gloversville NY"
-        description="Learn about Battles Budz, the premier veteran-owned cannabis dispensary coming to Gloversville, NY. Founded by U.S. Military Veteran Justin Battles, offering premium cannabis products and consumption lounge experiences."
+        title="About Battles Budz - Veteran-Owned Cannabis Dispensary Buffalo NY"
+        description="Learn about Battles Budz, the premier veteran-owned cannabis dispensary coming to Buffalo, NY. Founded by U.S. Military Veteran Justin Battles, offering premium cannabis products and consumption lounge experiences."
         keywords={[
           "Battles Budz",
           "Justin Battles veteran",
           "veteran owned cannabis business",
-          "Gloversville NY cannabis dispensary",
+          "Buffalo NY cannabis dispensary",
           "battles budz cannabis story", 
           "military veteran cannabis entrepreneur",
           "cannabis microbusiness New York",
           "veteran cannabis dispensary",
-          "Gloversville cannabis business"
+          "Buffalo cannabis business"
         ]}
         canonicalUrl={getCanonicalUrl("/about-battles-budz")}
         ogType="website"
@@ -46,7 +46,7 @@ export default function AboutBattlesBudzPage() {
               About <span className="text-battles-gold">Battles Budz</span>
             </h1>
             <p className="text-xl text-gray-300 mb-8">
-              The story of a U.S. Military Veteran bringing premium cannabis experiences to Gloversville, New York
+              The story of a U.S. Military Veteran bringing premium cannabis experiences to Buffalo, New York
             </p>
           </div>
         </section>
@@ -68,10 +68,10 @@ export default function AboutBattlesBudzPage() {
                   with service-related challenges.
                 </p>
                 <p className="text-gray-300 mb-6 text-lg leading-relaxed">
-                  Recognizing the need for a premium, veteran-focused cannabis experience in Central New York, 
+                  Recognizing the need for a premium, veteran-focused cannabis experience in Western New York, 
                   Justin established <strong className="text-battles-gold">Battles Budz LLC</strong> as a 
                   microbusiness dedicated to cultivation, processing, retail, and consumption lounge operations 
-                  in Gloversville, NY.
+                  in Buffalo, NY.
                 </p>
               </div>
             </div>
@@ -93,7 +93,7 @@ export default function AboutBattlesBudzPage() {
                   <h3 className="text-xl font-semibold text-battles-gold mb-4">For the Community</h3>
                   <p className="text-gray-300 mb-4">
                     Bringing legal, regulated cannabis products and educational experiences to 
-                    Gloversville and the broader Central New York region.
+                    Buffalo and the broader Western New York region.
                   </p>
                 </div>
               </div>
@@ -121,7 +121,7 @@ export default function AboutBattlesBudzPage() {
                   <ul className="text-gray-300 space-y-2">
                     <li>• <strong>Business Name:</strong> Battles Budz LLC</li>
                     <li>• <strong>Owner:</strong> Justin Battles (U.S. Veteran)</li>
-                    <li>• <strong>Location:</strong> Gloversville, NY 12078</li>
+                    <li>• <strong>Location:</strong> 333 Franklin St, Buffalo NY, 14202</li>
                     <li>• <strong>License Type:</strong> Cannabis Microbusiness</li>
                     <li>• <strong>Status:</strong> Pre-Launch Development</li>
                     <li>• <strong>Expected Opening:</strong> 2025</li>
@@ -133,18 +133,18 @@ export default function AboutBattlesBudzPage() {
             {/* Location Section */}
             <div className="bg-gray-900 rounded-lg p-8 mb-12">
               <h2 className="text-3xl font-playfair font-bold text-battles-gold mb-6">
-                Why Gloversville, New York?
+                Why Buffalo, New York?
               </h2>
               <p className="text-gray-300 mb-6 text-lg leading-relaxed">
-                <strong className="text-battles-gold">Gloversville, NY</strong> represents the heart of 
-                Central New York's growing cannabis market. As a veteran-owned business, Battles Budz 
+                <strong className="text-battles-gold">Buffalo, NY</strong> represents the heart of 
+                Western New York's growing cannabis market. As a veteran-owned business, Battles Budz 
                 chose this location to serve both the local community and veterans throughout the region 
                 who deserve access to premium cannabis products and education.
               </p>
               <p className="text-gray-300 text-lg leading-relaxed">
-                Our planned <strong className="text-battles-gold">cannabis dispensary in Gloversville</strong> will 
+                Our planned <strong className="text-battles-gold">cannabis dispensary in Buffalo</strong> will 
                 feature a consumption lounge, educational center, and retail space designed to create a 
-                premium cannabis experience unlike anything currently available in Central New York.
+                premium cannabis experience unlike anything currently available in Western New York.
               </p>
             </div>
 
@@ -162,7 +162,7 @@ export default function AboutBattlesBudzPage() {
                   Email: battlesbudz@gmail.com
                 </p>
                 <p className="text-gray-400">
-                  Follow our journey as we bring premium cannabis to Gloversville, NY
+                  Follow our journey as we bring premium cannabis to Buffalo, NY
                 </p>
               </div>
             </div>

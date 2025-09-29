@@ -7,19 +7,19 @@ export default function KeywordLandingPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <SEOHead
-        title="Battles Buds Cannabis Gloversville - Veteran Gloversville Cannabis Dispensary"
-        description="Battles Buds cannabis dispensary in Gloversville, NY. Veteran-owned cannabis business by Justin Battles. Premium cannabis products and consumption lounge coming to Central New York."
+        title="Battles Buds Cannabis Buffalo - Veteran Buffalo Cannabis Dispensary"
+        description="Battles Buds cannabis dispensary in Buffalo, NY. Veteran-owned cannabis business by Justin Battles. Premium cannabis products and consumption lounge coming to Western New York."
         keywords={[
-          "battles buds cannabis gloversville",
-          "veteran gloversville cannabis",
-          "battles budz gloversville",
+          "battles buds cannabis buffalo",
+          "veteran buffalo cannabis",
+          "battles budz buffalo",
           "justin battles cannabis",
-          "gloversville cannabis veteran",
-          "veteran owned cannabis gloversville ny",
+          "buffalo cannabis veteran",
+          "veteran owned cannabis buffalo ny",
           "battles buds dispensary",
-          "cannabis dispensary gloversville new york"
+          "cannabis dispensary buffalo new york"
         ]}
-        canonicalUrl={getCanonicalUrl("/battles-buds-cannabis-gloversville")}
+        canonicalUrl={getCanonicalUrl("/battles-buds-cannabis-buffalo")}
         ogType="website"
       />
       <Navigation />
@@ -30,23 +30,23 @@ export default function KeywordLandingPage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-playfair font-bold mb-6">
               <span className="text-battles-gold">Battles Buds Cannabis</span><br />
-              Gloversville, NY
+              Buffalo, NY
             </h1>
             <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-300">
               Veteran-Owned Cannabis Dispensary <span className="text-battles-gold">Opening 2025</span>
             </h2>
             <p className="text-xl text-gray-300 mb-8">
               Founded by U.S. Military Veteran Justin Battles, bringing premium cannabis 
-              experiences to Gloversville and Central New York
+              experiences to Buffalo and Western New York
             </p>
             <div className="bg-battles-gold/10 border border-battles-gold/30 rounded-lg p-6 max-w-2xl mx-auto">
               <h3 className="text-xl font-semibold text-battles-gold mb-4">
-                Veteran Gloversville Cannabis Business
+                Veteran Buffalo Cannabis Business
               </h3>
               <p className="text-gray-300">
                 <strong>Battles Buds</strong> (also known as Battles Budz) is a veteran-owned 
                 cannabis microbusiness bringing legal cannabis retail, consumption lounge, 
-                and educational experiences to Gloversville, New York.
+                and educational experiences to Buffalo, New York.
               </p>
             </div>
           </div>
@@ -73,7 +73,7 @@ export default function KeywordLandingPage() {
                   </div>
                   <div>
                     <strong className="text-battles-gold">Location:</strong>
-                    <p className="text-gray-300">Gloversville, New York 12078</p>
+                    <p className="text-gray-300">333 Franklin St, Buffalo NY, 14202</p>
                   </div>
                   <div>
                     <strong className="text-battles-gold">Business Type:</strong>
@@ -98,13 +98,13 @@ export default function KeywordLandingPage() {
                     the unique needs of veterans seeking cannabis alternatives.
                   </p>
                   <p className="text-gray-300">
-                    This <strong className="text-battles-gold">veteran Gloversville cannabis</strong> business 
+                    This <strong className="text-battles-gold">veteran Buffalo cannabis</strong> business 
                     is specifically designed to serve fellow veterans and the broader community 
                     with premium, safe, and legal cannabis products.
                   </p>
                   <p className="text-gray-300">
                     As a <strong className="text-battles-gold">veteran-owned cannabis business</strong> in 
-                    Central New York, Battles Buds represents military values of service, 
+                    Western New York, Battles Buds represents military values of service, 
                     integrity, and excellence in everything we do.
                   </p>
                 </div>
@@ -148,18 +148,18 @@ export default function KeywordLandingPage() {
         <section className="py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-playfair font-bold text-battles-gold mb-8">
-              Cannabis in Gloversville, New York
+              Cannabis in Buffalo, New York
             </h2>
             <div className="bg-gray-900 rounded-lg p-8">
               <p className="text-gray-300 mb-6 text-lg leading-relaxed">
-                <strong className="text-battles-gold">Battles Buds cannabis Gloversville</strong> will be 
-                the premier destination for legal cannabis in Central New York. Our 
-                <strong className="text-battles-gold"> veteran Gloversville cannabis</strong> dispensary 
+                <strong className="text-battles-gold">Battles Buds cannabis Buffalo</strong> will be 
+                the premier destination for legal cannabis in Western New York. Our 
+                <strong className="text-battles-gold"> veteran Buffalo cannabis</strong> dispensary 
                 will serve adults 21+ with premium products and educational experiences.
               </p>
               <p className="text-gray-300 mb-6 text-lg leading-relaxed">
                 As the first <strong className="text-battles-gold">veteran-owned cannabis dispensary</strong> in 
-                the Gloversville area, we're committed to bringing safe, legal, and premium 
+                the Buffalo area, we're committed to bringing safe, legal, and premium 
                 cannabis products to our community while honoring our military heritage.
               </p>
               <div className="bg-battles-gold/10 border border-battles-gold/30 rounded-lg p-6">
@@ -167,7 +167,7 @@ export default function KeywordLandingPage() {
                   Stay Updated on Our Launch
                 </h3>
                 <p className="text-gray-300 mb-4">
-                  Be the first to know when Battles Buds cannabis opens in Gloversville, NY
+                  Be the first to know when Battles Buds cannabis opens in Buffalo, NY
                 </p>
                 <p className="text-battles-gold font-semibold">
                   Email: battlesbudz@gmail.com

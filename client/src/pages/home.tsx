@@ -20,21 +20,21 @@ export default function Home() {
   return (
     <div className="min-h-screen overflow-x-hidden">
       <SEOHead
-        title="Battles Budz Cannabis Dispensary Gloversville NY - Veteran Owned Premium Cannabis"
-        description="Battles Budz - Premier veteran-owned cannabis dispensary in Gloversville, NY. Premium cannabis flower, edibles, vapes and consumption lounge. Founded by U.S. Military Veteran Justin Battles."
+        title="Battles Budz Cannabis Dispensary Buffalo NY - Veteran Owned Premium Cannabis"
+        description="Battles Budz - Premier veteran-owned cannabis dispensary in Buffalo, NY. Premium cannabis flower, edibles, vapes and consumption lounge. Founded by U.S. Military Veteran Justin Battles."
         keywords={[
           "Battles Budz",
           "battles buds cannabis",
-          "cannabis dispensary Gloversville NY",
-          "veteran owned cannabis Gloversville",
-          "Gloversville cannabis dispensary",
+          "cannabis dispensary Buffalo NY",
+          "veteran owned cannabis Buffalo",
+          "Buffalo cannabis dispensary",
           "veteran cannabis New York",
           "Justin Battles cannabis",
-          "premium cannabis Gloversville",
+          "premium cannabis Buffalo",
           "cannabis consumption lounge NY",
           "New York cannabis microbusiness",
           "battles budz dispensary",
-          "gloversville marijuana dispensary",
+          "buffalo marijuana dispensary",
           "veteran owned dispensary NY"
         ]}
         canonicalUrl={getCanonicalUrl("/")}

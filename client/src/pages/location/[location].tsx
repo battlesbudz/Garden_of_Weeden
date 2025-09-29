@@ -3,7 +3,7 @@ import { Link } from 'wouter';
 import Navigation from '@/components/navigation';
 import SEOHead from '@/components/seo/SEOHead';
 import { getCanonicalUrl } from '@/utils/seo';
-import { getLocationSEO, getLocationStructuredData, centralNYLocations } from '@/data/locationSEO';
+import { getLocationSEO, getLocationStructuredData, westernNYLocations } from '@/data/locationSEO';
 import { MapPin, Clock, Phone, Car, Users, Star } from 'lucide-react';
 
 export default function LocationPage() {
@@ -125,8 +125,8 @@ export default function LocationPage() {
               <div className="bg-black rounded-lg p-6 text-center">
                 <MapPin className="h-12 w-12 text-battles-gold mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-battles-gold mb-2">Location</h3>
-                <p className="text-gray-300">Gloversville, NY</p>
-                <p className="text-gray-400 text-sm">{locationData.distance} from {locationData.city}</p>
+                <p className="text-gray-300">333 Franklin St, Buffalo NY, 14202</p>
+                <p className="text-gray-400 text-sm">Main dispensary location</p>
               </div>
               
               <div className="bg-black rounded-lg p-6 text-center">
@@ -175,7 +175,7 @@ export default function LocationPage() {
               Other Locations We Serve
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {centralNYLocations
+              {westernNYLocations
                 .filter(loc => loc.slug !== locationSlug)
                 .map((location) => (
                   <Link

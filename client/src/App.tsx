@@ -28,6 +28,7 @@ import TermsOfService from "./pages/terms-of-service";
 import AgeVerification from "./pages/age-verification";
 import KeywordLandingPage from "./pages/keyword-landing";
 import LocationPage from "./pages/location/[location]";
+import AboutBattlesBudzPage from "./pages/about-battles-budz";
 import { AgeVerificationModal } from "@/components/user-guide/age-verification-modal";
 import { QuickStartModal } from "@/components/user-guide/quick-start-modal";
 import { UserGuideOverlay } from "@/components/user-guide/user-guide-overlay";
@@ -67,12 +68,15 @@ function Router() {
         <Route path="/products/heirloom-flower" component={HeirloomFlowerPage} />
         
         {/* SEO Landing Pages */}
-        <Route path="/battles-buds-cannabis-gloversville" component={KeywordLandingPage} />
-        <Route path="/veteran-gloversville-cannabis" component={KeywordLandingPage} />
+        <Route path="/battles-buds-cannabis-buffalo" component={KeywordLandingPage} />
+        <Route path="/veteran-buffalo-cannabis" component={KeywordLandingPage} />
         <Route path="/justin-battles-cannabis" component={KeywordLandingPage} />
         
         {/* Location-Specific SEO Pages */}
         <Route path="/location/:location" component={LocationPage} />
+        
+        {/* About Page */}
+        <Route path="/about-battles-budz" component={AboutBattlesBudzPage} />
 
         <Route path="/enhanced-community" component={EnhancedCommunityPage} />
         <Route path="/privacy-policy" component={PrivacyPolicy} />

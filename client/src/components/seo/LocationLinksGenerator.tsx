@@ -1,5 +1,5 @@
 import { Link } from 'wouter';
-import { centralNYLocations } from '@/data/locationSEO';
+import { westernNYLocations } from '@/data/locationSEO';
 import { MapPin } from 'lucide-react';
 
 // Component to generate internal links for all locations - SEO boost
@@ -8,10 +8,10 @@ export function LocationLinksFooter() {
     <section className="bg-gray-900 py-8 border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h3 className="text-lg font-semibold text-battles-gold mb-4 text-center">
-          Cannabis Dispensary Serving Central New York
+          Cannabis Dispensary Serving Western New York
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {centralNYLocations.map((location) => (
+          {westernNYLocations.map((location) => (
             <Link
               key={location.slug}
               href={`/location/${location.slug}`}
@@ -23,7 +23,7 @@ export function LocationLinksFooter() {
           ))}
         </div>
         <p className="text-center text-gray-400 text-sm mt-4">
-          Veteran-owned cannabis dispensary serving Fulton County, Montgomery County, Albany County, and Schenectady County
+          Veteran-owned cannabis dispensary serving Erie County, Niagara County, Monroe County, and Western New York
         </p>
       </div>
     </section>

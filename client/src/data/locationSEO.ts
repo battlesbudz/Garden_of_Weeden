@@ -1,4 +1,4 @@
-// Location-based SEO data for Central NY cannabis market
+// Location-based SEO data for Western NY cannabis market
 // Following Reddit user's successful location-specific SEO strategy
 
 export interface LocationSEOData {
@@ -24,192 +24,191 @@ export interface LocationSEOData {
   priority: number;
 }
 
-export const centralNYLocations: LocationSEOData[] = [
+export const westernNYLocations: LocationSEOData[] = [
   {
-    slug: "gloversville",
-    city: "Gloversville",
-    county: "Fulton County",
+    slug: "buffalo",
+    city: "Buffalo",
+    county: "Erie County",
     state: "NY",
-    zipCodes: ["12078"],
-    population: 14740,
-    demographics: "Diverse community with growing veteran population",
+    zipCodes: ["14202"],
+    population: 278349,
+    demographics: "Diverse urban community with strong veteran population",
     distance: "0 miles",
-    seoTitle: "Battles Budz Cannabis Dispensary Gloversville NY - Veteran Owned Premium Cannabis",
-    seoDescription: "Premium cannabis dispensary in Gloversville, NY. Veteran-owned by Justin Battles, offering cannabis flower, edibles, vapes and consumption lounge. Serving Fulton County since 2025.",
+    seoTitle: "Battles Budz Cannabis Dispensary Buffalo NY - Veteran Owned Premium Cannabis",
+    seoDescription: "Premium cannabis dispensary in Buffalo, NY. Veteran-owned by Justin Battles, offering cannabis flower, edibles, vapes and consumption lounge. Serving Erie County since 2025.",
     keywords: [
-      "cannabis dispensary Gloversville NY",
-      "Gloversville marijuana dispensary", 
-      "veteran owned cannabis Gloversville",
-      "Battles Budz Gloversville",
-      "cannabis shop Fulton County NY",
-      "Gloversville weed dispensary",
-      "premium cannabis Gloversville"
+      "cannabis dispensary Buffalo NY",
+      "Buffalo marijuana dispensary", 
+      "veteran owned cannabis Buffalo",
+      "Battles Budz Buffalo",
+      "cannabis shop Erie County NY",
+      "Buffalo weed dispensary",
+      "premium cannabis Buffalo"
     ],
     localCompetitors: ["Traditional pharmacies", "Alcohol retailers"],
     uniqueContent: {
-      intro: "Gloversville's first veteran-owned cannabis dispensary, bringing premium cannabis experiences to Fulton County residents.",
+      intro: "Buffalo's first veteran-owned cannabis dispensary, bringing premium cannabis experiences to Western NY residents.",
       benefits: [
         "Local ownership by veteran Justin Battles",
-        "Walking distance from downtown Gloversville",
+        "Walking distance from downtown Buffalo",
         "Veteran-friendly environment and staff",
         "Educational cannabis programs for the community",
         "Consumption lounge for on-site enjoyment"
       ],
       localFacts: [
-        "Historic leather manufacturing city embracing cannabis innovation",
-        "Strong veteran community of over 800 local veterans",
-        "Central location serving all of Fulton County",
-        "Easy access from Routes 29 and 30A"
+        "Historic industrial city embracing cannabis innovation",
+        "Strong veteran community of over 15,000 local veterans",
+        "Central location serving all of Erie County",
+        "Easy access from I-90 and Route 33"
       ],
-      callToAction: "Be among the first to experience premium cannabis in Gloversville when we open in 2025."
+      callToAction: "Be among the first to experience premium cannabis in Buffalo when we open in 2025."
     },
     lastModified: "2025-01-07",
     priority: 1.0
   },
   {
-    slug: "johnstown",
-    city: "Johnstown",
-    county: "Fulton County", 
+    slug: "rochester",
+    city: "Rochester",
+    county: "Monroe County", 
     state: "NY",
-    zipCodes: ["12095"],
-    population: 8300,
-    demographics: "Working-class community, close-knit neighborhoods",
-    distance: "8 miles from Gloversville",
-    seoTitle: "Cannabis Near Johnstown NY - Battles Budz Dispensary 8 Miles Away",
-    seoDescription: "Closest premium cannabis dispensary to Johnstown, NY. Battles Budz in nearby Gloversville offers veteran-owned cannabis products just 8 miles away. Delivery available.",
+    zipCodes: ["14601", "14602", "14603", "14604", "14605"],
+    population: 211328,
+    demographics: "College town with tech professionals and diverse community",
+    distance: "75 miles from Buffalo",
+    seoTitle: "Cannabis Near Rochester NY - Battles Budz Dispensary 75 Miles Away",
+    seoDescription: "Premium cannabis dispensary serving Rochester, NY area. Battles Budz in Buffalo offers veteran-owned cannabis products, 75 miles from Rochester. Worth the drive for quality.",
     keywords: [
-      "cannabis near Johnstown NY",
-      "Johnstown marijuana dispensary nearby",
-      "cannabis delivery Johnstown NY",
-      "closest dispensary to Johnstown",
-      "Fulton County cannabis shop"
+      "cannabis near Rochester NY",
+      "Rochester marijuana dispensary nearby",
+      "cannabis delivery Rochester NY",
+      "Monroe County cannabis shop",
+      "premium cannabis Rochester area"
     ],
-    localCompetitors: [],
+    localCompetitors: ["Existing Rochester dispensaries"],
     uniqueContent: {
-      intro: "Serving Johnstown residents with the closest premium cannabis dispensary, just 8 miles away in Gloversville.",
+      intro: "Serving Rochester residents with premium veteran-owned cannabis, worth the scenic drive to Buffalo.",
       benefits: [
-        "Quick 15-minute drive to premium cannabis",
-        "Delivery service available to Johnstown area",
+        "1.5 hour drive to premium cannabis experience",
         "Veteran-owned business supporting local veterans",
-        "Educational programs for Johnstown cannabis newcomers"
+        "Educational programs for Rochester cannabis newcomers",
+        "Higher quality than mass-market dispensaries"
       ],
       localFacts: [
-        "Historic mill town with growing cannabis acceptance",
-        "Part of the greater Gloversville-Johnstown metro area",
-        "Strong veteran presence from local military families"
+        "University town with growing cannabis acceptance",
+        "Tech hub with professionals seeking premium products",
+        "Strong connection to Western NY cannabis culture"
       ],
-      callToAction: "Join our mailing list for Johnstown area delivery updates and grand opening announcements."
+      callToAction: "Join our mailing list for Rochester area updates and grand opening announcements."
     },
     lastModified: "2025-01-07",
     priority: 0.8
   },
   {
-    slug: "amsterdam",
-    city: "Amsterdam",
-    county: "Montgomery County",
+    slug: "niagara-falls",
+    city: "Niagara Falls",
+    county: "Niagara County",
     state: "NY", 
-    zipCodes: ["12010"],
-    population: 17800,
-    demographics: "Diverse urban community, young professionals",
-    distance: "18 miles from Gloversville",
-    seoTitle: "Cannabis Dispensary Near Amsterdam NY - Battles Budz Premium Cannabis",
-    seoDescription: "Premium cannabis dispensary serving Amsterdam, NY area. Battles Budz in Gloversville offers veteran-owned cannabis products, 18 miles from Amsterdam. Worth the drive for quality.",
+    zipCodes: ["14301", "14302", "14303", "14304"],
+    population: 48671,
+    demographics: "Tourist destination with local working community",
+    distance: "20 miles from Buffalo",
+    seoTitle: "Cannabis Dispensary Near Niagara Falls NY - Battles Budz Premium Cannabis",
+    seoDescription: "Premium cannabis dispensary serving Niagara Falls, NY area. Battles Budz in Buffalo offers veteran-owned cannabis products, 20 miles from Niagara Falls. Perfect for tourists and locals.",
     keywords: [
-      "cannabis near Amsterdam NY",
-      "Amsterdam marijuana dispensary nearby",
-      "Montgomery County cannabis",
-      "premium cannabis Amsterdam NY area"
+      "cannabis near Niagara Falls NY",
+      "Niagara Falls marijuana dispensary nearby",
+      "Niagara County cannabis",
+      "cannabis tourism Niagara Falls"
     ],
-    localCompetitors: ["Existing Amsterdam dispensaries"],
+    localCompetitors: ["Tourist-focused dispensaries"],
     uniqueContent: {
-      intro: "Amsterdam cannabis enthusiasts discover premium quality at Battles Budz, the veteran-owned dispensary worth the 25-minute drive.",
+      intro: "Niagara Falls cannabis enthusiasts and tourists discover authentic premium quality at Battles Budz, just 30 minutes away.",
       benefits: [
-        "Higher quality products than mass-market dispensaries",
+        "Easy 30-minute drive from Niagara Falls",
+        "Cannabis tourism experience with consumption lounge",
         "Veteran-owned authenticity and military precision",
-        "Educational consumption lounge experience",
-        "Personalized service you won't find in bigger stores"
+        "Perfect stop before or after visiting the Falls"
       ],
       localFacts: [
-        "Growing cannabis tourism destination",
-        "Young professional community embracing premium cannabis",
-        "Historic riverside city with modern cannabis attitudes"
+        "Major international tourist destination",
+        "Growing cannabis tourism market",
+        "Border city with diverse cannabis culture"
       ],
-      callToAction: "Experience the difference veteran-owned cannabis quality makes - plan your visit to Battles Budz."
+      callToAction: "Experience authentic veteran-owned cannabis during your Niagara Falls visit."
     },
     lastModified: "2025-01-07",
     priority: 0.7
   },
   {
-    slug: "schenectady",
-    city: "Schenectady", 
-    county: "Schenectady County",
+    slug: "tonawanda",
+    city: "Tonawanda", 
+    county: "Erie County",
     state: "NY",
-    zipCodes: ["12301", "12302", "12303", "12304", "12305", "12306", "12307", "12308", "12309"],
-    population: 65273,
-    demographics: "Urban area, college students, professionals",
-    distance: "35 miles from Gloversville",
-    seoTitle: "Premium Cannabis Alternative to Schenectady NY Dispensaries - Battles Budz",
-    seoDescription: "Skip crowded Schenectady dispensaries. Battles Budz offers premium veteran-owned cannabis experience 35 miles away. Quality over convenience - worth the drive for serious cannabis users.",
+    zipCodes: ["14150", "14151"],
+    population: 57961,
+    demographics: "Suburban community, working families, strong veteran presence",
+    distance: "15 miles from Buffalo",
+    seoTitle: "Cannabis Dispensary Near Tonawanda NY - Battles Budz Premium Cannabis",
+    seoDescription: "Premium cannabis dispensary serving Tonawanda, NY area. Battles Budz in Buffalo offers veteran-owned cannabis products, 15 miles from Tonawanda. Quick drive for quality.",
     keywords: [
-      "alternative to Schenectady dispensaries",
-      "premium cannabis near Schenectady",
-      "veteran owned dispensary Schenectady area",
-      "quality cannabis Schenectady NY"
+      "cannabis near Tonawanda NY",
+      "Tonawanda marijuana dispensary nearby",
+      "veteran owned dispensary Tonawanda",
+      "Erie County cannabis shop"
     ],
-    localCompetitors: ["CURALEAF", "Verilife", "MedMen"],
+    localCompetitors: ["Local dispensaries"],
     uniqueContent: {
-      intro: "Schenectady cannabis connoisseurs choose quality over convenience, making the drive to Battles Budz for premium veteran-owned cannabis.",
+      intro: "Tonawanda residents enjoy easy access to premium veteran-owned cannabis, just 20 minutes away in Buffalo.",
       benefits: [
-        "Escape corporate cannabis chains",
+        "Quick 20-minute drive to premium cannabis",
         "Personal service from veteran owner Justin Battles",
-        "Premium products not available in mass-market stores",
         "Educational consumption lounge experience",
-        "Supporting veteran entrepreneurship"
+        "Supporting local veteran entrepreneurship"
       ],
       localFacts: [
-        "Union College students and faculty seek quality cannabis",
-        "Growing appreciation for craft cannabis over corporate",
-        "Strong veteran community values supporting veteran businesses"
+        "Suburban WNY community embracing cannabis culture",
+        "Growing appreciation for veteran-owned businesses",
+        "Strong connection to Buffalo cannabis scene"
       ],
-      callToAction: "Join Schenectady cannabis enthusiasts who choose quality over convenience at Battles Budz."
+      callToAction: "Experience veteran-owned cannabis quality at Battles Budz, your local WNY dispensary."
     },
     lastModified: "2025-01-07",
     priority: 0.6
   },
   {
-    slug: "albany",
-    city: "Albany",
-    county: "Albany County", 
+    slug: "jamestown",
+    city: "Jamestown",
+    county: "Chautauqua County", 
     state: "NY",
-    zipCodes: ["12201", "12202", "12203", "12204", "12205", "12206", "12207", "12208", "12209", "12210"],
-    population: 97478,
-    demographics: "State capital, government workers, diverse urban population",
-    distance: "45 miles from Gloversville",
-    seoTitle: "Cannabis Tourism Albany NY - Battles Budz Veteran-Owned Dispensary Experience",
-    seoDescription: "Albany cannabis tourism destination. Experience veteran-owned Battles Budz dispensary 45 miles away. Premium cannabis and consumption lounge worth the scenic drive from NY's capital.",
+    zipCodes: ["14701", "14702"],
+    population: 28712,
+    demographics: "Small city, working-class community, rural WNY character",
+    distance: "65 miles from Buffalo",
+    seoTitle: "Cannabis Tourism Jamestown NY - Battles Budz Veteran-Owned Dispensary Experience",
+    seoDescription: "Jamestown cannabis tourism destination. Experience veteran-owned Battles Budz dispensary in Buffalo. Premium cannabis and consumption lounge worth the scenic drive through WNY.",
     keywords: [
-      "cannabis tourism Albany NY",
-      "Albany cannabis day trip",
-      "veteran owned dispensary near Albany",
-      "premium cannabis Albany area",
-      "cannabis consumption lounge Albany"
+      "cannabis tourism Jamestown NY",
+      "Jamestown cannabis day trip",
+      "veteran owned dispensary near Jamestown",
+      "premium cannabis Jamestown area",
+      "Chautauqua County cannabis"
     ],
-    localCompetitors: ["CURALEAF Albany", "Verilife Albany", "Fine Fettle"],
+    localCompetitors: ["Limited local options"],
     uniqueContent: {
-      intro: "Albany's cannabis tourists discover authentic veteran-owned experiences at Battles Budz - a scenic hour drive to premium cannabis and consumption lounge.",
+      intro: "Jamestown's cannabis tourists discover authentic veteran-owned experiences at Battles Budz - a scenic 1-hour drive to premium cannabis and consumption lounge.",
       benefits: [
         "Cannabis tourism destination with consumption lounge",
         "Authentic veteran-owned business story",
-        "Educational cannabis experiences for state workers",
-        "Premium products for discerning Albany professionals",
-        "Scenic drive through beautiful Central NY"
+        "Educational cannabis experiences for rural WNY users",
+        "Premium products for discerning users",
+        "Scenic drive through beautiful Western NY"
       ],
       localFacts: [
-        "State government workers seeking veteran-owned businesses",
-        "Growing cannabis tourism from NY's capital region",
+        "Rural WNY community seeking veteran-owned businesses",
+        "Growing cannabis tourism from Chautauqua County",
         "Appreciation for authentic local cannabis businesses"
       ],
-      callToAction: "Plan your cannabis tourism trip from Albany to experience authentic veteran-owned cannabis at Battles Budz."
+      callToAction: "Plan your cannabis tourism trip from Jamestown to experience authentic veteran-owned cannabis at Battles Budz."
     },
     lastModified: "2025-01-07",
     priority: 0.5
@@ -218,7 +217,7 @@ export const centralNYLocations: LocationSEOData[] = [
 
 // Location-specific meta tag generation
 export function getLocationSEO(locationSlug: string): LocationSEOData | null {
-  return centralNYLocations.find(loc => loc.slug === locationSlug) || null;
+  return westernNYLocations.find(loc => loc.slug === locationSlug) || null;
 }
 
 // Generate location-based structured data

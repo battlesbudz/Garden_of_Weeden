@@ -154,7 +154,7 @@ export default function Shop() {
     <div className="min-h-screen bg-black text-white">
       <SEOHead
         title={getPageTitle("Cannabis Shop - Premium Products")}
-        description="Shop premium cannabis products at Battles Budz. Browse our selection of cannabis flower, edibles, vapes, and beverages. Legal cannabis dispensary in Gloversville, NY."
+        description="Shop premium cannabis products at Battles Budz. Browse our selection of cannabis flower, edibles, vapes, and beverages. Legal cannabis dispensary in Buffalo, NY."
         keywords={CANNABIS_KEYWORDS.shop}
         canonicalUrl={getCanonicalUrl("/shop")}
         ogType="website"
