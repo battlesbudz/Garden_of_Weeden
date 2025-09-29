@@ -225,7 +225,7 @@ export default function InvestorPortal() {
   const businessStats = {
     licenseStatus: "Provisional - Approved",
     licenseNumber: "OCMMICR-2023-000258",
-    location: "19 North Main Street, Gloversville, NY",
+    location: "333 Franklin St, Buffalo, NY 14202",
     fundingRound: "$1M for 10% equity",
     capitalRaised: "Funding in progress",
     nextMilestone: "Site approval completion"
@@ -453,7 +453,7 @@ export default function InvestorPortal() {
                     </div>
                     <div className="border-l-4 border-yellow-500 pl-4">
                       <h4 className="font-semibold text-white">Premium Facility Secured</h4>
-                      <p className="text-sm text-gray-300">7,600 sq ft in Gloversville, NY</p>
+                      <p className="text-sm text-gray-300">7,600 sq ft in Buffalo, NY</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -570,7 +570,7 @@ export default function InvestorPortal() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <p className="text-gray-300 text-sm">
-                      <strong>19 North Main Street, Gloversville, NY</strong>
+                      <strong>333 Franklin St, Buffalo, NY 14202</strong>
                     </p>
                     <div className="space-y-2 text-gray-300 text-sm">
                       <p>• 7,600 sq ft facility with dedicated areas for:</p>
@@ -670,7 +670,7 @@ export default function InvestorPortal() {
                     </div>
                     <div className="border-l-4 border-blue-500 pl-4">
                       <p className="font-medium text-gray-200">Site Selection Confirmed</p>
-                      <p className="text-sm text-gray-400">19 North Main Street, Gloversville, NY</p>
+                      <p className="text-sm text-gray-400">333 Franklin St, Buffalo, NY 14202</p>
                     </div>
                   </div>
                 </CardContent>
@@ -700,7 +700,7 @@ export default function InvestorPortal() {
                   <h4 className="font-semibold text-battles-gold mb-3">Business Model</h4>
                   <div className="space-y-4 text-gray-300">
                     <p>
-                      Battles Budz is a licensed cannabis microbusiness in Gloversville, NY. We are fully vertically integrated with cultivation, processing, retail, delivery, and on-site consumption all under one license.
+                      Battles Budz is a licensed cannabis microbusiness in Buffalo, NY. We are fully vertically integrated with cultivation, processing, retail, delivery, and on-site consumption all under one license.
                     </p>
                     
                     <div>
@@ -956,7 +956,7 @@ export default function InvestorPortal() {
                       <span className="text-sm text-gray-400">January 2025</span>
                     </div>
                     <p className="text-gray-300 mb-2">
-                      Secured location at 19 North Main Street, Gloversville, NY. Received first 
+                      Secured location at 333 Franklin St, Buffalo, NY 14202. Received first 
                       investor commitment and moving forward with site approval process. 
                       Working on GMP certification requirements.
                     </p>
@@ -1186,10 +1186,10 @@ export default function InvestorPortal() {
                         Secured Premium Facility
                       </h4>
                       <p className="text-gray-300 text-sm leading-relaxed">
-                        7,600 sq. ft. building secured in Gloversville, NY for cultivation, retail, processing, 
+                        7,600 sq. ft. building secured in Buffalo, NY for cultivation, retail, processing, 
                         and VIP consumption lounge operations.
                       </p>
-                      <Badge className="bg-blue-900 text-blue-300 mt-2">19 North Main Street</Badge>
+                      <Badge className="bg-blue-900 text-blue-300 mt-2">333 Franklin St, Buffalo</Badge>
                     </div>
 
                     <div className="border-l-4 border-yellow-500 pl-6 py-3">

@@ -44,13 +44,13 @@
 
   <!-- SEO Landing Pages - HIGH PRIORITY -->
   <url>
-    <loc>https://battlesbudz.replit.app/battles-buds-cannabis-gloversville</loc>
+    <loc>https://battlesbudz.replit.app/battles-buds-cannabis-buffalo</loc>
     <lastmod>2025-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://battlesbudz.replit.app/veteran-gloversville-cannabis</loc>
+    <loc>https://battlesbudz.replit.app/veteran-buffalo-cannabis</loc>
     <lastmod>2025-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
@@ -64,31 +64,31 @@
 
   <!-- Location-Specific Pages -->
   <url>
-    <loc>https://battlesbudz.replit.app/location/gloversville</loc>
+    <loc>https://battlesbudz.replit.app/location/buffalo</loc>
     <lastmod>2025-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://battlesbudz.replit.app/location/johnstown</loc>
+    <loc>https://battlesbudz.replit.app/location/rochester</loc>
     <lastmod>2025-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://battlesbudz.replit.app/location/amsterdam</loc>
+    <loc>https://battlesbudz.replit.app/location/niagara-falls</loc>
     <lastmod>2025-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://battlesbudz.replit.app/location/schenectady</loc>
+    <loc>https://battlesbudz.replit.app/location/tonawanda</loc>
     <lastmod>2025-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://battlesbudz.replit.app/location/albany</loc>
+    <loc>https://battlesbudz.replit.app/location/jamestown</loc>
     <lastmod>2025-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

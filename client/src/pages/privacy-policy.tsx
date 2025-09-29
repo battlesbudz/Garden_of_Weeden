@@ -70,7 +70,7 @@ export default function PrivacyPolicy() {
             <div className="text-gray-300">
               <p>Email: battlesbudz@gmail.com</p>
               <p>Phone: (904) 415-7635</p>
-              <p>Address: Gloversville, NY 12078</p>
+              <p>Address: 333 Franklin St, Buffalo, NY 14202</p>
             </div>
           </section>
         </div>

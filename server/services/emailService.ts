@@ -186,7 +186,7 @@ export async function sendExperienceBookingConfirmation(booking: any) {
               ${booking.message ? `<p><strong>Special Requests:</strong> ${booking.message}</p>` : ''}
             </div>
             
-            <p>We're excited to provide you with an exceptional cannabis tourism experience in New York's beautiful Mohawk Valley region!</p>
+            <p>We're excited to provide you with an exceptional cannabis tourism experience in Western New York!</p>
             
             <p><strong>Next Steps:</strong></p>
             <ul>
@@ -198,7 +198,7 @@ export async function sendExperienceBookingConfirmation(booking: any) {
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
             <p><strong>Battles Budz</strong></p>
             <p>📞 904-415-7635 | 📧 Battlesbudz@gmail.com</p>
-            <p>Premium Cannabis Tourism • Gloversville, NY</p>
+            <p>Premium Cannabis Tourism • Buffalo, NY</p>
           </div>
         </div>
       `

@@ -82,7 +82,7 @@ const quickStartOptions: QuickStartOption[] = [
   {
     id: 'location',
     title: 'Visit Our Location',
-    description: 'Learn about our Gloversville, NY location and cannabis tourism.',
+    description: 'Learn about our Buffalo, NY location and cannabis tourism.',
     icon: MapPin,
     action: 'Get Directions',
     color: 'bg-red-500/20 text-red-400 border-red-500/30',

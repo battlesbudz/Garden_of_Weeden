@@ -104,8 +104,8 @@ const guideSteps: GuideStep[] = [
   },
   {
     id: 'location',
-    title: 'Visit Us in Gloversville',
-    description: 'Located in the heart of New York\'s Mohawk Valley, we\'re your destination for authentic cannabis tourism.',
+    title: 'Visit Us in Buffalo',
+    description: 'Located in the heart of Western New York, we\'re your destination for authentic cannabis tourism.',
     element: '#about',
     position: 'top',
     icon: MapPin,
