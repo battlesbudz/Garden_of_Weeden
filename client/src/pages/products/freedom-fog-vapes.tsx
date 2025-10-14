@@ -53,7 +53,7 @@ export default function FreedomFogVapesPage() {
                 <span className="text-battles-gold">Freedom Fog</span> Vapes
               </h1>
               <p className="text-xl text-gray-300 mb-8">
-                Premium distillate vape cartridges with proprietary terpene blends for superior flavor and effects.
+                Premium vape cartridges with proprietary terpene blends for superior flavor and effects.
               </p>
             </div>
             <div className="flex justify-center">
@@ -72,7 +72,7 @@ export default function FreedomFogVapesPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-battles-gold mb-8 text-center">About Freedom Fog Vapes</h2>
           <p className="text-lg text-gray-300 leading-relaxed text-center">
-            Distillate vape cartridges made with proprietary terpene blends for smoother draws, enhanced flavor, 
+            Premium vape cartridges made with proprietary terpene blends for smoother draws, enhanced flavor, 
             and satisfying effects.
           </p>
         </div>
@@ -89,7 +89,7 @@ export default function FreedomFogVapesPage() {
             </div>
             <div className="text-center p-6 bg-gray-900 rounded-lg border border-battles-gold/20">
               <h3 className="text-xl font-semibold text-battles-gold mb-3">Infusion Type</h3>
-              <p className="text-gray-300">Distillate with proprietary terpenes</p>
+              <p className="text-gray-300">Proprietary terpene blend</p>
             </div>
             <div className="text-center p-6 bg-gray-900 rounded-lg border border-battles-gold/20">
               <h3 className="text-xl font-semibold text-battles-gold mb-3">Experience</h3>

@@ -513,7 +513,7 @@ export default function InvestorPortal() {
                     <div className="bg-gray-800 p-4 rounded-lg">
                       <h4 className="font-medium text-battles-gold mb-2">Freedom Fog Vapes</h4>
                       <p className="text-gray-300 text-sm leading-relaxed">
-                        Premium distillate vape line utilizing proprietary terpene ratio formulations to deliver enhanced flavor, smoother draw, and optimized effects. Positioned to capture share in the fastest-growing product category while maintaining superior unit economics.
+                        Premium vape line utilizing proprietary terpene ratio formulations to deliver enhanced flavor, smoother draw, and optimized effects. Positioned to capture share in the fastest-growing product category while maintaining superior unit economics.
                       </p>
                     </div>
                     
