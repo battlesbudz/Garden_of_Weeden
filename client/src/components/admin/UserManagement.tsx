@@ -106,6 +106,9 @@ export function UserManagement() {
                       <DialogContent className="max-w-2xl">
                         <DialogHeader>
                           <DialogTitle>Investor Access Request Details</DialogTitle>
+                          <DialogDescription>
+                            Review the complete information submitted by this investor
+                          </DialogDescription>
                         </DialogHeader>
                         {selectedRequest && (
                           <div className="space-y-4">

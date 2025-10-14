@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Navigation from "@/components/navigation";
 import InvestorAccessRequestForm from "@/components/investor-access-request-form";
 import SEOHead from "@/components/seo/SEOHead";
@@ -1708,6 +1708,9 @@ export default function InvestorPortal() {
             <div className="flex flex-col items-center text-center gap-4 mb-6">
               <img src={battlesLogo} alt="Battles Budz Logo" className="h-20 w-20 sm:h-24 sm:w-24 lg:h-28 lg:w-28 object-contain drop-shadow-2xl" />
               <DialogTitle className="text-black text-xl sm:text-2xl lg:text-3xl font-bold">Schedule a Meeting with Battles Budz</DialogTitle>
+              <DialogDescription className="sr-only">
+                Use the calendar below to schedule a meeting with the Battles Budz investment team
+              </DialogDescription>
             </div>
           </DialogHeader>
           <div className="flex-1 overflow-hidden">

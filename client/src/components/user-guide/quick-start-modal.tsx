@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -142,6 +142,9 @@ export function QuickStartModal({ isOpen, onClose, onStartTour, onOptionSelect }
                 Welcome to Battles Budz!
               </DialogTitle>
             </div>
+            <DialogDescription className="sr-only">
+              Choose how you would like to get started with Battles Budz or take our guided tour to explore all features.
+            </DialogDescription>
             <div className="flex gap-2">
               <Button
                 variant="outline"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Shield, Leaf } from 'lucide-react';
 
@@ -21,6 +21,9 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
       <DialogContent className="max-w-md bg-battles-black border-battles-gold/30 text-white" hideClose>
         <DialogHeader>
           <DialogTitle className="sr-only">Age Verification</DialogTitle>
+          <DialogDescription className="sr-only">
+            You must verify that you are 21 years or older to access this cannabis website as required by New York State law.
+          </DialogDescription>
         </DialogHeader>
         <div className="space-y-6 text-center">
           {/* Header */}
