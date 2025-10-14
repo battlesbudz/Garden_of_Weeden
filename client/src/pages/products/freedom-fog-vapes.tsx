@@ -82,14 +82,10 @@ export default function FreedomFogVapesPage() {
       <section className="py-16 bg-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-battles-gold mb-12 text-center">Key Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="text-center p-6 bg-gray-900 rounded-lg border border-battles-gold/20">
               <h3 className="text-xl font-semibold text-battles-gold mb-3">Format</h3>
               <p className="text-gray-300">1g cartridge</p>
-            </div>
-            <div className="text-center p-6 bg-gray-900 rounded-lg border border-battles-gold/20">
-              <h3 className="text-xl font-semibold text-battles-gold mb-3">Infusion Type</h3>
-              <p className="text-gray-300">Proprietary terpene blend</p>
             </div>
             <div className="text-center p-6 bg-gray-900 rounded-lg border border-battles-gold/20">
               <h3 className="text-xl font-semibold text-battles-gold mb-3">Experience</h3>
