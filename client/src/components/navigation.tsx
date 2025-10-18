@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X, User, ShoppingBag, LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,12 +8,26 @@ import logoPath from "@assets/BattlesBudz_Logo_1752301078028.png";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [location, setLocation] = useLocation();
   const { user, isAuthenticated, isAdmin } = useAuth();
 
+  // Debug auth state
+  console.log('Navigation - Auth State:', { user, isAuthenticated, isAdmin });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 100);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const navigateToSection = (sectionId: string) => {
+    // If we're not on the homepage, navigate there first
     if (location !== "/") {
       setLocation("/");
+      // Wait for navigation to complete, then scroll
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -21,6 +35,7 @@ export default function Navigation() {
         }
       }, 100);
     } else {
+      // We're already on homepage, just scroll
       const element = document.getElementById(sectionId);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
@@ -34,178 +49,191 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="fixed w-full top-0 z-50 bg-black border-b border-battles-gold/20">
+    <nav
+      className="fixed w-full top-0 z-50 bg-black border-b border-yellow-500/20"
+      style={{ backgroundColor: '#000000' }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity" data-testid="link-home">
+        <div className="flex justify-between items-center h-16">
+          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
             <img
               src={logoPath}
               alt="Battles Budz Logo"
-              className="h-32 w-auto"
+              className="h-28 w-auto"
             />
+            <span className="ml-4 text-battles-gold font-bold text-xl flex items-center">
+              BATTLES BUDZ
+            </span>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-1">
-            <Link href="/shop" data-testid="link-shop">
-              <Button
-                variant="ghost"
-                className="text-white hover:text-battles-gold hover:bg-battles-gold/10 font-semibold"
-              >
-                Shop Now
-              </Button>
-            </Link>
-
-            {/* User Menu */}
-            {isAuthenticated ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="text-battles-gold hover:text-battles-gold/80" data-testid="button-user-menu">
-                    <User className="h-5 w-5 mr-2" />
-                    {(user as any)?.email || (user as any)?.firstName || 'User'}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-gray-900 border-battles-gold/30">
-                  {isAdmin && (
-                    <>
-                      <DropdownMenuItem asChild>
-                        <Link href="/dashboard" className="flex items-center text-white hover:text-battles-gold cursor-pointer">
-                          <Settings className="h-4 w-4 mr-2" />
-                          Admin Dashboard
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <Link href="/investor-admin" className="flex items-center text-white hover:text-battles-gold cursor-pointer">
-                          <Settings className="h-4 w-4 mr-2" />
-                          Investor Admin
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator className="bg-battles-gold/30" />
-                    </>
-                  )}
-                  <DropdownMenuItem asChild>
-                    <Link href="/community" className="flex items-center text-white hover:text-battles-gold cursor-pointer">
-                      Community
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/investors" className="flex items-center text-white hover:text-battles-gold cursor-pointer">
-                      Investors
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator className="bg-battles-gold/30" />
-                  <DropdownMenuItem onClick={handleLogout} className="text-white hover:text-battles-gold cursor-pointer">
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Logout
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <a href="/api/login" data-testid="link-signin">
-                <Button className="bg-battles-gold hover:bg-battles-gold/90 text-black font-semibold">
-                  Sign In
-                </Button>
-              </a>
-            )}
-
-            {/* Mobile Menu Button */}
+          {/* Mobile menu button - Always visible with yellow styling */}
+          <div className="block">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
-              className="text-battles-gold hover:text-battles-gold/80"
-              data-testid="button-mobile-menu"
+              className="text-yellow-400 hover:text-yellow-300 border border-yellow-400 hover:border-yellow-300"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
 
-          {/* Mobile Menu Button (visible on mobile) */}
-          <div className="flex md:hidden items-center space-x-2">
-            {isAuthenticated && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-battles-gold" data-testid="button-mobile-user">
-                    <User className="h-5 w-5" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-gray-900 border-battles-gold/30">
-                  {isAdmin && (
-                    <>
-                      <DropdownMenuItem asChild>
-                        <Link href="/dashboard" className="flex items-center text-white hover:text-battles-gold cursor-pointer">
-                          <Settings className="h-4 w-4 mr-2" />
-                          Admin
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator className="bg-battles-gold/30" />
-                    </>
-                  )}
-                  <DropdownMenuItem onClick={handleLogout} className="text-white hover:text-battles-gold cursor-pointer">
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Logout
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-battles-gold border border-battles-gold hover:bg-battles-gold/10"
-              data-testid="button-mobile-menu-toggle"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Full Screen Mobile Menu */}
-      {isOpen && (
-        <div className="fixed inset-0 top-20 bg-black z-40 overflow-y-auto">
-          <div className="px-6 py-8 space-y-1">
-            {/* Primary Navigation */}
-            <div className="space-y-2 mb-8">
-              <h3 className="text-battles-gold font-bold text-sm uppercase tracking-wide mb-4">Shop All</h3>
-              <Link href="/shop" className="block text-white hover:text-battles-gold text-xl font-medium py-3" onClick={() => setIsOpen(false)} data-testid="link-mobile-shop">
-                Shop Now
+          <div className="hidden lg:block">
+            <div className="ml-10 flex items-baseline space-x-4">
+              <Link href="/" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Home
               </Link>
-            </div>
-
-            {/* Connect Section */}
-            <div className="space-y-2 mb-8 border-t border-battles-gold/20 pt-6">
-              <h3 className="text-battles-gold font-bold text-sm uppercase tracking-wide mb-4">Connect</h3>
-              <Link href="/community" className="block text-white hover:text-battles-gold text-lg py-2" onClick={() => setIsOpen(false)} data-testid="link-mobile-community">
+              <Link href="/community" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Community
               </Link>
               <button
                 onClick={() => navigateToSection("about")}
-                className="block text-white hover:text-battles-gold text-lg py-2 w-full text-left"
-                data-testid="button-mobile-about"
+                className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
-                About Us
+                About
+              </button>
+              <button
+                onClick={() => navigateToSection("retail")}
+                className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                Products
               </button>
               <button
                 onClick={() => navigateToSection("events")}
-                className="block text-white hover:text-battles-gold text-lg py-2 w-full text-left"
-                data-testid="button-mobile-events"
+                className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
                 Events
               </button>
-              <Link href="/investors" className="block text-white hover:text-battles-gold text-lg py-2" onClick={() => setIsOpen(false)} data-testid="link-mobile-investors">
+              <Link href="/shop" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                <ShoppingBag className="h-4 w-4 mr-1" />
+                Shop
+              </Link>
+              <Link href="/investors" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Investors
               </Link>
-            </div>
 
-            {/* Auth Section */}
-            {!isAuthenticated && (
-              <div className="border-t border-battles-gold/20 pt-6">
-                <a href="/api/login" className="block bg-battles-gold hover:bg-battles-gold/90 text-black text-center px-6 py-4 text-lg font-bold rounded-lg" data-testid="link-mobile-signin">
+              {/* Authentication Links */}
+              {isAuthenticated ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="text-battles-gold hover:text-battles-gold/80">
+                      <User className="h-4 w-4 mr-2" />
+                      {(user as any)?.email || (user as any)?.firstName || 'User'}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-gray-900 border-battles-gold/30">
+                    {isAdmin && (
+                      <>
+                        <DropdownMenuItem asChild>
+                          <Link href="/dashboard" className="flex items-center text-white hover:text-battles-gold">
+                            <Settings className="h-4 w-4 mr-2" />
+                            Admin Dashboard
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/investors" className="flex items-center text-white hover:text-battles-gold">
+                            <Settings className="h-4 w-4 mr-2" />
+                            Investor Portal
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/investor-admin" className="flex items-center text-white hover:text-battles-gold">
+                            <Settings className="h-4 w-4 mr-2" />
+                            Investor Admin
+                          </Link>
+                        </DropdownMenuItem>
+
+                        <DropdownMenuSeparator className="bg-battles-gold/30" />
+                      </>
+                    )}
+
+                    <DropdownMenuItem onClick={handleLogout} className="text-white hover:text-battles-gold">
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <a href="/api/login" className="bg-battles-gold hover:bg-battles-gold/90 text-black px-4 py-2 rounded-md text-sm font-semibold transition-colors">
                   Sign In
                 </a>
-              </div>
+              )}
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="block">
+          <div className="px-2 pt-2 pb-3 space-y-1 bg-battles-black border-t border-battles-gold">
+            <Link href="/" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
+              Home
+            </Link>
+            <Link href="/community" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
+              Community
+            </Link>
+            <button
+              onClick={() => navigateToSection("about")}
+              className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
+            >
+              About
+            </button>
+            <button
+              onClick={() => navigateToSection("retail")}
+              className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
+            >
+              Products
+            </button>
+            <button
+              onClick={() => navigateToSection("events")}
+              className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
+            >
+              Events
+            </button>
+            <Link href="/shop" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+              <ShoppingBag className="h-4 w-4 mr-2" />
+              Shop
+            </Link>
+            <Link href="/investors" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
+              Investors
+            </Link>
+            
+            {/* Mobile Auth */}
+            {isAuthenticated ? (
+              <>
+                {isAdmin && (
+                  <>
+                    <Link href="/dashboard" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+                      <Settings className="h-4 w-4 mr-2" />
+                      Admin Dashboard
+                    </Link>
+                    <Link href="/investors" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+                      <Settings className="h-4 w-4 mr-2" />
+                      Investor Portal
+                    </Link>
+                    <Link href="/investor-admin" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+                      <Settings className="h-4 w-4 mr-2" />
+                      Investor Admin
+                    </Link>
+
+                  </>
+                )}
+
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout ({(user as any)?.email || (user as any)?.firstName || 'User'})
+                </button>
+              </>
+            ) : (
+              <a href="/api/login" className="block bg-battles-gold hover:bg-battles-gold/90 text-black px-3 py-2 text-base font-semibold w-full text-center rounded">
+                Sign In
+              </a>
             )}
           </div>
         </div>
