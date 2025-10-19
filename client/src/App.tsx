@@ -51,7 +51,7 @@ function Router() {
     <>
       <SkipNavigation />
       <ScrollToTop />
-      <main id="main-content" role="main">
+      <main id="main-content" role="main" tabIndex={-1}>
         <Switch>
           <Route path="/" component={Home} />
         <Route path="/login" component={LoginPage} />

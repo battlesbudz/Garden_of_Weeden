@@ -72,12 +72,11 @@ export default function RetailSection() {
                 </h3>
                 <p className="text-gray-300 mb-4">{product.description}</p>
                 <div className="flex items-center justify-center">
-                  <Link href={product.route}>
-                    <span 
-                      className="text-battles-gold font-semibold hover:text-yellow-400 transition-colors cursor-pointer border-b border-battles-gold/30 hover:border-battles-gold pb-1"
-                      role="link"
-                      aria-label={`Learn more about ${product.name} and join the waitlist`}
-                    >
+                  <Link 
+                    href={product.route}
+                    aria-label={`Learn more about ${product.name} and join the waitlist`}
+                  >
+                    <span className="text-battles-gold font-semibold hover:text-yellow-400 transition-colors cursor-pointer border-b border-battles-gold/30 hover:border-battles-gold pb-1">
                       Learn More & Join Waitlist →
                     </span>
                   </Link>
