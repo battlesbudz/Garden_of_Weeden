@@ -47,13 +47,12 @@ export function OCMWarning({ className = "", topPlacement = false }: OCMWarningP
   return (
     <div 
       className={`ocm-warning-container ${className}`}
-      role="alert"
-      aria-live="polite"
-      aria-atomic="true"
       data-testid="ocm-warning-container"
     >
       <div 
         className="ocm-warning-box"
+        role="region"
+        aria-label="New York Office of Cannabis Management health warnings"
         style={{
           backgroundColor: '#fff300',
           border: '2px solid #000',
@@ -78,11 +77,14 @@ export function OCMWarning({ className = "", topPlacement = false }: OCMWarningP
           {GENERAL_SAFETY_WARNING}
         </p>
 
-        {/* Rotating Health Warning - Per §129.2(d) */}
+        {/* Rotating Health Warning - Per §129.2(d) with live region for screen readers */}
         <p 
           className="ocm-rotating-warning"
           data-testid="ocm-rotating-warning"
-          aria-label={`Health warning: ${rotatingWarning}`}
+          aria-live="polite"
+          aria-atomic="true"
+          role="status"
+          aria-label="Rotating health warning"
         >
           {rotatingWarning}
         </p>
@@ -143,12 +145,15 @@ export function OCMFooterWarning() {
           {GENERAL_SAFETY_WARNING}
         </p>
 
-        {/* Rotating Health Warning */}
+        {/* Rotating Health Warning with live region for screen readers */}
         <p 
           className="ocm-rotating-warning"
           style={{ marginBottom: '12px' }}
           data-testid="ocm-footer-rotating-warning"
-          aria-label={`Health warning: ${rotatingWarning}`}
+          aria-live="polite"
+          aria-atomic="true"
+          role="status"
+          aria-label="Rotating health warning"
         >
           {rotatingWarning}
         </p>

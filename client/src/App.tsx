@@ -34,6 +34,7 @@ import { QuickStartModal } from "@/components/user-guide/quick-start-modal";
 import { UserGuideOverlay } from "@/components/user-guide/user-guide-overlay";
 import { HelpButton } from "@/components/user-guide/help-button";
 import { useUserGuide } from "@/hooks/useUserGuide";
+import SkipNavigation from "@/components/accessibility/SkipNavigation";
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -48,9 +49,11 @@ function ScrollToTop() {
 function Router() {
   return (
     <>
+      <SkipNavigation />
       <ScrollToTop />
-      <Switch>
-        <Route path="/" component={Home} />
+      <main id="main-content" role="main">
+        <Switch>
+          <Route path="/" component={Home} />
         <Route path="/login" component={LoginPage} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/shop" component={Shop} />
@@ -84,6 +87,7 @@ function Router() {
         <Route path="/age-verification" component={AgeVerification} />
         <Route component={NotFound} />
       </Switch>
+      </main>
     </>
   );
 }
