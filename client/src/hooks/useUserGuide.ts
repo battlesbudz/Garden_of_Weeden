@@ -52,8 +52,13 @@ export function useUserGuide() {
   };
 
   const handleAgeDenied = () => {
-    // Redirect to age-appropriate page or show denial message
-    window.location.href = 'https://www.google.com';
+    // Per NY OCM regulations: redirect under-21 users away from cannabis content
+    // Clear any age verification data to prevent bypass
+    localStorage.removeItem('ageVerified');
+    localStorage.removeItem('ageVerifiedDate');
+    
+    // Redirect to NY OCM consumer education site
+    window.location.href = 'https://cannabis.ny.gov/consumers';
   };
 
   const handleQuickStartClose = () => {

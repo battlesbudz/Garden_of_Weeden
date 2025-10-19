@@ -1,6 +1,7 @@
 import { MapPin, Mail, Phone, AlertTriangle } from "lucide-react";
 import logoPath from "@assets/BattlesBudz_Logo_1752301078028.png";
 import { LocationLinksFooter } from '@/components/seo/LocationLinksGenerator';
+import { OCMFooterWarning } from '@/components/OCMWarning';
 
 export default function Footer() {
   const scrollToSection = (sectionId: string) => {
@@ -18,10 +19,11 @@ export default function Footer() {
             <div className="flex items-center mb-4">
               <img
                 src={logoPath}
-                alt="Battles Budz Logo"
+                alt="Battles Budz Logo - Premium Cannabis Dispensary"
                 className="h-8 w-auto mr-3"
+                data-testid="footer-logo"
               />
-              <span className="text-battles-gold font-bold text-xl">
+              <span className="text-battles-gold font-bold text-xl" data-testid="footer-brand-name">
                 BATTLES BUDZ
               </span>
             </div>
@@ -31,17 +33,21 @@ export default function Footer() {
               community-focused.
             </p>
             <div className="text-gray-400 space-y-2">
-              <p className="flex items-center">
-                <MapPin className="text-battles-gold mr-2 h-4 w-4" />
-                333 Franklin St, Buffalo NY, 14202
+              <p className="flex items-center" data-testid="footer-address">
+                <MapPin className="text-battles-gold mr-2 h-4 w-4" aria-hidden="true" />
+                <span>333 Franklin St, Buffalo NY, 14202</span>
               </p>
-              <p className="flex items-center">
-                <Mail className="text-battles-gold mr-2 h-4 w-4" />
-                battlesbudz@gmail.com
+              <p className="flex items-center" data-testid="footer-email">
+                <Mail className="text-battles-gold mr-2 h-4 w-4" aria-hidden="true" />
+                <a href="mailto:battlesbudz@gmail.com" className="hover:text-battles-gold transition-colors">
+                  battlesbudz@gmail.com
+                </a>
               </p>
-              <p className="flex items-center">
-                <Phone className="text-battles-gold mr-2 h-4 w-4" />
-                (904) 415-7635
+              <p className="flex items-center" data-testid="footer-phone">
+                <Phone className="text-battles-gold mr-2 h-4 w-4" aria-hidden="true" />
+                <a href="tel:+19044157635" className="hover:text-battles-gold transition-colors">
+                  (904) 415-7635
+                </a>
               </p>
             </div>
           </div>
@@ -61,6 +67,8 @@ export default function Footer() {
                   <button
                     onClick={() => scrollToSection(item.id)}
                     className="hover:text-battles-gold transition-colors"
+                    data-testid={`footer-link-${item.id}`}
+                    aria-label={`Navigate to ${item.label} section`}
                   >
                     {item.label}
                   </button>
@@ -73,17 +81,32 @@ export default function Footer() {
             <h4 className="text-battles-gold font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <a href="/privacy-policy" className="hover:text-battles-gold transition-colors">
+                <a 
+                  href="/privacy-policy" 
+                  className="hover:text-battles-gold transition-colors"
+                  data-testid="footer-link-privacy"
+                  aria-label="View Privacy Policy"
+                >
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="/terms-of-service" className="hover:text-battles-gold transition-colors">
+                <a 
+                  href="/terms-of-service" 
+                  className="hover:text-battles-gold transition-colors"
+                  data-testid="footer-link-terms"
+                  aria-label="View Terms of Service"
+                >
                   Terms of Service
                 </a>
               </li>
               <li>
-                <a href="/age-verification" className="hover:text-battles-gold transition-colors">
+                <a 
+                  href="/age-verification" 
+                  className="hover:text-battles-gold transition-colors"
+                  data-testid="footer-link-age-verification"
+                  aria-label="View Age Verification Policy"
+                >
                   Age Verification
                 </a>
               </li>
@@ -92,22 +115,14 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8">
-          <div className="bg-yellow-900 border border-battles-gold rounded-lg p-4 mb-6">
-            <h5 className="text-battles-gold font-semibold mb-2 flex items-center">
-              <AlertTriangle className="mr-2 h-4 w-4" />
-              Legal Disclaimer
-            </h5>
-            <p className="text-yellow-100 text-sm">
-              Battles Budz LLC operates under New York State Adult-Use Microbusiness License 
-              OCMMICR-2023-000258. Must be 21+ to purchase cannabis products.
-              Cannabis products have not been analyzed or approved by the FDA.
-              Please consume responsibly.
-            </p>
+          {/* OCM Compliance Warning - Required by NY OCM Regulations */}
+          <div className="mb-6">
+            <OCMFooterWarning />
           </div>
 
           <div className="flex flex-col sm:flex-row justify-between items-center text-gray-400 text-sm">
-            <p>&copy; 2024 Battles Budz USA. All rights reserved.</p>
-            <p className="mt-2 sm:mt-0">Veteran-Owned Cannabis Business</p>
+            <p data-testid="footer-copyright">&copy; 2025 Battles Budz LLC. All rights reserved.</p>
+            <p className="mt-2 sm:mt-0" data-testid="footer-veteran-badge">Veteran-Owned Cannabis Business</p>
           </div>
         </div>
       </div>

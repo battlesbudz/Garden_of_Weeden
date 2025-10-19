@@ -13,6 +13,24 @@ A sophisticated cannabis industry digital platform designed to streamline invest
 
 ## Recent Changes
 
+### NY OCM Compliance & WCAG 2.1 AA Accessibility Implementation (2025-01-19)
+- **OCM Regulatory Compliance**: Implemented full 9 NYCRR Parts 128 & 129 compliance
+  - Age verification gate with proper redirect for under-21 users to https://cannabis.ny.gov/consumers
+  - OCMWarning component with exact mandated health warnings from § 129.2(d)
+  - General safety warning per § 129.2(c) on all cannabis content
+  - Yellow box (#fff300) styling with black text, Arial/Helvetica fonts, 12px minimum
+  - License number display (OCM-MICR-2023-000258) in footer
+  - Rotating health warnings (4 exact statements from regulations)
+- **WCAG 2.1 AA Accessibility**: Enhanced accessibility throughout the site
+  - Comprehensive data-testid attributes on all interactive elements
+  - ARIA labels and descriptions for screen readers
+  - Proper alt text on all images
+  - Keyboard navigation support
+  - Focus indicators on interactive elements
+  - aria-hidden on decorative icons
+- **SEO Enhancement**: Added SEO meta tags to Privacy Policy page
+- **Documentation**: Updated replit.md with compliance implementation details
+
 ### Diagnostic Fixes & Accessibility Improvements (2025-01-14)
 - **Accessibility Enhancement**: Added ARIA DialogDescription to all Dialog components for screen reader compliance
 - **Browserslist Update**: Updated caniuse-lite database from 1.0.30001677 to 1.0.30001750
@@ -74,9 +92,11 @@ A sophisticated cannabis industry digital platform designed to streamline invest
 - Test on both desktop and mobile viewports
 
 ## Current Status
+- ✅ **NY OCM COMPLIANCE COMPLETE**: Full 9 NYCRR Parts 128 & 129 regulatory compliance implemented
+- ✅ **WCAG 2.1 AA ACCESSIBILITY**: Comprehensive accessibility features with ARIA labels and keyboard navigation
 - ✅ **SEO SYSTEM FULLY IMPLEMENTED**: Comprehensive SEO across all pages with cannabis industry optimization
 - ✅ **Technical SEO Complete**: Robots.txt, XML sitemap, structured data, and meta tag optimization
-- ✅ **Cannabis Compliance**: Industry-specific keywords, local SEO, and regulatory compliance
+- ✅ **Cannabis Compliance**: Industry-specific keywords, local SEO, and regulatory compliance with OCM standards
 - ✅ Login redirect issue completely resolved with cookie-based solution
 - ✅ Mobile responsiveness improved (no desktop view switching)  
 - ✅ TypeScript errors fixed

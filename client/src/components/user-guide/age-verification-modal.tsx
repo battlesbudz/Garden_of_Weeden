@@ -48,6 +48,8 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
               onClick={onDenied}
               variant="outline"
               className="flex-1 border-red-500/50 text-red-400 hover:bg-red-500/10 hover:border-red-500"
+              data-testid="age-gate-deny-button"
+              aria-label="I am under 21 years old"
             >
               No, I'm under 21
             </Button>
@@ -55,6 +57,8 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
             <Button
               onClick={handleVerify}
               className="flex-1 bg-battles-gold text-battles-black hover:bg-yellow-600 font-semibold"
+              data-testid="age-gate-verify-button"
+              aria-label="I am 21 years or older"
             >
               Yes, I'm 21+
             </Button>

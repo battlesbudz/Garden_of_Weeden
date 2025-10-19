@@ -55,13 +55,14 @@ export default function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity" data-testid="nav-logo-link">
             <img
               src={logoPath}
-              alt="Battles Budz Logo"
+              alt="Battles Budz Logo - Premium Cannabis Dispensary"
               className="h-28 w-auto"
+              data-testid="nav-logo-image"
             />
-            <span className="ml-4 text-battles-gold font-bold text-xl flex items-center">
+            <span className="ml-4 text-battles-gold font-bold text-xl flex items-center" data-testid="nav-brand-name">
               BATTLES BUDZ
             </span>
           </Link>
@@ -73,6 +74,8 @@ export default function Navigation() {
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
               className="text-yellow-400 hover:text-yellow-300 border border-yellow-400 hover:border-yellow-300"
+              data-testid="nav-mobile-menu-button"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
@@ -80,35 +83,41 @@ export default function Navigation() {
 
           <div className="hidden lg:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <Link href="/" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link href="/" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-home">
                 Home
               </Link>
-              <Link href="/community" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link href="/community" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-community">
                 Community
               </Link>
               <button
                 onClick={() => navigateToSection("about")}
                 className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                data-testid="nav-link-about"
+                aria-label="Navigate to About section"
               >
                 About
               </button>
               <button
                 onClick={() => navigateToSection("retail")}
                 className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                data-testid="nav-link-products"
+                aria-label="Navigate to Products section"
               >
                 Products
               </button>
               <button
                 onClick={() => navigateToSection("events")}
                 className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                data-testid="nav-link-events"
+                aria-label="Navigate to Events section"
               >
                 Events
               </button>
-              <Link href="/shop" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
-                <ShoppingBag className="h-4 w-4 mr-1" />
+              <Link href="/shop" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center" data-testid="nav-link-shop">
+                <ShoppingBag className="h-4 w-4 mr-1" aria-hidden="true" />
                 Shop
               </Link>
-              <Link href="/investors" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link href="/investors" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-investors">
                 Investors
               </Link>
 
@@ -116,8 +125,8 @@ export default function Navigation() {
               {isAuthenticated ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="text-battles-gold hover:text-battles-gold/80">
-                      <User className="h-4 w-4 mr-2" />
+                    <Button variant="ghost" className="text-battles-gold hover:text-battles-gold/80" data-testid="nav-user-menu-trigger">
+                      <User className="h-4 w-4 mr-2" aria-hidden="true" />
                       {(user as any)?.email || (user as any)?.firstName || 'User'}
                     </Button>
                   </DropdownMenuTrigger>
@@ -154,7 +163,7 @@ export default function Navigation() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <a href="/api/login" className="bg-battles-gold hover:bg-battles-gold/90 text-black px-4 py-2 rounded-md text-sm font-semibold transition-colors">
+                <a href="/api/login" className="bg-battles-gold hover:bg-battles-gold/90 text-black px-4 py-2 rounded-md text-sm font-semibold transition-colors" data-testid="nav-signin-button" aria-label="Sign in to your account">
                   Sign In
                 </a>
               )}
