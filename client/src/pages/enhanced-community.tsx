@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -25,8 +25,19 @@ import SEOHead from "@/components/seo/SEOHead";
 import { getCanonicalUrl, getPageTitle, CANNABIS_KEYWORDS } from "@/utils/seo";
 
 export default function EnhancedCommunityPage() {
-  const [activeTab, setActiveTab] = useState("forum");
+  const [activeTab, setActiveTab] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('tab') || 'forum';
+  });
   const { toast } = useToast();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get('tab');
+    if (tabParam && ['forum', 'education', 'experts'].includes(tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, []);
 
   // Expert meeting request form
   const form = useForm<InsertMeetingRequest>({

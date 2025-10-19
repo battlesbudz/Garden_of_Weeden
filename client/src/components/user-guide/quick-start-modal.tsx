@@ -68,7 +68,7 @@ const quickStartOptions: QuickStartOption[] = [
     icon: BookOpen,
     action: 'Start Learning',
     color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-    path: '/community',
+    path: '/community?tab=education',
     navigate: true
   },
   {
