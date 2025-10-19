@@ -181,4 +181,35 @@
     animation: fade-in-up 0.8s ease-out;
     animation-fill-mode: both;
   }
+
+  /* WCAG 2.1 AA Touch Target Sizes (Criterion 2.5.5) */
+  /* Ensure all interactive elements are at least 44x44px for easier tapping */
+  button, 
+  input[type="button"], 
+  input[type="submit"],
+  input[type="reset"] {
+    min-height: 44px;
+  }
+
+  /* Ensure proper spacing between touch targets (8px minimum) */
+  .touch-target-spacing > * + * {
+    margin-left: 8px;
+  }
+
+  /* Enhanced focus indicators for keyboard navigation */
+  *:focus-visible {
+    outline: 2px solid hsl(51, 100%, 50%);
+    outline-offset: 2px;
+  }
+
+  /* High contrast focus for better visibility */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 3px solid hsl(51, 100%, 50%);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+  }
 }
