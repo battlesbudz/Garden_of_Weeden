@@ -73,7 +73,11 @@ export default function RetailSection() {
                 <p className="text-gray-300 mb-4">{product.description}</p>
                 <div className="flex items-center justify-center">
                   <Link href={product.route}>
-                    <span className="text-battles-gold font-semibold hover:text-yellow-400 transition-colors cursor-pointer border-b border-battles-gold/30 hover:border-battles-gold pb-1">
+                    <span 
+                      className="text-battles-gold font-semibold hover:text-yellow-400 transition-colors cursor-pointer border-b border-battles-gold/30 hover:border-battles-gold pb-1"
+                      role="link"
+                      aria-label={`Learn more about ${product.name} and join the waitlist`}
+                    >
                       Learn More & Join Waitlist →
                     </span>
                   </Link>
@@ -91,6 +95,7 @@ export default function RetailSection() {
           <button
             onClick={() => scrollToSection("newsletter")}
             className="bg-battles-gold text-battles-black px-8 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
+            aria-label="Subscribe to newsletter to get notified when we launch"
           >
             Get Notified When We Launch
           </button>
