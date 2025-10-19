@@ -37,18 +37,24 @@ export default function Footer() {
                 <MapPin className="text-battles-gold mr-2 h-4 w-4" aria-hidden="true" />
                 <span>333 Franklin St, Buffalo NY, 14202</span>
               </p>
-              <p className="flex items-center" data-testid="footer-email">
+              <a 
+                href="mailto:battlesbudz@gmail.com" 
+                className="flex items-center hover:text-battles-gold transition-colors" 
+                data-testid="footer-email"
+                aria-label="Email Battles Budz at battlesbudz@gmail.com"
+              >
                 <Mail className="text-battles-gold mr-2 h-4 w-4" aria-hidden="true" />
-                <a href="mailto:battlesbudz@gmail.com" className="hover:text-battles-gold transition-colors">
-                  battlesbudz@gmail.com
-                </a>
-              </p>
-              <p className="flex items-center" data-testid="footer-phone">
+                <span>battlesbudz@gmail.com</span>
+              </a>
+              <a 
+                href="tel:+19044157635" 
+                className="flex items-center hover:text-battles-gold transition-colors" 
+                data-testid="footer-phone"
+                aria-label="Call Battles Budz at (904) 415-7635"
+              >
                 <Phone className="text-battles-gold mr-2 h-4 w-4" aria-hidden="true" />
-                <a href="tel:+19044157635" className="hover:text-battles-gold transition-colors">
-                  (904) 415-7635
-                </a>
-              </p>
+                <span>(904) 415-7635</span>
+              </a>
             </div>
           </div>
 
