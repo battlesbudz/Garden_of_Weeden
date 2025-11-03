@@ -47,7 +47,7 @@ export default function NewsletterSection() {
           Stay Updated
         </h2>
         <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
-        <p className="font-storybook text-xl md:text-2xl text-evergreen mb-4">
+        <p className="font-storybook text-xl md:text-2xl text-green-400 mb-4">
           Join Our Newsletter
         </p>
         <p className="font-garden text-lg text-gray-300 mb-8 max-w-2xl mx-auto">

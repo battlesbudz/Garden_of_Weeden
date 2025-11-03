@@ -42,7 +42,7 @@ export default function ServicesSection() {
             Our Values
           </h2>
           <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
-          <p className="font-storybook text-xl md:text-2xl text-evergreen max-w-3xl mx-auto">
+          <p className="font-storybook text-xl md:text-2xl text-green-400 max-w-3xl mx-auto">
             Service, Quality, and Community
           </p>
         </div>

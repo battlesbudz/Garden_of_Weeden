@@ -35,7 +35,7 @@ export default function About() {
           <h1 className="font-enchanted text-5xl md:text-6xl text-parchment mb-6">
             From Service to Soil
           </h1>
-          <p className="font-storybook text-2xl md:text-3xl text-evergreen mb-8">
+          <p className="font-storybook text-2xl md:text-3xl text-green-400 mb-8">
             Our Veteran Story
           </p>
           <div className="h-1 w-32 bg-evergreen mx-auto mb-8"></div>

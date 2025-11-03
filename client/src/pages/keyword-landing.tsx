@@ -33,7 +33,7 @@ export default function KeywordLandingPage() {
               <span className="text-evergreen">Buffalo, NY</span>
             </h1>
             <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
-            <h2 className="font-storybook text-2xl md:text-3xl mb-6 text-evergreen">
+            <h2 className="font-storybook text-2xl md:text-3xl mb-6 text-green-400">
               Veteran-Owned Cannabis Microbusiness <span className="text-parchment">Coming Soon</span>
             </h2>
             <p className="font-garden text-xl text-gray-300 mb-8">
