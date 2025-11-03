@@ -58,7 +58,7 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity" data-testid="nav-logo-link">
             <img 
-              src="/attached_assets/AISelect_20251103_100452_Instagram_1762191130474.jpg" 
+              src="/attached_assets/garden_of_weeden_logo_transparent_1762191379653.png" 
               alt="Garden of Weeden Logo" 
               className="h-12 w-auto"
             />
