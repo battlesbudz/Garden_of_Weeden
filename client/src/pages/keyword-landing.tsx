@@ -30,21 +30,21 @@ export default function KeywordLandingPage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="font-enchanted text-4xl md:text-6xl mb-6 text-parchment">
               Garden of Weeden<br />
-              <span className="text-evergreen">Buffalo, NY</span>
+              <span className="text-green-500">Buffalo, NY</span>
             </h1>
-            <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
+            <div className="h-1 w-32 bg-green-500 mx-auto mb-6"></div>
             <h2 className="font-storybook text-2xl md:text-3xl mb-6 text-green-400">
               Veteran-Owned Cannabis Microbusiness <span className="text-parchment">Coming Soon</span>
             </h2>
             <p className="font-garden text-xl text-gray-300 mb-8">
               From service to soil: veteran-owned craft cannabis cultivation in Western New York
             </p>
-            <div className="bg-evergreen/10 border border-evergreen/30 rounded-lg p-6 max-w-2xl mx-auto">
+            <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-6 max-w-2xl mx-auto">
               <h3 className="font-storybook text-xl text-parchment mb-4">
                 Buffalo's Veteran-Owned Cannabis Garden
               </h3>
               <p className="font-garden text-gray-300">
-                <strong className="text-evergreen">Garden of Weeden</strong> is a veteran-owned cannabis microbusiness 
+                <strong className="text-green-500">Garden of Weeden</strong> is a veteran-owned cannabis microbusiness 
                 rooted in Buffalo, New York. Where military-grade precision meets botanical mastery.
               </p>
             </div>
@@ -57,50 +57,50 @@ export default function KeywordLandingPage() {
             <div className="grid md:grid-cols-2 gap-8">
               
               {/* Business Details */}
-              <div className="bg-gray-900 rounded-lg p-8 border border-evergreen/20">
+              <div className="bg-gray-900 rounded-lg p-8 border border-green-500/20">
                 <h2 className="font-storybook text-2xl text-parchment mb-6">
                   Garden of Weeden Business Details
                 </h2>
                 <div className="space-y-4 font-garden">
                   <div>
-                    <strong className="text-evergreen">Business Name:</strong>
+                    <strong className="text-green-500">Business Name:</strong>
                     <p className="text-gray-300">Garden of Weeden LLC</p>
                   </div>
                   <div>
-                    <strong className="text-evergreen">Location:</strong>
+                    <strong className="text-green-500">Location:</strong>
                     <p className="text-gray-300">Buffalo, NY (Western New York)</p>
                   </div>
                   <div>
-                    <strong className="text-evergreen">Business Type:</strong>
+                    <strong className="text-green-500">Business Type:</strong>
                     <p className="text-gray-300">Veteran-Owned Cannabis Microbusiness</p>
                   </div>
                   <div>
-                    <strong className="text-evergreen">Cultivation:</strong>
+                    <strong className="text-green-500">Cultivation:</strong>
                     <p className="text-gray-300">Outdoor Buffalo Micro-Terroir</p>
                   </div>
                   <div>
-                    <strong className="text-evergreen">Status:</strong>
+                    <strong className="text-green-500">Status:</strong>
                     <p className="text-gray-300">Coming Soon - Join Waitlist</p>
                   </div>
                 </div>
               </div>
 
               {/* Mission Focus */}
-              <div className="bg-gray-900 rounded-lg p-8 border border-evergreen/20">
+              <div className="bg-gray-900 rounded-lg p-8 border border-green-500/20">
                 <h2 className="font-storybook text-2xl text-parchment mb-6">
                   Our Mission
                 </h2>
                 <div className="space-y-4 font-garden">
                   <p className="text-gray-300">
-                    <strong className="text-evergreen">Garden of Weeden</strong> brings dedication 
+                    <strong className="text-green-500">Garden of Weeden</strong> brings dedication 
                     and veteran-earned values to Buffalo's cannabis community.
                   </p>
                   <p className="text-gray-300">
-                    This <strong className="text-evergreen">veteran-owned Buffalo cannabis</strong> operation 
+                    This <strong className="text-green-500">veteran-owned Buffalo cannabis</strong> operation 
                     cultivates premium flower in Western New York's unique micro-terroir.
                   </p>
                   <p className="text-gray-300">
-                    As a local <strong className="text-evergreen">cannabis microbusiness</strong>, 
+                    As a local <strong className="text-green-500">cannabis microbusiness</strong>, 
                     we're committed to veteran wellness, community service, and botanical excellence.
                   </p>
                 </div>

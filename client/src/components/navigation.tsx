@@ -50,7 +50,7 @@ export default function Navigation() {
 
   return (
     <nav
-      className="fixed w-full top-0 z-50 bg-battles-black border-b border-evergreen/20"
+      className="fixed w-full top-0 z-50 bg-battles-black border-b border-green-500/20"
       role="navigation"
       aria-label="Main navigation"
     >
@@ -65,13 +65,13 @@ export default function Navigation() {
             />
           </Link>
 
-          {/* Mobile menu button - Always visible with evergreen styling */}
+          {/* Mobile menu button - Always visible with green styling */}
           <div className="block">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
-              className="text-evergreen hover:text-parchment border border-evergreen hover:border-parchment"
+              className="text-green-500 hover:text-parchment border border-green-500 hover:border-parchment"
               data-testid="nav-mobile-menu-button"
               aria-label={isOpen ? "Close menu" : "Open menu"}
             >
@@ -81,22 +81,22 @@ export default function Navigation() {
 
           <div className="hidden lg:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <Link href="/" className="font-garden text-battles-white hover:text-evergreen px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-home">
+              <Link href="/" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-home">
                 Home
               </Link>
-              <Link href="/about" className="font-garden text-battles-white hover:text-evergreen px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-about">
+              <Link href="/about" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-about">
                 Our Story
               </Link>
-              <Link href="/products" className="font-garden text-battles-white hover:text-evergreen px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-products">
+              <Link href="/products" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-products">
                 Products
               </Link>
-              <Link href="/shop" className="font-garden text-battles-white hover:text-evergreen px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center" data-testid="nav-link-shop">
+              <Link href="/shop" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center" data-testid="nav-link-shop">
                 <ShoppingBag className="h-4 w-4 mr-1" aria-hidden="true" />
                 Shop
               </Link>
               <button
                 onClick={() => navigateToSection("contact")}
-                className="font-garden text-battles-white hover:text-evergreen px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 data-testid="nav-link-contact"
                 aria-label="Navigate to Contact section"
               >
@@ -107,20 +107,20 @@ export default function Navigation() {
               {isAuthenticated ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="font-garden text-evergreen hover:text-parchment" data-testid="nav-user-menu-trigger">
+                    <Button variant="ghost" className="font-garden text-green-500 hover:text-parchment" data-testid="nav-user-menu-trigger">
                       <User className="h-4 w-4 mr-2" aria-hidden="true" />
                       {(user as any)?.email || (user as any)?.firstName || 'User'}
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-gray-900 border-evergreen/30">
-                    <DropdownMenuItem onClick={handleLogout} className="text-white hover:text-evergreen">
+                  <DropdownMenuContent className="bg-gray-900 border-green-500/30">
+                    <DropdownMenuItem onClick={handleLogout} className="text-white hover:text-green-400">
                       <LogOut className="h-4 w-4 mr-2" />
                       Logout
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <a href="/api/login" className="font-garden bg-evergreen hover:bg-canopy text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors" data-testid="nav-signin-button" aria-label="Sign in to your account">
+                <a href="/api/login" className="font-garden bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors" data-testid="nav-signin-button" aria-label="Sign in to your account">
                   Sign In
                 </a>
               )}
@@ -134,23 +134,23 @@ export default function Navigation() {
       {/* Mobile menu */}
       {isOpen && (
         <div className="block">
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-battles-black border-t border-evergreen">
-            <Link href="/" className="font-garden block text-white hover:text-evergreen px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
+          <div className="px-2 pt-2 pb-3 space-y-1 bg-battles-black border-t border-green-500">
+            <Link href="/" className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
               Home
             </Link>
-            <Link href="/about" className="font-garden block text-white hover:text-evergreen px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
+            <Link href="/about" className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
               Our Story
             </Link>
-            <Link href="/products" className="font-garden block text-white hover:text-evergreen px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
+            <Link href="/products" className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
               Products
             </Link>
-            <Link href="/shop" className="font-garden flex items-center text-white hover:text-evergreen px-3 py-2 text-base font-medium w-full" onClick={() => setIsOpen(false)}>
+            <Link href="/shop" className="font-garden flex items-center text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full" onClick={() => setIsOpen(false)}>
               <ShoppingBag className="h-4 w-4 mr-2" />
               Shop
             </Link>
             <button
               onClick={() => navigateToSection("contact")}
-              className="font-garden block text-white hover:text-evergreen px-3 py-2 text-base font-medium w-full text-left"
+              className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left"
             >
               Contact
             </button>
@@ -159,13 +159,13 @@ export default function Navigation() {
             {isAuthenticated ? (
               <button
                 onClick={handleLogout}
-                className="font-garden flex items-center text-white hover:text-evergreen px-3 py-2 text-base font-medium w-full text-left"
+                className="font-garden flex items-center text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left"
               >
                 <LogOut className="h-4 w-4 mr-2" />
                 Logout ({(user as any)?.email || (user as any)?.firstName || 'User'})
               </button>
             ) : (
-              <a href="/api/login" className="font-garden block bg-evergreen hover:bg-canopy text-white px-3 py-2 text-base font-semibold w-full text-center rounded">
+              <a href="/api/login" className="font-garden block bg-green-500 hover:bg-green-700 text-white px-3 py-2 text-base font-semibold w-full text-center rounded">
                 Sign In
               </a>
             )}

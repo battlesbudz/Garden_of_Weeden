@@ -32,7 +32,7 @@ export default function HeroSection() {
           <h1 className="font-enchanted text-5xl md:text-7xl lg:text-8xl text-parchment mb-4 leading-tight">
             Garden of Weeden
           </h1>
-          <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
+          <div className="h-1 w-32 bg-green-500 mx-auto mb-6"></div>
         </div>
 
         {/* Veteran-Owned Tagline */}
@@ -47,18 +47,18 @@ export default function HeroSection() {
 
         {/* Three Pillars */}
         <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12 animate-fade-in-up animation-delay-200">
-          <div className="bg-midnight-grove/40 backdrop-blur-sm border border-evergreen/30 rounded-lg p-6 hover:border-evergreen/60 transition-all">
-            <Award className="h-10 w-10 text-evergreen mx-auto mb-3" />
+          <div className="bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-lg p-6 hover:border-green-500/60 transition-all">
+            <Award className="h-10 w-10 text-green-500 mx-auto mb-3" />
             <h3 className="font-storybook text-xl text-parchment mb-2">Veteran-Owned</h3>
             <p className="font-garden text-sm text-gray-300">Quality cultivation by those who served</p>
           </div>
-          <div className="bg-midnight-grove/40 backdrop-blur-sm border border-evergreen/30 rounded-lg p-6 hover:border-evergreen/60 transition-all">
-            <MapPin className="h-10 w-10 text-evergreen mx-auto mb-3" />
+          <div className="bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-lg p-6 hover:border-green-500/60 transition-all">
+            <MapPin className="h-10 w-10 text-green-500 mx-auto mb-3" />
             <h3 className="font-storybook text-xl text-parchment mb-2">Buffalo Roots</h3>
             <p className="font-garden text-sm text-gray-300">Grown in Western NY's micro-terroir</p>
           </div>
-          <div className="bg-midnight-grove/40 backdrop-blur-sm border border-evergreen/30 rounded-lg p-6 hover:border-evergreen/60 transition-all">
-            <Heart className="h-10 w-10 text-evergreen mx-auto mb-3" />
+          <div className="bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-lg p-6 hover:border-green-500/60 transition-all">
+            <Heart className="h-10 w-10 text-green-500 mx-auto mb-3" />
             <h3 className="font-storybook text-xl text-parchment mb-2">Wellness Focused</h3>
             <p className="font-garden text-sm text-gray-300">Supporting veteran healing journeys</p>
           </div>
@@ -68,7 +68,7 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400 mb-12">
           <Link href="/about">
             <button
-              className="bg-evergreen hover:bg-canopy text-white px-8 py-4 rounded-lg font-garden font-semibold text-base shadow-lg hover:shadow-xl hover:shadow-evergreen/30 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
+              className="bg-green-500 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-garden font-semibold text-base shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
               data-testid="hero-cta-story"
             >
               Our Story
@@ -76,7 +76,7 @@ export default function HeroSection() {
           </Link>
           <button
             onClick={() => scrollToSection("retail")}
-            className="border-2 border-evergreen text-parchment px-8 py-4 rounded-lg font-garden font-semibold text-base hover:bg-evergreen/20 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
+            className="border-2 border-green-500 text-parchment px-8 py-4 rounded-lg font-garden font-semibold text-base hover:bg-green-700/20 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             data-testid="hero-cta-products"
           >
             Learn More
@@ -91,14 +91,14 @@ export default function HeroSection() {
         </div>
 
         {/* Location Badge */}
-        <div className="inline-flex items-center gap-2 bg-midnight-grove/60 backdrop-blur-sm border border-evergreen/40 rounded-full px-6 py-3 animate-fade-in-up animation-delay-1000">
-          <MapPin className="h-4 w-4 text-evergreen" />
+        <div className="inline-flex items-center gap-2 bg-midnight-grove/60 backdrop-blur-sm border border-green-500/40 rounded-full px-6 py-3 animate-fade-in-up animation-delay-1000">
+          <MapPin className="h-4 w-4 text-green-500" />
           <span className="font-garden text-sm text-parchment font-medium">Proudly Cultivated in Buffalo, NY</span>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-evergreen animate-bounce z-10">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-green-500 animate-bounce z-10">
         <ChevronDown className="h-8 w-8" />
       </div>
     </section>

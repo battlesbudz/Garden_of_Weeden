@@ -46,7 +46,7 @@ export default function NewsletterSection() {
         <h2 className="font-enchanted text-4xl md:text-5xl text-parchment mb-4">
           Stay Updated
         </h2>
-        <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
+        <div className="h-1 w-32 bg-green-500 mx-auto mb-6"></div>
         <p className="font-storybook text-xl md:text-2xl text-green-400 mb-4">
           Join Our Newsletter
         </p>
@@ -62,7 +62,7 @@ export default function NewsletterSection() {
               placeholder="Enter your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 bg-gray-800 text-white border-evergreen/30 focus:border-evergreen font-garden"
+              className="flex-1 bg-gray-800 text-white border-green-500/30 focus:border-green-500 font-garden"
               required
               data-testid="newsletter-email-input"
               aria-label="Subscribe to newsletter to get notified when we launch"
@@ -70,7 +70,7 @@ export default function NewsletterSection() {
             <Button
               type="submit"
               disabled={newsletterMutation.isPending}
-              className="bg-evergreen hover:bg-canopy text-white font-garden font-semibold whitespace-nowrap"
+              className="bg-green-500 hover:bg-green-700 text-white font-garden font-semibold whitespace-nowrap"
               data-testid="newsletter-subscribe-button"
             >
               {newsletterMutation.isPending ? (
@@ -88,7 +88,7 @@ export default function NewsletterSection() {
           </p>
         </form>
 
-        <div className="mt-12 border-t border-evergreen/20 pt-8">
+        <div className="mt-12 border-t border-green-500/20 pt-8">
           <h3 className="font-storybook text-2xl mb-6 text-parchment">
             Follow Our Cultivation Journey
           </h3>
@@ -97,7 +97,7 @@ export default function NewsletterSection() {
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-evergreen text-2xl transition-colors"
+              className="text-gray-400 hover:text-green-400 text-2xl transition-colors"
               title="Follow us on Instagram"
             >
               <Instagram className="h-6 w-6" />
@@ -106,7 +106,7 @@ export default function NewsletterSection() {
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-evergreen text-2xl transition-colors"
+              className="text-gray-400 hover:text-green-400 text-2xl transition-colors"
               title="Follow us on Facebook"
             >
               <Facebook className="h-6 w-6" />
@@ -115,7 +115,7 @@ export default function NewsletterSection() {
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-evergreen text-2xl transition-colors"
+              className="text-gray-400 hover:text-green-400 text-2xl transition-colors"
               title="Follow us on Twitter"
             >
               <Twitter className="h-6 w-6" />
@@ -124,7 +124,7 @@ export default function NewsletterSection() {
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-evergreen text-2xl transition-colors"
+              className="text-gray-400 hover:text-green-400 text-2xl transition-colors"
               title="Connect with us on LinkedIn"
             >
               <Linkedin className="h-6 w-6" />

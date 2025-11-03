@@ -15,7 +15,7 @@
   --card-foreground: hsl(0, 0%, 0%);
   --border: hsl(0, 0%, 90%);
   --input: hsl(0, 0%, 90%);
-  --primary: hsl(103, 34%, 26%);
+  --primary: hsl(142, 76%, 36%);
   --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(0, 0%, 96%);
   --secondary-foreground: hsl(0, 0%, 0%);
@@ -23,16 +23,16 @@
   --accent-foreground: hsl(0, 0%, 0%);
   --destructive: hsl(0, 84%, 60%);
   --destructive-foreground: hsl(60, 9%, 98%);
-  --ring: hsl(103, 34%, 26%);
+  --ring: hsl(142, 76%, 36%);
   --radius: 0.5rem;
 
   /* Garden of Weeden Brand Colors (Logo-Aligned) */
-  --evergreen-canopy: hsl(103, 34%, 26%);     /* #245427 - Primary green from logo */
+  --evergreen-canopy: hsl(142, 76%, 36%);     /* Bright green - Primary green */
   --midnight-grove: hsl(120, 28%, 8%);        /* #0C1A0C - Dark green text */
   --onyx-bark: hsl(0, 0%, 6.7%);              /* #111111 - Black backgrounds */
   --parchment-glow: hsl(45, 60%, 93%);        /* #F7F1DA - Cream/off-white from logo script */
   --moonlit-mist: hsl(45, 40%, 88%);          /* #E4E0CC - Softer cream for cards */
-  --canopy-veil: hsl(103, 29%, 30%);          /* #3A6A2B - Brighter green for accents */
+  --canopy-veil: hsl(142, 69%, 50%);          /* Bright green for accents */
 }
 
 .dark {
@@ -46,7 +46,7 @@
   --card-foreground: hsl(0, 0%, 98%);
   --border: hsl(0, 0%, 15%);
   --input: hsl(0, 0%, 15%);
-  --primary: hsl(140, 45%, 40%);
+  --primary: hsl(142, 76%, 36%);
   --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(0, 0%, 15%);
   --secondary-foreground: hsl(0, 0%, 98%);
@@ -54,7 +54,7 @@
   --accent-foreground: hsl(0, 0%, 98%);
   --destructive: hsl(0, 62%, 30%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(140, 45%, 35%);
+  --ring: hsl(142, 76%, 36%);
 }
 
 @layer base {

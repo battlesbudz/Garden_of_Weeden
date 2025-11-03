@@ -19,7 +19,7 @@ export default function RetailSection() {
             <h2 className="font-enchanted text-4xl md:text-5xl text-parchment mb-4">
               Buffalo Micro-Terroir
             </h2>
-            <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
+            <div className="h-1 w-32 bg-green-500 mx-auto mb-6"></div>
             <p className="font-storybook text-xl md:text-2xl text-green-400 max-w-3xl mx-auto mb-4">
               Where Lake Erie Winds Meet Western New York Soil
             </p>
@@ -30,7 +30,7 @@ export default function RetailSection() {
               <img 
                 src={flowerCloseupImage} 
                 alt="Garden of Weeden premium cannabis flower close-up" 
-                className="rounded-lg shadow-2xl border-2 border-evergreen/30"
+                className="rounded-lg shadow-2xl border-2 border-green-500/30"
               />
             </div>
             <div className="space-y-6 font-garden text-gray-300">
@@ -39,16 +39,16 @@ export default function RetailSection() {
                 Lake Erie's moderating influence creates ideal temperature swings, while mineral-rich glacial soils 
                 provide the foundation for exceptional cannabis cultivation.
               </p>
-              <div className="bg-midnight-grove/40 border border-evergreen/30 rounded-lg p-6">
+              <div className="bg-midnight-grove/40 border border-green-500/30 rounded-lg p-6">
                 <h3 className="font-storybook text-xl text-parchment mb-3 flex items-center">
-                  <MapPin className="h-5 w-5 text-evergreen mr-2" />
+                  <MapPin className="h-5 w-5 text-green-500 mr-2" />
                   Terroir Advantages
                 </h3>
                 <ul className="space-y-2 text-gray-300">
-                  <li>• <strong className="text-evergreen">Lake Effect Climate:</strong> Cooler summers, moderated winters</li>
-                  <li>• <strong className="text-evergreen">Glacial Soils:</strong> Mineral-dense growing medium</li>
-                  <li>• <strong className="text-evergreen">Outdoor Cultivation:</strong> Sun-grown for natural terpene development</li>
-                  <li>• <strong className="text-evergreen">Buffalo Pride:</strong> Supporting local Western NY economy</li>
+                  <li>• <strong className="text-green-500">Lake Effect Climate:</strong> Cooler summers, moderated winters</li>
+                  <li>• <strong className="text-green-500">Glacial Soils:</strong> Mineral-dense growing medium</li>
+                  <li>• <strong className="text-green-500">Outdoor Cultivation:</strong> Sun-grown for natural terpene development</li>
+                  <li>• <strong className="text-green-500">Buffalo Pride:</strong> Supporting local Western NY economy</li>
                 </ul>
               </div>
             </div>
@@ -61,7 +61,7 @@ export default function RetailSection() {
             <h2 className="font-enchanted text-4xl md:text-5xl text-parchment mb-4">
               Our Cultivation Process
             </h2>
-            <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
+            <div className="h-1 w-32 bg-green-500 mx-auto mb-6"></div>
             <p className="font-storybook text-xl md:text-2xl text-green-400 max-w-3xl mx-auto">
               Quality and Consistency in Every Harvest
             </p>
@@ -75,23 +75,23 @@ export default function RetailSection() {
                 and excellence in every harvest.
               </p>
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-midnight-grove/40 border border-evergreen/30 rounded-lg p-4 text-center">
-                  <Sprout className="h-8 w-8 text-evergreen mx-auto mb-2" />
+                <div className="bg-midnight-grove/40 border border-green-500/30 rounded-lg p-4 text-center">
+                  <Sprout className="h-8 w-8 text-green-500 mx-auto mb-2" />
                   <h4 className="font-storybook text-parchment mb-1">Cultivation</h4>
                   <p className="text-sm">Outdoor growing in Buffalo's micro-terroir</p>
                 </div>
-                <div className="bg-midnight-grove/40 border border-evergreen/30 rounded-lg p-4 text-center">
-                  <Award className="h-8 w-8 text-evergreen mx-auto mb-2" />
+                <div className="bg-midnight-grove/40 border border-green-500/30 rounded-lg p-4 text-center">
+                  <Award className="h-8 w-8 text-green-500 mx-auto mb-2" />
                   <h4 className="font-storybook text-parchment mb-1">Harvest</h4>
                   <p className="text-sm">Hand-trimmed with veteran precision</p>
                 </div>
-                <div className="bg-midnight-grove/40 border border-evergreen/30 rounded-lg p-4 text-center">
-                  <Heart className="h-8 w-8 text-evergreen mx-auto mb-2" />
+                <div className="bg-midnight-grove/40 border border-green-500/30 rounded-lg p-4 text-center">
+                  <Heart className="h-8 w-8 text-green-500 mx-auto mb-2" />
                   <h4 className="font-storybook text-parchment mb-1">Cure</h4>
                   <p className="text-sm">Slow-cured for optimal flavor</p>
                 </div>
-                <div className="bg-midnight-grove/40 border border-evergreen/30 rounded-lg p-4 text-center">
-                  <MapPin className="h-8 w-8 text-evergreen mx-auto mb-2" />
+                <div className="bg-midnight-grove/40 border border-green-500/30 rounded-lg p-4 text-center">
+                  <MapPin className="h-8 w-8 text-green-500 mx-auto mb-2" />
                   <h4 className="font-storybook text-parchment mb-1">Local</h4>
                   <p className="text-sm">Buffalo-proud, veteran-owned</p>
                 </div>
@@ -101,14 +101,14 @@ export default function RetailSection() {
               <img 
                 src={dryingRacksImage} 
                 alt="Garden of Weeden drying racks showing craft curing process" 
-                className="rounded-lg shadow-2xl border-2 border-evergreen/30"
+                className="rounded-lg shadow-2xl border-2 border-green-500/30"
               />
             </div>
           </div>
         </div>
 
         {/* Coming Soon CTA */}
-        <div className="text-center bg-midnight-grove/40 border border-evergreen/30 rounded-xl p-12">
+        <div className="text-center bg-midnight-grove/40 border border-green-500/30 rounded-xl p-12">
           <h3 className="font-storybook text-3xl text-parchment mb-4">
             The Harvest is Coming
           </h3>
@@ -118,7 +118,7 @@ export default function RetailSection() {
           </p>
           <button
             onClick={() => scrollToSection("newsletter")}
-            className="bg-evergreen hover:bg-canopy text-white px-8 py-4 rounded-lg font-garden font-semibold text-lg shadow-lg hover:shadow-xl hover:shadow-evergreen/30 transform hover:scale-105 transition-all duration-300"
+            className="bg-green-500 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-garden font-semibold text-lg shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300"
             aria-label="Subscribe to newsletter to get notified when we launch"
             data-testid="retail-join-waitlist"
           >

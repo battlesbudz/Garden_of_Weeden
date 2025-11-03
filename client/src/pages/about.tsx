@@ -38,7 +38,7 @@ export default function About() {
           <p className="font-storybook text-2xl md:text-3xl text-green-400 mb-8">
             Our Veteran Story
           </p>
-          <div className="h-1 w-32 bg-evergreen mx-auto mb-8"></div>
+          <div className="h-1 w-32 bg-green-500 mx-auto mb-8"></div>
           <p className="font-garden text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Garden of Weeden is a veteran-owned cannabis microbusiness rooted in Buffalo, NY. 
             Our journey from service to cultivation tells a story of dedication, 
@@ -53,7 +53,7 @@ export default function About() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <Award className="h-8 w-8 text-evergreen" />
+                <Award className="h-8 w-8 text-green-500" />
                 <h2 className="font-storybook text-4xl text-parchment">Our Approach</h2>
               </div>
               <p className="font-garden text-gray-300 mb-6 leading-relaxed">
@@ -65,7 +65,7 @@ export default function About() {
                 We bring that same commitment to quality to every plant we nurture. Our veteran team 
                 understands that excellence isn't optional—it's the foundation of everything we do.
               </p>
-              <blockquote className="border-l-4 border-evergreen pl-6 font-script text-xl text-parchment italic">
+              <blockquote className="border-l-4 border-green-500 pl-6 font-script text-xl text-parchment italic">
                 "Quality cannabis, grown with care and integrity."
               </blockquote>
             </div>
@@ -93,7 +93,7 @@ export default function About() {
             </div>
             <div className="order-1 md:order-2">
               <div className="flex items-center gap-3 mb-6">
-                <MapPin className="h-8 w-8 text-evergreen" />
+                <MapPin className="h-8 w-8 text-green-500" />
                 <h2 className="font-storybook text-4xl text-parchment">Buffalo Micro-Terroir</h2>
               </div>
               <p className="font-garden text-gray-300 mb-6 leading-relaxed">
@@ -107,21 +107,21 @@ export default function About() {
               </p>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <Leaf className="h-6 w-6 text-evergreen flex-shrink-0 mt-1" />
+                  <Leaf className="h-6 w-6 text-green-500 flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-storybook text-xl text-parchment mb-2">Lake Erie Climate</h3>
                     <p className="font-garden text-gray-400">Unique humidity and temperature patterns create ideal growing conditions</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Leaf className="h-6 w-6 text-evergreen flex-shrink-0 mt-1" />
+                  <Leaf className="h-6 w-6 text-green-500 flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-storybook text-xl text-parchment mb-2">Western NY Soil</h3>
                     <p className="font-garden text-gray-400">Rich, mineral-dense earth that produces robust, flavorful plants</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Leaf className="h-6 w-6 text-evergreen flex-shrink-0 mt-1" />
+                  <Leaf className="h-6 w-6 text-green-500 flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-storybook text-xl text-parchment mb-2">Seasonal Excellence</h3>
                     <p className="font-garden text-gray-400">Buffalo's distinct seasons create natural cultivation cycles</p>
@@ -139,7 +139,7 @@ export default function About() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <Heart className="h-8 w-8 text-evergreen" />
+                <Heart className="h-8 w-8 text-green-500" />
                 <h2 className="font-storybook text-4xl text-parchment">Veteran Wellness Advocacy</h2>
               </div>
               <p className="font-garden text-gray-300 mb-6 leading-relaxed">
@@ -151,23 +151,23 @@ export default function About() {
                 cannabis for therapeutic purposes. Our mission goes beyond cultivation—it's about supporting 
                 the community that shaped who we are.
               </p>
-              <div className="bg-evergreen/10 border border-evergreen/30 rounded-lg p-6">
+              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-6">
                 <h3 className="font-storybook text-2xl text-parchment mb-4">Our Commitment</h3>
                 <ul className="space-y-3 font-garden text-gray-300">
                   <li className="flex items-start gap-2">
-                    <Target className="h-5 w-5 text-evergreen flex-shrink-0 mt-1" />
+                    <Target className="h-5 w-5 text-green-500 flex-shrink-0 mt-1" />
                     <span>Veteran-focused education and resources</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Target className="h-5 w-5 text-evergreen flex-shrink-0 mt-1" />
+                    <Target className="h-5 w-5 text-green-500 flex-shrink-0 mt-1" />
                     <span>PTSD and wellness support programs</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Target className="h-5 w-5 text-evergreen flex-shrink-0 mt-1" />
+                    <Target className="h-5 w-5 text-green-500 flex-shrink-0 mt-1" />
                     <span>Community partnerships with veteran organizations</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Target className="h-5 w-5 text-evergreen flex-shrink-0 mt-1" />
+                    <Target className="h-5 w-5 text-green-500 flex-shrink-0 mt-1" />
                     <span>Giving back to those who serve</span>
                   </li>
                 </ul>
@@ -188,7 +188,7 @@ export default function About() {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex items-center justify-center gap-3 mb-8">
-            <Users className="h-8 w-8 text-evergreen" />
+            <Users className="h-8 w-8 text-green-500" />
             <h2 className="font-storybook text-4xl text-parchment">From Service to Cure</h2>
           </div>
           <p className="font-garden text-gray-300 mb-12 leading-relaxed text-lg">
@@ -197,22 +197,22 @@ export default function About() {
             brought to our missions.
           </p>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-midnight-grove/20 p-6 rounded-lg border border-evergreen/20">
-              <div className="text-5xl font-enchanted text-evergreen mb-4">01</div>
+            <div className="bg-midnight-grove/20 p-6 rounded-lg border border-green-500/20">
+              <div className="text-5xl font-enchanted text-green-500 mb-4">01</div>
               <h3 className="font-storybook text-2xl text-parchment mb-3">Cultivation</h3>
               <p className="font-garden text-gray-400">
                 Outdoor growing in Buffalo's micro-terroir with military-grade precision
               </p>
             </div>
-            <div className="bg-midnight-grove/20 p-6 rounded-lg border border-evergreen/20">
-              <div className="text-5xl font-enchanted text-evergreen mb-4">02</div>
+            <div className="bg-midnight-grove/20 p-6 rounded-lg border border-green-500/20">
+              <div className="text-5xl font-enchanted text-green-500 mb-4">02</div>
               <h3 className="font-storybook text-2xl text-parchment mb-3">Harvest</h3>
               <p className="font-garden text-gray-400">
                 Careful timing and expert handling preserve every plant's unique character
               </p>
             </div>
-            <div className="bg-midnight-grove/20 p-6 rounded-lg border border-evergreen/20">
-              <div className="text-5xl font-enchanted text-evergreen mb-4">03</div>
+            <div className="bg-midnight-grove/20 p-6 rounded-lg border border-green-500/20">
+              <div className="text-5xl font-enchanted text-green-500 mb-4">03</div>
               <h3 className="font-storybook text-2xl text-parchment mb-3">Cure</h3>
               <p className="font-garden text-gray-400">
                 Patient, controlled curing develops complex flavors and optimal potency
@@ -223,7 +223,7 @@ export default function About() {
       </section>
 
       {/* Buffalo Pride CTA */}
-      <section className="py-20 px-4 bg-evergreen/10 border-y border-evergreen/30">
+      <section className="py-20 px-4 bg-green-500/10 border-y border-green-500/30">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-enchanted text-4xl md:text-5xl text-parchment mb-6">
             Proudly Rooted in Buffalo
@@ -231,7 +231,7 @@ export default function About() {
           <p className="font-garden text-xl text-gray-300 mb-8 leading-relaxed">
             Veteran-owned. Buffalo-grown. Community-focused.
           </p>
-          <blockquote className="font-script text-2xl text-evergreen italic mb-8">
+          <blockquote className="font-script text-2xl text-green-500 italic mb-8">
             "Every harvest reflects our city's grit, resilience, and natural beauty."
           </blockquote>
         </div>

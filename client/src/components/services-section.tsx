@@ -41,7 +41,7 @@ export default function ServicesSection() {
           <h2 className="font-enchanted text-4xl md:text-5xl text-parchment mb-4">
             Our Values
           </h2>
-          <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
+          <div className="h-1 w-32 bg-green-500 mx-auto mb-6"></div>
           <p className="font-storybook text-xl md:text-2xl text-green-400 max-w-3xl mx-auto">
             Service, Quality, and Community
           </p>
@@ -53,10 +53,10 @@ export default function ServicesSection() {
             return (
               <div
                 key={index}
-                className="bg-midnight-grove/40 backdrop-blur-sm border border-evergreen/30 rounded-xl p-8 text-center hover:border-evergreen/60 hover:bg-midnight-grove/60 transition-all duration-300 group"
+                className="bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 text-center hover:border-green-500/60 hover:bg-midnight-grove/60 transition-all duration-300 group"
               >
-                <div className="bg-evergreen/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 group-hover:bg-evergreen/30 transition-colors">
-                  <IconComponent className="text-evergreen h-8 w-8" />
+                <div className="bg-green-500/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 group-hover:bg-green-700/30 transition-colors">
+                  <IconComponent className="text-green-500 h-8 w-8" />
                 </div>
                 <h3 className="font-storybook text-2xl mb-4 text-parchment">
                   {service.title}
