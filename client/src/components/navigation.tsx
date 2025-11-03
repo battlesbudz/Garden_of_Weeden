@@ -4,6 +4,7 @@ import { Menu, X, User, ShoppingBag, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
+import logoImage from "@assets/garden_of_weeden_logo_transparent_1762191379653.png";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,10 +58,9 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity" data-testid="nav-logo-link">
             <img 
-              src="/attached_assets/garden_of_weeden_logo_transparent_1762191379653.png" 
+              src={logoImage}
               alt="Garden of Weeden Logo" 
               className="h-16 w-auto"
-              onError={(e) => console.error('Logo failed to load:', e)}
             />
           </Link>
 
