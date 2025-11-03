@@ -20,9 +20,9 @@ export const SITE_CONFIG = {
     phone: "+1-716-XXX-XXXX"
   },
   social: {
-    facebook: "https://facebook.com/gardenofweeden",
-    instagram: "https://instagram.com/gardenofweeden",
-    twitter: "https://twitter.com/gardenofweeden"
+    facebook: "https://www.facebook.com/",
+    instagram: "https://www.instagram.com/garden_of_weeden_ny?igsh=MTBuZDV4dzB6NnVwbA==",
+    twitter: "https://twitter.com/"
   }
 };
 
