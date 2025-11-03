@@ -42,51 +42,22 @@ const quickStartOptions: QuickStartOption[] = [
     path: '#retail'
   },
   {
-    id: 'booking',
-    title: 'Book an Experience',
-    description: 'Schedule a private tasting, workshop, or group tour at our lounge.',
-    icon: Calendar,
-    action: 'Book Now',
-    color: 'bg-green-500/20 text-green-400 border-green-500/30',
-    path: '#events',
-    scrollTo: true
-  },
-  {
-    id: 'community',
-    title: 'Join the Community',
-    description: 'Connect with fellow enthusiasts in our discussion forums.',
-    icon: Users,
-    action: 'Explore Community',
-    color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-    path: '/community',
-    navigate: true
-  },
-  {
-    id: 'education',
-    title: 'Learn About Cannabis',
-    description: 'Access educational guides about cannabis laws and consumption.',
+    id: 'about',
+    title: 'Our Veteran Story',
+    description: 'Learn about our service-forged journey from military to cultivation mastery.',
     icon: BookOpen,
-    action: 'Start Learning',
-    color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-    path: '/community?tab=education',
+    action: 'Read Our Story',
+    color: 'bg-green-500/20 text-green-400 border-green-500/30',
+    path: '/about',
     navigate: true
-  },
-  {
-    id: 'rewards',
-    title: 'Earn Rewards',
-    description: 'Participate in the community to earn points and unlock achievements.',
-    icon: Award,
-    action: 'View Rewards',
-    color: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-    path: '/community'
   },
   {
     id: 'location',
-    title: 'Visit Our Location',
-    description: 'Learn about our location and cannabis experiences.',
+    title: 'Visit Our Garden',
+    description: 'Discover our Buffalo, NY location and micro-terroir cultivation.',
     icon: MapPin,
     action: 'Get Directions',
-    color: 'bg-red-500/20 text-red-400 border-red-500/30',
+    color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
     path: '#about'
   }
 ];
