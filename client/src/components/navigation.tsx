@@ -60,7 +60,8 @@ export default function Navigation() {
             <img 
               src={logoImage}
               alt="Garden of Weeden Logo" 
-              className="h-16 w-auto"
+              className="h-16 w-auto rounded-full"
+              style={{ backgroundColor: 'transparent', mixBlendMode: 'normal' }}
             />
           </Link>
 
