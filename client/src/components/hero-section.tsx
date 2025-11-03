@@ -37,10 +37,10 @@ export default function HeroSection() {
 
         {/* Veteran-Owned Tagline */}
         <div className="animate-fade-in-up mb-8">
-          <h2 className="font-storybook text-2xl md:text-4xl lg:text-5xl text-evergreen mb-4">
+          <h2 className="font-storybook text-2xl md:text-4xl lg:text-5xl text-parchment drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] mb-4">
             From Service to Soil
           </h2>
-          <p className="font-garden text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto">
+          <p className="font-garden text-xl md:text-2xl text-parchment drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] max-w-3xl mx-auto">
             Where Military Precision Meets Botanical Mastery
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function HeroSection() {
           </button>
           <button
             onClick={() => scrollToSection("newsletter")}
-            className="border-2 border-parchment/60 text-parchment/80 px-8 py-4 rounded-lg font-garden font-medium text-base hover:bg-parchment/10 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
+            className="bg-parchment/90 hover:bg-parchment text-midnight-grove px-8 py-4 rounded-lg font-garden font-semibold text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             data-testid="hero-cta-newsletter"
           >
             Join the Garden Guild

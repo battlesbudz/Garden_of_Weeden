@@ -1,50 +1,49 @@
-import { Sprout, FlaskConical, Store, Truck, Sofa, Calendar } from "lucide-react";
+import { Award, Heart, Users, BookOpen, Leaf, Shield } from "lucide-react";
 
 export default function ServicesSection() {
   const services = [
     {
-      icon: Sprout,
-      title: "Cultivation",
-      description: "State-of-the-art indoor cultivation using sustainable practices and premium genetics for consistent, high-quality flower.",
+      icon: Award,
+      title: "Service-Forged Excellence",
+      description: "Military discipline applied to every aspect of cannabis cultivation. From seed selection to final cure, we bring the same attention to detail that defined our service.",
     },
     {
-      icon: FlaskConical,
-      title: "Processing",
-      description: "Expert extraction and infusion capabilities for edibles, beverages, and concentrates using cutting-edge technology.",
+      icon: Heart,
+      title: "Veteran Wellness Advocacy",
+      description: "Supporting fellow veterans' healing journeys through education, access, and community. Cannabis wellness rooted in service and compassion.",
     },
     {
-      icon: Store,
-      title: "Retail",
-      description: "Premium cannabis retail experience featuring our signature products including edibles, vapes, and beverages.",
+      icon: Users,
+      title: "Community Commitment",
+      description: "Building Buffalo's cannabis community with integrity and transparency. Local cultivation supporting local wellness and economic growth.",
     },
     {
-      icon: Truck,
-      title: "Delivery",
-      description: "Fast, reliable delivery service bringing premium products directly to your door with professional service.",
+      icon: BookOpen,
+      title: "Garden Lore & Education",
+      description: "Sharing cultivation knowledge and cannabis education. From plant science to consumption best practices, we're here to guide your journey.",
     },
     {
-      icon: Sofa,
-      title: "On-Site Consumption Lounge",
-      description: "Premium consumption experience with comfortable seating, entertainment, and guided tastings in a welcoming environment.",
+      icon: Leaf,
+      title: "Sustainable Cultivation",
+      description: "Outdoor growing that respects the land and honors Buffalo's micro-terroir. Sun-grown cannabis with minimal environmental impact.",
     },
     {
-      icon: Calendar,
-      title: "Events",
-      description: "Educational workshops, cultivation classes, and entertaining events like smoke and paint, laugh and smoke sessions, live bands, and glass blowing demonstrations.",
+      icon: Shield,
+      title: "Quality Assurance",
+      description: "Rigorous testing and quality control at every stage. Your safety and satisfaction are our mission, backed by veteran values of honor and integrity.",
     },
   ];
 
   return (
-    <section id="services" className="py-20 bg-battles-black text-white">
+    <section id="services" className="py-20 bg-gradient-to-b from-battles-black to-midnight-grove/20 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-6">
-            <span className="text-battles-gold">Vertically Integrated</span>{" "}
-            Excellence
+          <h2 className="font-enchanted text-4xl md:text-5xl text-parchment mb-4">
+            Our Garden Values
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            From seed to sale, we control every aspect of the cannabis
-            experience to ensure uncompromising quality.
+          <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
+          <p className="font-storybook text-xl md:text-2xl text-evergreen max-w-3xl mx-auto">
+            The Four Pillars of Enchanted Grit
           </p>
         </div>
 
@@ -54,15 +53,15 @@ export default function ServicesSection() {
             return (
               <div
                 key={index}
-                className="bg-gray-900 rounded-xl p-8 text-center hover:bg-gray-800 transition-colors duration-300"
+                className="bg-midnight-grove/40 backdrop-blur-sm border border-evergreen/30 rounded-xl p-8 text-center hover:border-evergreen/60 hover:bg-midnight-grove/60 transition-all duration-300 group"
               >
-                <div className="bg-battles-gold rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                  <IconComponent className="text-battles-black h-8 w-8" />
+                <div className="bg-evergreen/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 group-hover:bg-evergreen/30 transition-colors">
+                  <IconComponent className="text-evergreen h-8 w-8" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-battles-gold">
+                <h3 className="font-storybook text-2xl mb-4 text-parchment">
                   {service.title}
                 </h3>
-                <p className="text-gray-300">{service.description}</p>
+                <p className="font-garden text-gray-300">{service.description}</p>
               </div>
             );
           })}
