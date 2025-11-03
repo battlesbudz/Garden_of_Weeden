@@ -57,9 +57,11 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity" data-testid="nav-logo-link">
-            <span className="text-2xl font-playfair font-bold text-green-500" data-testid="nav-brand-name">
-              Garden of Weeden
-            </span>
+            <img 
+              src="/attached_assets/AISelect_20251103_100452_Instagram_1762191130474.jpg" 
+              alt="Garden of Weeden Logo" 
+              className="h-12 w-auto"
+            />
           </Link>
 
           {/* Mobile menu button - Always visible with yellow styling */}
