@@ -28,23 +28,24 @@ export default function KeywordLandingPage() {
         {/* Hero Section */}
         <section className="py-16 bg-gradient-to-b from-black to-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-6xl font-playfair font-bold mb-6">
-              <span className="text-battles-gold">Garden of Weeden</span><br />
-              Buffalo, NY
+            <h1 className="font-enchanted text-4xl md:text-6xl mb-6 text-parchment">
+              Garden of Weeden<br />
+              <span className="text-evergreen">Buffalo, NY</span>
             </h1>
-            <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-300">
-              Premium Cannabis Dispensary <span className="text-battles-gold">Coming Soon</span>
+            <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
+            <h2 className="font-storybook text-2xl md:text-3xl mb-6 text-evergreen">
+              Veteran-Owned Cannabis Microbusiness <span className="text-parchment">Coming Soon</span>
             </h2>
-            <p className="text-xl text-gray-300 mb-8">
-              Bringing premium cannabis experiences to Buffalo and Western New York
+            <p className="font-garden text-xl text-gray-300 mb-8">
+              From service to soil: bringing military precision to craft cannabis cultivation in Western New York
             </p>
-            <div className="bg-battles-gold/10 border border-battles-gold/30 rounded-lg p-6 max-w-2xl mx-auto">
-              <h3 className="text-xl font-semibold text-battles-gold mb-4">
-                Buffalo Cannabis Business
+            <div className="bg-evergreen/10 border border-evergreen/30 rounded-lg p-6 max-w-2xl mx-auto">
+              <h3 className="font-storybook text-xl text-parchment mb-4">
+                Buffalo's Veteran-Owned Cannabis Garden
               </h3>
-              <p className="text-gray-300">
-                <strong>Garden of Weeden</strong> is a local cannabis microbusiness bringing 
-                legal cannabis retail and quality services to Buffalo, New York.
+              <p className="font-garden text-gray-300">
+                <strong className="text-evergreen">Garden of Weeden</strong> is a veteran-owned cannabis microbusiness 
+                rooted in Buffalo, New York. Where military-grade precision meets botanical mastery.
               </p>
             </div>
           </div>
@@ -56,48 +57,51 @@ export default function KeywordLandingPage() {
             <div className="grid md:grid-cols-2 gap-8">
               
               {/* Business Details */}
-              <div className="bg-gray-900 rounded-lg p-8">
-                <h2 className="text-2xl font-playfair font-bold text-battles-gold mb-6">
+              <div className="bg-gray-900 rounded-lg p-8 border border-evergreen/20">
+                <h2 className="font-storybook text-2xl text-parchment mb-6">
                   Garden of Weeden Business Details
                 </h2>
-                <div className="space-y-4">
+                <div className="space-y-4 font-garden">
                   <div>
-                    <strong className="text-battles-gold">Business Name:</strong>
-                    <p className="text-gray-300">Garden of Weeden</p>
+                    <strong className="text-evergreen">Business Name:</strong>
+                    <p className="text-gray-300">Garden of Weeden LLC</p>
                   </div>
                   <div>
-                    <strong className="text-battles-gold">Location:</strong>
-                    <p className="text-gray-300">Buffalo, NY</p>
+                    <strong className="text-evergreen">Location:</strong>
+                    <p className="text-gray-300">Buffalo, NY (Western New York)</p>
                   </div>
                   <div>
-                    <strong className="text-battles-gold">Business Type:</strong>
-                    <p className="text-gray-300">Cannabis Microbusiness</p>
+                    <strong className="text-evergreen">Business Type:</strong>
+                    <p className="text-gray-300">Veteran-Owned Cannabis Microbusiness</p>
                   </div>
                   <div>
-                    <strong className="text-battles-gold">Status:</strong>
-                    <p className="text-gray-300">Coming Soon</p>
+                    <strong className="text-evergreen">Cultivation:</strong>
+                    <p className="text-gray-300">Outdoor Buffalo Micro-Terroir</p>
+                  </div>
+                  <div>
+                    <strong className="text-evergreen">Status:</strong>
+                    <p className="text-gray-300">Coming Soon - Join Waitlist</p>
                   </div>
                 </div>
               </div>
 
               {/* Mission Focus */}
-              <div className="bg-gray-900 rounded-lg p-8">
-                <h2 className="text-2xl font-playfair font-bold text-battles-gold mb-6">
-                  Our Commitment
+              <div className="bg-gray-900 rounded-lg p-8 border border-evergreen/20">
+                <h2 className="font-storybook text-2xl text-parchment mb-6">
+                  Our Service-Forged Mission
                 </h2>
-                <div className="space-y-4">
+                <div className="space-y-4 font-garden">
                   <p className="text-gray-300">
-                    <strong className="text-battles-gold">Garden of Weeden</strong> is dedicated to 
-                    providing the Buffalo community with premium cannabis products and exceptional service.
+                    <strong className="text-evergreen">Garden of Weeden</strong> brings military discipline 
+                    and veteran-earned values to Buffalo's cannabis community.
                   </p>
                   <p className="text-gray-300">
-                    This <strong className="text-battles-gold">Buffalo cannabis</strong> business 
-                    is designed to serve the community with premium, safe, and legal cannabis products.
+                    This <strong className="text-evergreen">veteran-owned Buffalo cannabis</strong> operation 
+                    cultivates premium flower in Western New York's unique micro-terroir.
                   </p>
                   <p className="text-gray-300">
-                    As a local <strong className="text-battles-gold">cannabis business</strong> in 
-                    Western New York, Garden of Weeden represents values of quality, 
-                    integrity, and excellence in everything we do.
+                    As a local <strong className="text-evergreen">cannabis microbusiness</strong>, 
+                    we're committed to veteran wellness, community service, and botanical excellence.
                   </p>
                 </div>
               </div>
