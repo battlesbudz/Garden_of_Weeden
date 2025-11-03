@@ -8,7 +8,7 @@ export default function PrivacyPolicy() {
     <div className="min-h-screen bg-battles-black text-white">
       <SEOHead
         title={getPageTitle("Privacy Policy")}
-        description="Battles Budz privacy policy. Learn how we collect, use, and protect your personal information in compliance with New York cannabis regulations."
+        description="Garden of Weeden privacy policy. Learn how we collect, use, and protect your personal information in compliance with New York cannabis regulations."
         canonicalUrl={getCanonicalUrl("/privacy-policy")}
         ogType="article"
       />
@@ -34,14 +34,12 @@ export default function PrivacyPolicy() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-battles-gold">Information We Collect</h2>
             <p className="text-gray-300">
-              At Battles Budz LLC, we collect information you provide directly to us, such as when you:
+              At Garden of Weeden LLC, we collect information you provide directly to us, such as when you:
             </p>
             <ul className="list-disc list-inside text-gray-300 space-y-2">
               <li>Subscribe to our newsletter</li>
-              <li>Submit a job application</li>
               <li>Contact us through our website</li>
-              <li>Book events or experiences</li>
-              <li>Create an investor account</li>
+              <li>Use our services</li>
             </ul>
           </section>
 
@@ -76,13 +74,8 @@ export default function PrivacyPolicy() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-battles-gold">Contact Us</h2>
             <p className="text-gray-300">
-              If you have any questions about this Privacy Policy, please contact us at:
+              If you have any questions about this Privacy Policy, please contact us via our website contact form.
             </p>
-            <div className="text-gray-300">
-              <p>Email: battlesbudz@gmail.com</p>
-              <p>Phone: (904) 415-7635</p>
-              <p>Address: 333 Franklin St, Buffalo, NY 14202</p>
-            </div>
           </section>
         </div>
       </div>

@@ -55,7 +55,7 @@ export default function AgeVerification() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-battles-gold">Compliance</h2>
             <p className="text-gray-300">
-              Battles Budz LLC is committed to preventing underage access to cannabis products. We reserve the right to:
+              Garden of Weeden LLC is committed to preventing underage access to cannabis products. We reserve the right to:
             </p>
             <ul className="list-disc list-inside text-gray-300 space-y-2">
               <li>Request additional verification at any time</li>
@@ -74,7 +74,7 @@ export default function AgeVerification() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-battles-gold">Contact Us</h2>
             <p className="text-gray-300">
-              If you have questions about our age verification policy, please contact us at battlesbudz@gmail.com
+              If you have questions about our age verification policy, please contact us via our contact form.
             </p>
           </section>
         </div>

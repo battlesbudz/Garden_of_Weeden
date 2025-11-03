@@ -115,10 +115,10 @@ export default function KeywordLandingPage() {
               <div className="bg-black rounded-lg p-6">
                 <h3 className="text-xl font-semibold text-battles-gold mb-4">Cannabis Products</h3>
                 <ul className="text-gray-300 space-y-2">
-                  <li>• Premium Cannabis Flower (Heirloom Landrace Strains)</li>
-                  <li>• Cannabis Edibles (Cosmic Chewz)</li>
-                  <li>• Cannabis Vapes (Freedom Fog)</li>
-                  <li>• Cannabis Beverages (Battle Brew)</li>
+                  <li>• Premium Cannabis Flower</li>
+                  <li>• Cannabis Edibles</li>
+                  <li>• Cannabis Vapes</li>
+                  <li>• Cannabis Beverages</li>
                   <li>• Pre-rolls and Concentrates</li>
                 </ul>
               </div>

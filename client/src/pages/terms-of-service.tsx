@@ -23,7 +23,7 @@ export default function TermsOfService() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-battles-gold">Acceptance of Terms</h2>
             <p className="text-gray-300">
-              By accessing and using the Battles Budz LLC website, you accept and agree to be bound by the terms and provision of this agreement.
+              By accessing and using the Garden of Weeden LLC website, you accept and agree to be bound by the terms and provision of this agreement.
             </p>
           </section>
 
@@ -37,7 +37,7 @@ export default function TermsOfService() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-battles-gold">Legal Compliance</h2>
             <p className="text-gray-300">
-              Battles Budz LLC operates under New York State Adult-Use Microbusiness License OCMMICR-2023-000258. All cannabis products are produced and sold in compliance with New York State regulations.
+              Garden of Weeden LLC operates under New York State Adult-Use Microbusiness License. All cannabis products are produced and sold in compliance with New York State regulations.
             </p>
           </section>
 
@@ -64,14 +64,14 @@ export default function TermsOfService() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-battles-gold">Limitation of Liability</h2>
             <p className="text-gray-300">
-              Battles Budz LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of our services.
+              Garden of Weeden LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of our services.
             </p>
           </section>
 
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-battles-gold">Contact Information</h2>
             <p className="text-gray-300">
-              Questions about the Terms of Service should be sent to us at battlesbudz@gmail.com
+              Questions about the Terms of Service should be sent to us via our contact form.
             </p>
           </section>
         </div>
