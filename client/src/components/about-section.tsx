@@ -5,18 +5,18 @@ export default function AboutSection() {
   const values = [
     {
       icon: Award,
-      title: "Veteran-Led",
-      description: "Military discipline and values guide every aspect of our operation.",
+      title: "Excellence-Driven",
+      description: "Unwavering commitment to quality and excellence in every aspect of our operation.",
     },
     {
       icon: Heart,
       title: "Community-Focused",
-      description: "Building connections and supporting our local Western New York community.",
+      description: "Building connections and supporting our local community through education and wellness.",
     },
     {
       icon: Leaf,
-      title: "Quality-Driven",
-      description: "Uncompromising standards from cultivation to consumption.",
+      title: "Sustainably Grown",
+      description: "Eco-friendly cultivation practices and sustainable operations for a better future.",
     },
   ];
 
@@ -31,22 +31,22 @@ export default function AboutSection() {
 
             <div className="space-y-6 text-lg text-battles-gray">
               <p>
-                <strong className="text-battles-black">Justin Battles</strong> first turned to cannabis at 14 as the only thing that helped him feel calm and focused. Later, during his eight years in the Army, he was diagnosed with ADHD and tried medications like Adderall and Ritalin, but they didn't help. They killed his appetite, caused insomnia, and left him unfocused.
+                Founded on the belief that quality cannabis should be accessible to everyone, we're dedicated to providing premium products that enhance well-being and bring people together. Our journey began with a passion for the plant and a commitment to doing things right.
               </p>
 
               <p>
-                During his military service, Justin injured his knees jumping out of planes, leading to his medical retirement. Cannabis was the one thing that helped him manage pain and stay clear-headed, inspiring him to learn everything he could about the plant.
+                We believe cannabis has the power to transform lives through its therapeutic and wellness benefits. That's why we've built our business on principles of quality, transparency, and community care.
               </p>
 
               <p>
-                That passion led him to study cultivation and processing and grow medical cannabis for himself and his wife. At Battles Budz, Justin oversees cultivation and product creation, channeling his military discipline into building a business that serves the community with integrity.
+                From seed to sale, we oversee every step of the process with meticulous attention to detail. Our team combines expertise in cultivation, processing, and customer service to deliver an exceptional cannabis experience.
               </p>
 
               <div className="bg-battles-black text-white p-6 rounded-lg">
                 <p className="italic text-battles-gold font-medium">
-                  "We're building a facility that will house a dispensary and an indoor consumption lounge, allowing people to safely enjoy cannabis while seeing how it's grown and made. We're excited to launch, grow, and take Battles Budz national."
+                  "We're building more than just a dispensary—we're creating a community hub where people can safely enjoy cannabis, learn about the plant, and connect with others who share their interests."
                 </p>
-                <p className="mt-4 text-sm">— Justin Battles, Founder & CEO</p>
+                <p className="mt-4 text-sm">— The Garden of Weeden Team</p>
               </div>
             </div>
           </div>

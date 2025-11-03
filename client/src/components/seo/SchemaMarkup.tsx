@@ -11,12 +11,12 @@ export default function SchemaMarkup({ type }: SchemaMarkupProps) {
         return {
           "@context": "https://schema.org",
           "@type": ["Organization", "LocalBusiness"],
-          "name": "Battles Budz LLC",
-          "alternateName": "Battles Budz",
-          "description": "Veteran-owned cannabis microbusiness offering premium cannabis cultivation, processing, and consumption experiences in Buffalo, New York.",
-          "url": "https://battlesbudz.replit.app",
-          "logo": "https://battlesbudz.replit.app/logo.png",
-          "image": "https://battlesbudz.replit.app/og-image.jpg",
+          "name": "Garden of Weeden LLC",
+          "alternateName": "Garden of Weeden",
+          "description": "Premium cannabis microbusiness offering quality cannabis cultivation, processing, and consumption experiences in Buffalo, New York.",
+          "url": window.location.origin,
+          "logo": window.location.origin + "/logo.png",
+          "image": window.location.origin + "/og-image.jpg",
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Buffalo",
@@ -37,16 +37,10 @@ export default function SchemaMarkup({ type }: SchemaMarkupProps) {
             },
             "geoRadius": "50000"
           },
-          "founder": {
-            "@type": "Person",
-            "name": "Justin Battles",
-            "description": "U.S. Military Veteran and Cannabis Industry Entrepreneur"
-          },
           "foundingDate": "2024",
           "industry": "Cannabis Industry",
           "keywords": [
             "cannabis dispensary",
-            "veteran owned business",
             "cannabis cultivation", 
             "consumption lounge",
             "premium cannabis",
@@ -96,9 +90,9 @@ export default function SchemaMarkup({ type }: SchemaMarkupProps) {
             ]
           },
           "sameAs": [
-            "https://www.facebook.com/battlesbudz",
-            "https://www.instagram.com/battlesbudz",
-            "https://twitter.com/battlesbudz"
+            "https://www.facebook.com/",
+            "https://www.instagram.com/",
+            "https://twitter.com/"
           ]
         };
       default:

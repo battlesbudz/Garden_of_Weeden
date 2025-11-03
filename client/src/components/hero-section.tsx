@@ -1,5 +1,5 @@
 import { ChevronDown } from "lucide-react";
-import logoPath from "@assets/BattlesBudz_Logo_1752301078028.png";
+import logoPath from "@assets/AISelect_20251103_100452_Instagram_1762183195419.jpg";
 
 export default function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -19,7 +19,7 @@ export default function HeroSection() {
         <div className="animate-fade-in flex justify-center px-4 pt-4 pb-2">
           <img
             src={logoPath}
-            alt="Battles Budz Logo"
+            alt="Garden of Weeden Logo"
             className="drop-shadow-2xl w-full max-w-sm md:max-w-md lg:max-w-lg h-auto"
           />
         </div>
@@ -30,19 +30,18 @@ export default function HeroSection() {
         >
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-playfair font-bold mb-3" style={{ margin: 0, lineHeight: 1.1 }}>
             <span className="text-battles-gold">
-              Crafting Community
+              Premium Cannabis
             </span>
             <br />
             <span className="text-white inline-block">
-              and Cannabis
+              Experience
             </span>
           </h1>
         </div>
 
         {/* Supporting text */}
         <p className="text-base md:text-lg lg:text-xl mb-4 max-w-3xl mx-auto font-light text-gray-300 animate-fade-in-up animation-delay-200">
-          Veteran-owned premium cannabis cultivation, processing, and consumption
-          experiences in the heart of Western New York.
+          Quality cannabis products and services in Western New York.
         </p>
 
         {/* CTA Buttons */}

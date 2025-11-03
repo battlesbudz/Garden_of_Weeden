@@ -57,7 +57,7 @@ export default function VideoHeroSection({
         <div className="mb-8">
           <img
             src={logoPath}
-            alt="Battles Budz Logo"
+            alt="Garden of Weeden Logo"
             className="h-24 w-auto mx-auto mb-6"
           />
         </div>
@@ -69,8 +69,8 @@ export default function VideoHeroSection({
         </h1>
 
         <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light">
-          Veteran-owned premium cannabis cultivation, processing, and consumption
-          experiences in the heart of Western New York.
+          Premium cannabis cultivation, processing, and consumption
+          experiences with a commitment to quality and community.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

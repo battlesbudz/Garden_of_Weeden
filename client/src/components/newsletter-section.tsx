@@ -87,38 +87,38 @@ export default function NewsletterSection() {
           </h3>
           <div className="flex justify-center space-x-6">
             <a
-              href="https://instagram.com/battles_budz"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-battles-gold text-2xl transition-colors"
-              title="Follow @battles_budz on Instagram"
+              title="Follow us on Instagram"
             >
               <Instagram className="h-6 w-6" />
             </a>
             <a
-              href="https://www.facebook.com/profile.php?id=100095028196403"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-battles-gold text-2xl transition-colors"
-              title="Follow Battles Budz on Facebook"
+              title="Follow us on Facebook"
             >
               <Facebook className="h-6 w-6" />
             </a>
             <a
-              href="https://twitter.com/BattlesBudz"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-battles-gold text-2xl transition-colors"
-              title="Follow @BattlesBudz on Twitter"
+              title="Follow us on Twitter"
             >
               <Twitter className="h-6 w-6" />
             </a>
             <a
-              href="https://www.linkedin.com/in/justin-battles-5548a018a"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-battles-gold text-2xl transition-colors"
-              title="Connect with Justin Battles on LinkedIn"
+              title="Connect with us on LinkedIn"
             >
               <Linkedin className="h-6 w-6" />
             </a>

@@ -1,7 +1,8 @@
-import { MapPin, Mail, Phone, AlertTriangle } from "lucide-react";
-import logoPath from "@assets/BattlesBudz_Logo_1752301078028.png";
+import { MapPin, Mail, Phone } from "lucide-react";
+import logoPath from "@assets/AISelect_20251103_100452_Instagram_1762183195419.jpg";
 import { LocationLinksFooter } from '@/components/seo/LocationLinksGenerator';
 import { OCMFooterWarning } from '@/components/OCMWarning';
+import { SITE_CONFIG } from '@/utils/seo';
 
 export default function Footer() {
   const scrollToSection = (sectionId: string) => {
@@ -19,72 +20,45 @@ export default function Footer() {
             <div className="flex items-center mb-4">
               <img
                 src={logoPath}
-                alt="Battles Budz Logo - Premium Cannabis Dispensary"
+                alt={`${SITE_CONFIG.name} Logo - Premium Cannabis Dispensary`}
                 className="h-8 w-auto mr-3"
                 data-testid="footer-logo"
               />
               <span className="text-battles-gold font-bold text-xl" data-testid="footer-brand-name">
-                BATTLES BUDZ
+                {SITE_CONFIG.name.toUpperCase()}
               </span>
             </div>
             <p className="text-gray-400 mb-4 max-w-md">
-              Premium cannabis cultivation, processing, and consumption
-              experiences in Buffalo, New York. Veteran-owned and
-              community-focused.
+              {SITE_CONFIG.description}
             </p>
             <div className="text-gray-400 space-y-2">
               <p className="flex items-center" data-testid="footer-address">
                 <MapPin className="text-battles-gold mr-2 h-4 w-4" aria-hidden="true" />
-                <span>333 Franklin St, Buffalo NY, 14202</span>
+                <span>{SITE_CONFIG.location.address}</span>
               </p>
               <a 
-                href="mailto:battlesbudz@gmail.com" 
+                href={`mailto:${SITE_CONFIG.contact.email}`}
                 className="flex items-center hover:text-battles-gold transition-colors" 
                 data-testid="footer-email"
-                aria-label="Email Battles Budz at battlesbudz@gmail.com"
+                aria-label={`Email ${SITE_CONFIG.name} at ${SITE_CONFIG.contact.email}`}
               >
                 <Mail className="text-battles-gold mr-2 h-4 w-4" aria-hidden="true" />
-                <span>battlesbudz@gmail.com</span>
+                <span>{SITE_CONFIG.contact.email}</span>
               </a>
               <a 
-                href="tel:+19044157635" 
+                href={`tel:${SITE_CONFIG.contact.phone}`}
                 className="flex items-center hover:text-battles-gold transition-colors" 
                 data-testid="footer-phone"
-                aria-label="Call Battles Budz at (904) 415-7635"
+                aria-label={`Call ${SITE_CONFIG.name} at ${SITE_CONFIG.contact.phone}`}
               >
                 <Phone className="text-battles-gold mr-2 h-4 w-4" aria-hidden="true" />
-                <span>(904) 415-7635</span>
+                <span>{SITE_CONFIG.contact.phone}</span>
               </a>
             </div>
           </div>
 
           <div>
-            <h4 className="text-battles-gold font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2 text-gray-400">
-              {[
-                { id: "home", label: "Home" },
-                { id: "retail", label: "Retail" },
-                { id: "services", label: "Services" },
-                { id: "about", label: "About" },
-                { id: "team", label: "Team" },
-                { id: "events", label: "Events" },
-              ].map((item) => (
-                <li key={item.id}>
-                  <button
-                    onClick={() => scrollToSection(item.id)}
-                    className="hover:text-battles-gold transition-colors"
-                    data-testid={`footer-link-${item.id}`}
-                    aria-label={`Navigate to ${item.label} section`}
-                  >
-                    {item.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-battles-gold font-semibold mb-4">Legal</h4>
+            <h4 className="text-battles-gold font-semibold mb-4">Essential Links</h4>
             <ul className="space-y-2 text-gray-400">
               <li>
                 <a 
@@ -108,12 +82,54 @@ export default function Footer() {
               </li>
               <li>
                 <a 
-                  href="/age-verification" 
+                  href="#contact" 
                   className="hover:text-battles-gold transition-colors"
-                  data-testid="footer-link-age-verification"
-                  aria-label="View Age Verification Policy"
+                  data-testid="footer-link-contact"
+                  aria-label="Contact Us"
                 >
-                  Age Verification
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-battles-gold font-semibold mb-4">Follow Us</h4>
+            <ul className="space-y-2 text-gray-400">
+              <li>
+                <a 
+                  href={SITE_CONFIG.social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-battles-gold transition-colors"
+                  data-testid="footer-link-facebook"
+                  aria-label={`Follow ${SITE_CONFIG.name} on Facebook`}
+                >
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a 
+                  href={SITE_CONFIG.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-battles-gold transition-colors"
+                  data-testid="footer-link-instagram"
+                  aria-label={`Follow ${SITE_CONFIG.name} on Instagram`}
+                >
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a 
+                  href={SITE_CONFIG.social.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-battles-gold transition-colors"
+                  data-testid="footer-link-twitter"
+                  aria-label={`Follow ${SITE_CONFIG.name} on Twitter`}
+                >
+                  Twitter
                 </a>
               </li>
             </ul>
@@ -127,8 +143,8 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col sm:flex-row justify-between items-center text-gray-400 text-sm">
-            <p data-testid="footer-copyright">&copy; 2025 Battles Budz LLC. All rights reserved.</p>
-            <p className="mt-2 sm:mt-0" data-testid="footer-veteran-badge">Veteran-Owned Cannabis Business</p>
+            <p data-testid="footer-copyright">&copy; 2025 {SITE_CONFIG.businessName}. All rights reserved.</p>
+            <p className="mt-2 sm:mt-0" data-testid="footer-location">{SITE_CONFIG.location.city}, {SITE_CONFIG.location.state}</p>
           </div>
         </div>
       </div>
@@ -138,7 +154,7 @@ export default function Footer() {
       
       <div className="bg-black py-4 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400 text-sm">
-          <p>&copy; 2025 Battles Budz LLC. All rights reserved. | Veteran-Owned Cannabis Business | Buffalo, NY</p>
+          <p>&copy; 2025 {SITE_CONFIG.businessName}. All rights reserved. | {SITE_CONFIG.location.city}, {SITE_CONFIG.location.state}</p>
         </div>
       </div>
     </footer>

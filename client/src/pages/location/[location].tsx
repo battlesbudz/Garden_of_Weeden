@@ -57,7 +57,7 @@ export default function LocationPage() {
               <span className="text-battles-gold">Cannabis in {locationData.city}</span>
             </h1>
             <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-300">
-              Battles Budz Serving {locationData.county}
+              Garden of Weeden Serving {locationData.county}
             </h2>
             <p className="text-xl text-gray-300 mb-8">
               {locationData.uniqueContent.intro}
@@ -85,7 +85,7 @@ export default function LocationPage() {
         <section className="py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-playfair font-bold text-battles-gold mb-8 text-center">
-              Why {locationData.city} Chooses Battles Budz
+              Why {locationData.city} Chooses Garden of Weeden
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-gray-900 rounded-lg p-8">
@@ -119,7 +119,7 @@ export default function LocationPage() {
         <section className="py-16 bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-playfair font-bold text-battles-gold mb-8 text-center">
-              Battles Budz Cannabis Dispensary Details
+              Garden of Weeden Cannabis Dispensary Details
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-black rounded-lg p-6 text-center">

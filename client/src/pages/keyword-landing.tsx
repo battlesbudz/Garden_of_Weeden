@@ -7,19 +7,19 @@ export default function KeywordLandingPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <SEOHead
-        title="Battles Buds Cannabis Buffalo - Veteran Buffalo Cannabis Dispensary"
-        description="Battles Buds cannabis dispensary in Buffalo, NY. Veteran-owned cannabis business by Justin Battles. Premium cannabis products and consumption lounge coming to Western New York."
+        title="Garden of Weeden Cannabis Buffalo - Premium Cannabis Dispensary"
+        description="Garden of Weeden cannabis dispensary in Buffalo, NY. Local microbusiness offering premium cannabis products and services in Western New York."
         keywords={[
-          "battles buds cannabis buffalo",
-          "veteran buffalo cannabis",
-          "battles budz buffalo",
-          "justin battles cannabis",
-          "buffalo cannabis veteran",
-          "veteran owned cannabis buffalo ny",
-          "battles buds dispensary",
+          "garden of weeden cannabis buffalo",
+          "buffalo cannabis",
+          "garden of weeden buffalo",
+          "cannabis dispensary buffalo",
+          "buffalo cannabis dispensary",
+          "cannabis buffalo ny",
+          "garden of weeden dispensary",
           "cannabis dispensary buffalo new york"
         ]}
-        canonicalUrl={getCanonicalUrl("/battles-buds-cannabis-buffalo")}
+        canonicalUrl={getCanonicalUrl("/buffalo-cannabis")}
         ogType="website"
       />
       <Navigation />
@@ -29,24 +29,22 @@ export default function KeywordLandingPage() {
         <section className="py-16 bg-gradient-to-b from-black to-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-playfair font-bold mb-6">
-              <span className="text-battles-gold">Battles Buds Cannabis</span><br />
+              <span className="text-battles-gold">Garden of Weeden</span><br />
               Buffalo, NY
             </h1>
             <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-300">
-              Veteran-Owned Cannabis Dispensary <span className="text-battles-gold">Opening 2025</span>
+              Premium Cannabis Dispensary <span className="text-battles-gold">Coming Soon</span>
             </h2>
             <p className="text-xl text-gray-300 mb-8">
-              Founded by U.S. Military Veteran Justin Battles, bringing premium cannabis 
-              experiences to Buffalo and Western New York
+              Bringing premium cannabis experiences to Buffalo and Western New York
             </p>
             <div className="bg-battles-gold/10 border border-battles-gold/30 rounded-lg p-6 max-w-2xl mx-auto">
               <h3 className="text-xl font-semibold text-battles-gold mb-4">
-                Veteran Buffalo Cannabis Business
+                Buffalo Cannabis Business
               </h3>
               <p className="text-gray-300">
-                <strong>Battles Buds</strong> (also known as Battles Budz) is a veteran-owned 
-                cannabis microbusiness bringing legal cannabis retail, consumption lounge, 
-                and educational experiences to Buffalo, New York.
+                <strong>Garden of Weeden</strong> is a local cannabis microbusiness bringing 
+                legal cannabis retail and quality services to Buffalo, New York.
               </p>
             </div>
           </div>
@@ -60,51 +58,45 @@ export default function KeywordLandingPage() {
               {/* Business Details */}
               <div className="bg-gray-900 rounded-lg p-8">
                 <h2 className="text-2xl font-playfair font-bold text-battles-gold mb-6">
-                  Battles Buds Cannabis Business Details
+                  Garden of Weeden Business Details
                 </h2>
                 <div className="space-y-4">
                   <div>
                     <strong className="text-battles-gold">Business Name:</strong>
-                    <p className="text-gray-300">Battles Budz LLC (DBA: Battles Buds)</p>
-                  </div>
-                  <div>
-                    <strong className="text-battles-gold">Owner/Founder:</strong>
-                    <p className="text-gray-300">Justin Battles, U.S. Military Veteran</p>
+                    <p className="text-gray-300">Garden of Weeden</p>
                   </div>
                   <div>
                     <strong className="text-battles-gold">Location:</strong>
-                    <p className="text-gray-300">333 Franklin St, Buffalo NY, 14202</p>
+                    <p className="text-gray-300">Buffalo, NY</p>
                   </div>
                   <div>
                     <strong className="text-battles-gold">Business Type:</strong>
-                    <p className="text-gray-300">Cannabis Microbusiness (Cultivation, Processing, Retail, Consumption Lounge)</p>
+                    <p className="text-gray-300">Cannabis Microbusiness</p>
                   </div>
                   <div>
                     <strong className="text-battles-gold">Status:</strong>
-                    <p className="text-gray-300">Pre-Launch Development - Coming 2025</p>
+                    <p className="text-gray-300">Coming Soon</p>
                   </div>
                 </div>
               </div>
 
-              {/* Veteran Focus */}
+              {/* Mission Focus */}
               <div className="bg-gray-900 rounded-lg p-8">
                 <h2 className="text-2xl font-playfair font-bold text-battles-gold mb-6">
-                  Veteran Cannabis Leadership
+                  Our Commitment
                 </h2>
                 <div className="space-y-4">
                   <p className="text-gray-300">
-                    <strong className="text-battles-gold">Justin Battles</strong>, the founder 
-                    of Battles Buds cannabis, is a proud U.S. Military Veteran who understands 
-                    the unique needs of veterans seeking cannabis alternatives.
+                    <strong className="text-battles-gold">Garden of Weeden</strong> is dedicated to 
+                    providing the Buffalo community with premium cannabis products and exceptional service.
                   </p>
                   <p className="text-gray-300">
-                    This <strong className="text-battles-gold">veteran Buffalo cannabis</strong> business 
-                    is specifically designed to serve fellow veterans and the broader community 
-                    with premium, safe, and legal cannabis products.
+                    This <strong className="text-battles-gold">Buffalo cannabis</strong> business 
+                    is designed to serve the community with premium, safe, and legal cannabis products.
                   </p>
                   <p className="text-gray-300">
-                    As a <strong className="text-battles-gold">veteran-owned cannabis business</strong> in 
-                    Western New York, Battles Buds represents military values of service, 
+                    As a local <strong className="text-battles-gold">cannabis business</strong> in 
+                    Western New York, Garden of Weeden represents values of quality, 
                     integrity, and excellence in everything we do.
                   </p>
                 </div>
@@ -117,7 +109,7 @@ export default function KeywordLandingPage() {
         <section className="py-16 bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-playfair font-bold text-battles-gold mb-8 text-center">
-              Battles Buds Cannabis Products & Services
+              Garden of Weeden Products & Services
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-black rounded-lg p-6">

@@ -79,7 +79,7 @@ export default function InvestorAccessRequestForm({ onClose }: InvestorAccessReq
           </CardHeader>
           <CardContent className="text-center space-y-4">
             <p className="text-white/80">
-              Thank you for your interest in investing with Battles Budz. We've received your access request and will review it within 48 hours.
+              Thank you for your investment interest. We've received your access request and will review it within 48 hours.
             </p>
             <p className="text-battles-gold text-sm">
               We'll contact you at the email address you provided with our decision.
@@ -328,10 +328,10 @@ export default function InvestorAccessRequestForm({ onClose }: InvestorAccessReq
                   name="reasonForInterest"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-white">Why Battles Budz? *</FormLabel>
+                      <FormLabel className="text-white">Why invest with us? *</FormLabel>
                       <FormControl>
                         <Textarea 
-                          placeholder="Please explain why you're interested in investing in Battles Budz specifically..."
+                          placeholder="Please explain why you're interested in this investment opportunity..."
                           className="bg-gray-900 border-gray-700 text-white min-h-[100px]"
                           {...field} 
                         />

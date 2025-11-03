@@ -35,8 +35,8 @@ interface GuideStep {
 const guideSteps: GuideStep[] = [
   {
     id: 'welcome',
-    title: 'Welcome to Battles Budz!',
-    description: 'This is your gateway to New York\'s premium cannabis tourism experience. Let\'s take a quick tour of everything we offer.',
+    title: 'Welcome to Garden of Weeden!',
+    description: 'This is your gateway to a premium cannabis experience. Let\'s take a quick tour of everything we offer.',
     position: 'center',
     icon: Leaf,
     category: 'navigation'
@@ -104,8 +104,8 @@ const guideSteps: GuideStep[] = [
   },
   {
     id: 'location',
-    title: 'Visit Us in Buffalo',
-    description: 'Located in the heart of Western New York, we\'re your destination for authentic cannabis tourism.',
+    title: 'Visit Our Location',
+    description: 'Your destination for authentic cannabis experiences and community connection.',
     element: '#about',
     position: 'top',
     icon: MapPin,

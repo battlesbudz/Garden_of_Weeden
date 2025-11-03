@@ -34,7 +34,7 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
               </div>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-battles-gold mb-3">Welcome to Battles Budz</h2>
+              <h2 className="text-3xl font-bold text-battles-gold mb-3">Welcome to Garden of Weeden</h2>
               <p className="text-xl text-white mb-4">Are you 21 years or older?</p>
               <p className="text-sm text-gray-400">
                 You must be 21+ to enter this cannabis website as required by New York State law.

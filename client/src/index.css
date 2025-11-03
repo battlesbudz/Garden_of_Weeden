@@ -13,21 +13,21 @@
   --card-foreground: hsl(0, 0%, 0%);
   --border: hsl(0, 0%, 90%);
   --input: hsl(0, 0%, 90%);
-  --primary: hsl(51, 100%, 50%);
-  --primary-foreground: hsl(0, 0%, 0%);
+  --primary: hsl(140, 45%, 35%);
+  --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(0, 0%, 96%);
   --secondary-foreground: hsl(0, 0%, 0%);
   --accent: hsl(0, 0%, 96%);
   --accent-foreground: hsl(0, 0%, 0%);
   --destructive: hsl(0, 84%, 60%);
   --destructive-foreground: hsl(60, 9%, 98%);
-  --ring: hsl(51, 100%, 50%);
+  --ring: hsl(140, 45%, 35%);
   --radius: 0.5rem;
 
-  /* Battles Budz custom colors */
-  --battles-gold: hsl(51, 100%, 50%);
-  --battles-black: hsl(0, 0%, 0%);
-  --battles-gray: hsl(0, 0%, 20%);
+  /* Garden of Weeden custom colors */
+  --garden-green: hsl(140, 45%, 35%);
+  --garden-dark: hsl(0, 0%, 10%);
+  --garden-light: hsl(140, 30%, 95%);
 }
 
 .dark {
@@ -41,15 +41,15 @@
   --card-foreground: hsl(0, 0%, 98%);
   --border: hsl(0, 0%, 15%);
   --input: hsl(0, 0%, 15%);
-  --primary: hsl(51, 100%, 50%);
-  --primary-foreground: hsl(0, 0%, 0%);
+  --primary: hsl(140, 45%, 40%);
+  --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(0, 0%, 15%);
   --secondary-foreground: hsl(0, 0%, 98%);
   --accent: hsl(0, 0%, 15%);
   --accent-foreground: hsl(0, 0%, 98%);
   --destructive: hsl(0, 62%, 30%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(51, 100%, 50%);
+  --ring: hsl(140, 45%, 35%);
 }
 
 @layer base {
@@ -63,45 +63,58 @@
 }
 
 @layer utilities {
-  .text-battles-gold {
-    color: hsl(51, 100%, 50%);
+  .text-garden-green {
+    color: hsl(140, 45%, 35%);
   }
 
-  .text-battles-black {
-    color: hsl(0, 0%, 0%);
+  .text-garden-dark {
+    color: hsl(0, 0%, 10%);
   }
 
-  .text-battles-gray {
-    color: hsl(0, 0%, 20%);
+  .text-garden-light {
+    color: hsl(140, 30%, 95%);
   }
 
-  .bg-battles-gold {
-    background-color: hsl(51, 100%, 50%);
+  .bg-garden-green {
+    background-color: hsl(140, 45%, 35%);
   }
 
-  .bg-battles-black {
-    background-color: hsl(0, 0%, 0%);
+  .bg-garden-dark {
+    background-color: hsl(0, 0%, 10%);
   }
 
-  .bg-battles-gray {
-    background-color: hsl(0, 0%, 20%);
+  .bg-garden-light {
+    background-color: hsl(140, 30%, 95%);
   }
 
-  .border-battles-gold {
-    border-color: hsl(51, 100%, 50%);
+  .border-garden-green {
+    border-color: hsl(140, 45%, 35%);
   }
 
-  .border-battles-black {
-    border-color: hsl(0, 0%, 0%);
+  .border-garden-dark {
+    border-color: hsl(0, 0%, 10%);
   }
 
-  .hover\:bg-battles-gold:hover {
-    background-color: hsl(51, 100%, 50%);
+  .hover\:bg-garden-green:hover {
+    background-color: hsl(140, 45%, 35%);
   }
 
-  .hover\:text-battles-gold:hover {
-    color: hsl(51, 100%, 50%);
+  .hover\:text-garden-green:hover {
+    color: hsl(140, 45%, 35%);
   }
+  
+  /* Legacy battles- classes for backward compatibility */
+  .text-battles-gold { color: hsl(140, 45%, 35%); }
+  .text-battles-black { color: hsl(0, 0%, 10%); }
+  .text-battles-gray { color: hsl(0, 0%, 20%); }
+  .text-battles-white { color: hsl(0, 0%, 100%); }
+  .bg-battles-gold { background-color: hsl(140, 45%, 35%); }
+  .bg-battles-black { background-color: hsl(0, 0%, 10%); }
+  .bg-battles-gray { background-color: hsl(0, 0%, 20%); }
+  .border-battles-gold { border-color: hsl(140, 45%, 35%); }
+  .border-battles-black { border-color: hsl(0, 0%, 10%); }
+  .hover\:bg-battles-gold:hover { background-color: hsl(140, 45%, 35%); }
+  .hover\:text-battles-gold:hover { color: hsl(140, 45%, 35%); }
 
   .font-playfair {
     font-family: 'Playfair Display', serif;
@@ -198,7 +211,7 @@
 
   /* Enhanced focus indicators for keyboard navigation */
   *:focus-visible {
-    outline: 2px solid hsl(51, 100%, 50%);
+    outline: 2px solid hsl(140, 45%, 35%);
     outline-offset: 2px;
   }
 
@@ -208,8 +221,8 @@
   input:focus-visible,
   textarea:focus-visible,
   select:focus-visible {
-    outline: 3px solid hsl(51, 100%, 50%);
+    outline: 3px solid hsl(140, 45%, 35%);
     outline-offset: 2px;
-    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
   }
 }

@@ -69,7 +69,7 @@ export default function JobApplicationForm() {
     onSuccess: () => {
       toast({
         title: "Application Submitted!",
-        description: "Thank you for your interest in joining Battles Budz. We'll review your application and get back to you soon.",
+        description: "Thank you for your interest in joining our team. We'll review your application and get back to you soon.",
       });
       reset();
       setResumeFile(null);
@@ -300,7 +300,7 @@ export default function JobApplicationForm() {
 
         <div>
           <Label htmlFor="coverLetter" className="text-white">
-            Cover Letter / Why do you want to work at Battles Budz?
+            Cover Letter / Why do you want to work with us?
           </Label>
           <Textarea
             id="coverLetter"

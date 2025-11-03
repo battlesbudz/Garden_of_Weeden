@@ -1,28 +1,28 @@
 // SEO utility functions and constants
 
 export const SITE_CONFIG = {
-  name: "Battles Budz",
+  name: "Garden of Weeden",
   tagline: "Premium Cannabis Experience",
-  description: "Premium cannabis cultivation, processing, and consumption experiences in Buffalo, NY. Veteran-owned microbusiness offering retail cannabis, consumption lounge, and educational events.",
-  url: import.meta.env.VITE_SITE_URL || "https://battlesbudz.replit.app",
-  businessName: "Battles Budz LLC",
+  description: "Premium cannabis products and experiences in Buffalo, NY. Local microbusiness offering quality cannabis retail and services.",
+  url: import.meta.env.VITE_SITE_URL || "https://gardenofweeden.replit.app",
+  businessName: "Garden of Weeden",
   location: {
     city: "Buffalo",
     state: "NY",
-    address: "333 Franklin St, Buffalo NY, 14202",
+    address: "Buffalo, NY",
     coordinates: {
       latitude: 42.8864,
       longitude: -78.8784
     }
   },
   contact: {
-    email: "info@battlesbudz.com",
-    phone: "+1-518-XXX-XXXX"
+    email: "info@gardenofweeden.com",
+    phone: "+1-716-XXX-XXXX"
   },
   social: {
-    facebook: "https://facebook.com/battlesbudz",
-    instagram: "https://instagram.com/battlesbudz",
-    twitter: "https://twitter.com/battlesbudz"
+    facebook: "https://facebook.com/gardenofweeden",
+    instagram: "https://instagram.com/gardenofweeden",
+    twitter: "https://twitter.com/gardenofweeden"
   }
 };
 
@@ -145,14 +145,12 @@ export const CANNABIS_KEYWORDS = {
   home: [
     "cannabis dispensary Buffalo NY",
     "premium cannabis Buffalo",
-    "veteran owned cannabis business",
-    "consumption lounge New York",
-    "cannabis cultivation NY",
-    "cannabis processing facility",
+    "locally owned cannabis business",
     "legal cannabis Buffalo",
     "cannabis retail store",
-    "cannabis education classes",
-    "cannabis community events"
+    "cannabis products NY",
+    "cannabis shop Buffalo",
+    "quality cannabis Buffalo"
   ],
   shop: [
     "buy cannabis Buffalo",

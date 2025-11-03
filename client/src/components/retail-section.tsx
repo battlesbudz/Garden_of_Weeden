@@ -1,9 +1,5 @@
-import { Link } from 'wouter';
-import cosmicChewzImg from "@assets/20240228_223118_1752399041772.png";
-import freedomFogImg from "@assets/file_0000000084c86230b8826b578af0fa18_1752398828783.png";
+import { Badge } from '@/components/ui/badge';
 import cannabisFlower1 from "@assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg";
-import cannabisFlower2 from "@assets/Screenshot_20250713_025012_Gallery_1752389462115.jpg";
-import battleBrewImg from "@assets/file_00000000a95c61f9a7846b7990b6738f_1752399026270.png";
 
 export default function RetailSection() {
   const scrollToSection = (sectionId: string) => {
@@ -15,28 +11,28 @@ export default function RetailSection() {
 
   const products = [
     {
-      name: "Heirloom Flower",
-      description: "Small-batch, hand-trimmed premium flower from legacy genetics.",
+      name: "Premium Flower",
+      description: "Small-batch, hand-trimmed cannabis flower cultivated with care and precision.",
       image: cannabisFlower1,
-      route: "/products/heirloom-flower",
+      comingSoon: true,
     },
     {
-      name: "Battle Brew",
-      description: "Our signature cannabis-infused sweet tea. 10mg THC per can, 12 FL OZ. Military-inspired design with bold Battles Budz branding.",
-      image: battleBrewImg,
-      route: "/products/battle-brew",
+      name: "Edibles",
+      description: "Precisely dosed cannabis-infused edibles for a consistent experience.",
+      image: cannabisFlower1,
+      comingSoon: true,
     },
     {
-      name: "Cosmic Chewz",
-      description: "100mg per package, 10mg per piece. Hard on the outside, soft on the inside. RSO infused with cosmic flavors including watermelon, blue raspberry, strawberry, banana, cherry, and cheesecake.",
-      image: cosmicChewzImg,
-      route: "/products/cosmic-chewz",
+      name: "Vapes",
+      description: "Premium vape cartridges featuring high-quality cannabis extracts.",
+      image: cannabisFlower1,
+      comingSoon: true,
     },
     {
-      name: "Freedom Fog Vapes",
-      description: "Premium 1G vape cartridges with military-inspired camouflage design. High-quality cannabis extracts for the ultimate vaping experience.",
-      image: freedomFogImg,
-      route: "/products/freedom-fog-vapes",
+      name: "Concentrates",
+      description: "Expertly processed cannabis concentrates for enhanced potency and flavor.",
+      image: cannabisFlower1,
+      comingSoon: true,
     },
   ];
 
@@ -57,14 +53,21 @@ export default function RetailSection() {
           {products.map((product, index) => (
             <div
               key={index}
-              className="group cursor-pointer"
+              className="group relative"
             >
-              <div className="bg-transparent rounded-xl overflow-hidden mb-6">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-80 md:h-96 object-contain hover:scale-105 transition-transform duration-300"
-                />
+              <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden mb-6 border border-battles-gold/20 relative">
+                <div className="absolute top-4 right-4 z-10">
+                  <Badge className="bg-battles-gold text-battles-black font-semibold px-3 py-1">
+                    Coming Soon
+                  </Badge>
+                </div>
+                <div className="opacity-40 grayscale">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-80 md:h-96 object-contain"
+                  />
+                </div>
               </div>
               <div className="text-center">
                 <h3 className="text-2xl font-bold text-white mb-2">
@@ -72,14 +75,13 @@ export default function RetailSection() {
                 </h3>
                 <p className="text-gray-300 mb-4">{product.description}</p>
                 <div className="flex items-center justify-center">
-                  <Link 
-                    href={product.route}
-                    aria-label={`Learn more about ${product.name} and join the waitlist`}
+                  <button
+                    onClick={() => scrollToSection("newsletter")}
+                    className="text-battles-gold font-semibold hover:text-yellow-400 transition-colors border-b border-battles-gold/30 hover:border-battles-gold pb-1"
+                    aria-label={`Get notified when ${product.name} launches`}
                   >
-                    <span className="text-battles-gold font-semibold hover:text-yellow-400 transition-colors cursor-pointer border-b border-battles-gold/30 hover:border-battles-gold pb-1">
-                      Learn More & Join Waitlist →
-                    </span>
-                  </Link>
+                    Join Waitlist →
+                  </button>
                 </div>
               </div>
             </div>

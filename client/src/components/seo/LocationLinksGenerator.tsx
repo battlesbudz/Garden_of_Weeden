@@ -23,7 +23,7 @@ export function LocationLinksFooter() {
           ))}
         </div>
         <p className="text-center text-gray-400 text-sm mt-4">
-          Veteran-owned cannabis dispensary serving Erie County, Niagara County, and Western New York suburbs
+          Premium cannabis dispensary serving Erie County, Niagara County, and Western New York suburbs
         </p>
       </div>
     </section>
@@ -37,7 +37,7 @@ export function SEOBreadcrumbs({ currentPage, location }: { currentPage: string;
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex items-center space-x-2 text-sm" aria-label="Breadcrumb">
           <Link href="/" className="text-gray-400 hover:text-battles-gold transition-colors">
-            Battles Budz Cannabis Dispensary
+            Garden of Weeden Cannabis Dispensary
           </Link>
           <span className="text-gray-600">/</span>
           {location && (

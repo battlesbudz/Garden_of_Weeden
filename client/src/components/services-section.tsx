@@ -15,12 +15,12 @@ export default function ServicesSection() {
     {
       icon: Store,
       title: "Retail",
-      description: "Premium cannabis retail experience featuring our signature products including Cosmic Chewz, Freedom Fog Vapes, and BattleBrew.",
+      description: "Premium cannabis retail experience featuring our signature products including edibles, vapes, and beverages.",
     },
     {
       icon: Truck,
       title: "Delivery",
-      description: "Fast, reliable delivery service bringing premium Battles Budz products directly to your door with professional service.",
+      description: "Fast, reliable delivery service bringing premium products directly to your door with professional service.",
     },
     {
       icon: Sofa,

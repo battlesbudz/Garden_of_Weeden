@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, User, ShoppingBag, LogOut, Settings } from "lucide-react";
+import { Menu, X, User, ShoppingBag, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
-import logoPath from "@assets/BattlesBudz_Logo_1752301078028.png";
+import logoPath from "@assets/AISelect_20251103_100452_Instagram_1762183195419.jpg";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,12 +60,12 @@ export default function Navigation() {
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity" data-testid="nav-logo-link">
             <img
               src={logoPath}
-              alt="Battles Budz Logo - Premium Cannabis Dispensary"
+              alt="Garden of Weeden Logo"
               className="h-28 w-auto"
               data-testid="nav-logo-image"
             />
             <span className="ml-4 text-battles-gold font-bold text-xl flex items-center" data-testid="nav-brand-name">
-              BATTLES BUDZ
+              GARDEN OF WEEDEN
             </span>
           </Link>
 
@@ -88,40 +88,21 @@ export default function Navigation() {
               <Link href="/" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-home">
                 Home
               </Link>
-              <Link href="/community" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-community">
-                Community
-              </Link>
-              <button
-                onClick={() => navigateToSection("about")}
-                className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                data-testid="nav-link-about"
-                aria-label="Navigate to About section"
-              >
-                About
-              </button>
-              <button
-                onClick={() => navigateToSection("retail")}
-                className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                data-testid="nav-link-products"
-                aria-label="Navigate to Products section"
-              >
+              <Link href="/products" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-products">
                 Products
-              </button>
-              <button
-                onClick={() => navigateToSection("events")}
-                className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                data-testid="nav-link-events"
-                aria-label="Navigate to Events section"
-              >
-                Events
-              </button>
+              </Link>
               <Link href="/shop" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center" data-testid="nav-link-shop">
                 <ShoppingBag className="h-4 w-4 mr-1" aria-hidden="true" />
                 Shop
               </Link>
-              <Link href="/investors" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-investors">
-                Investors
-              </Link>
+              <button
+                onClick={() => navigateToSection("contact")}
+                className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                data-testid="nav-link-contact"
+                aria-label="Navigate to Contact section"
+              >
+                Contact
+              </button>
 
               {/* Authentication Links */}
               {isAuthenticated ? (
@@ -133,31 +114,6 @@ export default function Navigation() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-gray-900 border-battles-gold/30">
-                    {isAdmin && (
-                      <>
-                        <DropdownMenuItem asChild>
-                          <Link href="/dashboard" className="flex items-center text-white hover:text-battles-gold">
-                            <Settings className="h-4 w-4 mr-2" />
-                            Admin Dashboard
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/investors" className="flex items-center text-white hover:text-battles-gold">
-                            <Settings className="h-4 w-4 mr-2" />
-                            Investor Portal
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/investor-admin" className="flex items-center text-white hover:text-battles-gold">
-                            <Settings className="h-4 w-4 mr-2" />
-                            Investor Admin
-                          </Link>
-                        </DropdownMenuItem>
-
-                        <DropdownMenuSeparator className="bg-battles-gold/30" />
-                      </>
-                    )}
-
                     <DropdownMenuItem onClick={handleLogout} className="text-white hover:text-battles-gold">
                       <LogOut className="h-4 w-4 mr-2" />
                       Logout
@@ -183,64 +139,29 @@ export default function Navigation() {
             <Link href="/" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
               Home
             </Link>
-            <Link href="/community" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
-              Community
-            </Link>
-            <button
-              onClick={() => navigateToSection("about")}
-              className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
-            >
-              About
-            </button>
-            <button
-              onClick={() => navigateToSection("retail")}
-              className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
-            >
+            <Link href="/products" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
               Products
-            </button>
-            <button
-              onClick={() => navigateToSection("events")}
-              className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
-            >
-              Events
-            </button>
-            <Link href="/shop" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
+            </Link>
+            <Link href="/shop" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full" onClick={() => setIsOpen(false)}>
               <ShoppingBag className="h-4 w-4 mr-2" />
               Shop
             </Link>
-            <Link href="/investors" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left">
-              Investors
-            </Link>
+            <button
+              onClick={() => navigateToSection("contact")}
+              className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
+            >
+              Contact
+            </button>
             
             {/* Mobile Auth */}
             {isAuthenticated ? (
-              <>
-                {isAdmin && (
-                  <>
-                    <Link href="/dashboard" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
-                      <Settings className="h-4 w-4 mr-2" />
-                      Admin Dashboard
-                    </Link>
-                    <Link href="/investors" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
-                      <Settings className="h-4 w-4 mr-2" />
-                      Investor Portal
-                    </Link>
-                    <Link href="/investor-admin" className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full">
-                      <Settings className="h-4 w-4 mr-2" />
-                      Investor Admin
-                    </Link>
-
-                  </>
-                )}
-
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
-                >
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Logout ({(user as any)?.email || (user as any)?.firstName || 'User'})
-                </button>
-              </>
+              <button
+                onClick={handleLogout}
+                className="flex items-center text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout ({(user as any)?.email || (user as any)?.firstName || 'User'})
+              </button>
             ) : (
               <a href="/api/login" className="block bg-battles-gold hover:bg-battles-gold/90 text-black px-3 py-2 text-base font-semibold w-full text-center rounded">
                 Sign In

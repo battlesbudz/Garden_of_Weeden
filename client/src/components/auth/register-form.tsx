@@ -41,7 +41,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
     register.mutate(data, {
       onSuccess: () => {
         toast({
-          title: "Welcome to Battles Budz!",
+          title: "Welcome to Garden of Weeden!",
           description: "Your account has been created successfully.",
         });
         onSuccess?.();
@@ -60,7 +60,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
     <Card className="w-full max-w-md mx-auto bg-black border-battles-gold">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-playfair text-battles-gold">
-          Join Battles Budz
+          Join Garden of Weeden
         </CardTitle>
         <p className="text-white">Create your account</p>
       </CardHeader>

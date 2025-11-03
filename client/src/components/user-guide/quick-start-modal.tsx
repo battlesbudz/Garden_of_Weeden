@@ -64,7 +64,7 @@ const quickStartOptions: QuickStartOption[] = [
   {
     id: 'education',
     title: 'Learn About Cannabis',
-    description: 'Access educational guides about NY cannabis laws and consumption.',
+    description: 'Access educational guides about cannabis laws and consumption.',
     icon: BookOpen,
     action: 'Start Learning',
     color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
@@ -83,7 +83,7 @@ const quickStartOptions: QuickStartOption[] = [
   {
     id: 'location',
     title: 'Visit Our Location',
-    description: 'Learn about our Buffalo, NY location and cannabis tourism.',
+    description: 'Learn about our location and cannabis experiences.',
     icon: MapPin,
     action: 'Get Directions',
     color: 'bg-red-500/20 text-red-400 border-red-500/30',
@@ -140,11 +140,11 @@ export function QuickStartModal({ isOpen, onClose, onStartTour, onOptionSelect }
                 <Leaf className="h-8 w-8 text-battles-gold" />
               </div>
               <DialogTitle className="text-2xl font-bold text-battles-gold">
-                Welcome to Battles Budz!
+                Welcome to Garden of Weeden!
               </DialogTitle>
             </div>
             <DialogDescription className="sr-only">
-              Choose how you would like to get started with Battles Budz or take our guided tour to explore all features.
+              Choose how you would like to get started or take our guided tour to explore all features.
             </DialogDescription>
             <div className="flex gap-2">
               <Button
@@ -167,7 +167,7 @@ export function QuickStartModal({ isOpen, onClose, onStartTour, onOptionSelect }
             </div>
           </div>
           <p className="text-gray-300 text-lg max-w-2xl">
-            Your gateway to New York's premier cannabis tourism experience. 
+            Your gateway to a premier cannabis experience. 
             Choose how you'd like to get started, or take our guided tour.
           </p>
         </DialogHeader>

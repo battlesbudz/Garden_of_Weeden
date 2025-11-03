@@ -6,20 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import LoginPage from "@/pages/login";
-import Dashboard from "@/pages/dashboard";
 import Shop from "@/pages/shop";
-
-
-import EnhancedCommunityPage from "@/pages/enhanced-community";
-import ForumPostPage from "@/pages/forum-post";
-import InvestorPortal from "@/pages/investor-portal";
-import InvestorAdmin from "@/pages/investor-admin";
-
-// Product Pages
-import BattleBrewPage from "@/pages/products/battle-brew";
-import CosmicChewzPage from "@/pages/products/cosmic-chewz";
-import FreedomFogVapesPage from "@/pages/products/freedom-fog-vapes";
-import HeirloomFlowerPage from "@/pages/products/heirloom-flower";
 
 
 import NotFound from "./pages/not-found";
@@ -28,7 +15,7 @@ import TermsOfService from "./pages/terms-of-service";
 import AgeVerification from "./pages/age-verification";
 import KeywordLandingPage from "./pages/keyword-landing";
 import LocationPage from "./pages/location/[location]";
-import AboutBattlesBudzPage from "./pages/about-battles-budz";
+import ProductsComingSoon from "@/pages/products-coming-soon";
 import { AgeVerificationModal } from "@/components/user-guide/age-verification-modal";
 import { QuickStartModal } from "@/components/user-guide/quick-start-modal";
 import { UserGuideOverlay } from "@/components/user-guide/user-guide-overlay";
@@ -55,33 +42,19 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/dashboard" component={Dashboard} />
         <Route path="/shop" component={Shop} />
-        <Route path="/investors" component={InvestorPortal} />
-        <Route path="/investor-portal" component={InvestorPortal} />
-
-        <Route path="/community" component={EnhancedCommunityPage} />
-        <Route path="/community/posts/:id" component={ForumPostPage} />
-        <Route path="/investor-admin" component={InvestorAdmin} />
-
-        {/* Product Pages */}
-        <Route path="/products/battle-brew" component={BattleBrewPage} />
-        <Route path="/products/cosmic-chewz" component={CosmicChewzPage} />
-        <Route path="/products/freedom-fog-vapes" component={FreedomFogVapesPage} />
-        <Route path="/products/heirloom-flower" component={HeirloomFlowerPage} />
+        
+        {/* Product Pages - Coming Soon */}
+        <Route path="/products" component={ProductsComingSoon} />
+        <Route path="/products/:slug" component={ProductsComingSoon} />
         
         {/* SEO Landing Pages */}
-        <Route path="/battles-buds-cannabis-buffalo" component={KeywordLandingPage} />
-        <Route path="/veteran-buffalo-cannabis" component={KeywordLandingPage} />
-        <Route path="/justin-battles-cannabis" component={KeywordLandingPage} />
+        <Route path="/buffalo-cannabis" component={KeywordLandingPage} />
+        <Route path="/cannabis-buffalo-ny" component={KeywordLandingPage} />
         
         {/* Location-Specific SEO Pages */}
         <Route path="/location/:location" component={LocationPage} />
         
-        {/* About Page */}
-        <Route path="/about-battles-budz" component={AboutBattlesBudzPage} />
-
-        <Route path="/enhanced-community" component={EnhancedCommunityPage} />
         <Route path="/privacy-policy" component={PrivacyPolicy} />
         <Route path="/terms-of-service" component={TermsOfService} />
         <Route path="/age-verification" component={AgeVerification} />
