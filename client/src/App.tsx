@@ -94,11 +94,6 @@ function App() {
           onClose={userGuide.handleTourClose}
           onComplete={userGuide.handleTourComplete}
         />
-
-        <HelpButton
-          onStartTour={userGuide.handleShowTour}
-          onShowGuide={userGuide.handleShowQuickStart}
-        />
       </TooltipProvider>
     </QueryClientProvider>
   );
