@@ -20,7 +20,7 @@ export default function RetailSection() {
               Buffalo Micro-Terroir
             </h2>
             <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
-            <p className="font-storybook text-xl md:text-2xl text-evergreen max-w-3xl mx-auto mb-4">
+            <p className="font-storybook text-xl md:text-2xl text-parchment max-w-3xl mx-auto mb-4">
               Where Lake Erie Winds Meet Western New York Soil
             </p>
           </div>
