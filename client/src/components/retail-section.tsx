@@ -78,7 +78,7 @@ export default function RetailSection() {
                 <div className="bg-midnight-grove/40 border border-green-500/30 rounded-lg p-4 text-center">
                   <Sprout className="h-8 w-8 text-green-500 mx-auto mb-2" />
                   <h4 className="font-storybook text-parchment mb-1">Cultivation</h4>
-                  <p className="text-sm">Outdoor growing in Buffalo's micro-terroir</p>
+                  <p className="text-sm">Sun-grown in Buffalo's unique lake-effect climate</p>
                 </div>
                 <div className="bg-midnight-grove/40 border border-green-500/30 rounded-lg p-4 text-center">
                   <Award className="h-8 w-8 text-green-500 mx-auto mb-2" />
