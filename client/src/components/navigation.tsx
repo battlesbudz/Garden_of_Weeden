@@ -59,7 +59,8 @@ export default function Navigation() {
             <img 
               src="/attached_assets/garden_of_weeden_logo_transparent_1762191379653.png" 
               alt="Garden of Weeden Logo" 
-              className="h-12 w-auto"
+              className="h-16 w-auto"
+              onError={(e) => console.error('Logo failed to load:', e)}
             />
           </Link>
 
