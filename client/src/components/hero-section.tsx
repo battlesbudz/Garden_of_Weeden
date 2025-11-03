@@ -11,7 +11,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative flex flex-col items-center justify-center text-center bg-black min-h-screen overflow-x-hidden py-20"
+      className="relative flex flex-col items-center justify-center text-center bg-battles-black min-h-screen overflow-x-hidden py-20"
     >
       <div className="relative z-10 max-w-5xl mx-auto px-4">
         {/* Logo/Brand */}

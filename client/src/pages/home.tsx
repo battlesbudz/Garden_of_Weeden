@@ -14,7 +14,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden bg-battles-black">
       <SEOHead
         title="Garden of Weeden - Premium Cannabis Dispensary"
         description="Garden of Weeden - Your premier destination for high-quality cannabis products. Explore our selection of premium flower, edibles, vapes, and more."

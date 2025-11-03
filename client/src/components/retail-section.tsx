@@ -32,7 +32,7 @@ export default function RetailSection() {
   ];
 
   return (
-    <section id="retail" className="py-20 bg-black">
+    <section id="retail" className="py-20 bg-battles-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
