@@ -1,4 +1,4 @@
-import { MapPin, Mail, Phone, Leaf } from "lucide-react";
+import { MapPin, Mail, Phone, Leaf, Award, Heart } from "lucide-react";
 import { LocationLinksFooter } from '@/components/seo/LocationLinksGenerator';
 import { OCMFooterWarning } from '@/components/OCMWarning';
 import { SITE_CONFIG } from '@/utils/seo';
@@ -14,16 +14,43 @@ export default function Footer() {
   return (
     <footer id="contact" className="bg-gray-900 text-white py-12" role="contentinfo" aria-label="Site footer">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Veteran-Owned Pride Banner */}
+        <div className="bg-evergreen/20 border border-evergreen/40 rounded-lg p-6 mb-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <Award className="h-8 w-8 text-evergreen" />
+              <div>
+                <h3 className="font-storybook text-xl text-parchment font-semibold">Certified Veteran-Owned Business</h3>
+                <p className="font-garden text-sm text-gray-300">Service-forged excellence in every harvest</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <MapPin className="h-8 w-8 text-evergreen" />
+              <div>
+                <h3 className="font-storybook text-xl text-parchment font-semibold">Buffalo-Proud</h3>
+                <p className="font-garden text-sm text-gray-300">Rooted in Western New York</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <Heart className="h-8 w-8 text-evergreen" />
+              <div>
+                <h3 className="font-storybook text-xl text-parchment font-semibold">Community Committed</h3>
+                <p className="font-garden text-sm text-gray-300">Supporting veteran wellness</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center mb-4">
-              <Leaf className="text-green-500 mr-3 h-8 w-8" />
-              <span className="text-green-500 font-bold text-xl" data-testid="footer-brand-name">
-                {SITE_CONFIG.name.toUpperCase()}
+              <Leaf className="text-evergreen mr-3 h-8 w-8" />
+              <span className="text-evergreen font-enchanted text-2xl" data-testid="footer-brand-name">
+                Garden of Weeden
               </span>
             </div>
-            <p className="text-gray-400 mb-4 max-w-md">
-              {SITE_CONFIG.description}
+            <p className="font-garden text-gray-400 mb-4 max-w-md">
+              Veteran-owned cannabis microbusiness cultivating premium flower with military precision in Buffalo, NY.
             </p>
             <div className="text-gray-400 space-y-2">
               <p className="flex items-center" data-testid="footer-address">

@@ -41,49 +41,56 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section id="newsletter" className="py-20 bg-battles-black text-white">
+    <section id="newsletter" className="py-20 bg-midnight-grove/20 text-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-6">
-          Stay <span className="text-battles-gold">Connected</span>
+        <h2 className="font-enchanted text-4xl md:text-5xl text-parchment mb-4">
+          Join the Garden Guild
         </h2>
-        <p className="text-xl text-gray-300 mb-8">
-          Be the first to know when we launch retail operations, special events,
-          and exclusive product releases.
+        <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
+        <p className="font-storybook text-xl md:text-2xl text-evergreen mb-4">
+          Follow the Yellow Brick Road to Cannabis Clarity
+        </p>
+        <p className="font-garden text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+          Be the first to know when we launch our harvest, receive veteran wellness resources, 
+          and get exclusive updates from our Buffalo garden.
         </p>
 
         <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
           <div className="flex flex-col sm:flex-row gap-4">
             <Input
               type="email"
-              placeholder="Enter your email address"
+              placeholder="Plant your email to receive harvest updates"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 bg-gray-800 text-white border-gray-700 focus:border-battles-gold"
+              className="flex-1 bg-gray-800 text-white border-evergreen/30 focus:border-evergreen font-garden"
               required
+              data-testid="newsletter-email-input"
+              aria-label="Subscribe to newsletter to get notified when we launch"
             />
             <Button
               type="submit"
               disabled={newsletterMutation.isPending}
-              className="bg-battles-gold text-battles-black hover:bg-yellow-400 font-semibold whitespace-nowrap"
+              className="bg-evergreen hover:bg-canopy text-white font-garden font-semibold whitespace-nowrap"
+              data-testid="newsletter-subscribe-button"
             >
               {newsletterMutation.isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Subscribing...
+                  Joining...
                 </>
               ) : (
-                "Get Updates"
+                "Join the Guild"
               )}
             </Button>
           </div>
-          <p className="text-gray-400 text-sm mt-4">
+          <p className="font-garden text-gray-400 text-sm mt-4">
             We respect your privacy. Unsubscribe at any time.
           </p>
         </form>
 
-        <div className="mt-12 border-t border-gray-800 pt-8">
-          <h3 className="text-2xl font-bold mb-6 text-battles-gold">
-            Follow Our Journey
+        <div className="mt-12 border-t border-evergreen/20 pt-8">
+          <h3 className="font-storybook text-2xl mb-6 text-parchment">
+            Follow Our Cultivation Journey
           </h3>
           <div className="flex justify-center space-x-6">
             <a
