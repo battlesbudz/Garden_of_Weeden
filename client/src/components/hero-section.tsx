@@ -41,7 +41,7 @@ export default function HeroSection() {
             From Service to Soil
           </h2>
           <p className="font-garden text-xl md:text-2xl text-parchment drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] max-w-3xl mx-auto">
-            Veteran-Owned Cannabis Cultivation in Buffalo, NY
+            Veteran-Owned Cannabis Microbusiness in Buffalo, NY
           </p>
         </div>
 
