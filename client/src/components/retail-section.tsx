@@ -1,6 +1,6 @@
 import { Sprout, Award, Heart, MapPin } from "lucide-react";
-import flowerCloseupImage from "@assets/AISelect_20251103_131732_Instagram_1762194447870.jpg";
-import dryingRacksImage from "@assets/AISelect_20251103_131804_Instagram_1762194447870.jpg";
+import flowerCloseupImage from "@assets/AISelect_20251103_131526_Instagram_1762194447917.jpg";
+import dryingRacksImage from "@assets/AISelect_20251103_131504_Instagram_1762194447955.jpg";
 
 export default function RetailSection() {
   const scrollToSection = (sectionId: string) => {
