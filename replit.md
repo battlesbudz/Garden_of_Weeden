@@ -1,7 +1,7 @@
-# Battles Budz Cannabis Platform
+# Garden of Weeden Cannabis Platform
 
 ## Project Overview
-A sophisticated cannabis industry digital platform designed to streamline investor engagement through a secure, role-based document management system.
+Garden of Weeden is a veteran-owned cannabis microbusiness in Buffalo, New York, bringing military precision to craft cannabis cultivation. This sophisticated digital platform showcases the brand's unique "Enchanted Grit" identity—combining Wizard of Oz whimsy with authentic service-forged values. The site emphasizes veteran ownership, Buffalo micro-terroir cultivation, and wellness advocacy.
 
 ## Architecture
 - **Frontend**: React with Vite, TypeScript, Tailwind CSS, shadcn/ui components
@@ -12,6 +12,52 @@ A sophisticated cannabis industry digital platform designed to streamline invest
 - **Routing**: Wouter for client-side routing
 
 ## Recent Changes
+
+### Complete Garden of Weeden Rebrand (2025-01-19)
+- **Brand Transformation**: Complete rebrand from Battles Budz to Garden of Weeden with veteran-owned Buffalo identity
+  
+**Design System Overhaul**
+  - **Logo-Aligned Color Palette**: Extracted from circular green logo
+    - Evergreen Canopy (#245427) - primary forest green
+    - Parchment Glow (#F7F1DA) - cream/off-white for text
+    - Midnight Grove (#1a1a1a) - deep black
+    - Canopy Veil (#3A6A2B) - secondary green accent
+  - **Wizard of Oz Typography**: Whimsical, enchanted aesthetic
+    - Yeseva One (font-enchanted) - main headlines
+    - Cormorant Garamond (font-storybook) - subheadings
+    - Work Sans (font-garden) - body text
+    - Parisienne (font-script) - decorative accents
+  - **CSS Architecture**: Custom properties in HSL format, backward-compatible battles- classes
+  - **Files Modified**: `client/src/index.css`
+
+**Content & Messaging**
+  - **Brand Voice**: "Enchanted Grit" - mythic/whimsical + reverent + grounded/authentic
+  - **Four Messaging Pillars**:
+    1. Service-Forged Mastery - military discipline meets botanical expertise
+    2. Buffalo Micro-Terroir - Lake Erie climate, Western NY soil
+    3. Veteran Wellness Advocacy - service commitment continues through cannabis
+    4. Garden Lore & Education - cultivation wisdom and cannabis education
+  - **About Page**: Comprehensive veteran story with three strategic cultivation photos (field rows, flowering plant, drying racks)
+  - **Homepage Hero**: Split-screen layout with outdoor cultivation photo, veteran-owned messaging, three pillars (Veteran-Owned, Buffalo Roots, Wellness Focused)
+  - **Footer**: Veteran-owned pride banner with Award, MapPin, and Heart icons
+  - **Newsletter**: "Join the Garden Guild" with "Yellow Brick Road to Cannabis Clarity" tagline
+  - **Navigation**: Added "Our Story" link to About page
+  - **Files Created/Modified**: `client/src/pages/about.tsx`, `client/src/components/hero-section.tsx`, `client/src/components/footer.tsx`, `client/src/components/newsletter-section.tsx`, `client/src/components/navigation.tsx`
+
+**SEO & Marketing**
+  - **Updated Keywords**: Veteran-owned cannabis Buffalo, Buffalo micro-terroir, craft cannabis Buffalo, veteran wellness cannabis
+  - **Homepage SEO**: "Garden of Weeden - Veteran-Owned Cannabis | Buffalo, NY"
+  - **Meta Descriptions**: Emphasize veteran ownership, Buffalo roots, and military precision cultivation
+  - **Keyword Landing Pages**: Updated with veteran-focused "Enchanted Grit" voice
+  - **Files Modified**: `client/src/pages/home.tsx`, `client/src/pages/keyword-landing.tsx`
+
+**Technical Notes**
+  - Community and investor portal references removed from quick-start modal
+  - Deleted investor-access-request-form component (no longer needed)
+  - All backend functionality preserved - frontend-only rebrand
+  - Three cultivation photos integrated: field-rows.jpg, flower-closeup.jpg, drying-racks.jpg
+  - Zero breaking changes to existing features or authentication flows
+  - Comprehensive end-to-end testing completed successfully
 
 ### 100% WCAG 2.1 AA Accessibility Achievement (2025-01-19)
 - **Complete WCAG 2.1 Level AA Compliance**: Achieved full accessibility compliance
@@ -121,17 +167,23 @@ A sophisticated cannabis industry digital platform designed to streamline invest
 
 ## User Preferences
 - Focus on mobile-first responsive design
-- Maintain professional cannabis industry branding with gold/black color scheme
+- **Garden of Weeden Brand Identity**: Veteran-owned, Buffalo-proud, Wizard of Oz aesthetic
+- **Color Palette**: Evergreen/parchment/midnight (no longer gold/black)
+- **Typography**: Wizard of Oz fonts for whimsical, enchanted feel
+- **Voice**: "Enchanted Grit" - mythic + reverent + authentic
 - Prioritize user experience and navigation flow
 - Keep authentication secure but user-friendly
+- Emphasize veteran ownership and Buffalo micro-terroir positioning
 
 ## Key Features
 - Multi-tier authentication (customer, investor, admin)
-- Investor portal with document access control
-- Community forum with gamification
-- E-commerce functionality
+- Veteran story and mission-driven About page
+- Buffalo micro-terroir cultivation messaging
+- E-commerce functionality (coming soon)
 - Real-time updates and notifications
 - Mobile-responsive design
+- NY OCM regulatory compliance
+- WCAG 2.1 AA accessibility compliance
 
 ## Development Guidelines
 - Follow the fullstack_js development guidelines in the codebase
@@ -141,19 +193,21 @@ A sophisticated cannabis industry digital platform designed to streamline invest
 - Test on both desktop and mobile viewports
 
 ## Current Status
+- ✅ **GARDEN OF WEEDEN REBRAND COMPLETE**: Full transformation to veteran-owned Buffalo brand identity with Wizard of Oz aesthetic
+- ✅ **Design System Implemented**: Logo-aligned evergreen/parchment color palette, custom typography (Yeseva One, Cormorant Garamond, Work Sans)
+- ✅ **Content Transformation**: "Enchanted Grit" voice across all pages, veteran story, Buffalo micro-terroir messaging
+- ✅ **Visual Assets Integrated**: Three cultivation photos strategically placed (field rows, flower closeup, drying racks)
 - ✅ **100% WCAG 2.1 AA COMPLIANCE ACHIEVED**: Full accessibility compliance with skip navigation, ARIA live regions, landmarks, enhanced focus management, touch targets, and keyboard navigation
 - ✅ **NY OCM COMPLIANCE COMPLETE**: Full 9 NYCRR Parts 128 & 129 regulatory compliance implemented with 18.07:1 contrast ratio
-- ✅ **SEO SYSTEM FULLY IMPLEMENTED**: Comprehensive SEO across all pages with cannabis industry optimization
+- ✅ **SEO UPDATED**: Veteran-owned Buffalo keywords, updated meta descriptions, keyword landing pages
 - ✅ **Technical SEO Complete**: Robots.txt, XML sitemap, structured data, and meta tag optimization
-- ✅ **Cannabis Compliance**: Industry-specific keywords, local SEO, and regulatory compliance with OCM standards
 - ✅ Login redirect issue completely resolved with cookie-based solution
 - ✅ Mobile responsiveness improved (no desktop view switching)  
 - ✅ TypeScript errors fixed
 - ✅ Robust authentication flow that survives OAuth session resets
 - ✅ Cryptographically signed cookies with HMAC verification
 - ✅ **MAJOR REFACTORING COMPLETED**: Schema decomposition (85% reduction) and enhanced-community.tsx (80% reduction)
-- ✅ Community page functionality restored after component extraction
-- → System fully operational with improved architecture, maintainability, accessibility, and SEO optimization
+- → **Garden of Weeden site fully operational** with distinctive veteran-owned Buffalo identity, complete rebrand, accessibility, regulatory compliance, and SEO optimization
 
 ## Refactoring Achievements (January 6, 2025)
 - **Schema.ts**: 589 lines → 90 lines (85% reduction) via domain-driven decomposition
