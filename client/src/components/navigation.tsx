@@ -4,7 +4,6 @@ import { Menu, X, User, ShoppingBag, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
-import logoPath from "@assets/AISelect_20251103_100452_Instagram_1762183195419.jpg";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,14 +57,8 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity" data-testid="nav-logo-link">
-            <img
-              src={logoPath}
-              alt="Garden of Weeden Logo"
-              className="h-28 w-auto"
-              data-testid="nav-logo-image"
-            />
-            <span className="ml-4 text-battles-gold font-bold text-xl flex items-center" data-testid="nav-brand-name">
-              GARDEN OF WEEDEN
+            <span className="text-2xl font-bold text-green-500" data-testid="nav-brand-name">
+              Garden of Weeden
             </span>
           </Link>
 
