@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&family=Cormorant+Garamond:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&family=Parisienne&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,7 +15,7 @@
   --card-foreground: hsl(0, 0%, 0%);
   --border: hsl(0, 0%, 90%);
   --input: hsl(0, 0%, 90%);
-  --primary: hsl(140, 45%, 35%);
+  --primary: hsl(103, 34%, 26%);
   --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(0, 0%, 96%);
   --secondary-foreground: hsl(0, 0%, 0%);
@@ -21,13 +23,16 @@
   --accent-foreground: hsl(0, 0%, 0%);
   --destructive: hsl(0, 84%, 60%);
   --destructive-foreground: hsl(60, 9%, 98%);
-  --ring: hsl(140, 45%, 35%);
+  --ring: hsl(103, 34%, 26%);
   --radius: 0.5rem;
 
-  /* Garden of Weeden custom colors */
-  --garden-green: hsl(140, 45%, 35%);
-  --garden-dark: hsl(0, 0%, 10%);
-  --garden-light: hsl(140, 30%, 95%);
+  /* Garden of Weeden Brand Colors (Logo-Aligned) */
+  --evergreen-canopy: hsl(103, 34%, 26%);     /* #245427 - Primary green from logo */
+  --midnight-grove: hsl(120, 28%, 8%);        /* #0C1A0C - Dark green text */
+  --onyx-bark: hsl(0, 0%, 6.7%);              /* #111111 - Black backgrounds */
+  --parchment-glow: hsl(45, 60%, 93%);        /* #F7F1DA - Cream/off-white from logo script */
+  --moonlit-mist: hsl(45, 40%, 88%);          /* #E4E0CC - Softer cream for cards */
+  --canopy-veil: hsl(103, 29%, 30%);          /* #3A6A2B - Brighter green for accents */
 }
 
 .dark {
@@ -63,61 +68,58 @@
 }
 
 @layer utilities {
-  .text-garden-green {
-    color: hsl(140, 45%, 35%);
-  }
-
-  .text-garden-dark {
-    color: hsl(0, 0%, 10%);
-  }
-
-  .text-garden-light {
-    color: hsl(140, 30%, 95%);
-  }
-
-  .bg-garden-green {
-    background-color: hsl(140, 45%, 35%);
-  }
-
-  .bg-garden-dark {
-    background-color: hsl(0, 0%, 10%);
-  }
-
-  .bg-garden-light {
-    background-color: hsl(140, 30%, 95%);
-  }
-
-  .border-garden-green {
-    border-color: hsl(140, 45%, 35%);
-  }
-
-  .border-garden-dark {
-    border-color: hsl(0, 0%, 10%);
-  }
-
-  .hover\:bg-garden-green:hover {
-    background-color: hsl(140, 45%, 35%);
-  }
-
-  .hover\:text-garden-green:hover {
-    color: hsl(140, 45%, 35%);
-  }
+  /* Garden of Weeden Brand Colors */
+  .text-evergreen { color: var(--evergreen-canopy); }
+  .text-midnight-grove { color: var(--midnight-grove); }
+  .text-parchment { color: var(--parchment-glow); }
+  .text-moonlit { color: var(--moonlit-mist); }
+  .text-canopy { color: var(--canopy-veil); }
   
-  /* Legacy battles- classes for backward compatibility */
-  .text-battles-gold { color: hsl(140, 45%, 35%); }
+  .bg-evergreen { background-color: var(--evergreen-canopy); }
+  .bg-midnight-grove { background-color: var(--midnight-grove); }
+  .bg-onyx { background-color: var(--onyx-bark); }
+  .bg-parchment { background-color: var(--parchment-glow); }
+  .bg-moonlit { background-color: var(--moonlit-mist); }
+  .bg-canopy { background-color: var(--canopy-veil); }
+  
+  .border-evergreen { border-color: var(--evergreen-canopy); }
+  .border-parchment { border-color: var(--parchment-glow); }
+  .border-canopy { border-color: var(--canopy-veil); }
+  
+  .hover\:bg-evergreen:hover { background-color: var(--evergreen-canopy); }
+  .hover\:bg-canopy:hover { background-color: var(--canopy-veil); }
+  .hover\:text-evergreen:hover { color: var(--evergreen-canopy); }
+  .hover\:text-canopy:hover { color: var(--canopy-veil); }
+  
+  /* Legacy battles- classes (mapped to new brand colors for backward compatibility) */
+  .text-battles-gold { color: var(--evergreen-canopy); }
   .text-battles-black { color: hsl(0, 0%, 0%); }
   .text-battles-gray { color: hsl(0, 0%, 20%); }
   .text-battles-white { color: hsl(0, 0%, 100%); }
-  .bg-battles-gold { background-color: hsl(140, 45%, 35%); }
+  .bg-battles-gold { background-color: var(--evergreen-canopy); }
   .bg-battles-black { background-color: hsl(0, 0%, 0%); }
   .bg-battles-gray { background-color: hsl(0, 0%, 20%); }
-  .border-battles-gold { border-color: hsl(140, 45%, 35%); }
+  .border-battles-gold { border-color: var(--evergreen-canopy); }
   .border-battles-black { border-color: hsl(0, 0%, 0%); }
-  .hover\:bg-battles-gold:hover { background-color: hsl(140, 45%, 35%); }
-  .hover\:text-battles-gold:hover { color: hsl(140, 45%, 35%); }
+  .hover\:bg-battles-gold:hover { background-color: var(--canopy-veil); }
+  .hover\:text-battles-gold:hover { color: var(--evergreen-canopy); }
 
-  .font-playfair {
-    font-family: 'Playfair Display', serif;
+  /* Garden of Weeden Typography - Wizard of Oz Aesthetic */
+  .font-enchanted {
+    font-family: 'Yeseva One', serif;
+    font-weight: 400;
+  }
+  
+  .font-storybook {
+    font-family: 'Cormorant Garamond', serif;
+  }
+  
+  .font-garden {
+    font-family: 'Work Sans', sans-serif;
+  }
+  
+  .font-script {
+    font-family: 'Parisienne', cursive;
   }
 
   .no-scroll {

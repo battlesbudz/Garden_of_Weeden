@@ -7,7 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import LoginPage from "@/pages/login";
 import Shop from "@/pages/shop";
-
+import About from "@/pages/about";
 
 import NotFound from "./pages/not-found";
 import PrivacyPolicy from "./pages/privacy-policy";
@@ -43,6 +43,7 @@ function Router() {
           <Route path="/" component={Home} />
         <Route path="/login" component={LoginPage} />
         <Route path="/shop" component={Shop} />
+        <Route path="/about" component={About} />
         
         {/* Product Pages - Coming Soon */}
         <Route path="/products" component={ProductsComingSoon} />

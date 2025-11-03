@@ -84,6 +84,9 @@ export default function Navigation() {
               <Link href="/" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-home">
                 Home
               </Link>
+              <Link href="/about" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-about">
+                Our Story
+              </Link>
               <Link href="/products" className="text-battles-white hover:text-battles-gold px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-products">
                 Products
               </Link>
@@ -134,6 +137,9 @@ export default function Navigation() {
           <div className="px-2 pt-2 pb-3 space-y-1 bg-battles-black border-t border-battles-gold">
             <Link href="/" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
               Home
+            </Link>
+            <Link href="/about" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
+              Our Story
             </Link>
             <Link href="/products" className="block text-white hover:text-battles-gold px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
               Products
