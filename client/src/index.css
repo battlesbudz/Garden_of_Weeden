@@ -31,21 +31,21 @@
 }
 
 .dark {
-  --background: hsl(0, 0%, 0%);
+  --background: hsl(120, 35%, 28%);
   --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(0, 0%, 15%);
+  --muted: hsl(120, 30%, 20%);
   --muted-foreground: hsl(0, 0%, 65%);
-  --popover: hsl(0, 0%, 0%);
+  --popover: hsl(120, 35%, 28%);
   --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(0, 0%, 0%);
+  --card: hsl(120, 35%, 28%);
   --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(0, 0%, 15%);
-  --input: hsl(0, 0%, 15%);
+  --border: hsl(120, 30%, 20%);
+  --input: hsl(120, 30%, 20%);
   --primary: hsl(140, 45%, 40%);
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(0, 0%, 15%);
+  --secondary: hsl(120, 30%, 20%);
   --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(0, 0%, 15%);
+  --accent: hsl(120, 30%, 20%);
   --accent-foreground: hsl(0, 0%, 98%);
   --destructive: hsl(0, 62%, 30%);
   --destructive-foreground: hsl(0, 0%, 98%);
@@ -105,14 +105,14 @@
   
   /* Legacy battles- classes for backward compatibility */
   .text-battles-gold { color: hsl(140, 45%, 35%); }
-  .text-battles-black { color: hsl(0, 0%, 10%); }
-  .text-battles-gray { color: hsl(0, 0%, 20%); }
+  .text-battles-black { color: hsl(120, 35%, 28%); }
+  .text-battles-gray { color: hsl(120, 30%, 20%); }
   .text-battles-white { color: hsl(0, 0%, 100%); }
   .bg-battles-gold { background-color: hsl(140, 45%, 35%); }
-  .bg-battles-black { background-color: hsl(0, 0%, 10%); }
-  .bg-battles-gray { background-color: hsl(0, 0%, 20%); }
+  .bg-battles-black { background-color: hsl(120, 35%, 28%); }
+  .bg-battles-gray { background-color: hsl(120, 30%, 20%); }
   .border-battles-gold { border-color: hsl(140, 45%, 35%); }
-  .border-battles-black { border-color: hsl(0, 0%, 10%); }
+  .border-battles-black { border-color: hsl(120, 35%, 28%); }
   .hover\:bg-battles-gold:hover { background-color: hsl(140, 45%, 35%); }
   .hover\:text-battles-gold:hover { color: hsl(140, 45%, 35%); }
 

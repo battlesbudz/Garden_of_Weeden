@@ -49,8 +49,7 @@ export default function Navigation() {
 
   return (
     <nav
-      className="fixed w-full top-0 z-50 bg-black border-b border-yellow-500/20"
-      style={{ backgroundColor: '#000000' }}
+      className="fixed w-full top-0 z-50 bg-battles-black border-b border-yellow-500/20"
       role="navigation"
       aria-label="Main navigation"
     >
