@@ -164,7 +164,7 @@ export function OCMFooterWarning() {
           style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid #000' }}
           data-testid="ocm-license-info"
         >
-          New York State Licensed Microbusiness | OCM-MICR-2023-000258
+          New York State Licensed Microbusiness | OCMMICR-2023-000312
         </p>
       </div>
 

@@ -37,7 +37,7 @@ export default function TermsOfService() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-battles-gold">Legal Compliance</h2>
             <p className="text-gray-300">
-              Garden of Weeden LLC operates under New York State Adult-Use Microbusiness License. All cannabis products are produced and sold in compliance with New York State regulations.
+              Garden of Weeden LLC operates under New York State Adult-Use Microbusiness License OCMMICR-2023-000312. All cannabis products are produced and sold in compliance with New York State regulations.
             </p>
           </section>
 
