@@ -12,12 +12,12 @@ export default function About() {
     <div className="min-h-screen overflow-x-hidden bg-battles-black">
       <SEOHead
         title="Our Veteran Story - Garden of Weeden"
-        description="From service to soil: Learn how Garden of Weeden's veteran-owned team brings military precision to craft cannabis cultivation in Buffalo, NY."
+        description="From service to soil: Learn how Garden of Weeden's veteran-owned team cultivates premium craft cannabis in Buffalo, NY."
         keywords={[
           "veteran-owned cannabis",
           "Buffalo cannabis",
           "craft cultivation",
-          "military precision cannabis",
+          "craft cannabis cultivation",
           "veteran business Buffalo",
           "micro-terroir cannabis",
           "Western New York cannabis",
@@ -36,13 +36,13 @@ export default function About() {
             From Service to Soil
           </h1>
           <p className="font-storybook text-2xl md:text-3xl text-evergreen mb-8">
-            Where Military Precision Meets Botanical Mastery
+            Our Veteran Story
           </p>
           <div className="h-1 w-32 bg-evergreen mx-auto mb-8"></div>
           <p className="font-garden text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Garden of Weeden is a veteran-owned cannabis microbusiness rooted in Buffalo, NY. 
-            Our journey from battlefield discipline to botanical excellence tells a story of 
-            service, resilience, and commitment to quality.
+            Our journey from service to cultivation tells a story of dedication, 
+            resilience, and commitment to quality.
           </p>
         </div>
       </section>
@@ -54,20 +54,19 @@ export default function About() {
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <Award className="h-8 w-8 text-evergreen" />
-                <h2 className="font-storybook text-4xl text-parchment">Service-Forged Mastery</h2>
+                <h2 className="font-storybook text-4xl text-parchment">Our Approach</h2>
               </div>
               <p className="font-garden text-gray-300 mb-6 leading-relaxed">
-                Every mission taught us patience, attention to detail, and unwavering commitment to excellence. 
-                After years of service, we discovered that the same principles that guided us in uniform could 
-                transform how we approach cannabis cultivation.
+                Years of service taught us patience, attention to detail, and unwavering commitment to excellence. 
+                After transitioning from the military, we discovered that the same principles that guided us 
+                could be applied to craft cannabis cultivation.
               </p>
               <p className="font-garden text-gray-300 mb-6 leading-relaxed">
-                From battlefield precision to botanical perfection, we bring military-grade standards to 
-                every plant we nurture. Our veteran team understands that excellence isn't optional—it's 
-                the foundation of everything we do.
+                We bring that same commitment to quality to every plant we nurture. Our veteran team 
+                understands that excellence isn't optional—it's the foundation of everything we do.
               </p>
               <blockquote className="border-l-4 border-evergreen pl-6 font-script text-xl text-parchment italic">
-                "Cultivated with military-grade precision. Tested with veteran-earned trust."
+                "Quality cannabis, grown with care and integrity."
               </blockquote>
             </div>
             <div className="relative">

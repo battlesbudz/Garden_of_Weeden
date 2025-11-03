@@ -55,23 +55,23 @@ export default function RetailSection() {
           </div>
         </div>
 
-        {/* Service-Forged Cultivation Process */}
+        {/* Cultivation Process */}
         <div className="mb-20">
           <div className="text-center mb-12">
             <h2 className="font-enchanted text-4xl md:text-5xl text-parchment mb-4">
-              From Service to Cure
+              Our Cultivation Process
             </h2>
             <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
             <p className="font-storybook text-xl md:text-2xl text-evergreen max-w-3xl mx-auto">
-              Military Precision Meets Botanical Artistry
+              Quality and Consistency in Every Harvest
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6 font-garden text-gray-300 order-2 md:order-1">
               <p className="text-lg">
-                Every plant receives the same attention to detail we learned in service. Our cultivation protocols 
-                combine military-grade precision with generations of botanical wisdom, ensuring consistent quality 
+                Every plant receives careful attention throughout its lifecycle. Our cultivation approach 
+                combines time-tested methods with hands-on experience, ensuring consistent quality 
                 and excellence in every harvest.
               </p>
               <div className="grid grid-cols-2 gap-4">

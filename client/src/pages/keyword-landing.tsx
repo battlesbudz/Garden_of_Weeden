@@ -37,7 +37,7 @@ export default function KeywordLandingPage() {
               Veteran-Owned Cannabis Microbusiness <span className="text-parchment">Coming Soon</span>
             </h2>
             <p className="font-garden text-xl text-gray-300 mb-8">
-              From service to soil: bringing military precision to craft cannabis cultivation in Western New York
+              From service to soil: veteran-owned craft cannabis cultivation in Western New York
             </p>
             <div className="bg-evergreen/10 border border-evergreen/30 rounded-lg p-6 max-w-2xl mx-auto">
               <h3 className="font-storybook text-xl text-parchment mb-4">
@@ -88,11 +88,11 @@ export default function KeywordLandingPage() {
               {/* Mission Focus */}
               <div className="bg-gray-900 rounded-lg p-8 border border-evergreen/20">
                 <h2 className="font-storybook text-2xl text-parchment mb-6">
-                  Our Service-Forged Mission
+                  Our Mission
                 </h2>
                 <div className="space-y-4 font-garden">
                   <p className="text-gray-300">
-                    <strong className="text-evergreen">Garden of Weeden</strong> brings military discipline 
+                    <strong className="text-evergreen">Garden of Weeden</strong> brings dedication 
                     and veteran-earned values to Buffalo's cannabis community.
                   </p>
                   <p className="text-gray-300">

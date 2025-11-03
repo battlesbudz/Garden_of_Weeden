@@ -17,7 +17,7 @@ export default function Home() {
     <div className="min-h-screen overflow-x-hidden bg-battles-black">
       <SEOHead
         title="Garden of Weeden - Veteran-Owned Cannabis | Buffalo, NY"
-        description="Garden of Weeden: Veteran-owned cannabis microbusiness in Buffalo, NY. From service to soil—cultivating premium flower with military precision in Western New York's micro-terroir."
+        description="Garden of Weeden: Veteran-owned cannabis microbusiness in Buffalo, NY. From service to soil—cultivating premium craft flower in Western New York's micro-terroir."
         keywords={[
           "Garden of Weeden",
           "veteran-owned cannabis Buffalo",
@@ -26,7 +26,7 @@ export default function Home() {
           "veteran cannabis business",
           "Buffalo micro-terroir",
           "craft cannabis Buffalo",
-          "military precision cannabis",
+          "craft cannabis cultivation",
           "veteran wellness cannabis",
           "Buffalo NY dispensary"
         ]}

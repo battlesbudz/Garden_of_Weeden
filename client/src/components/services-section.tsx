@@ -4,8 +4,8 @@ export default function ServicesSection() {
   const services = [
     {
       icon: Award,
-      title: "Service-Forged Excellence",
-      description: "Military discipline applied to every aspect of cannabis cultivation. From seed selection to final cure, we bring the same attention to detail that defined our service.",
+      title: "Veteran Excellence",
+      description: "Our commitment to quality comes from years of service. From seed selection to final cure, we bring the same care and attention to detail that defined our work.",
     },
     {
       icon: Heart,

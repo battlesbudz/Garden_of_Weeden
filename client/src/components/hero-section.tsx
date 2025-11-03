@@ -41,7 +41,7 @@ export default function HeroSection() {
             From Service to Soil
           </h2>
           <p className="font-garden text-xl md:text-2xl text-parchment drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] max-w-3xl mx-auto">
-            Where Military Precision Meets Botanical Mastery
+            Veteran-Owned Cannabis Cultivation in Buffalo, NY
           </p>
         </div>
 
@@ -50,7 +50,7 @@ export default function HeroSection() {
           <div className="bg-midnight-grove/40 backdrop-blur-sm border border-evergreen/30 rounded-lg p-6 hover:border-evergreen/60 transition-all">
             <Award className="h-10 w-10 text-evergreen mx-auto mb-3" />
             <h3 className="font-storybook text-xl text-parchment mb-2">Veteran-Owned</h3>
-            <p className="font-garden text-sm text-gray-300">Service-forged cultivation excellence</p>
+            <p className="font-garden text-sm text-gray-300">Quality cultivation by those who served</p>
           </div>
           <div className="bg-midnight-grove/40 backdrop-blur-sm border border-evergreen/30 rounded-lg p-6 hover:border-evergreen/60 transition-all">
             <MapPin className="h-10 w-10 text-evergreen mx-auto mb-3" />

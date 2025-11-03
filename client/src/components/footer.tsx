@@ -21,7 +21,7 @@ export default function Footer() {
               <Award className="h-8 w-8 text-evergreen" />
               <div>
                 <h3 className="font-storybook text-xl text-parchment font-semibold">Certified Veteran-Owned Business</h3>
-                <p className="font-garden text-sm text-gray-300">Service-forged excellence in every harvest</p>
+                <p className="font-garden text-sm text-gray-300">Quality and care in every harvest</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -50,7 +50,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="font-garden text-gray-400 mb-4 max-w-md">
-              Veteran-owned cannabis microbusiness cultivating premium flower with military precision in Buffalo, NY.
+              Veteran-owned cannabis microbusiness cultivating premium flower in Buffalo, NY.
             </p>
             <div className="text-gray-400 space-y-2">
               <p className="flex items-center" data-testid="footer-address">
