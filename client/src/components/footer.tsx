@@ -1,5 +1,4 @@
-import { MapPin, Mail, Phone } from "lucide-react";
-import logoPath from "@assets/AISelect_20251103_100452_Instagram_1762183195419.jpg";
+import { MapPin, Mail, Phone, Leaf } from "lucide-react";
 import { LocationLinksFooter } from '@/components/seo/LocationLinksGenerator';
 import { OCMFooterWarning } from '@/components/OCMWarning';
 import { SITE_CONFIG } from '@/utils/seo';
@@ -18,13 +17,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center mb-4">
-              <img
-                src={logoPath}
-                alt={`${SITE_CONFIG.name} Logo - Premium Cannabis Dispensary`}
-                className="h-8 w-auto mr-3"
-                data-testid="footer-logo"
-              />
-              <span className="text-battles-gold font-bold text-xl" data-testid="footer-brand-name">
+              <Leaf className="text-green-500 mr-3 h-8 w-8" />
+              <span className="text-green-500 font-bold text-xl" data-testid="footer-brand-name">
                 {SITE_CONFIG.name.toUpperCase()}
               </span>
             </div>

@@ -1,5 +1,4 @@
-import { ChevronDown } from "lucide-react";
-import logoPath from "@assets/AISelect_20251103_100452_Instagram_1762183195419.jpg";
+import { ChevronDown, Leaf } from "lucide-react";
 
 export default function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -12,36 +11,29 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative flex flex-col items-center justify-start text-center bg-black overflow-x-hidden py-8"
+      className="relative flex flex-col items-center justify-center text-center bg-black min-h-screen overflow-x-hidden py-20"
     >
-      <div className="relative z-10 w-screen" style={{ margin: 0, padding: 0 }}>
-        {/* Logo */}
-        <div className="animate-fade-in flex justify-center px-4 pt-4 pb-2">
-          <img
-            src={logoPath}
-            alt="Garden of Weeden Logo"
-            className="drop-shadow-2xl w-full max-w-sm md:max-w-md lg:max-w-lg h-auto"
-          />
+      <div className="relative z-10 max-w-5xl mx-auto px-4">
+        {/* Logo/Brand */}
+        <div className="animate-fade-in flex justify-center mb-8">
+          <div className="flex items-center gap-3">
+            <Leaf className="w-16 h-16 text-green-500" />
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-green-500">
+              Garden of Weeden
+            </h1>
+          </div>
         </div>
 
-        {/* New Tagline */}
-        <div 
-          className="animate-fade-in-up px-4 mt-3" 
-        >
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-playfair font-bold mb-3" style={{ margin: 0, lineHeight: 1.1 }}>
-            <span className="text-battles-gold">
-              Premium Cannabis
-            </span>
-            <br />
-            <span className="text-white inline-block">
-              Experience
-            </span>
-          </h1>
+        {/* Tagline */}
+        <div className="animate-fade-in-up mb-6">
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-playfair font-bold text-white">
+            Your Premium Cannabis Destination
+          </h2>
         </div>
 
         {/* Supporting text */}
-        <p className="text-base md:text-lg lg:text-xl mb-4 max-w-3xl mx-auto font-light text-gray-300 animate-fade-in-up animation-delay-200">
-          Quality cannabis products and services in Western New York.
+        <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto font-light text-gray-300 animate-fade-in-up animation-delay-200">
+          Discover quality cannabis products crafted for discerning enthusiasts in Buffalo, New York.
         </p>
 
         {/* CTA Buttons */}

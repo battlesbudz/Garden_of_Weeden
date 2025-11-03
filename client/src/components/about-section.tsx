@@ -1,5 +1,4 @@
 import { Award, Heart, Leaf } from "lucide-react";
-import cultivationImg from "@assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg";
 
 export default function AboutSection() {
   const values = [
