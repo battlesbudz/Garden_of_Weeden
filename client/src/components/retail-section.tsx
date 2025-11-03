@@ -1,5 +1,4 @@
 import { Badge } from '@/components/ui/badge';
-import cannabisFlower1 from "@assets/Screenshot_20250713_025017_Gallery_1752389462073.jpg";
 
 export default function RetailSection() {
   const scrollToSection = (sectionId: string) => {
@@ -13,25 +12,21 @@ export default function RetailSection() {
     {
       name: "Premium Flower",
       description: "Small-batch, hand-trimmed cannabis flower cultivated with care and precision.",
-      image: cannabisFlower1,
       comingSoon: true,
     },
     {
       name: "Edibles",
       description: "Precisely dosed cannabis-infused edibles for a consistent experience.",
-      image: cannabisFlower1,
       comingSoon: true,
     },
     {
       name: "Vapes",
       description: "Premium vape cartridges featuring high-quality cannabis extracts.",
-      image: cannabisFlower1,
       comingSoon: true,
     },
     {
       name: "Concentrates",
       description: "Expertly processed cannabis concentrates for enhanced potency and flavor.",
-      image: cannabisFlower1,
       comingSoon: true,
     },
   ];
@@ -53,27 +48,18 @@ export default function RetailSection() {
           {products.map((product, index) => (
             <div
               key={index}
-              className="group relative"
+              className="group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-8 border border-battles-gold/20"
             >
-              <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden mb-6 border border-battles-gold/20 relative">
-                <div className="absolute top-4 right-4 z-10">
-                  <Badge className="bg-battles-gold text-battles-black font-semibold px-3 py-1">
-                    Coming Soon
-                  </Badge>
-                </div>
-                <div className="opacity-40 grayscale">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-80 md:h-96 object-contain"
-                  />
-                </div>
+              <div className="flex justify-end mb-4">
+                <Badge className="bg-battles-gold text-battles-black font-semibold px-3 py-1">
+                  Coming Soon
+                </Badge>
               </div>
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-white mb-2">
+                <h3 className="text-3xl font-bold text-white mb-4">
                   {product.name}
                 </h3>
-                <p className="text-gray-300 mb-4">{product.description}</p>
+                <p className="text-gray-300 mb-6 text-lg">{product.description}</p>
                 <div className="flex items-center justify-center">
                   <button
                     onClick={() => scrollToSection("newsletter")}
