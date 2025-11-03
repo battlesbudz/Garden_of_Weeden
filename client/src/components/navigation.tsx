@@ -57,7 +57,7 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity" data-testid="nav-logo-link">
-            <span className="text-2xl font-bold text-green-500" data-testid="nav-brand-name">
+            <span className="text-2xl font-playfair font-bold text-green-500" data-testid="nav-brand-name">
               Garden of Weeden
             </span>
           </Link>
