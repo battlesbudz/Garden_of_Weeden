@@ -83,7 +83,7 @@ export default function HeroSection() {
           </button>
           <button
             onClick={() => scrollToSection("newsletter")}
-            className="bg-parchment/90 hover:bg-parchment text-midnight-grove px-8 py-4 rounded-lg font-garden font-semibold text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
+            className="bg-parchment hover:bg-parchment/90 text-black px-8 py-4 rounded-lg font-garden font-semibold text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             data-testid="hero-cta-newsletter"
           >
             Get Updates
