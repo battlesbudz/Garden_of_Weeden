@@ -27,7 +27,7 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 py-20 text-center">
-        {/* Main Headline - Wizard of Oz Style */}
+        {/* Main Headline */}
         <div className="animate-fade-in mb-6">
           <h1 className="font-enchanted text-5xl md:text-7xl lg:text-8xl text-parchment mb-4 leading-tight">
             Garden of Weeden
@@ -64,14 +64,14 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* CTA Buttons - Themed */}
+        {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400 mb-12">
           <Link href="/about">
             <button
               className="bg-evergreen hover:bg-canopy text-white px-8 py-4 rounded-lg font-garden font-semibold text-base shadow-lg hover:shadow-xl hover:shadow-evergreen/30 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
               data-testid="hero-cta-story"
             >
-              Embark on Our Story
+              Our Story
             </button>
           </Link>
           <button
@@ -79,14 +79,14 @@ export default function HeroSection() {
             className="border-2 border-evergreen text-parchment px-8 py-4 rounded-lg font-garden font-semibold text-base hover:bg-evergreen/20 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             data-testid="hero-cta-products"
           >
-            Explore the Harvest
+            Learn More
           </button>
           <button
             onClick={() => scrollToSection("newsletter")}
             className="bg-parchment/90 hover:bg-parchment text-midnight-grove px-8 py-4 rounded-lg font-garden font-semibold text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             data-testid="hero-cta-newsletter"
           >
-            Join the Garden Guild
+            Get Updates
           </button>
         </div>
 

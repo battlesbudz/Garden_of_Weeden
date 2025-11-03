@@ -19,7 +19,7 @@ export default function ServicesSection() {
     },
     {
       icon: BookOpen,
-      title: "Garden Lore & Education",
+      title: "Education & Resources",
       description: "Sharing cultivation knowledge and cannabis education. From plant science to consumption best practices, we're here to guide your journey.",
     },
     {
@@ -39,11 +39,11 @@ export default function ServicesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="font-enchanted text-4xl md:text-5xl text-parchment mb-4">
-            Our Garden Values
+            Our Values
           </h2>
           <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
           <p className="font-storybook text-xl md:text-2xl text-evergreen max-w-3xl mx-auto">
-            The Four Pillars of Enchanted Grit
+            Service, Quality, and Community
           </p>
         </div>
 

@@ -44,22 +44,22 @@ export default function NewsletterSection() {
     <section id="newsletter" className="py-20 bg-midnight-grove/20 text-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="font-enchanted text-4xl md:text-5xl text-parchment mb-4">
-          Join the Garden Guild
+          Stay Updated
         </h2>
         <div className="h-1 w-32 bg-evergreen mx-auto mb-6"></div>
         <p className="font-storybook text-xl md:text-2xl text-evergreen mb-4">
-          Follow the Yellow Brick Road to Cannabis Clarity
+          Join Our Newsletter
         </p>
         <p className="font-garden text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-          Be the first to know when we launch our harvest, receive veteran wellness resources, 
-          and get exclusive updates from our Buffalo garden.
+          Be the first to know when we launch, receive veteran wellness resources, 
+          and get exclusive updates from our Buffalo cultivation operation.
         </p>
 
         <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
           <div className="flex flex-col sm:flex-row gap-4">
             <Input
               type="email"
-              placeholder="Plant your email to receive harvest updates"
+              placeholder="Enter your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="flex-1 bg-gray-800 text-white border-evergreen/30 focus:border-evergreen font-garden"
@@ -76,10 +76,10 @@ export default function NewsletterSection() {
               {newsletterMutation.isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Joining...
+                  Subscribing...
                 </>
               ) : (
-                "Join the Guild"
+                "Subscribe"
               )}
             </Button>
           </div>
@@ -97,7 +97,7 @@ export default function NewsletterSection() {
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-battles-gold text-2xl transition-colors"
+              className="text-gray-400 hover:text-evergreen text-2xl transition-colors"
               title="Follow us on Instagram"
             >
               <Instagram className="h-6 w-6" />
@@ -106,7 +106,7 @@ export default function NewsletterSection() {
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-battles-gold text-2xl transition-colors"
+              className="text-gray-400 hover:text-evergreen text-2xl transition-colors"
               title="Follow us on Facebook"
             >
               <Facebook className="h-6 w-6" />
@@ -115,7 +115,7 @@ export default function NewsletterSection() {
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-battles-gold text-2xl transition-colors"
+              className="text-gray-400 hover:text-evergreen text-2xl transition-colors"
               title="Follow us on Twitter"
             >
               <Twitter className="h-6 w-6" />
@@ -124,7 +124,7 @@ export default function NewsletterSection() {
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-battles-gold text-2xl transition-colors"
+              className="text-gray-400 hover:text-evergreen text-2xl transition-colors"
               title="Connect with us on LinkedIn"
             >
               <Linkedin className="h-6 w-6" />
