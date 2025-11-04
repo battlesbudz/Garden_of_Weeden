@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X, User, ShoppingBag, LogOut } from "lucide-react";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
+import { SITE_CONFIG } from "@/utils/seo";
 import logoImage from "@assets/garden_of_weeden_logo_transparent_1762191379653.png";
 
 export default function Navigation() {
@@ -108,6 +110,40 @@ export default function Navigation() {
               >
                 Contact
               </button>
+
+              {/* Social Media Icons */}
+              <div className="flex items-center gap-2 border-l border-green-500/30 pl-4 ml-2">
+                <a
+                  href={SITE_CONFIG.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-green-500 transition-all duration-300 hover:scale-110"
+                  aria-label={`Follow ${SITE_CONFIG.name} on Instagram`}
+                  data-testid="nav-social-instagram"
+                >
+                  <FaInstagram className="h-4 w-4" />
+                </a>
+                <a
+                  href={SITE_CONFIG.social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-green-500 transition-all duration-300 hover:scale-110"
+                  aria-label={`Follow ${SITE_CONFIG.name} on Facebook`}
+                  data-testid="nav-social-facebook"
+                >
+                  <FaFacebook className="h-4 w-4" />
+                </a>
+                <a
+                  href={SITE_CONFIG.social.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-green-500 transition-all duration-300 hover:scale-110"
+                  aria-label={`Follow ${SITE_CONFIG.name} on Twitter`}
+                  data-testid="nav-social-twitter"
+                >
+                  <FaTwitter className="h-4 w-4" />
+                </a>
+              </div>
 
               {/* Authentication Links */}
               {isAuthenticated ? (

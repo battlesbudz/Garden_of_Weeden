@@ -1,4 +1,5 @@
 import { MapPin, Mail, Phone, Leaf, Award, Heart } from "lucide-react";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { useReducedMotion } from "framer-motion";
 import { LocationLinksFooter } from '@/components/seo/LocationLinksGenerator';
 import { OCMFooterWarning } from '@/components/OCMWarning';
@@ -119,44 +120,61 @@ export default function Footer() {
 
           <div>
             <h4 className="text-battles-gold font-semibold mb-4">Follow Us</h4>
-            <ul className="space-y-2 text-gray-400">
-              <li>
-                <a 
-                  href={SITE_CONFIG.social.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-battles-gold transition-colors"
-                  data-testid="footer-link-facebook"
-                  aria-label={`Follow ${SITE_CONFIG.name} on Facebook`}
-                >
-                  Facebook
-                </a>
-              </li>
-              <li>
-                <a 
-                  href={SITE_CONFIG.social.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-battles-gold transition-colors"
-                  data-testid="footer-link-instagram"
-                  aria-label={`Follow ${SITE_CONFIG.name} on Instagram`}
-                >
-                  Instagram
-                </a>
-              </li>
-              <li>
-                <a 
-                  href={SITE_CONFIG.social.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-battles-gold transition-colors"
-                  data-testid="footer-link-twitter"
-                  aria-label={`Follow ${SITE_CONFIG.name} on Twitter`}
-                >
-                  Twitter
-                </a>
-              </li>
-            </ul>
+            <div className="flex gap-4">
+              <a 
+                href={SITE_CONFIG.social.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-center w-12 h-12 rounded-full bg-gray-800 border-2 border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-500/30"
+                data-testid="footer-link-facebook"
+                aria-label={`Follow ${SITE_CONFIG.name} on Facebook`}
+              >
+                <FaFacebook className="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors" />
+              </a>
+              <a 
+                href={SITE_CONFIG.social.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-center w-12 h-12 rounded-full bg-gray-800 border-2 border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-500/30"
+                data-testid="footer-link-instagram"
+                aria-label={`Follow ${SITE_CONFIG.name} on Instagram`}
+              >
+                <FaInstagram className="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors" />
+              </a>
+              <a 
+                href={SITE_CONFIG.social.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-center w-12 h-12 rounded-full bg-gray-800 border-2 border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-500/30"
+                data-testid="footer-link-twitter"
+                aria-label={`Follow ${SITE_CONFIG.name} on Twitter`}
+              >
+                <FaTwitter className="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors" />
+              </a>
+            </div>
+            
+            {/* Instagram Feed Preview */}
+            <div className="mt-6">
+              <p className="text-sm text-gray-400 mb-3 font-garden">Latest from Instagram</p>
+              <div className="grid grid-cols-3 gap-2">
+                <div className="aspect-square bg-gray-800 border border-gray-700 rounded-lg overflow-hidden hover:border-green-500 transition-colors group cursor-pointer">
+                  <div className="w-full h-full bg-gradient-to-br from-green-900/40 to-gray-900/80 flex items-center justify-center">
+                    <FaInstagram className="h-6 w-6 text-gray-600 group-hover:text-green-500 transition-colors" />
+                  </div>
+                </div>
+                <div className="aspect-square bg-gray-800 border border-gray-700 rounded-lg overflow-hidden hover:border-green-500 transition-colors group cursor-pointer">
+                  <div className="w-full h-full bg-gradient-to-br from-green-900/40 to-gray-900/80 flex items-center justify-center">
+                    <FaInstagram className="h-6 w-6 text-gray-600 group-hover:text-green-500 transition-colors" />
+                  </div>
+                </div>
+                <div className="aspect-square bg-gray-800 border border-gray-700 rounded-lg overflow-hidden hover:border-green-500 transition-colors group cursor-pointer">
+                  <div className="w-full h-full bg-gradient-to-br from-green-900/40 to-gray-900/80 flex items-center justify-center">
+                    <FaInstagram className="h-6 w-6 text-gray-600 group-hover:text-green-500 transition-colors" />
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-gray-500 mt-2 font-garden">Connect your Instagram to display your latest posts</p>
+            </div>
           </div>
         </div>
 

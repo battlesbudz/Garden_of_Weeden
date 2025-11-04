@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import { SITE_CONFIG } from "@/utils/seo";
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState("");
@@ -94,40 +95,37 @@ export default function NewsletterSection() {
           </h3>
           <div className="flex justify-center space-x-6">
             <a
-              href="#"
+              href={SITE_CONFIG.social.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-green-400 text-2xl transition-colors"
+              className="text-gray-400 hover:text-green-400 hover:scale-110 text-2xl transition-all duration-300"
               title="Follow us on Instagram"
+              data-testid="newsletter-social-instagram"
+              aria-label={`Follow ${SITE_CONFIG.name} on Instagram`}
             >
               <Instagram className="h-6 w-6" />
             </a>
             <a
-              href="#"
+              href={SITE_CONFIG.social.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-green-400 text-2xl transition-colors"
+              className="text-gray-400 hover:text-green-400 hover:scale-110 text-2xl transition-all duration-300"
               title="Follow us on Facebook"
+              data-testid="newsletter-social-facebook"
+              aria-label={`Follow ${SITE_CONFIG.name} on Facebook`}
             >
               <Facebook className="h-6 w-6" />
             </a>
             <a
-              href="#"
+              href={SITE_CONFIG.social.twitter}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-green-400 text-2xl transition-colors"
+              className="text-gray-400 hover:text-green-400 hover:scale-110 text-2xl transition-all duration-300"
               title="Follow us on Twitter"
+              data-testid="newsletter-social-twitter"
+              aria-label={`Follow ${SITE_CONFIG.name} on Twitter`}
             >
               <Twitter className="h-6 w-6" />
-            </a>
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-green-400 text-2xl transition-colors"
-              title="Connect with us on LinkedIn"
-            >
-              <Linkedin className="h-6 w-6" />
             </a>
           </div>
         </div>

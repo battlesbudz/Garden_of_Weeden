@@ -1,7 +1,8 @@
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import SEOHead from "@/components/seo/SEOHead";
-import { getCanonicalUrl } from "@/utils/seo";
+import { SocialShare } from "@/components/social-share";
+import { getCanonicalUrl, SITE_CONFIG } from "@/utils/seo";
 import { Leaf, Award, MapPin, Users, Target, Heart } from "lucide-react";
 import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
 import flowerCloseupImage from "@assets/AISelect_20251103_131526_Instagram_1762194447917.jpg";
@@ -44,6 +45,16 @@ export default function About() {
             Our journey from service to cultivation tells a story of dedication, 
             resilience, and commitment to quality.
           </p>
+          
+          {/* Social Share - Inline */}
+          <div className="flex justify-center mt-8">
+            <SocialShare
+              url={`${SITE_CONFIG.url}/about`}
+              title="Our Veteran Story - Garden of Weeden"
+              description="From service to soil: Learn how Garden of Weeden's veteran-owned team cultivates premium craft cannabis in Buffalo, NY."
+              variant="inline"
+            />
+          </div>
         </div>
       </section>
 
