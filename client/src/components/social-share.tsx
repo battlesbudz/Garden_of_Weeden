@@ -19,7 +19,7 @@ export function SocialShare({ url, title, description, variant = 'inline' }: Soc
   const shareTitle = encodeURIComponent(title);
   const shareDescription = encodeURIComponent(description || '');
 
-  const instagramLink = SITE_CONFIG.social.instagram;
+  const instagramLink = SITE_CONFIG.social?.instagram || 'https://www.instagram.com/garden_of_weeden_ny';
 
   const handleCopyLink = async () => {
     try {
@@ -39,24 +39,22 @@ export function SocialShare({ url, title, description, variant = 'inline' }: Soc
     }
   };
 
-  const handleInstagramClick = () => {
-    window.open(instagramLink, '_blank', 'noopener,noreferrer');
-  };
-
   if (variant === 'floating') {
     return (
       <div className="fixed left-4 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-3">
         <div className="text-xs font-garden text-gray-400 writing-mode-vertical-rl transform rotate-180 mb-2">
           Share
         </div>
-        <button
-          onClick={handleInstagramClick}
+        <a
+          href={instagramLink}
+          target="_blank"
+          rel="noopener noreferrer"
           className="group flex items-center justify-center w-12 h-12 rounded-full bg-midnight-grove border-2 border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-500/30"
           aria-label="Follow us on Instagram"
           data-testid="share-instagram"
         >
           <FaInstagram className="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors" />
-        </button>
+        </a>
         <button
           onClick={handleCopyLink}
           className="group flex items-center justify-center w-12 h-12 rounded-full bg-midnight-grove border-2 border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-500/30"
@@ -80,14 +78,16 @@ export function SocialShare({ url, title, description, variant = 'inline' }: Soc
         <span className="text-sm font-garden">Share:</span>
       </div>
       <div className="flex gap-2">
-        <button
-          onClick={handleInstagramClick}
+        <a
+          href={instagramLink}
+          target="_blank"
+          rel="noopener noreferrer"
           className="group flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 border border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110"
           aria-label="Follow us on Instagram"
           data-testid="share-instagram-inline"
         >
           <FaInstagram className="h-4 w-4 text-gray-400 group-hover:text-green-500 transition-colors" />
-        </button>
+        </a>
         <button
           onClick={handleCopyLink}
           className="group flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 border border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110"
