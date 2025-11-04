@@ -4,7 +4,6 @@ import { useReducedMotion } from "framer-motion";
 import { LocationLinksFooter } from '@/components/seo/LocationLinksGenerator';
 import { OCMFooterWarning } from '@/components/OCMWarning';
 import { SITE_CONFIG } from '@/utils/seo';
-import { InstagramFeed } from '@/components/instagram-feed';
 
 export default function Footer() {
   const prefersReducedMotion = useReducedMotion();
@@ -121,21 +120,20 @@ export default function Footer() {
 
           <div>
             <h4 className="text-battles-gold font-semibold mb-4">Follow Us</h4>
-            <div className="flex justify-center mb-6">
-              <a 
-                href={SITE_CONFIG.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-center w-12 h-12 rounded-full bg-gray-800 border-2 border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-500/30"
-                data-testid="footer-link-instagram"
-                aria-label={`Follow ${SITE_CONFIG.name} on Instagram`}
-              >
-                <FaInstagram className="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors" />
-              </a>
-            </div>
-            
-            {/* Instagram Feed Preview */}
-            <InstagramFeed />
+            <a 
+              href={SITE_CONFIG.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-3 px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300"
+              data-testid="footer-link-instagram"
+              aria-label={`Follow ${SITE_CONFIG.name} on Instagram`}
+            >
+              <FaInstagram className="h-6 w-6 text-gray-400 group-hover:text-green-500 transition-colors flex-shrink-0" />
+              <div className="text-left">
+                <div className="font-garden text-sm text-gray-300 group-hover:text-green-500 transition-colors">@garden_of_weeden_ny</div>
+                <div className="font-garden text-xs text-gray-500">Follow our journey</div>
+              </div>
+            </a>
           </div>
         </div>
 
