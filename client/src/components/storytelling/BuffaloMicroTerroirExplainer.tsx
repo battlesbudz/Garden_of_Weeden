@@ -110,15 +110,14 @@ export function BuffaloMicroTerroirExplainer() {
                 </h3>
 
                 <div className="text-center mb-3">
-                  {isInView && (
-                    <div className="text-3xl font-bold text-green-500">
-                      <AnimatedCounter 
-                        end={parseInt(factor.stat)} 
-                        suffix={factor.stat.replace(/[0-9]/g, '')}
-                        duration={2}
-                      />
-                    </div>
-                  )}
+                  <div className="text-3xl font-bold text-green-500">
+                    <AnimatedCounter 
+                      end={parseInt(factor.stat)} 
+                      suffix={factor.stat.replace(/[0-9]/g, '')}
+                      duration={2}
+                      testId={`terroir-stat-${index}`}
+                    />
+                  </div>
                   <div className="text-xs text-gray-500 font-garden">{factor.statLabel}</div>
                 </div>
 
@@ -162,13 +161,12 @@ export function BuffaloMicroTerroirExplainer() {
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-parchment font-semibold font-garden">{soil.component}</span>
                   <span className="text-green-500 font-bold">
-                    {isInView && (
-                      <AnimatedCounter 
-                        end={soil.percentage} 
-                        suffix="%" 
-                        duration={2}
-                      />
-                    )}
+                    <AnimatedCounter 
+                      end={soil.percentage} 
+                      suffix="%" 
+                      duration={2}
+                      testId={`soil-${soil.component.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-')}`}
+                    />
                   </span>
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
@@ -205,13 +203,13 @@ export function BuffaloMicroTerroirExplainer() {
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <div className="bg-white/10 backdrop-blur rounded-lg px-6 py-3">
               <div className="text-3xl font-bold text-white">
-                {isInView && <AnimatedCounter end={100} suffix="%" duration={2} />}
+                <AnimatedCounter end={100} suffix="%" duration={2} testId="stat-natural-conditions" />
               </div>
               <div className="text-sm text-green-100 font-garden">Natural Growing Conditions</div>
             </div>
             <div className="bg-white/10 backdrop-blur rounded-lg px-6 py-3">
               <div className="text-3xl font-bold text-white">
-                {isInView && <AnimatedCounter end={0} suffix="%" duration={2} />}
+                <AnimatedCounter end={0} suffix="%" duration={2} testId="stat-artificial-enhancements" />
               </div>
               <div className="text-sm text-green-100 font-garden">Artificial Enhancements</div>
             </div>
