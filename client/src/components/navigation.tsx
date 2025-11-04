@@ -50,17 +50,21 @@ export default function Navigation() {
 
   return (
     <nav
-      className="fixed w-full top-0 z-50 bg-battles-black border-b border-green-500/20"
+      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-battles-black/95 backdrop-blur-md shadow-lg shadow-green-500/10 border-b border-green-500/30' 
+          : 'bg-battles-black/80 backdrop-blur-sm border-b border-green-500/20'
+      }`}
       role="navigation"
       aria-label="Main navigation"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className={`flex justify-between items-center transition-all duration-300 ${scrolled ? 'h-14' : 'h-16'}`}>
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity" data-testid="nav-logo-link">
             <img 
               src={logoImage}
               alt="Garden of Weeden Logo" 
-              className="h-16 w-auto rounded-full"
+              className={`w-auto rounded-full transition-all duration-300 ${scrolled ? 'h-12' : 'h-16'}`}
               style={{ backgroundColor: 'transparent', mixBlendMode: 'normal' }}
             />
           </Link>

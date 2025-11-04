@@ -11,35 +11,42 @@ export default function RetailSection() {
   };
 
   return (
-    <section id="retail" className="py-20 bg-battles-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="retail" className="relative py-24 overflow-hidden">
+      {/* Enhanced background with layered gradients */}
+      <div className="absolute inset-0 bg-gradient-to-b from-battles-black via-battles-black to-midnight-grove/20"></div>
+      <div className="absolute inset-0 bg-gradient-radial from-transparent via-green-500/3 to-transparent"></div>
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Buffalo Micro-Terroir Section */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="font-enchanted text-4xl md:text-5xl text-parchment mb-4">
+        <div className="mb-24">
+          <div className="text-center mb-16">
+            <h2 className="font-enchanted text-5xl md:text-6xl lg:text-7xl text-parchment mb-6 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
               Buffalo Micro-Terroir
             </h2>
-            <div className="h-1 w-32 bg-green-500 mx-auto mb-6"></div>
-            <p className="font-storybook text-xl md:text-2xl text-green-400 max-w-3xl mx-auto mb-4">
+            <div className="h-1.5 w-40 bg-gradient-to-r from-green-400 via-green-500 to-green-600 mx-auto mb-8 rounded-full shadow-lg shadow-green-500/50"></div>
+            <p className="font-storybook text-2xl md:text-3xl text-green-400 max-w-3xl mx-auto mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               Where Lake Erie Winds Meet Western New York Soil
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <img 
-                src={flowerCloseupImage} 
-                alt="Garden of Weeden premium cannabis flower close-up" 
-                className="rounded-lg shadow-2xl border-2 border-green-500/30"
-              />
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="group">
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl border-2 border-green-500/30 group-hover:border-green-500/60 transition-all duration-500">
+                <img 
+                  src={flowerCloseupImage} 
+                  alt="Garden of Weeden premium cannabis flower close-up" 
+                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-battles-black/50 via-transparent to-transparent group-hover:from-battles-black/30 transition-all duration-500"></div>
+              </div>
             </div>
-            <div className="space-y-6 font-garden text-gray-300">
-              <p className="text-lg">
+            <div className="space-y-8 font-garden text-gray-300">
+              <p className="text-lg md:text-xl leading-relaxed">
                 Our Buffalo cultivation site harnesses the unique environmental conditions of Western New York. 
                 Lake Erie's moderating influence creates ideal temperature swings, while mineral-rich glacial soils 
                 provide the foundation for exceptional cannabis cultivation.
               </p>
-              <div className="bg-midnight-grove/40 border border-green-500/30 rounded-lg p-6">
+              <div className="bg-midnight-grove/50 backdrop-blur-md border border-green-500/40 rounded-2xl p-8 shadow-xl hover:border-green-500/60 hover:shadow-2xl hover:shadow-green-500/10 transition-all duration-500">
                 <h3 className="font-storybook text-xl text-parchment mb-3 flex items-center">
                   <MapPin className="h-5 w-5 text-green-500 mr-2" />
                   Terroir Advantages
@@ -56,59 +63,72 @@ export default function RetailSection() {
         </div>
 
         {/* Cultivation Process */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="font-enchanted text-4xl md:text-5xl text-parchment mb-4">
+        <div className="mb-24">
+          <div className="text-center mb-16">
+            <h2 className="font-enchanted text-5xl md:text-6xl lg:text-7xl text-parchment mb-6 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
               Our Cultivation Process
             </h2>
-            <div className="h-1 w-32 bg-green-500 mx-auto mb-6"></div>
-            <p className="font-storybook text-xl md:text-2xl text-green-400 max-w-3xl mx-auto">
+            <div className="h-1.5 w-40 bg-gradient-to-r from-green-400 via-green-500 to-green-600 mx-auto mb-8 rounded-full shadow-lg shadow-green-500/50"></div>
+            <p className="font-storybook text-2xl md:text-3xl text-green-400 max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               Quality and Consistency in Every Harvest
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 font-garden text-gray-300 order-2 md:order-1">
-              <p className="text-lg">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8 font-garden text-gray-300 order-2 md:order-1">
+              <p className="text-lg md:text-xl leading-relaxed">
                 Every plant receives careful attention throughout its lifecycle. Our cultivation approach 
                 combines time-tested methods with hands-on experience, ensuring consistent quality 
                 and excellence in every harvest.
               </p>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-midnight-grove/40 border border-green-500/30 rounded-lg p-4 text-center">
-                  <Sprout className="h-8 w-8 text-green-500 mx-auto mb-2" />
-                  <h4 className="font-storybook text-parchment mb-1">Cultivation</h4>
-                  <p className="text-sm">Sun-grown in Buffalo's unique lake-effect climate</p>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="group bg-midnight-grove/50 backdrop-blur-md border border-green-500/30 rounded-xl p-6 text-center hover:border-green-500/70 hover:bg-midnight-grove/70 hover:scale-105 hover:shadow-xl hover:shadow-green-500/20 transition-all duration-300 cursor-pointer">
+                  <div className="transform group-hover:scale-110 transition-transform duration-300">
+                    <Sprout className="h-10 w-10 text-green-500 mx-auto mb-3 group-hover:text-green-400 transition-colors" />
+                  </div>
+                  <h4 className="font-storybook text-lg text-parchment mb-2 group-hover:text-green-400 transition-colors">Cultivation</h4>
+                  <p className="text-sm text-gray-300 group-hover:text-gray-200 transition-colors">Sun-grown in Buffalo's unique lake-effect climate</p>
                 </div>
-                <div className="bg-midnight-grove/40 border border-green-500/30 rounded-lg p-4 text-center">
-                  <Award className="h-8 w-8 text-green-500 mx-auto mb-2" />
-                  <h4 className="font-storybook text-parchment mb-1">Harvest</h4>
-                  <p className="text-sm">Hand-trimmed with veteran precision</p>
+                <div className="group bg-midnight-grove/50 backdrop-blur-md border border-green-500/30 rounded-xl p-6 text-center hover:border-green-500/70 hover:bg-midnight-grove/70 hover:scale-105 hover:shadow-xl hover:shadow-green-500/20 transition-all duration-300 cursor-pointer">
+                  <div className="transform group-hover:scale-110 transition-transform duration-300">
+                    <Award className="h-10 w-10 text-green-500 mx-auto mb-3 group-hover:text-green-400 transition-colors" />
+                  </div>
+                  <h4 className="font-storybook text-lg text-parchment mb-2 group-hover:text-green-400 transition-colors">Harvest</h4>
+                  <p className="text-sm text-gray-300 group-hover:text-gray-200 transition-colors">Hand-trimmed with veteran precision</p>
                 </div>
-                <div className="bg-midnight-grove/40 border border-green-500/30 rounded-lg p-4 text-center">
-                  <Heart className="h-8 w-8 text-green-500 mx-auto mb-2" />
-                  <h4 className="font-storybook text-parchment mb-1">Cure</h4>
-                  <p className="text-sm">Slow-cured for optimal flavor</p>
+                <div className="group bg-midnight-grove/50 backdrop-blur-md border border-green-500/30 rounded-xl p-6 text-center hover:border-green-500/70 hover:bg-midnight-grove/70 hover:scale-105 hover:shadow-xl hover:shadow-green-500/20 transition-all duration-300 cursor-pointer">
+                  <div className="transform group-hover:scale-110 transition-transform duration-300">
+                    <Heart className="h-10 w-10 text-green-500 mx-auto mb-3 group-hover:text-green-400 transition-colors" />
+                  </div>
+                  <h4 className="font-storybook text-lg text-parchment mb-2 group-hover:text-green-400 transition-colors">Cure</h4>
+                  <p className="text-sm text-gray-300 group-hover:text-gray-200 transition-colors">Slow-cured for optimal flavor</p>
                 </div>
-                <div className="bg-midnight-grove/40 border border-green-500/30 rounded-lg p-4 text-center">
-                  <MapPin className="h-8 w-8 text-green-500 mx-auto mb-2" />
-                  <h4 className="font-storybook text-parchment mb-1">Local</h4>
-                  <p className="text-sm">Buffalo-proud, veteran-owned</p>
+                <div className="group bg-midnight-grove/50 backdrop-blur-md border border-green-500/30 rounded-xl p-6 text-center hover:border-green-500/70 hover:bg-midnight-grove/70 hover:scale-105 hover:shadow-xl hover:shadow-green-500/20 transition-all duration-300 cursor-pointer">
+                  <div className="transform group-hover:scale-110 transition-transform duration-300">
+                    <MapPin className="h-10 w-10 text-green-500 mx-auto mb-3 group-hover:text-green-400 transition-colors" />
+                  </div>
+                  <h4 className="font-storybook text-lg text-parchment mb-2 group-hover:text-green-400 transition-colors">Local</h4>
+                  <p className="text-sm text-gray-300 group-hover:text-gray-200 transition-colors">Buffalo-proud, veteran-owned</p>
                 </div>
               </div>
             </div>
-            <div className="order-1 md:order-2">
-              <img 
-                src={dryingRacksImage} 
-                alt="Garden of Weeden drying racks showing craft curing process" 
-                className="rounded-lg shadow-2xl border-2 border-green-500/30"
-              />
+            <div className="order-1 md:order-2 group">
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl border-2 border-green-500/30 group-hover:border-green-500/60 transition-all duration-500">
+                <img 
+                  src={dryingRacksImage} 
+                  alt="Garden of Weeden drying racks showing craft curing process" 
+                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-battles-black/50 via-transparent to-transparent group-hover:from-battles-black/30 transition-all duration-500"></div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Coming Soon CTA */}
-        <div className="text-center bg-midnight-grove/40 border border-green-500/30 rounded-xl p-12">
+        {/* Coming Soon CTA - Enhanced */}
+        <div className="relative overflow-hidden text-center bg-midnight-grove/50 backdrop-blur-md border border-green-500/40 rounded-2xl p-16 shadow-2xl hover:border-green-500/70 hover:shadow-3xl hover:shadow-green-500/20 transition-all duration-500">
+          <div className="absolute inset-0 bg-gradient-radial from-green-500/5 via-transparent to-transparent"></div>
+          <div className="relative z-10">
           <h3 className="font-storybook text-3xl text-parchment mb-4">
             The Harvest is Coming
           </h3>
@@ -124,6 +144,7 @@ export default function RetailSection() {
           >
             Join the Waitlist
           </button>
+          </div>
         </div>
       </div>
     </section>
