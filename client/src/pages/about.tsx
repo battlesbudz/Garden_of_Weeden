@@ -4,6 +4,13 @@ import SEOHead from "@/components/seo/SEOHead";
 import { SocialShare } from "@/components/social-share";
 import { getCanonicalUrl, SITE_CONFIG } from "@/utils/seo";
 import { Leaf, Award, MapPin, Users, Target, Heart } from "lucide-react";
+import { AnimatedCounter } from "@/components/interactive/AnimatedCounter";
+import { ImageComparison } from "@/components/interactive/ImageComparison";
+import { ServiceToSoilTimeline } from "@/components/storytelling/ServiceToSoilTimeline";
+import { BuffaloMicroTerroirExplainer } from "@/components/storytelling/BuffaloMicroTerroirExplainer";
+import { GrowingProcessInfographic } from "@/components/storytelling/GrowingProcessInfographic";
+import { CannabisLeafPattern, MilitaryGeometricPattern } from "@/components/patterns/BackgroundPatterns";
+import { WaveDivider } from "@/components/patterns/SectionDividers";
 import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
 import flowerCloseupImage from "@assets/AISelect_20251103_131526_Instagram_1762194447917.jpg";
 import dryingRacksImage from "@assets/AISelect_20251103_131504_Instagram_1762194447955.jpg";
@@ -32,7 +39,8 @@ export default function About() {
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+        <CannabisLeafPattern opacity={0.05} />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="font-enchanted text-5xl md:text-6xl text-parchment mb-6">
             From Service to Soil
           </h1>
@@ -57,6 +65,41 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      {/* Stats Section with AnimatedCounters */}
+      <section className="py-12 px-4 bg-gradient-to-b from-green-900/20 to-transparent relative">
+        <MilitaryGeometricPattern opacity={0.03} />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-green-500 mb-2">
+                <AnimatedCounter end={100} suffix="%" duration={2.5} testId="stat-veteran-owned" />
+              </div>
+              <div className="text-sm md:text-base font-garden text-gray-400">Veteran-Owned</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-green-500 mb-2">
+                <AnimatedCounter end={100} suffix="%" duration={2.5} testId="stat-buffalo-grown" />
+              </div>
+              <div className="text-sm md:text-base font-garden text-gray-400">Buffalo-Grown</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-green-500 mb-2">
+                <AnimatedCounter end={0} suffix="%" duration={2.5} testId="stat-pesticides" />
+              </div>
+              <div className="text-sm md:text-base font-garden text-gray-400">Pesticides</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-green-500 mb-2">
+                <AnimatedCounter end={100} suffix="%" duration={2.5} testId="stat-dedication" />
+              </div>
+              <div className="text-sm md:text-base font-garden text-gray-400">Dedication</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <WaveDivider />
 
       {/* Service-Forged Mastery */}
       <section className="py-16 px-4 bg-midnight-grove/20">
@@ -91,58 +134,34 @@ export default function About() {
         </div>
       </section>
 
-      {/* Buffalo Micro-Terroir */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="order-2 md:order-1 relative">
-              <img 
-                src={fieldRowsImage} 
-                alt="Outdoor cannabis cultivation rows in Buffalo, NY" 
-                className="rounded-lg shadow-2xl w-full"
-              />
-            </div>
-            <div className="order-1 md:order-2">
-              <div className="flex items-center gap-3 mb-6">
-                <MapPin className="h-8 w-8 text-green-500" />
-                <h2 className="font-storybook text-4xl text-parchment">Buffalo Micro-Terroir</h2>
-              </div>
-              <p className="font-garden text-gray-300 mb-6 leading-relaxed">
-                Grown where Lake Erie winds meet Western New York soil. Our garden thrives in Buffalo's 
-                distinct climate, creating flavors you won't find anywhere else.
-              </p>
-              <p className="font-garden text-gray-300 mb-6 leading-relaxed">
-                Buffalo's lake-effect weather isn't just winter storms—it's our secret ingredient. Cold nights, 
-                humid summers, and resilient soil forge hardy, flavorful plants that embody the grit and 
-                character of our city.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <Leaf className="h-6 w-6 text-green-500 flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-storybook text-xl text-parchment mb-2">Lake Erie Climate</h3>
-                    <p className="font-garden text-gray-400">Unique humidity and temperature patterns create ideal growing conditions</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Leaf className="h-6 w-6 text-green-500 flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-storybook text-xl text-parchment mb-2">Western NY Soil</h3>
-                    <p className="font-garden text-gray-400">Rich, mineral-dense earth that produces robust, flavorful plants</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Leaf className="h-6 w-6 text-green-500 flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-storybook text-xl text-parchment mb-2">Seasonal Excellence</h3>
-                    <p className="font-garden text-gray-400">Buffalo's distinct seasons create natural cultivation cycles</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* Image Comparison - Cultivation Process */}
+      <section className="py-16 px-4 bg-gradient-to-b from-black to-gray-900 relative">
+        <CannabisLeafPattern opacity={0.04} />
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="font-storybook text-4xl md:text-5xl text-parchment mb-4">
+              Cultivation Excellence
+            </h2>
+            <p className="font-garden text-gray-300 text-lg">
+              See the transformation from seedling to harvest
+            </p>
           </div>
+          <ImageComparison
+            beforeImage={fieldRowsImage}
+            afterImage={flowerCloseupImage}
+            beforeLabel="Early Growth"
+            afterLabel="Peak Harvest"
+            className="max-w-4xl mx-auto"
+          />
         </div>
       </section>
+
+      <WaveDivider />
+
+      {/* Buffalo Micro-Terroir - Enhanced with Explainer Component */}
+      <BuffaloMicroTerroirExplainer />
+
+      <WaveDivider flip />
 
       {/* Veteran Wellness Mission */}
       <section className="py-16 px-4 bg-midnight-grove/20">
@@ -195,43 +214,11 @@ export default function About() {
         </div>
       </section>
 
-      {/* Our Process */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <Users className="h-8 w-8 text-green-500" />
-            <h2 className="font-storybook text-4xl text-parchment">From Service to Cure</h2>
-          </div>
-          <p className="font-garden text-gray-300 mb-12 leading-relaxed text-lg">
-            Our cultivation process reflects the discipline and precision learned through service. 
-            Every step—from seedling to final cure—receives the same meticulous attention we once 
-            brought to our missions.
-          </p>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-midnight-grove/20 p-6 rounded-lg border border-green-500/20">
-              <div className="text-5xl font-enchanted text-green-500 mb-4">01</div>
-              <h3 className="font-storybook text-2xl text-parchment mb-3">Cultivation</h3>
-              <p className="font-garden text-gray-400">
-                Outdoor growing in Buffalo's micro-terroir with military-grade precision
-              </p>
-            </div>
-            <div className="bg-midnight-grove/20 p-6 rounded-lg border border-green-500/20">
-              <div className="text-5xl font-enchanted text-green-500 mb-4">02</div>
-              <h3 className="font-storybook text-2xl text-parchment mb-3">Harvest</h3>
-              <p className="font-garden text-gray-400">
-                Careful timing and expert handling preserve every plant's unique character
-              </p>
-            </div>
-            <div className="bg-midnight-grove/20 p-6 rounded-lg border border-green-500/20">
-              <div className="text-5xl font-enchanted text-green-500 mb-4">03</div>
-              <h3 className="font-storybook text-2xl text-parchment mb-3">Cure</h3>
-              <p className="font-garden text-gray-400">
-                Patient, controlled curing develops complex flavors and optimal potency
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Service to Soil Timeline */}
+      <ServiceToSoilTimeline />
+
+      {/* Growing Process Infographic */}
+      <GrowingProcessInfographic />
 
       {/* Buffalo Pride CTA */}
       <section className="py-20 px-4 bg-green-500/10 border-y border-green-500/30">

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useInView } from 'framer-motion';
+import { useInView, useReducedMotion } from 'framer-motion';
 
 interface AnimatedCounterProps {
   end: number;
@@ -8,6 +8,7 @@ interface AnimatedCounterProps {
   suffix?: string;
   decimals?: number;
   className?: string;
+  testId?: string;
 }
 
 export function AnimatedCounter({ 
@@ -16,16 +17,24 @@ export function AnimatedCounter({
   prefix = '', 
   suffix = '', 
   decimals = 0,
-  className = ''
+  className = '',
+  testId
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const hasAnimated = useRef(false);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (!isInView || hasAnimated.current) return;
     hasAnimated.current = true;
+
+    // If user prefers reduced motion, set to end value immediately
+    if (prefersReducedMotion) {
+      setCount(end);
+      return;
+    }
 
     let startTime: number | null = null;
     const startValue = 0;
@@ -49,10 +58,10 @@ export function AnimatedCounter({
     };
 
     requestAnimationFrame(animate);
-  }, [isInView, end, duration]);
+  }, [isInView, end, duration, prefersReducedMotion]);
 
   return (
-    <span ref={ref} className={className}>
+    <span ref={ref} className={className} data-testid={testId}>
       {prefix}{count.toFixed(decimals)}{suffix}
     </span>
   );
