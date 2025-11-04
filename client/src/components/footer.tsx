@@ -4,6 +4,7 @@ import { useReducedMotion } from "framer-motion";
 import { LocationLinksFooter } from '@/components/seo/LocationLinksGenerator';
 import { OCMFooterWarning } from '@/components/OCMWarning';
 import { SITE_CONFIG } from '@/utils/seo';
+import { InstagramFeed } from '@/components/instagram-feed';
 
 export default function Footer() {
   const prefersReducedMotion = useReducedMotion();
@@ -134,42 +135,7 @@ export default function Footer() {
             </div>
             
             {/* Instagram Feed Preview */}
-            <div>
-              <p className="text-sm text-gray-400 mb-3 font-garden">Latest from Instagram</p>
-              <div className="grid grid-cols-3 gap-2">
-                <a
-                  href={SITE_CONFIG.social.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="aspect-square bg-gray-800 border border-gray-700 rounded-lg overflow-hidden hover:border-green-500 transition-colors group cursor-pointer"
-                >
-                  <div className="w-full h-full bg-gradient-to-br from-green-900/40 to-gray-900/80 flex items-center justify-center">
-                    <FaInstagram className="h-6 w-6 text-gray-600 group-hover:text-green-500 transition-colors" />
-                  </div>
-                </a>
-                <a
-                  href={SITE_CONFIG.social.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="aspect-square bg-gray-800 border border-gray-700 rounded-lg overflow-hidden hover:border-green-500 transition-colors group cursor-pointer"
-                >
-                  <div className="w-full h-full bg-gradient-to-br from-green-900/40 to-gray-900/80 flex items-center justify-center">
-                    <FaInstagram className="h-6 w-6 text-gray-600 group-hover:text-green-500 transition-colors" />
-                  </div>
-                </a>
-                <a
-                  href={SITE_CONFIG.social.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="aspect-square bg-gray-800 border border-gray-700 rounded-lg overflow-hidden hover:border-green-500 transition-colors group cursor-pointer"
-                >
-                  <div className="w-full h-full bg-gradient-to-br from-green-900/40 to-gray-900/80 flex items-center justify-center">
-                    <FaInstagram className="h-6 w-6 text-gray-600 group-hover:text-green-500 transition-colors" />
-                  </div>
-                </a>
-              </div>
-              <p className="text-xs text-gray-500 mt-2 font-garden">Visit Instagram to see our latest posts</p>
-            </div>
+            <InstagramFeed />
           </div>
         </div>
 

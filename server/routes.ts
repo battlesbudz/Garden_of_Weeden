@@ -49,6 +49,7 @@ import { registerDocumentRoutes } from "./routes/documents";
 import { registerAdminRoutes } from "./routes/admin";
 import { registerCalendarRoutes } from "./routes/calendar";
 import { registerBlogRoutes } from "./routes/blog";
+import { registerInstagramRoutes } from "./routes/instagram";
 
 // Initialize SendGrid (only if API key is available)
 let mailService: MailService | null = null;
@@ -76,6 +77,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   registerAdminRoutes(app);
   registerCalendarRoutes(app);
   registerBlogRoutes(app);
+  registerInstagramRoutes(app);
 
   const httpServer = createServer(app);
   return httpServer;
