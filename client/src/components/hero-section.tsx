@@ -1,13 +1,15 @@
 import { ChevronDown, Award, MapPin, Heart } from "lucide-react";
 import { Link } from "wouter";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
 
 export default function HeroSection() {
+  const prefersReducedMotion = useReducedMotion();
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
     }
   };
 
@@ -33,9 +35,9 @@ export default function HeroSection() {
         {/* Main Headline - Larger & Bolder */}
         <motion.div 
           className="mb-8"
-          initial={{ opacity: 0, y: -30 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: prefersReducedMotion ? 0 : 1, ease: "easeOut" }}
         >
           <h1 className="font-enchanted text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] text-parchment mb-6 leading-[0.9] tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
             Garden of Weeden
@@ -46,9 +48,9 @@ export default function HeroSection() {
         {/* Veteran-Owned Tagline - Enhanced */}
         <motion.div 
           className="mb-10"
-          initial={{ opacity: 0, y: 30 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+          transition={{ duration: prefersReducedMotion ? 0 : 1, delay: prefersReducedMotion ? 0 : 0.3, ease: "easeOut" }}
         >
           <h2 className="font-storybook text-3xl md:text-5xl lg:text-6xl text-parchment drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] mb-6 tracking-wide">
             From Service to Soil
@@ -62,9 +64,9 @@ export default function HeroSection() {
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-14">
           <motion.div 
             className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
-            initial={{ opacity: 0, y: 40 }}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.5, ease: "easeOut" }}
           >
             <div className="transform group-hover:scale-110 transition-transform duration-300">
               <Award className="h-12 w-12 text-green-500 mx-auto mb-4 group-hover:text-green-400 transition-colors" />
@@ -74,9 +76,9 @@ export default function HeroSection() {
           </motion.div>
           <motion.div 
             className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
-            initial={{ opacity: 0, y: 40 }}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.6, ease: "easeOut" }}
           >
             <div className="transform group-hover:scale-110 transition-transform duration-300">
               <MapPin className="h-12 w-12 text-green-500 mx-auto mb-4 group-hover:text-green-400 transition-colors" />
@@ -86,9 +88,9 @@ export default function HeroSection() {
           </motion.div>
           <motion.div 
             className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
-            initial={{ opacity: 0, y: 40 }}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.7, ease: "easeOut" }}
           >
             <div className="transform group-hover:scale-110 transition-transform duration-300">
               <Heart className="h-12 w-12 text-green-500 mx-auto mb-4 group-hover:text-green-400 transition-colors" />

@@ -1,13 +1,15 @@
 import { Sprout, Award, Heart, MapPin } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import flowerCloseupImage from "@assets/AISelect_20251103_131526_Instagram_1762194447917.jpg";
 import dryingRacksImage from "@assets/AISelect_20251103_131504_Instagram_1762194447955.jpg";
 
 export default function RetailSection() {
+  const prefersReducedMotion = useReducedMotion();
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
     }
   };
 
@@ -22,10 +24,10 @@ export default function RetailSection() {
         <div className="mb-24">
           <motion.div 
             className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.8, ease: "easeOut" }}
           >
             <h2 className="font-enchanted text-5xl md:text-6xl lg:text-7xl text-parchment mb-6 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
               Buffalo Micro-Terroir
@@ -39,10 +41,10 @@ export default function RetailSection() {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div 
               className="group"
-              initial={{ opacity: 0, x: -50 }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: "easeOut" }}
             >
               <div className="relative overflow-hidden rounded-2xl shadow-2xl border-2 border-green-500/30 group-hover:border-green-500/60 transition-all duration-500">
                 <img 
@@ -55,10 +57,10 @@ export default function RetailSection() {
             </motion.div>
             <motion.div 
               className="space-y-8 font-garden text-gray-300"
-              initial={{ opacity: 0, x: 50 }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.7, delay: prefersReducedMotion ? 0 : 0.2, ease: "easeOut" }}
             >
               <p className="text-lg md:text-xl leading-relaxed">
                 Our Buffalo cultivation site harnesses the unique environmental conditions of Western New York. 
@@ -85,10 +87,10 @@ export default function RetailSection() {
         <div className="mb-24">
           <motion.div 
             className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.8, ease: "easeOut" }}
           >
             <h2 className="font-enchanted text-5xl md:text-6xl lg:text-7xl text-parchment mb-6 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
               Our Cultivation Process
@@ -102,10 +104,10 @@ export default function RetailSection() {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div 
               className="space-y-8 font-garden text-gray-300 order-2 md:order-1"
-              initial={{ opacity: 0, x: -50 }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: "easeOut" }}
             >
               <p className="text-lg md:text-xl leading-relaxed">
                 Every plant receives careful attention throughout its lifecycle. Our cultivation approach 
@@ -145,10 +147,10 @@ export default function RetailSection() {
             </motion.div>
             <motion.div 
               className="order-1 md:order-2 group"
-              initial={{ opacity: 0, x: 50 }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.7, delay: prefersReducedMotion ? 0 : 0.2, ease: "easeOut" }}
             >
               <div className="relative overflow-hidden rounded-2xl shadow-2xl border-2 border-green-500/30 group-hover:border-green-500/60 transition-all duration-500">
                 <img 
@@ -165,10 +167,10 @@ export default function RetailSection() {
         {/* Coming Soon CTA - Enhanced */}
         <motion.div 
           className="relative overflow-hidden text-center bg-midnight-grove/50 backdrop-blur-md border border-green-500/40 rounded-2xl p-16 shadow-2xl hover:border-green-500/70 hover:shadow-3xl hover:shadow-green-500/20 transition-all duration-500"
-          initial={{ opacity: 0, y: 30 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.8, ease: "easeOut" }}
         >
           <div className="absolute inset-0 bg-gradient-radial from-green-500/5 via-transparent to-transparent"></div>
           <div className="relative z-10">

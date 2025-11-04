@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X, User, ShoppingBag, LogOut } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,6 +12,7 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [location, setLocation] = useLocation();
   const { user, isAuthenticated, isAdmin } = useAuth();
+  const prefersReducedMotion = useReducedMotion();
 
   // Debug auth state
   console.log('Navigation - Auth State:', { user, isAuthenticated, isAdmin });
@@ -31,14 +33,14 @@ export default function Navigation() {
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
+          element.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
         }
       }, 100);
     } else {
       // We're already on homepage, just scroll
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+        element.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
       }
     }
     setIsOpen(false);

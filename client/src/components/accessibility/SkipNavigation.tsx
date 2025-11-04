@@ -7,14 +7,18 @@
  * WCAG 2.1 Level A - Success Criterion 2.4.1 (Bypass Blocks)
  */
 
+import { useReducedMotion } from "framer-motion";
+
 export default function SkipNavigation() {
+  const prefersReducedMotion = useReducedMotion();
+  
   const handleSkipClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const mainContent = document.getElementById('main-content');
     if (mainContent) {
       mainContent.focus();
       // Also scroll into view for visual confirmation
-      mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      mainContent.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
     }
   };
 

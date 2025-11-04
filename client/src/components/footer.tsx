@@ -1,13 +1,16 @@
 import { MapPin, Mail, Phone, Leaf, Award, Heart } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
 import { LocationLinksFooter } from '@/components/seo/LocationLinksGenerator';
 import { OCMFooterWarning } from '@/components/OCMWarning';
 import { SITE_CONFIG } from '@/utils/seo';
 
 export default function Footer() {
+  const prefersReducedMotion = useReducedMotion();
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
     }
   };
 
