@@ -1,13 +1,13 @@
 # Garden of Weeden Cannabis Platform
 
 ## Overview
-Garden of Weeden is a veteran-owned cannabis microbusiness in Buffalo, New York, aiming to bring military precision to craft cannabis cultivation. This digital platform showcases the brand's "Enchanted Grit" identity, blending Wizard of Oz whimsy with authentic service-forged values. The platform emphasizes veteran ownership, Buffalo micro-terroir cultivation, and wellness advocacy, with a vision to become a leading example of compliant, high-quality craft cannabis in the New York market.
+Garden of Weeden is a veteran-owned cannabis microbusiness in Buffalo, New York, aiming to bring military precision to craft cannabis cultivation. This digital platform showcases the brand's "Enchanted Grit" identity, blending whimsical enchantment with authentic service-forged values. The platform emphasizes veteran ownership, Buffalo micro-terroir cultivation, and wellness advocacy, with a vision to become a leading example of compliant, high-quality craft cannabis in the New York market.
 
 ## User Preferences
 - Focus on mobile-first responsive design
-- **Garden of Weeden Brand Identity**: Veteran-owned, Buffalo-proud, Wizard of Oz aesthetic
+- **Garden of Weeden Brand Identity**: Veteran-owned, Buffalo-proud
 - **Color Palette**: Evergreen/parchment/midnight (no longer gold/black)
-- **Typography**: Wizard of Oz fonts for whimsical, enchanted feel
+- **Typography**: Whimsical, enchanted aesthetic with elegant serif and script fonts
 - **Voice**: "Enchanted Grit" - mythic + reverent + authentic
 - Prioritize user experience and navigation flow
 - Keep authentication secure but user-friendly
