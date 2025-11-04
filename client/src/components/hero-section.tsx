@@ -1,6 +1,7 @@
 import { ChevronDown, Award, MapPin, Heart } from "lucide-react";
 import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
+import { VideoBackground } from "@/components/video-background";
 import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
 
 export default function HeroSection() {
@@ -18,13 +19,20 @@ export default function HeroSection() {
       id="home"
       className="relative flex flex-col items-center justify-center bg-battles-black min-h-screen overflow-hidden"
     >
-      {/* Background Image with Enhanced Overlays */}
+      {/* Background Video/Image with Enhanced Overlays */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src={fieldRowsImage} 
-          alt="Garden of Weeden cannabis cultivation" 
-          className="w-full h-full object-cover opacity-50"
-        />
+        <div className="w-full h-full opacity-50">
+          <VideoBackground
+            videoSrc={undefined} // Replace with actual video URL when available: "/videos/garden-story.mp4"
+            posterImage={fieldRowsImage}
+            alt="Garden of Weeden cannabis cultivation fields in Buffalo, NY"
+            className=""
+            showControls={false}
+            autoplay={true}
+            muted={true}
+            loop={true}
+          />
+        </div>
         {/* Sophisticated gradient overlays for depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-battles-black/90 via-battles-black/50 to-battles-black/95"></div>
         <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-battles-black/40"></div>
