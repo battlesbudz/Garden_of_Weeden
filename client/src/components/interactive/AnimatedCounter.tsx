@@ -9,6 +9,7 @@ interface AnimatedCounterProps {
   decimals?: number;
   className?: string;
   testId?: string;
+  isInView?: boolean;
 }
 
 export function AnimatedCounter({ 
@@ -18,11 +19,13 @@ export function AnimatedCounter({
   suffix = '', 
   decimals = 0,
   className = '',
-  testId
+  testId,
+  isInView: externalIsInView
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const internalIsInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = externalIsInView !== undefined ? externalIsInView : internalIsInView;
   const hasAnimated = useRef(false);
   const prefersReducedMotion = useReducedMotion();
 

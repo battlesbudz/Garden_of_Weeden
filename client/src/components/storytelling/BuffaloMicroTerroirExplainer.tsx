@@ -115,6 +115,7 @@ export function BuffaloMicroTerroirExplainer() {
                       end={parseInt(factor.stat)} 
                       suffix={factor.stat.replace(/[0-9]/g, '')}
                       duration={2}
+                      isInView={isInView}
                       testId={`terroir-stat-${index}`}
                     />
                   </div>
@@ -165,6 +166,7 @@ export function BuffaloMicroTerroirExplainer() {
                       end={soil.percentage} 
                       suffix="%" 
                       duration={2}
+                      isInView={isInView}
                       testId={`soil-${soil.component.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-')}`}
                     />
                   </span>
@@ -203,13 +205,13 @@ export function BuffaloMicroTerroirExplainer() {
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <div className="bg-white/10 backdrop-blur rounded-lg px-6 py-3">
               <div className="text-3xl font-bold text-white">
-                <AnimatedCounter end={100} suffix="%" duration={2} testId="stat-natural-conditions" />
+                <AnimatedCounter end={100} suffix="%" duration={2} isInView={isInView} testId="stat-natural-conditions" />
               </div>
               <div className="text-sm text-green-100 font-garden">Natural Growing Conditions</div>
             </div>
             <div className="bg-white/10 backdrop-blur rounded-lg px-6 py-3">
               <div className="text-3xl font-bold text-white">
-                <AnimatedCounter end={0} suffix="%" duration={2} testId="stat-artificial-enhancements" />
+                <AnimatedCounter end={0} suffix="%" duration={2} isInView={isInView} testId="stat-artificial-enhancements" />
               </div>
               <div className="text-sm text-green-100 font-garden">Artificial Enhancements</div>
             </div>
