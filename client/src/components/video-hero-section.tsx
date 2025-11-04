@@ -1,5 +1,5 @@
 import { ChevronDown } from "lucide-react";
-import logoPath from "@assets/BattlesBudz_Logo_1752301078028.png";
+import logoPath from "@assets/garden_of_weeden_logo_transparent_1762191379653.png";
 
 interface VideoHeroSectionProps {
   videoSrc?: string;

@@ -166,7 +166,7 @@ export default function KeywordLandingPage() {
                   Be the first to know when Battles Buds cannabis opens in Buffalo, NY
                 </p>
                 <p className="text-battles-gold font-semibold">
-                  Email: battlesbudz@gmail.com
+                  Email: info@gardenofweeden.com
                 </p>
               </div>
             </div>
