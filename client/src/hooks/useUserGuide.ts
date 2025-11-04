@@ -16,6 +16,16 @@ export function useUserGuide() {
   });
 
   useEffect(() => {
+    // Force reload when page is restored from bfcache (back button after OCM redirect)
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        // Page was restored from bfcache - reload to ensure React works properly
+        window.location.reload();
+      }
+    };
+    
+    window.addEventListener('pageshow', handlePageShow);
+    
     // Age verification required on EVERY page load - no caching
     // Check if user has visited before
     const hasVisited = localStorage.getItem('hasVisited');
@@ -34,19 +44,18 @@ export function useUserGuide() {
     if (!hasVisited) {
       localStorage.setItem('hasVisited', 'true');
     }
+    
+    return () => {
+      window.removeEventListener('pageshow', handlePageShow);
+    };
   }, []);
 
   const handleAgeVerified = () => {
-    console.log('AGE GATE: handleAgeVerified called - closing modal');
-    setGuideState(prev => {
-      const newState = {
-        ...prev,
-        showAgeVerification: false,
-        showQuickStart: false, // Go directly to homepage instead
-      };
-      console.log('AGE GATE: New state set', newState);
-      return newState;
-    });
+    setGuideState(prev => ({
+      ...prev,
+      showAgeVerification: false,
+      showQuickStart: false, // Go directly to homepage instead
+    }));
   };
 
   const handleAgeDenied = () => {
