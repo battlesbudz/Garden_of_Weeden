@@ -33,6 +33,25 @@ The platform features a modern web stack designed for performance, scalability, 
 - **State Management**: TanStack Query for server-side state.
 - **Routing**: Wouter for client-side routing.
 - **SEO**: Comprehensive and dynamic SEO system with reusable components, cannabis-specific keywords, local optimization, structured data (Organization, Local Business, Product schemas), and mobile/social optimization (Open Graph tags).
+- **Animations**: Framer Motion for scroll-triggered animations, parallax effects, and interactive transitions, with full prefers-reduced-motion support.
+
+**Visual Enhancement Components (Phase 2):**
+- **Interactive Components**:
+  - AnimatedCounter: Scroll-triggered number animations with easing, reduced-motion support, and data-testid attributes
+  - ImageComparison: Before/after slider with touch support and keyboard navigation
+  - Lightbox/ImageGallery: Full-screen image viewer with keyboard controls and multi-image galleries
+- **Visual Storytelling**:
+  - GrowingProcessInfographic: 7-step cultivation journey visualization (Seed → Quality Control)
+  - ServiceToSoilTimeline: Interactive veteran-to-cannabis-entrepreneur journey timeline
+  - BuffaloMicroTerroirExplainer: Climate data visualization with interactive terroir factors and soil composition
+- **Background Patterns & Textures**:
+  - Cannabis leaf watermarks, military geometric patterns, topographic contours, and dots patterns
+  - Organic section dividers: Wave, Mountain, Cloud, Leaf Flow, Angular, and Gradient Fade
+- **Parallax & Depth Effects**:
+  - ParallaxSection, ParallaxHero, and ParallaxLayers for multi-speed scroll effects
+  - 7 gradient overlay types: Hero, Spotlight, Atmospheric, Vignette, Aurora, Mesh, and Striped
+- **Product Components**:
+  - InteractiveProductCard: 3D flip animation on hover, image cycling, strain-based color coding, and reduced-motion support
 
 **System Design Choices:**
 - **Mobile-First Design**: Ensures responsiveness and optimal viewing across all devices.
