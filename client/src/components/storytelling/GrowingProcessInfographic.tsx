@@ -55,7 +55,7 @@ const growingSteps = [
     id: 7,
     icon: Award,
     title: 'Quality Control',
-    description: 'Military precision testing and grading',
+    description: 'Hand-inspected for potency, purity, and craft quality',
     color: 'from-green-600 to-green-800',
     duration: 'Continuous'
   }
