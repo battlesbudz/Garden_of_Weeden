@@ -16,16 +16,6 @@ export function useUserGuide() {
   });
 
   useEffect(() => {
-    // Force reload when page is restored from bfcache (back button after OCM redirect)
-    const handlePageShow = (event: PageTransitionEvent) => {
-      if (event.persisted) {
-        // Page was restored from bfcache - reload to ensure React works properly
-        window.location.reload();
-      }
-    };
-    
-    window.addEventListener('pageshow', handlePageShow);
-    
     // Age verification required on EVERY page load - no caching
     // Check if user has visited before
     const hasVisited = localStorage.getItem('hasVisited');
@@ -44,10 +34,6 @@ export function useUserGuide() {
     if (!hasVisited) {
       localStorage.setItem('hasVisited', 'true');
     }
-    
-    return () => {
-      window.removeEventListener('pageshow', handlePageShow);
-    };
   }, []);
 
   const handleAgeVerified = () => {
@@ -64,8 +50,10 @@ export function useUserGuide() {
     localStorage.removeItem('ageVerified');
     localStorage.removeItem('ageVerifiedDate');
     
-    // Redirect to NY OCM consumer education site
-    window.location.href = 'https://cannabis.ny.gov/consumers';
+    // Open NY OCM consumer education site in new tab (avoids back-button issues)
+    window.open('https://cannabis.ny.gov/consumers', '_blank');
+    
+    // Keep modal open - user must close the browser tab/window to exit
   };
 
   const handleQuickStartClose = () => {
