@@ -8,6 +8,8 @@ import Home from "@/pages/home";
 import LoginPage from "@/pages/login";
 import Shop from "@/pages/shop";
 import About from "@/pages/about";
+import Blog from "@/pages/blog";
+import BlogPost from "@/pages/blog-post";
 
 import NotFound from "./pages/not-found";
 import PrivacyPolicy from "./pages/privacy-policy";
@@ -44,6 +46,10 @@ function Router() {
         <Route path="/login" component={LoginPage} />
         <Route path="/shop" component={Shop} />
         <Route path="/about" component={About} />
+        
+        {/* Blog Pages */}
+        <Route path="/blog" component={Blog} />
+        <Route path="/blog/:slug" component={BlogPost} />
         
         {/* Product Pages - Coming Soon */}
         <Route path="/products" component={ProductsComingSoon} />

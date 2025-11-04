@@ -95,6 +95,9 @@ export default function Navigation() {
               <Link href="/about" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-about">
                 Our Story
               </Link>
+              <Link href="/blog" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-blog">
+                Blog
+              </Link>
               <Link href="/products" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-products">
                 Products
               </Link>
@@ -182,6 +185,9 @@ export default function Navigation() {
             </Link>
             <Link href="/about" className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
               Our Story
+            </Link>
+            <Link href="/blog" className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)} data-testid="mobile-nav-link-blog">
+              Blog
             </Link>
             <Link href="/products" className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
               Products

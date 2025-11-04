@@ -24,6 +24,7 @@ import {
   leaderboard,
   secureDocuments,
   documentPermissions,
+  blogPosts,
   type User, 
   type UpsertUser,
   type Product,
@@ -72,7 +73,9 @@ import {
   type SecureDocument,
   type InsertSecureDocument,
   type DocumentPermission,
-  type InsertDocumentPermission
+  type InsertDocumentPermission,
+  type BlogPost,
+  type InsertBlogPost
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, sql } from "drizzle-orm";
@@ -202,6 +205,16 @@ export interface IStorage {
   updateDocumentPermission(documentId: number, investorId: string, canView: boolean, canDownload: boolean): Promise<void>;
   removeDocumentPermission(documentId: number, investorId: string): Promise<void>;
   getInvestorDocumentsWithPermissions(investorId: string): Promise<(SecureDocument & { canView: boolean; canDownload: boolean })[]>;
+  
+  // Blog post operations
+  getAllBlogPosts(): Promise<BlogPost[]>;
+  getPublishedBlogPosts(): Promise<BlogPost[]>;
+  getBlogPost(id: number): Promise<BlogPost | undefined>;
+  getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
+  getBlogPostsByCategory(category: string): Promise<BlogPost[]>;
+  createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
+  updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost>;
+  deleteBlogPost(id: number): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -420,6 +433,29 @@ export class DatabaseStorage implements IStorage {
   }
 
   async upsertUser(userData: UpsertUser): Promise<User> {
+    // First, check if a user with this email already exists
+    if (userData.email) {
+      const existingByEmail = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, userData.email))
+        .limit(1);
+      
+      // If user exists with this email but different ID, update by email
+      if (existingByEmail.length > 0 && existingByEmail[0].id !== userData.id) {
+        const [updated] = await db
+          .update(users)
+          .set({
+            ...userData,
+            updatedAt: new Date(),
+          })
+          .where(eq(users.email, userData.email))
+          .returning();
+        return updated;
+      }
+    }
+    
+    // Otherwise, use normal upsert by ID
     const [user] = await db
       .insert(users)
       .values(userData)
@@ -1639,6 +1675,74 @@ export class DatabaseStorage implements IStorage {
     );
 
     return uniqueDocuments;
+  }
+
+  // Blog post operations
+  async getAllBlogPosts(): Promise<BlogPost[]> {
+    return await db
+      .select()
+      .from(blogPosts)
+      .orderBy(desc(blogPosts.publishedAt));
+  }
+
+  async getPublishedBlogPosts(): Promise<BlogPost[]> {
+    return await db
+      .select()
+      .from(blogPosts)
+      .where(eq(blogPosts.published, true))
+      .orderBy(desc(blogPosts.publishedAt));
+  }
+
+  async getBlogPost(id: number): Promise<BlogPost | undefined> {
+    const results = await db
+      .select()
+      .from(blogPosts)
+      .where(eq(blogPosts.id, id))
+      .limit(1);
+    return results[0];
+  }
+
+  async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
+    const results = await db
+      .select()
+      .from(blogPosts)
+      .where(eq(blogPosts.slug, slug))
+      .limit(1);
+    return results[0];
+  }
+
+  async getBlogPostsByCategory(category: string): Promise<BlogPost[]> {
+    return await db
+      .select()
+      .from(blogPosts)
+      .where(and(
+        eq(blogPosts.category, category),
+        eq(blogPosts.published, true)
+      ))
+      .orderBy(desc(blogPosts.publishedAt));
+  }
+
+  async createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
+    const results = await db
+      .insert(blogPosts)
+      .values(post)
+      .returning();
+    return results[0];
+  }
+
+  async updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost> {
+    const results = await db
+      .update(blogPosts)
+      .set({ ...post, updatedAt: new Date() })
+      .where(eq(blogPosts.id, id))
+      .returning();
+    return results[0];
+  }
+
+  async deleteBlogPost(id: number): Promise<void> {
+    await db
+      .delete(blogPosts)
+      .where(eq(blogPosts.id, id));
   }
 }
 

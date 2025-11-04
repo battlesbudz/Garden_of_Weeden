@@ -6,3 +6,4 @@ export * from "./investor";
 export * from "./gamification";
 export * from "./events";
 export * from "./documents";
+export * from "./blog";

@@ -58,13 +58,20 @@ function updateUserSession(
 async function upsertUser(
   claims: any,
 ) {
-  await storage.upsertUser({
+  const userData: any = {
     id: claims["sub"],
     email: claims["email"],
     firstName: claims["first_name"],
     lastName: claims["last_name"],
     profileImageUrl: claims["profile_image_url"],
-  });
+  };
+  
+  // Only include role if it exists in claims
+  if (claims["role"]) {
+    userData.role = claims["role"];
+  }
+  
+  await storage.upsertUser(userData);
 }
 
 export async function setupAuth(app: Express) {
