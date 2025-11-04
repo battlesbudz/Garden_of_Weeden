@@ -12,12 +12,13 @@ Garden of Weeden is a veteran-owned cannabis microbusiness in Buffalo, New York,
 - Prioritize user experience and navigation flow
 - Keep authentication secure but user-friendly
 - Emphasize veteran ownership and Buffalo micro-terroir positioning
+- **Important**: "Wizard of Oz" is internal design inspiration ONLY - do NOT mention in customer-facing brand positioning
 
 ## System Architecture
 The platform features a modern web stack designed for performance, scalability, and maintainability.
 
 **UI/UX Decisions:**
-- **Brand Identity**: "Enchanted Grit" combining Wizard of Oz whimsy with service-forged values.
+- **Brand Identity**: "Enchanted Grit" combining whimsical enchantment with service-forged values.
 - **Color Palette**: Evergreen Canopy (#245427), Parchment Glow (#F7F1DA), Midnight Grove (#1a1a1a), and Canopy Veil (#3A6A2B), derived from the brand logo.
 - **Typography**: Yeseva One (headlines), Cormorant Garamond (subheadings), Work Sans (body), and Parisienne (decorative accents) for a whimsical feel.
 - **Design System**: Custom CSS properties in HSL format with backward compatibility.

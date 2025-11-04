@@ -31,7 +31,7 @@ const timelineEvents = [
     year: 'Vision',
     icon: Lightbulb,
     title: 'The Garden Vision',
-    description: 'Conceptualizing Garden of Weeden: merging Wizard of Oz whimsy with veteran values',
+    description: 'Conceptualizing Garden of Weeden: merging whimsical enchantment with veteran values',
     highlight: 'Enchanted Grit Born',
     position: 'right' as const
   },
