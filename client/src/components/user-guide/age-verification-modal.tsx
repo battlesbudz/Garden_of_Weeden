@@ -57,8 +57,10 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
   }, [isOpen]);
   
   const handleVerify = () => {
+    console.log('AGE GATE: Yes button clicked - handleVerify called');
     // No localStorage - age verification required on every page load
     onVerified();
+    console.log('AGE GATE: onVerified callback executed');
   };
 
   if (!isOpen) return null;

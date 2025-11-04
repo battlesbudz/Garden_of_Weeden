@@ -37,11 +37,16 @@ export function useUserGuide() {
   }, []);
 
   const handleAgeVerified = () => {
-    setGuideState(prev => ({
-      ...prev,
-      showAgeVerification: false,
-      showQuickStart: false, // Go directly to homepage instead
-    }));
+    console.log('AGE GATE: handleAgeVerified called - closing modal');
+    setGuideState(prev => {
+      const newState = {
+        ...prev,
+        showAgeVerification: false,
+        showQuickStart: false, // Go directly to homepage instead
+      };
+      console.log('AGE GATE: New state set', newState);
+      return newState;
+    });
   };
 
   const handleAgeDenied = () => {
