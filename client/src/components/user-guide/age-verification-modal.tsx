@@ -13,6 +13,29 @@ interface AgeVerificationModalProps {
 export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerificationModalProps) {
   const prefersReducedMotion = useReducedMotion();
   
+  // Prevent background scrolling when modal is open
+  React.useEffect(() => {
+    if (isOpen) {
+      // Store current scroll position
+      const scrollY = window.scrollY;
+      
+      // Lock body scroll
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      
+      return () => {
+        // Restore scroll position
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+  
   const handleVerify = () => {
     localStorage.setItem('ageVerified', 'true');
     localStorage.setItem('ageVerifiedDate', new Date().toISOString());
@@ -37,17 +60,16 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
         <img 
           src={fieldRowsImage} 
           alt="" 
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover opacity-20"
           aria-hidden="true"
         />
-        {/* Sophisticated gradient overlays for depth */}
-        <div className="absolute inset-0 bg-gradient-to-b from-battles-black via-battles-black/90 to-battles-black"></div>
-        <div className="absolute inset-0 bg-gradient-radial from-transparent via-midnight-grove/20 to-battles-black"></div>
+        {/* Dark overlays for better text contrast */}
+        <div className="absolute inset-0 bg-black/80"></div>
       </div>
 
       {/* Content */}
       <motion.div
-        className="relative z-10 max-w-2xl mx-4 my-4 bg-midnight-grove/60 backdrop-blur-xl border-2 border-green-500/30 rounded-3xl p-4 shadow-2xl shadow-green-500/20"
+        className="relative z-10 max-w-2xl mx-4 my-4 bg-black/85 backdrop-blur-xl border-2 border-green-500/40 rounded-3xl p-4 shadow-2xl shadow-green-500/20"
         initial={prefersReducedMotion ? { scale: 1, y: 0 } : { scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: prefersReducedMotion ? 0 : 0.2 }}
@@ -93,7 +115,7 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
             <p className="font-storybook text-lg text-parchment">
               Are you 21 years or older?
             </p>
-            <p className="font-garden text-xs text-gray-300 max-w-lg mx-auto leading-snug">
+            <p className="font-garden text-xs text-white max-w-lg mx-auto leading-snug">
               You must be 21+ to enter this cannabis website as required by New York State law. 
               By entering, you acknowledge that you are of legal age.
             </p>
@@ -106,17 +128,17 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
             animate={{ opacity: 1 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: prefersReducedMotion ? 0 : 0.7 }}
           >
-            <div className="flex flex-col items-center gap-0.5 p-1.5 bg-midnight-grove/40 border border-green-500/20 rounded-lg">
+            <div className="flex flex-col items-center gap-0.5 p-1.5 bg-black/40 border border-green-500/30 rounded-lg">
               <Award className="h-4 w-4 text-green-500" aria-hidden="true" />
-              <span className="font-garden text-[10px] text-gray-300 leading-tight">Veteran-Owned</span>
+              <span className="font-garden text-[10px] text-white leading-tight">Veteran-Owned</span>
             </div>
-            <div className="flex flex-col items-center gap-0.5 p-1.5 bg-midnight-grove/40 border border-green-500/20 rounded-lg">
+            <div className="flex flex-col items-center gap-0.5 p-1.5 bg-black/40 border border-green-500/30 rounded-lg">
               <MapPin className="h-4 w-4 text-green-500" aria-hidden="true" />
-              <span className="font-garden text-[10px] text-gray-300 leading-tight">Buffalo Roots</span>
+              <span className="font-garden text-[10px] text-white leading-tight">Buffalo Roots</span>
             </div>
-            <div className="flex flex-col items-center gap-0.5 p-1.5 bg-midnight-grove/40 border border-green-500/20 rounded-lg">
+            <div className="flex flex-col items-center gap-0.5 p-1.5 bg-black/40 border border-green-500/30 rounded-lg">
               <Shield className="h-4 w-4 text-green-500" aria-hidden="true" />
-              <span className="font-garden text-[10px] text-gray-300 leading-tight">Quality Assured</span>
+              <span className="font-garden text-[10px] text-white leading-tight">Quality Assured</span>
             </div>
           </motion.div>
 
@@ -149,7 +171,7 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
 
           {/* Legal Notice */}
           <motion.p 
-            className="font-garden text-xs text-gray-400 max-w-md mx-auto leading-relaxed"
+            className="font-garden text-xs text-gray-300 max-w-md mx-auto leading-relaxed"
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: prefersReducedMotion ? 0 : 0.9 }}
