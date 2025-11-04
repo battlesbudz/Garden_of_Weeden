@@ -13,6 +13,26 @@ interface AgeVerificationModalProps {
 export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerificationModalProps) {
   const prefersReducedMotion = useReducedMotion();
   
+  // Clear any leftover scroll lock styles on mount and when page is restored from bfcache
+  React.useEffect(() => {
+    const clearScrollLock = () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+    };
+    
+    // Clear on mount
+    clearScrollLock();
+    
+    // Also clear when page is restored from browser cache (back button)
+    window.addEventListener('pageshow', clearScrollLock);
+    
+    return () => {
+      window.removeEventListener('pageshow', clearScrollLock);
+    };
+  }, []);
+  
   // Prevent background scrolling when modal is open
   React.useEffect(() => {
     if (isOpen) {
