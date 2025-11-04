@@ -63,7 +63,7 @@ export default function HeroSection() {
           <h2 className="font-storybook text-3xl md:text-5xl lg:text-6xl text-parchment drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] mb-6 tracking-wide">
             From Service to Soil
           </h2>
-          <p className="font-garden text-xl md:text-3xl lg:text-4xl text-parchment/90 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] max-w-4xl mx-auto leading-relaxed">
+          <p className="font-garden text-xl md:text-3xl lg:text-4xl text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] max-w-4xl mx-auto leading-relaxed">
             Veteran-Owned Cannabis Microbusiness in Buffalo, NY
           </p>
         </motion.div>

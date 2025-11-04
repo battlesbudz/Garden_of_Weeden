@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { FaFacebook, FaTwitter, FaLinkedin, FaLink } from 'react-icons/fa';
+import { FaInstagram, FaLink } from 'react-icons/fa';
 import { Share2, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { SITE_CONFIG } from '@/utils/seo';
 
 interface SocialShareProps {
   url: string;
@@ -18,11 +19,7 @@ export function SocialShare({ url, title, description, variant = 'inline' }: Soc
   const shareTitle = encodeURIComponent(title);
   const shareDescription = encodeURIComponent(description || '');
 
-  const socialLinks = {
-    facebook: `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
-    twitter: `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`,
-    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`,
-  };
+  const instagramLink = SITE_CONFIG.social.instagram;
 
   const handleCopyLink = async () => {
     try {
@@ -42,8 +39,8 @@ export function SocialShare({ url, title, description, variant = 'inline' }: Soc
     }
   };
 
-  const handleShare = (platform: string, link: string) => {
-    window.open(link, '_blank', 'width=600,height=400');
+  const handleInstagramClick = () => {
+    window.open(instagramLink, '_blank', 'noopener,noreferrer');
   };
 
   if (variant === 'floating') {
@@ -53,28 +50,12 @@ export function SocialShare({ url, title, description, variant = 'inline' }: Soc
           Share
         </div>
         <button
-          onClick={() => handleShare('facebook', socialLinks.facebook)}
+          onClick={handleInstagramClick}
           className="group flex items-center justify-center w-12 h-12 rounded-full bg-midnight-grove border-2 border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-500/30"
-          aria-label="Share on Facebook"
-          data-testid="share-facebook"
+          aria-label="Follow us on Instagram"
+          data-testid="share-instagram"
         >
-          <FaFacebook className="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors" />
-        </button>
-        <button
-          onClick={() => handleShare('twitter', socialLinks.twitter)}
-          className="group flex items-center justify-center w-12 h-12 rounded-full bg-midnight-grove border-2 border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-500/30"
-          aria-label="Share on Twitter"
-          data-testid="share-twitter"
-        >
-          <FaTwitter className="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors" />
-        </button>
-        <button
-          onClick={() => handleShare('linkedin', socialLinks.linkedin)}
-          className="group flex items-center justify-center w-12 h-12 rounded-full bg-midnight-grove border-2 border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-500/30"
-          aria-label="Share on LinkedIn"
-          data-testid="share-linkedin"
-        >
-          <FaLinkedin className="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors" />
+          <FaInstagram className="h-5 w-5 text-gray-400 group-hover:text-green-500 transition-colors" />
         </button>
         <button
           onClick={handleCopyLink}
@@ -100,28 +81,12 @@ export function SocialShare({ url, title, description, variant = 'inline' }: Soc
       </div>
       <div className="flex gap-2">
         <button
-          onClick={() => handleShare('facebook', socialLinks.facebook)}
+          onClick={handleInstagramClick}
           className="group flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 border border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110"
-          aria-label="Share on Facebook"
-          data-testid="share-facebook-inline"
+          aria-label="Follow us on Instagram"
+          data-testid="share-instagram-inline"
         >
-          <FaFacebook className="h-4 w-4 text-gray-400 group-hover:text-green-500 transition-colors" />
-        </button>
-        <button
-          onClick={() => handleShare('twitter', socialLinks.twitter)}
-          className="group flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 border border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110"
-          aria-label="Share on Twitter"
-          data-testid="share-twitter-inline"
-        >
-          <FaTwitter className="h-4 w-4 text-gray-400 group-hover:text-green-500 transition-colors" />
-        </button>
-        <button
-          onClick={() => handleShare('linkedin', socialLinks.linkedin)}
-          className="group flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 border border-gray-700 hover:border-green-500 hover:bg-green-500/20 transition-all duration-300 hover:scale-110"
-          aria-label="Share on LinkedIn"
-          data-testid="share-linkedin-inline"
-        >
-          <FaLinkedin className="h-4 w-4 text-gray-400 group-hover:text-green-500 transition-colors" />
+          <FaInstagram className="h-4 w-4 text-gray-400 group-hover:text-green-500 transition-colors" />
         </button>
         <button
           onClick={handleCopyLink}

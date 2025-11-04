@@ -20,9 +20,7 @@ export const SITE_CONFIG = {
     phone: "+1-716-XXX-XXXX"
   },
   social: {
-    facebook: "https://www.facebook.com/",
-    instagram: "https://www.instagram.com/garden_of_weeden_ny?igsh=MTBuZDV4dzB6NnVwbA==",
-    twitter: "https://twitter.com/"
+    instagram: "https://www.instagram.com/garden_of_weeden_ny?igsh=MTBuZDV4dzB6NnVwbA=="
   }
 };
 
@@ -60,9 +58,7 @@ export function getOrganizationSchema() {
       "email": SITE_CONFIG.contact.email
     },
     "sameAs": [
-      SITE_CONFIG.social.facebook,
-      SITE_CONFIG.social.instagram,
-      SITE_CONFIG.social.twitter
+      SITE_CONFIG.social.instagram
     ]
   };
 }
