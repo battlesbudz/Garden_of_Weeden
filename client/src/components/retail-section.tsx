@@ -1,4 +1,5 @@
 import { Sprout, Award, Heart, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
 import flowerCloseupImage from "@assets/AISelect_20251103_131526_Instagram_1762194447917.jpg";
 import dryingRacksImage from "@assets/AISelect_20251103_131504_Instagram_1762194447955.jpg";
 
@@ -19,7 +20,13 @@ export default function RetailSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Buffalo Micro-Terroir Section */}
         <div className="mb-24">
-          <div className="text-center mb-16">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
             <h2 className="font-enchanted text-5xl md:text-6xl lg:text-7xl text-parchment mb-6 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
               Buffalo Micro-Terroir
             </h2>
@@ -27,10 +34,16 @@ export default function RetailSection() {
             <p className="font-storybook text-2xl md:text-3xl text-green-400 max-w-3xl mx-auto mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               Where Lake Erie Winds Meet Western New York Soil
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="group">
+            <motion.div 
+              className="group"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
               <div className="relative overflow-hidden rounded-2xl shadow-2xl border-2 border-green-500/30 group-hover:border-green-500/60 transition-all duration-500">
                 <img 
                   src={flowerCloseupImage} 
@@ -39,8 +52,14 @@ export default function RetailSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-battles-black/50 via-transparent to-transparent group-hover:from-battles-black/30 transition-all duration-500"></div>
               </div>
-            </div>
-            <div className="space-y-8 font-garden text-gray-300">
+            </motion.div>
+            <motion.div 
+              className="space-y-8 font-garden text-gray-300"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+            >
               <p className="text-lg md:text-xl leading-relaxed">
                 Our Buffalo cultivation site harnesses the unique environmental conditions of Western New York. 
                 Lake Erie's moderating influence creates ideal temperature swings, while mineral-rich glacial soils 
@@ -58,13 +77,19 @@ export default function RetailSection() {
                   <li>• <strong className="text-green-500">Buffalo Pride:</strong> Supporting local Western NY economy</li>
                 </ul>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
         {/* Cultivation Process */}
         <div className="mb-24">
-          <div className="text-center mb-16">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
             <h2 className="font-enchanted text-5xl md:text-6xl lg:text-7xl text-parchment mb-6 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
               Our Cultivation Process
             </h2>
@@ -72,10 +97,16 @@ export default function RetailSection() {
             <p className="font-storybook text-2xl md:text-3xl text-green-400 max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               Quality and Consistency in Every Harvest
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8 font-garden text-gray-300 order-2 md:order-1">
+            <motion.div 
+              className="space-y-8 font-garden text-gray-300 order-2 md:order-1"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
               <p className="text-lg md:text-xl leading-relaxed">
                 Every plant receives careful attention throughout its lifecycle. Our cultivation approach 
                 combines time-tested methods with hands-on experience, ensuring consistent quality 
@@ -111,8 +142,14 @@ export default function RetailSection() {
                   <p className="text-sm text-gray-300 group-hover:text-gray-200 transition-colors">Buffalo-proud, veteran-owned</p>
                 </div>
               </div>
-            </div>
-            <div className="order-1 md:order-2 group">
+            </motion.div>
+            <motion.div 
+              className="order-1 md:order-2 group"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+            >
               <div className="relative overflow-hidden rounded-2xl shadow-2xl border-2 border-green-500/30 group-hover:border-green-500/60 transition-all duration-500">
                 <img 
                   src={dryingRacksImage} 
@@ -121,12 +158,18 @@ export default function RetailSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-battles-black/50 via-transparent to-transparent group-hover:from-battles-black/30 transition-all duration-500"></div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
         {/* Coming Soon CTA - Enhanced */}
-        <div className="relative overflow-hidden text-center bg-midnight-grove/50 backdrop-blur-md border border-green-500/40 rounded-2xl p-16 shadow-2xl hover:border-green-500/70 hover:shadow-3xl hover:shadow-green-500/20 transition-all duration-500">
+        <motion.div 
+          className="relative overflow-hidden text-center bg-midnight-grove/50 backdrop-blur-md border border-green-500/40 rounded-2xl p-16 shadow-2xl hover:border-green-500/70 hover:shadow-3xl hover:shadow-green-500/20 transition-all duration-500"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="absolute inset-0 bg-gradient-radial from-green-500/5 via-transparent to-transparent"></div>
           <div className="relative z-10">
           <h3 className="font-storybook text-3xl text-parchment mb-4">
@@ -145,7 +188,7 @@ export default function RetailSection() {
             Join the Waitlist
           </button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

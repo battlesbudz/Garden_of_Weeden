@@ -1,4 +1,5 @@
 import { Award, Heart, Users, BookOpen, Leaf, Shield } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function ServicesSection() {
   const services = [
@@ -41,7 +42,13 @@ export default function ServicesSection() {
       <div className="absolute inset-0 bg-gradient-radial from-green-500/5 via-transparent to-transparent"></div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20">
+        <motion.div 
+          className="text-center mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <h2 className="font-enchanted text-5xl md:text-6xl lg:text-7xl text-parchment mb-6 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
             Our Values
           </h2>
@@ -49,15 +56,23 @@ export default function ServicesSection() {
           <p className="font-storybook text-2xl md:text-3xl text-green-400 max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
             Service, Quality, and Community
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
-              <div
+              <motion.div
                 key={index}
                 className="group relative bg-midnight-grove/40 backdrop-blur-md border border-green-500/30 rounded-2xl p-8 text-center hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: index * 0.1,
+                  ease: "easeOut" 
+                }}
               >
                 {/* Gradient overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-green-500/0 via-green-500/0 to-green-500/0 group-hover:from-green-500/5 group-hover:via-green-500/0 group-hover:to-green-500/10 rounded-2xl transition-all duration-500"></div>
@@ -71,7 +86,7 @@ export default function ServicesSection() {
                   </h3>
                   <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors leading-relaxed">{service.description}</p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

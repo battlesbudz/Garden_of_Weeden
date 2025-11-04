@@ -1,5 +1,6 @@
 import { ChevronDown, Award, MapPin, Heart } from "lucide-react";
 import { Link } from "wouter";
+import { motion } from "framer-motion";
 import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
 
 export default function HeroSection() {
@@ -30,46 +31,71 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 text-center">
         {/* Main Headline - Larger & Bolder */}
-        <div className="animate-fade-in mb-8">
+        <motion.div 
+          className="mb-8"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
           <h1 className="font-enchanted text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] text-parchment mb-6 leading-[0.9] tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
             Garden of Weeden
           </h1>
           <div className="h-1.5 w-40 bg-gradient-to-r from-green-400 via-green-500 to-green-600 mx-auto mb-8 rounded-full shadow-lg shadow-green-500/50"></div>
-        </div>
+        </motion.div>
 
         {/* Veteran-Owned Tagline - Enhanced */}
-        <div className="animate-fade-in-up mb-10">
+        <motion.div 
+          className="mb-10"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+        >
           <h2 className="font-storybook text-3xl md:text-5xl lg:text-6xl text-parchment drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] mb-6 tracking-wide">
             From Service to Soil
           </h2>
           <p className="font-garden text-xl md:text-3xl lg:text-4xl text-parchment/90 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] max-w-4xl mx-auto leading-relaxed">
             Veteran-Owned Cannabis Microbusiness in Buffalo, NY
           </p>
-        </div>
+        </motion.div>
 
         {/* Three Pillars - Enhanced with sophisticated hover effects */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-14 animate-fade-in-up animation-delay-200">
-          <div className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer">
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-14">
+          <motion.div 
+            className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+          >
             <div className="transform group-hover:scale-110 transition-transform duration-300">
               <Award className="h-12 w-12 text-green-500 mx-auto mb-4 group-hover:text-green-400 transition-colors" />
             </div>
             <h3 className="font-storybook text-2xl text-parchment mb-3 group-hover:text-green-400 transition-colors">Veteran-Owned</h3>
             <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors">Quality cultivation by those who served</p>
-          </div>
-          <div className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer">
+          </motion.div>
+          <motion.div 
+            className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+          >
             <div className="transform group-hover:scale-110 transition-transform duration-300">
               <MapPin className="h-12 w-12 text-green-500 mx-auto mb-4 group-hover:text-green-400 transition-colors" />
             </div>
             <h3 className="font-storybook text-2xl text-parchment mb-3 group-hover:text-green-400 transition-colors">Buffalo Roots</h3>
             <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors">Grown in Western NY's micro-terroir</p>
-          </div>
-          <div className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer">
+          </motion.div>
+          <motion.div 
+            className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
+          >
             <div className="transform group-hover:scale-110 transition-transform duration-300">
               <Heart className="h-12 w-12 text-green-500 mx-auto mb-4 group-hover:text-green-400 transition-colors" />
             </div>
             <h3 className="font-storybook text-2xl text-parchment mb-3 group-hover:text-green-400 transition-colors">Wellness Focused</h3>
             <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors">Supporting veteran healing journeys</p>
-          </div>
+          </motion.div>
         </div>
 
         {/* CTA Buttons */}
