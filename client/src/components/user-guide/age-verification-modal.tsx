@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Shield, Sparkles, Award, MapPin } from 'lucide-react';
+import { Shield, Award, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
 
@@ -67,7 +67,7 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
             transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: prefersReducedMotion ? 0 : 0.4, type: "spring", stiffness: 200 }}
           >
             <div className="p-2 rounded-full bg-gradient-to-br from-green-500/30 to-green-700/40 shadow-lg shadow-green-500/30 border border-green-500/40">
-              <Sparkles className="h-8 w-8 text-green-500" aria-hidden="true" />
+              <Shield className="h-8 w-8 text-green-500" aria-hidden="true" />
             </div>
           </motion.div>
 
