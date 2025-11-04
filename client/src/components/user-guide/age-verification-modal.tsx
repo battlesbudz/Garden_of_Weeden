@@ -37,8 +37,7 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
   }, [isOpen]);
   
   const handleVerify = () => {
-    localStorage.setItem('ageVerified', 'true');
-    localStorage.setItem('ageVerifiedDate', new Date().toISOString());
+    // No localStorage - age verification required on every page load
     onVerified();
   };
 

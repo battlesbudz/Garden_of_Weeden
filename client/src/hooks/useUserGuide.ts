@@ -16,14 +16,7 @@ export function useUserGuide() {
   });
 
   useEffect(() => {
-    // Check age verification
-    const ageVerified = localStorage.getItem('ageVerified');
-    const ageVerifiedDate = localStorage.getItem('ageVerifiedDate');
-    
-    // Check if age verification is still valid (24 hours)
-    const isAgeVerificationValid = ageVerified && ageVerifiedDate && 
-      (Date.now() - new Date(ageVerifiedDate).getTime()) < 24 * 60 * 60 * 1000;
-
+    // Age verification required on EVERY page load - no caching
     // Check if user has visited before
     const hasVisited = localStorage.getItem('hasVisited');
     const tourCompleted = localStorage.getItem('tourCompleted');
@@ -31,7 +24,7 @@ export function useUserGuide() {
     const isFirstVisit = !hasVisited;
 
     setGuideState({
-      showAgeVerification: !isAgeVerificationValid,
+      showAgeVerification: true, // Always show on every page load
       showQuickStart: false, // Only show when explicitly requested
       showTour: false,
       isFirstVisit,
