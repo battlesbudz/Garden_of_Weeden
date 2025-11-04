@@ -125,8 +125,8 @@ export default function LocationPage() {
               <div className="bg-black rounded-lg p-6 text-center">
                 <MapPin className="h-12 w-12 text-battles-gold mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-battles-gold mb-2">Location</h3>
-                <p className="text-gray-300">333 Franklin St, Buffalo NY, 14202</p>
-                <p className="text-gray-400 text-sm">Main dispensary location</p>
+                <p className="text-gray-300">Buffalo, NY</p>
+                <p className="text-gray-400 text-sm">Western New York</p>
               </div>
               
               <div className="bg-black rounded-lg p-6 text-center">

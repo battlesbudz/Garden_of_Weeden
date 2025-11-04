@@ -157,7 +157,7 @@ export default function EventsSection() {
               </div>
 
               <p className="text-sm text-gray-400 mt-6">
-                At The Lounge on Franklin • 333 Franklin St, Buffalo NY 14202
+                Buffalo, NY • Western New York
               </p>
             </div>
           </div>
