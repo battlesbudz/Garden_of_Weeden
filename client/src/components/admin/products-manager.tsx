@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Pencil, Trash2, Package } from "lucide-react";
+import { Plus, Pencil, Trash2, Package, Upload, Loader2 } from "lucide-react";
 import type { Product, Brand } from "@shared/schema";
 
 type ProductWithBrand = Product & { brand?: Brand };
@@ -18,6 +18,9 @@ export default function ProductsManager() {
   const { toast } = useToast();
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<ProductWithBrand | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -28,6 +31,45 @@ export default function ProductsManager() {
     inStock: true,
     isFeatured: false,
   });
+
+  const handleFileUpload = async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      toast({ title: "Please select an image file", variant: "destructive" });
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ title: "File size must be less than 5MB", variant: "destructive" });
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append("file", file);
+
+      const response = await fetch("/api/admin/upload", {
+        method: "POST",
+        credentials: "include",
+        body: formDataUpload,
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to upload file");
+      }
+      
+      const { url } = await response.json();
+      setFormData({ ...formData, imageUrl: url });
+      setImagePreview(URL.createObjectURL(file));
+      toast({ title: "Image uploaded successfully" });
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast({ title: "Failed to upload image", variant: "destructive" });
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   const { data: products, isLoading } = useQuery<ProductWithBrand[]>({
     queryKey: ["/api/admin/products"],
@@ -100,6 +142,10 @@ export default function ProductsManager() {
       inStock: true,
       isFeatured: false,
     });
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const openEditDialog = (product: ProductWithBrand) => {
@@ -114,6 +160,7 @@ export default function ProductsManager() {
       inStock: product.inStock ?? true,
       isFeatured: product.isFeatured ?? false,
     });
+    setImagePreview(product.imageUrl || null);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -203,19 +250,64 @@ export default function ProductsManager() {
         </Select>
       </div>
       <div>
-        <Label htmlFor="imageUrl" className="text-white">Image URL</Label>
-        <Input
-          id="imageUrl"
-          value={formData.imageUrl}
-          onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-          placeholder="https://example.com/image.png"
-          className="bg-zinc-800 border-zinc-700 text-white"
-        />
-        {formData.imageUrl && (
-          <div className="mt-2 p-2 bg-zinc-800 rounded-lg inline-block">
-            <img src={formData.imageUrl} alt="Product preview" className="max-h-20 object-contain" />
+        <Label className="text-white">Product Image</Label>
+        <div className="mt-2">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleFileUpload(file);
+            }}
+            className="hidden"
+            id="product-image-upload"
+          />
+          <div className="flex items-center gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploading}
+              className="border-zinc-700 text-gray-300 hover:bg-zinc-700"
+            >
+              {isUploading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Uploading...
+                </>
+              ) : (
+                <>
+                  <Upload className="w-4 h-4 mr-2" />
+                  {imagePreview || formData.imageUrl ? "Change Image" : "Upload Image"}
+                </>
+              )}
+            </Button>
+            {(imagePreview || formData.imageUrl) && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => {
+                  setFormData({ ...formData, imageUrl: "" });
+                  setImagePreview(null);
+                  if (fileInputRef.current) fileInputRef.current.value = "";
+                }}
+                className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
+              >
+                Remove
+              </Button>
+            )}
           </div>
-        )}
+          {(imagePreview || formData.imageUrl) && (
+            <div className="mt-3 p-3 bg-zinc-800 rounded-lg inline-block">
+              <img 
+                src={imagePreview || formData.imageUrl} 
+                alt="Product preview" 
+                className="max-h-24 object-contain"
+              />
+            </div>
+          )}
+        </div>
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
