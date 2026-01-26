@@ -3,21 +3,67 @@ import type { Express } from "express";
 import { isAdmin, isAuthenticated } from "../replitAuth";
 import { storage } from "../storage";
 import { insertBrandSchema, insertProductSchema } from "@shared/schema";
-import { ObjectStorageService } from "../objectStorage";
+import { objectStorageClient } from "../objectStorage";
+import multer from "multer";
+import { randomUUID } from "crypto";
 
-const objectStorage = new ObjectStorageService();
+// Configure multer for memory storage
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only image files are allowed"));
+    }
+  },
+});
 
 export function registerAdminRoutes(app: Express) {
   // ========== FILE UPLOAD ==========
   
-  // Get presigned URL for file upload
-  app.post("/api/admin/upload-url", isAdmin, async (req: any, res) => {
+  // Upload image file
+  app.post("/api/admin/upload", isAdmin, upload.single("file"), async (req: any, res) => {
     try {
-      const uploadURL = await objectStorage.getObjectEntityUploadURL();
-      res.json({ uploadURL });
+      if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+
+      const publicPaths = process.env.PUBLIC_OBJECT_SEARCH_PATHS || "";
+      const publicPath = publicPaths.split(",")[0]?.trim();
+      
+      if (!publicPath) {
+        return res.status(500).json({ message: "Object storage not configured" });
+      }
+
+      // Parse bucket and path
+      const pathParts = publicPath.split("/").filter(Boolean);
+      const bucketName = pathParts[0];
+      const basePath = pathParts.slice(1).join("/");
+      
+      // Generate unique filename
+      const ext = req.file.originalname.split(".").pop() || "jpg";
+      const filename = `brands/${randomUUID()}.${ext}`;
+      const objectName = basePath ? `${basePath}/${filename}` : filename;
+
+      // Upload to GCS
+      const bucket = objectStorageClient.bucket(bucketName);
+      const file = bucket.file(objectName);
+      
+      await file.save(req.file.buffer, {
+        contentType: req.file.mimetype,
+        metadata: {
+          cacheControl: "public, max-age=31536000",
+        },
+      });
+
+      // Return the public URL
+      const publicUrl = `https://storage.googleapis.com/${bucketName}/${objectName}`;
+      res.json({ url: publicUrl });
     } catch (error) {
-      console.error("Error generating upload URL:", error);
-      res.status(500).json({ message: "Failed to generate upload URL" });
+      console.error("Error uploading file:", error);
+      res.status(500).json({ message: "Failed to upload file" });
     }
   });
   // ========== BRAND MANAGEMENT ==========

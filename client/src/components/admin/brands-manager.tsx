@@ -32,34 +32,29 @@ export default function BrandsManager() {
       return;
     }
 
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ title: "File size must be less than 5MB", variant: "destructive" });
+      return;
+    }
+
     setIsUploading(true);
     try {
-      // Get presigned upload URL
-      const urlResponse = await fetch("/api/admin/upload-url", {
+      const formDataUpload = new FormData();
+      formDataUpload.append("file", file);
+
+      const response = await fetch("/api/admin/upload", {
         method: "POST",
         credentials: "include",
+        body: formDataUpload,
       });
       
-      if (!urlResponse.ok) {
-        throw new Error("Failed to get upload URL");
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to upload file");
       }
       
-      const { uploadURL } = await urlResponse.json();
-      
-      // Upload file directly to storage
-      const uploadResponse = await fetch(uploadURL, {
-        method: "PUT",
-        body: file,
-        headers: { "Content-Type": file.type },
-      });
-      
-      if (!uploadResponse.ok) {
-        throw new Error("Failed to upload file");
-      }
-      
-      // Extract the URL without query params for storage
-      const logoUrl = uploadURL.split("?")[0];
-      setFormData({ ...formData, logoUrl });
+      const { url } = await response.json();
+      setFormData({ ...formData, logoUrl: url });
       setLogoPreview(URL.createObjectURL(file));
       toast({ title: "Logo uploaded successfully" });
     } catch (error) {
