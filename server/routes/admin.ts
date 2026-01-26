@@ -3,8 +3,23 @@ import type { Express } from "express";
 import { isAdmin, isAuthenticated } from "../replitAuth";
 import { storage } from "../storage";
 import { insertBrandSchema, insertProductSchema } from "@shared/schema";
+import { ObjectStorageService } from "../objectStorage";
+
+const objectStorage = new ObjectStorageService();
 
 export function registerAdminRoutes(app: Express) {
+  // ========== FILE UPLOAD ==========
+  
+  // Get presigned URL for file upload
+  app.post("/api/admin/upload-url", isAdmin, async (req: any, res) => {
+    try {
+      const uploadURL = await objectStorage.getObjectEntityUploadURL();
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error generating upload URL:", error);
+      res.status(500).json({ message: "Failed to generate upload URL" });
+    }
+  });
   // ========== BRAND MANAGEMENT ==========
   
   // Get all brands (admin)

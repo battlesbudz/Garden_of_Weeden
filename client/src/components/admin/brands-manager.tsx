@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -8,13 +8,16 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Pencil, Trash2, Image as ImageIcon } from "lucide-react";
+import { Plus, Pencil, Trash2, Image as ImageIcon, Upload, Loader2 } from "lucide-react";
 import type { Brand } from "@shared/schema";
 
 export default function BrandsManager() {
   const { toast } = useToast();
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [editingBrand, setEditingBrand] = useState<Brand | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -22,6 +25,50 @@ export default function BrandsManager() {
     isActive: true,
     sortOrder: 0,
   });
+
+  const handleFileUpload = async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      toast({ title: "Please select an image file", variant: "destructive" });
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      // Get presigned upload URL
+      const urlResponse = await fetch("/api/admin/upload-url", {
+        method: "POST",
+        credentials: "include",
+      });
+      
+      if (!urlResponse.ok) {
+        throw new Error("Failed to get upload URL");
+      }
+      
+      const { uploadURL } = await urlResponse.json();
+      
+      // Upload file directly to storage
+      const uploadResponse = await fetch(uploadURL, {
+        method: "PUT",
+        body: file,
+        headers: { "Content-Type": file.type },
+      });
+      
+      if (!uploadResponse.ok) {
+        throw new Error("Failed to upload file");
+      }
+      
+      // Extract the URL without query params for storage
+      const logoUrl = uploadURL.split("?")[0];
+      setFormData({ ...formData, logoUrl });
+      setLogoPreview(URL.createObjectURL(file));
+      toast({ title: "Logo uploaded successfully" });
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast({ title: "Failed to upload logo", variant: "destructive" });
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   const { data: brands, isLoading } = useQuery<Brand[]>({
     queryKey: ["/api/admin/brands"],
@@ -81,6 +128,10 @@ export default function BrandsManager() {
       isActive: true,
       sortOrder: 0,
     });
+    setLogoPreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const openEditDialog = (brand: Brand) => {
@@ -92,6 +143,7 @@ export default function BrandsManager() {
       isActive: brand.isActive ?? true,
       sortOrder: brand.sortOrder ?? 0,
     });
+    setLogoPreview(brand.logoUrl || null);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -136,19 +188,64 @@ export default function BrandsManager() {
         />
       </div>
       <div>
-        <Label htmlFor="logoUrl" className="text-white">Logo URL</Label>
-        <Input
-          id="logoUrl"
-          value={formData.logoUrl}
-          onChange={(e) => setFormData({ ...formData, logoUrl: e.target.value })}
-          placeholder="https://example.com/logo.png"
-          className="bg-zinc-800 border-zinc-700 text-white"
-        />
-        {formData.logoUrl && (
-          <div className="mt-2 p-2 bg-zinc-800 rounded-lg inline-block">
-            <img src={formData.logoUrl} alt="Logo preview" className="max-h-20 object-contain" />
+        <Label className="text-white">Brand Logo</Label>
+        <div className="mt-2">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleFileUpload(file);
+            }}
+            className="hidden"
+            id="logo-upload"
+          />
+          <div className="flex items-center gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploading}
+              className="border-zinc-700 text-gray-300 hover:bg-zinc-700"
+            >
+              {isUploading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Uploading...
+                </>
+              ) : (
+                <>
+                  <Upload className="w-4 h-4 mr-2" />
+                  {logoPreview || formData.logoUrl ? "Change Logo" : "Upload Logo"}
+                </>
+              )}
+            </Button>
+            {(logoPreview || formData.logoUrl) && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => {
+                  setFormData({ ...formData, logoUrl: "" });
+                  setLogoPreview(null);
+                  if (fileInputRef.current) fileInputRef.current.value = "";
+                }}
+                className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
+              >
+                Remove
+              </Button>
+            )}
           </div>
-        )}
+          {(logoPreview || formData.logoUrl) && (
+            <div className="mt-3 p-3 bg-zinc-800 rounded-lg inline-block">
+              <img 
+                src={logoPreview || formData.logoUrl} 
+                alt="Logo preview" 
+                className="max-h-24 object-contain"
+              />
+            </div>
+          )}
+        </div>
       </div>
       <div>
         <Label htmlFor="sortOrder" className="text-white">Sort Order</Label>
