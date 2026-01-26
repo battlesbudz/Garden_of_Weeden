@@ -133,7 +133,7 @@ export default function ProductsManager() {
     );
   }
 
-  const ProductForm = () => (
+  const formContent = (
     <form onSubmit={handleSubmit} className="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
       <div>
         <Label htmlFor="name" className="text-white">Product Name *</Label>
@@ -276,7 +276,7 @@ export default function ProductsManager() {
             <DialogHeader>
               <DialogTitle className="text-white">Create New Product</DialogTitle>
             </DialogHeader>
-            <ProductForm />
+            {formContent}
           </DialogContent>
         </Dialog>
       </div>
@@ -286,7 +286,7 @@ export default function ProductsManager() {
           <DialogHeader>
             <DialogTitle className="text-white">Edit Product</DialogTitle>
           </DialogHeader>
-          <ProductForm />
+          {formContent}
         </DialogContent>
       </Dialog>
 

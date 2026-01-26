@@ -111,7 +111,7 @@ export default function BrandsManager() {
     );
   }
 
-  const BrandForm = () => (
+  const formContent = (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <Label htmlFor="name" className="text-white">Brand Name *</Label>
@@ -209,7 +209,7 @@ export default function BrandsManager() {
             <DialogHeader>
               <DialogTitle className="text-white">Create New Brand</DialogTitle>
             </DialogHeader>
-            <BrandForm />
+            {formContent}
           </DialogContent>
         </Dialog>
       </div>
@@ -219,7 +219,7 @@ export default function BrandsManager() {
           <DialogHeader>
             <DialogTitle className="text-white">Edit Brand</DialogTitle>
           </DialogHeader>
-          <BrandForm />
+          {formContent}
         </DialogContent>
       </Dialog>
 
