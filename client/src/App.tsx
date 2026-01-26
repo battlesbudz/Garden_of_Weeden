@@ -10,6 +10,7 @@ import Shop from "@/pages/shop";
 import About from "@/pages/about";
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
+import AdminDashboard from "@/pages/admin/dashboard";
 
 import NotFound from "./pages/not-found";
 import PrivacyPolicy from "./pages/privacy-policy";
@@ -50,6 +51,9 @@ function Router() {
         {/* Blog Pages */}
         <Route path="/blog" component={Blog} />
         <Route path="/blog/:slug" component={BlogPost} />
+        
+        {/* Admin Dashboard */}
+        <Route path="/admin" component={AdminDashboard} />
         
         {/* Product Pages - Coming Soon */}
         <Route path="/products" component={ProductsComingSoon} />

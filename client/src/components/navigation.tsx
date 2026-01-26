@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, User, ShoppingBag, LogOut } from "lucide-react";
+import { Menu, X, User, ShoppingBag, LogOut, Shield } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
 import { useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -128,6 +128,14 @@ export default function Navigation() {
                 </a>
               </div>
 
+              {/* Admin Link - Only visible to admins */}
+              {isAdmin && (
+                <Link href="/admin" className="font-garden text-battles-gold hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center" data-testid="nav-link-admin">
+                  <Shield className="h-4 w-4 mr-1" aria-hidden="true" />
+                  Admin
+                </Link>
+              )}
+
               {/* Authentication Links */}
               {isAuthenticated ? (
                 <DropdownMenu>
@@ -138,6 +146,14 @@ export default function Navigation() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-gray-900 border-green-500/30">
+                    {isAdmin && (
+                      <DropdownMenuItem asChild className="text-battles-gold hover:text-yellow-400">
+                        <Link href="/admin">
+                          <Shield className="h-4 w-4 mr-2" />
+                          Admin Dashboard
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem onClick={handleLogout} className="text-white hover:text-green-400">
                       <LogOut className="h-4 w-4 mr-2" />
                       Logout
@@ -183,6 +199,14 @@ export default function Navigation() {
               Contact
             </button>
             
+            {/* Admin Link - Mobile */}
+            {isAdmin && (
+              <Link href="/admin" className="font-garden flex items-center text-battles-gold hover:text-yellow-400 px-3 py-2 text-base font-medium w-full" onClick={() => setIsOpen(false)}>
+                <Shield className="h-4 w-4 mr-2" />
+                Admin Dashboard
+              </Link>
+            )}
+
             {/* Mobile Auth */}
             {isAuthenticated ? (
               <button

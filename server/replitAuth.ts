@@ -55,19 +55,31 @@ function updateUserSession(
   user.expires_at = user.claims?.exp;
 }
 
+const ADMIN_EMAILS = [
+  "battlesbudz@gmail.com",
+  "Battlesbudz@gmail.com",
+];
+
 async function upsertUser(
   claims: any,
 ) {
+  const email = claims["email"];
+  const isAdmin = ADMIN_EMAILS.some(adminEmail => 
+    adminEmail.toLowerCase() === email?.toLowerCase()
+  );
+  
   const userData: any = {
     id: claims["sub"],
-    email: claims["email"],
+    email: email,
     firstName: claims["first_name"],
     lastName: claims["last_name"],
     profileImageUrl: claims["profile_image_url"],
   };
   
-  // Only include role if it exists in claims
-  if (claims["role"]) {
+  // Auto-assign admin role for designated admin emails
+  if (isAdmin) {
+    userData.role = "admin";
+  } else if (claims["role"]) {
     userData.role = claims["role"];
   }
   
@@ -211,6 +223,37 @@ export async function setupAuth(app: Express) {
     });
   });
 }
+
+export const isAdmin: RequestHandler = async (req, res, next) => {
+  const user = req.user as any;
+
+  if (!req.isAuthenticated() || !user.expires_at) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const now = Math.floor(Date.now() / 1000);
+  if (now > user.expires_at) {
+    const refreshToken = user.refresh_token;
+    if (!refreshToken) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    try {
+      const config = await getOidcConfig();
+      const tokenResponse = await client.refreshTokenGrant(config, refreshToken);
+      updateUserSession(user, tokenResponse);
+    } catch (error) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+  }
+
+  // Check if user has admin role
+  const dbUser = await storage.getUser(user.claims.sub);
+  if (!dbUser || dbUser.role !== 'admin') {
+    return res.status(403).json({ message: "Admin access required" });
+  }
+
+  return next();
+};
 
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
   const user = req.user as any;

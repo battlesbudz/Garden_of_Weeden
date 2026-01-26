@@ -1,5 +1,6 @@
 import { 
   users, 
+  brands,
   products,
   orders,
   orderItems,
@@ -27,6 +28,8 @@ import {
   blogPosts,
   type User, 
   type UpsertUser,
+  type Brand,
+  type InsertBrand,
   type Product,
   type InsertProduct,
   type Order,
@@ -86,9 +89,19 @@ export interface IStorage {
   getUserByEmail(email: string): Promise<User | undefined>;
   getAllUsers(): Promise<User[]>;
   upsertUser(user: UpsertUser): Promise<User>;
+  updateUserRole(id: string, role: string): Promise<User>;
+  
+  // Brands
+  getAllBrands(): Promise<Brand[]>;
+  getActiveBrands(): Promise<Brand[]>;
+  getBrand(id: number): Promise<Brand | undefined>;
+  createBrand(brand: InsertBrand): Promise<Brand>;
+  updateBrand(id: number, brand: Partial<InsertBrand>): Promise<Brand>;
+  deleteBrand(id: number): Promise<void>;
   
   // Products
   getAllProducts(): Promise<Product[]>;
+  getProductsWithBrands(): Promise<(Product & { brand?: Brand })[]>;
   getProduct(id: number): Promise<Product | undefined>;
   createProduct(product: InsertProduct): Promise<Product>;
   updateProduct(id: number, product: Partial<InsertProduct>): Promise<Product>;
@@ -369,7 +382,15 @@ export class MemStorage implements IStorage {
   }
 
   // Stub implementations for interface compliance - MemStorage doesn't implement these
+  async updateUserRole(id: string, role: string): Promise<User> { throw new Error("Not implemented in MemStorage"); }
+  async getAllBrands(): Promise<Brand[]> { return []; }
+  async getActiveBrands(): Promise<Brand[]> { return []; }
+  async getBrand(id: number): Promise<Brand | undefined> { return undefined; }
+  async createBrand(brand: InsertBrand): Promise<Brand> { throw new Error("Not implemented in MemStorage"); }
+  async updateBrand(id: number, brand: Partial<InsertBrand>): Promise<Brand> { throw new Error("Not implemented in MemStorage"); }
+  async deleteBrand(id: number): Promise<void> { throw new Error("Not implemented in MemStorage"); }
   async getAllProducts(): Promise<Product[]> { return []; }
+  async getProductsWithBrands(): Promise<(Product & { brand?: Brand })[]> { return []; }
   async getProduct(id: number): Promise<Product | undefined> { return undefined; }
   async createProduct(product: InsertProduct): Promise<Product> { throw new Error("Not implemented in MemStorage"); }
   async updateProduct(id: number, product: Partial<InsertProduct>): Promise<Product> { throw new Error("Not implemented in MemStorage"); }
@@ -470,9 +491,65 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
+  async updateUserRole(id: string, role: string): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({ role, updatedAt: new Date() })
+      .where(eq(users.id, id))
+      .returning();
+    return user;
+  }
+
+  // Brand methods
+  async getAllBrands(): Promise<Brand[]> {
+    return await db.select().from(brands).orderBy(brands.sortOrder);
+  }
+
+  async getActiveBrands(): Promise<Brand[]> {
+    return await db.select().from(brands).where(eq(brands.isActive, true)).orderBy(brands.sortOrder);
+  }
+
+  async getBrand(id: number): Promise<Brand | undefined> {
+    const [brand] = await db.select().from(brands).where(eq(brands.id, id));
+    return brand || undefined;
+  }
+
+  async createBrand(insertBrand: InsertBrand): Promise<Brand> {
+    const [brand] = await db
+      .insert(brands)
+      .values(insertBrand)
+      .returning();
+    return brand;
+  }
+
+  async updateBrand(id: number, updateData: Partial<InsertBrand>): Promise<Brand> {
+    const [brand] = await db
+      .update(brands)
+      .set({ ...updateData, updatedAt: new Date() })
+      .where(eq(brands.id, id))
+      .returning();
+    return brand;
+  }
+
+  async deleteBrand(id: number): Promise<void> {
+    await db.delete(brands).where(eq(brands.id, id));
+  }
+
   // Product methods
   async getAllProducts(): Promise<Product[]> {
     return await db.select().from(products);
+  }
+
+  async getProductsWithBrands(): Promise<(Product & { brand?: Brand })[]> {
+    const result = await db
+      .select()
+      .from(products)
+      .leftJoin(brands, eq(products.brandId, brands.id));
+    
+    return result.map(row => ({
+      ...row.products,
+      brand: row.brands || undefined
+    }));
   }
 
   async getProduct(id: number): Promise<Product | undefined> {
