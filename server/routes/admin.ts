@@ -3,13 +3,30 @@ import type { Express } from "express";
 import { isAdmin, isAuthenticated } from "../replitAuth";
 import { storage } from "../storage";
 import { insertBrandSchema, insertProductSchema } from "@shared/schema";
-import { objectStorageClient } from "../objectStorage";
 import multer from "multer";
 import { randomUUID } from "crypto";
+import path from "path";
+import fs from "fs";
 
-// Configure multer for memory storage
+// Ensure upload directory exists
+const uploadDir = path.join(process.cwd(), "public", "uploads", "brands");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Configure multer for disk storage
+const diskStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname) || ".jpg";
+    cb(null, `${randomUUID()}${ext}`);
+  },
+});
+
 const upload = multer({
-  storage: multer.memoryStorage(),
+  storage: diskStorage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
   fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith("image/")) {
@@ -30,37 +47,9 @@ export function registerAdminRoutes(app: Express) {
         return res.status(400).json({ message: "No file uploaded" });
       }
 
-      const publicPaths = process.env.PUBLIC_OBJECT_SEARCH_PATHS || "";
-      const publicPath = publicPaths.split(",")[0]?.trim();
-      
-      if (!publicPath) {
-        return res.status(500).json({ message: "Object storage not configured" });
-      }
-
-      // Parse bucket and path
-      const pathParts = publicPath.split("/").filter(Boolean);
-      const bucketName = pathParts[0];
-      const basePath = pathParts.slice(1).join("/");
-      
-      // Generate unique filename
-      const ext = req.file.originalname.split(".").pop() || "jpg";
-      const filename = `brands/${randomUUID()}.${ext}`;
-      const objectName = basePath ? `${basePath}/${filename}` : filename;
-
-      // Upload to GCS
-      const bucket = objectStorageClient.bucket(bucketName);
-      const file = bucket.file(objectName);
-      
-      await file.save(req.file.buffer, {
-        contentType: req.file.mimetype,
-        metadata: {
-          cacheControl: "public, max-age=31536000",
-        },
-      });
-
-      // Return the public URL
-      const publicUrl = `https://storage.googleapis.com/${bucketName}/${objectName}`;
-      res.json({ url: publicUrl });
+      // Return the URL path to the uploaded file
+      const url = `/uploads/brands/${req.file.filename}`;
+      res.json({ url });
     } catch (error) {
       console.error("Error uploading file:", error);
       res.status(500).json({ message: "Failed to upload file" });

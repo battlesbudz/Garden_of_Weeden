@@ -1,5 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import express from "express";
+import path from "path";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
@@ -61,6 +63,8 @@ if (process.env.SENDGRID_API_KEY) {
 // Email notification functions will be moved to their respective route modules
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Serve uploaded files statically
+  app.use("/uploads", express.static(path.join(process.cwd(), "public", "uploads")));
 
   // Auth middleware
   await setupAuth(app);
