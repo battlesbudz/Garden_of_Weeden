@@ -43,7 +43,7 @@ export async function sendWelcomeEmail(subscriberEmail: string): Promise<boolean
     const { client, fromEmail } = await getResendClient();
     
     const { data, error } = await client.emails.send({
-      from: fromEmail || 'Garden of Weeden <onboarding@resend.dev>',
+      from: 'Garden of Weeden <onboarding@resend.dev>',
       to: subscriberEmail,
       subject: 'Welcome to Garden of Weeden! 🌿',
       html: `
@@ -127,7 +127,7 @@ export async function sendNewSubscriberNotification(subscriberEmail: string): Pr
     const { client, fromEmail } = await getResendClient();
     
     const { data, error } = await client.emails.send({
-      from: fromEmail || 'Garden of Weeden <onboarding@resend.dev>',
+      from: 'Garden of Weeden <onboarding@resend.dev>',
       to: 'info@gardenofweeden.com',
       subject: '🌿 New Newsletter Subscriber - Garden of Weeden',
       html: `
