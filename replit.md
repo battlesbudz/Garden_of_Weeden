@@ -70,3 +70,28 @@ The platform features a modern web stack designed for performance, scalability, 
 - **Express.js**: Backend web application framework.
 - **Drizzle ORM**: TypeScript ORM for PostgreSQL.
 - **Wouter**: React-friendly routing library.
+
+## Admin Dashboard Features
+
+The admin dashboard (/admin) provides comprehensive site management for site owners without developer assistance:
+
+**Tabs and Features:**
+- **Brands**: CRUD management for brand listings with logos and descriptions
+- **Products**: Product management with pricing, images, and brand associations
+- **Subscribers**: Newsletter subscriber list with CSV export
+- **Blog**: Full blog post management with draft/publish, categories, tags, and SEO fields
+- **Homepage**: Edit homepage content (hero title, tagline, feature pillars, CTA buttons)
+- **Media**: Upload and manage images with grid/list views and search
+- **Users**: View registered users and manage admin roles
+- **Settings**: Site-wide settings (business name, contact info, social links, hours)
+
+**Interactive Tutorial System:**
+- Step-by-step guided tour for new admins
+- Progress tracking via localStorage
+- Tooltips explaining each feature
+- Can be restarted anytime via Help button
+
+**Database Tables:**
+- `site_settings`: Key-value store for configurable settings
+- `media_items`: Tracks uploaded files (filename, url, mimeType, size)
+- `blog_posts`: Blog content with draft/published states

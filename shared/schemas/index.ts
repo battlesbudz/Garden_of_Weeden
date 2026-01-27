@@ -7,3 +7,4 @@ export * from "./gamification";
 export * from "./events";
 export * from "./documents";
 export * from "./blog";
+export * from "./media";

@@ -2,7 +2,8 @@
 import type { Express } from "express";
 import { isAdmin, isAuthenticated } from "../replitAuth";
 import { storage } from "../storage";
-import { insertBrandSchema, insertProductSchema } from "@shared/schema";
+import { insertBrandSchema, insertProductSchema, insertSiteSettingSchema } from "@shared/schema";
+import { z } from "zod";
 import multer from "multer";
 import { randomUUID } from "crypto";
 import path from "path";
@@ -47,14 +48,62 @@ export function registerAdminRoutes(app: Express) {
         return res.status(400).json({ message: "No file uploaded" });
       }
 
-      // Return the URL path to the uploaded file
       const url = `/uploads/brands/${req.file.filename}`;
-      res.json({ url });
+      
+      const mediaItem = await storage.createMediaItem({
+        filename: req.file.originalname,
+        url: url,
+        mimeType: req.file.mimetype,
+        size: req.file.size,
+      });
+      
+      res.json({ url, id: mediaItem.id });
     } catch (error) {
       console.error("Error uploading file:", error);
       res.status(500).json({ message: "Failed to upload file" });
     }
   });
+
+  // ========== MEDIA LIBRARY ==========
+  
+  // Get all media items
+  app.get("/api/admin/media", isAdmin, async (req: any, res) => {
+    try {
+      const items = await storage.getAllMediaItems();
+      res.json(items);
+    } catch (error) {
+      console.error("Error fetching media:", error);
+      res.status(500).json({ message: "Failed to fetch media" });
+    }
+  });
+
+  // Delete media item
+  app.delete("/api/admin/media/:id", isAdmin, async (req: any, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const item = await storage.getMediaItem(id);
+      if (!item) {
+        return res.status(404).json({ message: "Media not found" });
+      }
+      
+      // Delete from storage
+      await storage.deleteMediaItem(id);
+      
+      // Try to delete file from disk
+      const filePath = path.join(process.cwd(), "public", item.url);
+      try {
+        await fs.promises.unlink(filePath);
+      } catch (e) {
+        // File may not exist, ignore
+      }
+      
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting media:", error);
+      res.status(500).json({ message: "Failed to delete media" });
+    }
+  });
+
   // ========== BRAND MANAGEMENT ==========
   
   // Get all brands (admin)
@@ -254,6 +303,85 @@ export function registerAdminRoutes(app: Express) {
     } catch (error) {
       console.error("Error fetching subscribers:", error);
       res.status(500).json({ message: "Failed to fetch subscribers" });
+    }
+  });
+
+  // ========== SITE SETTINGS MANAGEMENT ==========
+  
+  // Get all site settings
+  app.get("/api/admin/settings", isAdmin, async (req: any, res) => {
+    try {
+      const settings = await storage.getAllSiteSettings();
+      const settingsMap: Record<string, string | null> = {};
+      settings.forEach(s => { settingsMap[s.key] = s.value; });
+      res.json(settingsMap);
+    } catch (error) {
+      console.error("Error fetching settings:", error);
+      res.status(500).json({ message: "Failed to fetch settings" });
+    }
+  });
+
+  // Update site settings (batch)
+  app.post("/api/admin/settings", isAdmin, async (req: any, res) => {
+    try {
+      const settings = req.body as Record<string, string>;
+      const results: Record<string, string | null> = {};
+      
+      for (const [key, value] of Object.entries(settings)) {
+        const validated = insertSiteSettingSchema.parse({ key, value });
+        const result = await storage.upsertSiteSetting(validated);
+        results[result.key] = result.value;
+      }
+      
+      res.json(results);
+    } catch (error) {
+      console.error("Error updating settings:", error);
+      res.status(500).json({ message: "Failed to update settings" });
+    }
+  });
+
+  // Get a specific setting
+  app.get("/api/admin/settings/:key", isAdmin, async (req: any, res) => {
+    try {
+      const setting = await storage.getSiteSetting(req.params.key);
+      if (!setting) {
+        return res.status(404).json({ message: "Setting not found" });
+      }
+      res.json(setting);
+    } catch (error) {
+      console.error("Error fetching setting:", error);
+      res.status(500).json({ message: "Failed to fetch setting" });
+    }
+  });
+
+  // ========== USER MANAGEMENT ==========
+  
+  // Get all users
+  app.get("/api/admin/users", isAdmin, async (req: any, res) => {
+    try {
+      const users = await storage.getAllUsers();
+      res.json(users);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      res.status(500).json({ message: "Failed to fetch users" });
+    }
+  });
+
+  // Update user role
+  app.patch("/api/admin/users/:id/role", isAdmin, async (req: any, res) => {
+    try {
+      const { id } = req.params;
+      const { role } = req.body;
+      
+      if (!role || !['customer', 'admin'].includes(role)) {
+        return res.status(400).json({ message: "Invalid role. Must be 'customer' or 'admin'" });
+      }
+      
+      const user = await storage.updateUserRole(id, role);
+      res.json(user);
+    } catch (error) {
+      console.error("Error updating user role:", error);
+      res.status(500).json({ message: "Failed to update user role" });
     }
   });
 }

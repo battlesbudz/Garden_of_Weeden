@@ -26,8 +26,11 @@ import {
   secureDocuments,
   documentPermissions,
   blogPosts,
+  siteSettings,
   type User, 
   type UpsertUser,
+  type SiteSetting,
+  type InsertSiteSetting,
   type Brand,
   type InsertBrand,
   type Product,
@@ -78,7 +81,10 @@ import {
   type DocumentPermission,
   type InsertDocumentPermission,
   type BlogPost,
-  type InsertBlogPost
+  type InsertBlogPost,
+  mediaItems,
+  type MediaItem,
+  type InsertMediaItem
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, sql } from "drizzle-orm";
@@ -228,6 +234,18 @@ export interface IStorage {
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost>;
   deleteBlogPost(id: number): Promise<void>;
+  
+  // Site settings operations
+  getAllSiteSettings(): Promise<SiteSetting[]>;
+  getSiteSetting(key: string): Promise<SiteSetting | undefined>;
+  upsertSiteSetting(setting: InsertSiteSetting): Promise<SiteSetting>;
+  deleteSiteSetting(key: string): Promise<void>;
+  
+  // Media operations
+  getAllMediaItems(): Promise<MediaItem[]>;
+  getMediaItem(id: number): Promise<MediaItem | undefined>;
+  createMediaItem(item: InsertMediaItem): Promise<MediaItem>;
+  deleteMediaItem(id: number): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -434,6 +452,14 @@ export class MemStorage implements IStorage {
   async toggleCommentLike(userId: string, commentId: number): Promise<{ liked: boolean; likeCount: number }> { throw new Error("Not implemented in MemStorage"); }
   async createMeetingRequest(request: InsertMeetingRequest): Promise<MeetingRequest> { throw new Error("Not implemented in MemStorage"); }
   async getAllMeetingRequests(): Promise<MeetingRequest[]> { return []; }
+  async getAllSiteSettings(): Promise<SiteSetting[]> { return []; }
+  async getSiteSetting(key: string): Promise<SiteSetting | undefined> { return undefined; }
+  async upsertSiteSetting(setting: InsertSiteSetting): Promise<SiteSetting> { throw new Error("Not implemented in MemStorage"); }
+  async deleteSiteSetting(key: string): Promise<void> { throw new Error("Not implemented in MemStorage"); }
+  async getAllMediaItems(): Promise<MediaItem[]> { return []; }
+  async getMediaItem(id: number): Promise<MediaItem | undefined> { return undefined; }
+  async createMediaItem(item: InsertMediaItem): Promise<MediaItem> { throw new Error("Not implemented in MemStorage"); }
+  async deleteMediaItem(id: number): Promise<void> { throw new Error("Not implemented in MemStorage"); }
 }
 
 export class DatabaseStorage implements IStorage {
@@ -1820,6 +1846,66 @@ export class DatabaseStorage implements IStorage {
     await db
       .delete(blogPosts)
       .where(eq(blogPosts.id, id));
+  }
+
+  // Site settings operations
+  async getAllSiteSettings(): Promise<SiteSetting[]> {
+    return await db.select().from(siteSettings);
+  }
+
+  async getSiteSetting(key: string): Promise<SiteSetting | undefined> {
+    const results = await db
+      .select()
+      .from(siteSettings)
+      .where(eq(siteSettings.key, key))
+      .limit(1);
+    return results[0];
+  }
+
+  async upsertSiteSetting(setting: InsertSiteSetting): Promise<SiteSetting> {
+    const [result] = await db
+      .insert(siteSettings)
+      .values(setting)
+      .onConflictDoUpdate({
+        target: siteSettings.key,
+        set: {
+          value: setting.value,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return result;
+  }
+
+  async deleteSiteSetting(key: string): Promise<void> {
+    await db
+      .delete(siteSettings)
+      .where(eq(siteSettings.key, key));
+  }
+
+  async getAllMediaItems(): Promise<MediaItem[]> {
+    return await db.select().from(mediaItems).orderBy(desc(mediaItems.createdAt));
+  }
+
+  async getMediaItem(id: number): Promise<MediaItem | undefined> {
+    const [result] = await db
+      .select()
+      .from(mediaItems)
+      .where(eq(mediaItems.id, id))
+      .limit(1);
+    return result;
+  }
+
+  async createMediaItem(item: InsertMediaItem): Promise<MediaItem> {
+    const [result] = await db
+      .insert(mediaItems)
+      .values(item)
+      .returning();
+    return result;
+  }
+
+  async deleteMediaItem(id: number): Promise<void> {
+    await db.delete(mediaItems).where(eq(mediaItems.id, id));
   }
 }
 
