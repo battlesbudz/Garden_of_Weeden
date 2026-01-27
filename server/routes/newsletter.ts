@@ -4,6 +4,7 @@ import { isAuthenticated } from "../replitAuth";
 import { storage } from "../storage";
 import { insertNewsletterSubscriberSchema, insertContactSubmissionSchema } from "@shared/schema";
 import { z } from "zod";
+import { sendWelcomeEmail, sendNewSubscriberNotification } from "../services/resendEmailService";
 
 export function registerNewsletterRoutes(app: Express) {
   // Newsletter subscription endpoint
@@ -18,6 +19,14 @@ export function registerNewsletterRoutes(app: Express) {
       }
 
       const subscriber = await storage.createNewsletterSubscriber(validatedData);
+
+      sendWelcomeEmail(validatedData.email).catch(err => {
+        console.error('Failed to send welcome email:', err);
+      });
+      
+      sendNewSubscriberNotification(validatedData.email).catch(err => {
+        console.error('Failed to send admin notification:', err);
+      });
 
       res.status(201).json({ 
         message: "Successfully subscribed to newsletter",
