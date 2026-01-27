@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, User, ShoppingBag, ShoppingCart, LogOut, Shield } from "lucide-react";
+import { Menu, X, User, ShoppingBag, ShoppingCart, LogOut, Shield, ClipboardList } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
 import { useReducedMotion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -160,6 +160,12 @@ export default function Navigation() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-gray-900 border-green-500/30">
+                    <DropdownMenuItem asChild className="text-white hover:text-green-400">
+                      <Link href="/my-orders">
+                        <ClipboardList className="h-4 w-4 mr-2" />
+                        My Orders
+                      </Link>
+                    </DropdownMenuItem>
                     {isAdmin && (
                       <DropdownMenuItem asChild className="text-battles-gold hover:text-yellow-400">
                         <Link href="/admin">
@@ -232,13 +238,19 @@ export default function Navigation() {
 
             {/* Mobile Auth */}
             {isAuthenticated ? (
-              <button
-                onClick={handleLogout}
-                className="font-garden flex items-center text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left"
-              >
-                <LogOut className="h-4 w-4 mr-2" />
-                Logout ({(user as any)?.email || (user as any)?.firstName || 'User'})
-              </button>
+              <>
+                <Link href="/my-orders" className="font-garden flex items-center text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full" onClick={() => setIsOpen(false)}>
+                  <ClipboardList className="h-4 w-4 mr-2" />
+                  My Orders
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="font-garden flex items-center text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout ({(user as any)?.email || (user as any)?.firstName || 'User'})
+                </button>
+              </>
             ) : (
               <a href="/api/login" className="font-garden block bg-green-500 hover:bg-green-700 text-white px-3 py-2 text-base font-semibold w-full text-center rounded">
                 Sign In

@@ -8,10 +8,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Shield, Package, Tags, LayoutDashboard, Mail, Download, Settings, Users, FileText, Home, Image, ShoppingBag } from "lucide-react";
+import { Shield, Package, Tags, LayoutDashboard, Mail, Download, Settings, Users, FileText, Home, Image, ShoppingBag, ClipboardList } from "lucide-react";
 import BrandsManager from "@/components/admin/brands-manager";
 import ProductsManager from "@/components/admin/products-manager";
 import ShopManager from "@/components/admin/shop-manager";
+import OrdersManager from "@/components/admin/orders-manager";
 import SettingsManager from "@/components/admin/settings-manager";
 import UsersManager from "@/components/admin/users-manager";
 import BlogManager from "@/components/admin/blog-manager";
@@ -120,6 +121,10 @@ export default function AdminDashboard() {
               <ShoppingBag className="w-4 h-4 mr-2" />
               Shop
             </TabsTrigger>
+            <TabsTrigger value="orders" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
+              <ClipboardList className="w-4 h-4 mr-2" />
+              Orders
+            </TabsTrigger>
             <TabsTrigger value="subscribers" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
               <Mail className="w-4 h-4 mr-2" />
               Subscribers
@@ -193,6 +198,23 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <ShopManager />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="orders">
+            <Card className="bg-zinc-900 border-zinc-800">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <ClipboardList className="w-5 h-5 text-battles-gold" />
+                  Order Management
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  View and manage customer orders. Update order status and track payments.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <OrdersManager />
               </CardContent>
             </Card>
           </TabsContent>

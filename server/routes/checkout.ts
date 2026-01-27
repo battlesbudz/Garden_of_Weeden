@@ -180,7 +180,7 @@ export function registerCheckoutRoutes(app: Express) {
   // Get user's orders
   app.get("/api/orders", async (req: Request, res: Response) => {
     try {
-      const userId = (req as any).user?.id;
+      const userId = (req as any).user?.claims?.sub;
       
       if (!userId) {
         return res.status(401).json({ message: "Authentication required" });

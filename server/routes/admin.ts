@@ -476,4 +476,35 @@ export function registerAdminRoutes(app: Express) {
       res.status(500).json({ message: "Failed to update user role" });
     }
   });
+
+  // ========== ORDERS ==========
+  
+  // Get all orders (admin only)
+  app.get("/api/admin/orders", isAdmin, async (req: any, res) => {
+    try {
+      const orders = await storage.getAllOrders();
+      res.json(orders);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      res.status(500).json({ message: "Failed to fetch orders" });
+    }
+  });
+
+  // Update order status (admin only)
+  app.patch("/api/admin/orders/:id/status", isAdmin, async (req: any, res) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      const { status } = req.body;
+      
+      if (!status) {
+        return res.status(400).json({ message: "Status is required" });
+      }
+      
+      const order = await storage.updateOrderStatus(orderId, status);
+      res.json(order);
+    } catch (error) {
+      console.error("Error updating order status:", error);
+      res.status(500).json({ message: "Failed to update order status" });
+    }
+  });
 }
