@@ -140,12 +140,19 @@ const tutorialSteps: TutorialStep[] = [
   {
     id: "settings",
     title: "Site Settings",
-    description: "Configure your website's core information. All settings update the footer section of your site - including your business name, contact info, address, and social media links. Changes appear immediately after saving.",
+    description: "Configure your website's core information. Each setting changes what visitors see on your site:",
     targetTab: "settings",
     tips: [
-      "Site Name & Tagline appear in the footer branding",
-      "Contact info (email, phone, address) shows in footer",
-      "Social links only appear if you fill them in"
+      "Site Name → Brand name in footer and copyright",
+      "Site Tagline → Description under brand name in footer",
+      "Contact Email → Email link in footer",
+      "Contact Phone → Phone link in footer",
+      "Business Address → Location shown in footer",
+      "Business Hours → Saved for contact pages",
+      "Facebook URL → Facebook button in footer (leave empty to hide)",
+      "Instagram URL → Instagram button in footer",
+      "Twitter/X URL → Twitter button in footer (leave empty to hide)",
+      "Footer Text → Custom text at bottom of every page"
     ]
   },
   {
