@@ -39,7 +39,7 @@ export function registerCheckoutRoutes(app: Express) {
   // Process checkout
   app.post("/api/checkout", async (req: Request, res: Response) => {
     try {
-      const userId = (req as any).user?.id;
+      const userId = (req as any).user?.claims?.sub;
       const sessionId = getCartSessionId(req);
       
       // Validate checkout data

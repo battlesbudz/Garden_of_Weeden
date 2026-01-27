@@ -36,7 +36,7 @@ export function registerCartRoutes(app: Express) {
   // Get or create cart for current user/session
   app.get("/api/cart", async (req: Request, res: Response) => {
     try {
-      const userId = (req as any).user?.id;
+      const userId = (req as any).user?.claims?.sub;
       const sessionId = getCartSessionId(req, res);
       
       const cart = await storage.getOrCreateCart(userId, sessionId);
@@ -52,7 +52,7 @@ export function registerCartRoutes(app: Express) {
   // Add item to cart
   app.post("/api/cart/items", async (req: Request, res: Response) => {
     try {
-      const userId = (req as any).user?.id;
+      const userId = (req as any).user?.claims?.sub;
       const sessionId = getCartSessionId(req, res);
       
       const parsed = addToCartSchema.safeParse(req.body);
@@ -107,7 +107,7 @@ export function registerCartRoutes(app: Express) {
       }
       
       // Get the user's cart and return it
-      const userId = (req as any).user?.id;
+      const userId = (req as any).user?.claims?.sub;
       const sessionId = getCartSessionId(req, res);
       const cart = await storage.getOrCreateCart(userId, sessionId);
       const cartWithItems = await storage.getCartWithItems(cart.id);
@@ -127,7 +127,7 @@ export function registerCartRoutes(app: Express) {
       await storage.removeFromCart(itemId);
       
       // Get the user's cart and return it
-      const userId = (req as any).user?.id;
+      const userId = (req as any).user?.claims?.sub;
       const sessionId = getCartSessionId(req, res);
       const cart = await storage.getOrCreateCart(userId, sessionId);
       const cartWithItems = await storage.getCartWithItems(cart.id);
@@ -142,7 +142,7 @@ export function registerCartRoutes(app: Express) {
   // Clear cart
   app.delete("/api/cart", async (req: Request, res: Response) => {
     try {
-      const userId = (req as any).user?.id;
+      const userId = (req as any).user?.claims?.sub;
       const sessionId = getCartSessionId(req, res);
       
       const cart = await storage.getOrCreateCart(userId, sessionId);
