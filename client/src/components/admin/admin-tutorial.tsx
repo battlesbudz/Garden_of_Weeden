@@ -140,19 +140,12 @@ const tutorialSteps: TutorialStep[] = [
   {
     id: "settings",
     title: "Site Settings",
-    description: "Configure your website's core information. Each setting changes what visitors see on your site. Here's what each setting controls:",
+    description: "Configure your website's core information. All settings update the footer section of your site - including your business name, contact info, address, and social media links. Changes appear immediately after saving.",
     targetTab: "settings",
     tips: [
-      "Site Name → Changes the brand name in the footer and copyright text",
-      "Site Tagline → Updates the description under your brand name in the footer",
-      "Contact Email → Updates the email link visitors can click in the footer",
-      "Contact Phone → Updates the phone number link in the footer",
-      "Business Address → Shows your location in the footer",
-      "Business Hours → Saved for future use on contact pages",
-      "Facebook URL → Adds a Facebook link button to the footer (leave empty to hide)",
-      "Instagram URL → Adds an Instagram link button to the footer",
-      "Twitter/X URL → Adds a Twitter link button to the footer (leave empty to hide)",
-      "Footer Text → Adds custom text at the bottom of every page"
+      "Site Name & Tagline appear in the footer branding",
+      "Contact info (email, phone, address) shows in footer",
+      "Social links only appear if you fill them in"
     ]
   },
   {
@@ -254,8 +247,8 @@ export default function AdminTutorial({ onTabChange, currentTab }: AdminTutorial
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-      <Card className="w-full max-w-lg mx-4 bg-zinc-900 border-zinc-800 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      <Card className="w-full max-w-lg bg-zinc-900 border-zinc-800 shadow-2xl max-h-[90vh] flex flex-col">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -281,7 +274,7 @@ export default function AdminTutorial({ onTabChange, currentTab }: AdminTutorial
           <Progress value={progress} className="mt-4 h-2 bg-zinc-800" />
         </CardHeader>
         
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 overflow-y-auto flex-1">
           <p className="text-gray-300 leading-relaxed">{step.description}</p>
           
           {step.action && (
