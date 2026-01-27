@@ -14,6 +14,25 @@ import type { Brand, Product } from "@shared/schema";
 type ProductWithBrand = Product & { brand?: Brand };
 type SortOption = "name-asc" | "name-desc" | "price-asc" | "price-desc" | "newest";
 
+const categoryLabels: Record<string, string> = {
+  flower: "Flower",
+  "pre-rolls": "Pre-Rolls",
+  edibles: "Edibles",
+  concentrates: "Concentrates",
+  vapes: "Vapes & Cartridges",
+  tinctures: "Tinctures",
+  topicals: "Topicals",
+  capsules: "Capsules",
+  beverages: "Beverages",
+  accessories: "Accessories",
+  merchandise: "Merchandise",
+  cannabis: "Cannabis",
+};
+
+const formatCategory = (category: string): string => {
+  return categoryLabels[category] || category.charAt(0).toUpperCase() + category.slice(1);
+};
+
 export default function Shop() {
   const [selectedBrand, setSelectedBrand] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -220,7 +239,7 @@ export default function Shop() {
                     onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
                     className={selectedCategory === category ? "bg-battles-gold text-black hover:bg-battles-gold/90" : "border-zinc-700 text-gray-300 hover:bg-zinc-800"}
                   >
-                    {category.charAt(0).toUpperCase() + category.slice(1)}
+                    {formatCategory(category)}
                   </Button>
                 ))}
               </div>
@@ -333,7 +352,7 @@ export default function Shop() {
                   )}
                   <div className="flex items-center justify-between pt-2 border-t border-zinc-800">
                     <Badge variant="outline" className="border-zinc-700 text-gray-400 text-xs">
-                      {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
+                      {formatCategory(product.category)}
                     </Badge>
                     {product.inStock !== false ? (
                       <span className="text-green-500 text-xs font-medium">In Stock</span>

@@ -48,7 +48,7 @@ export const educationGuides: EducationGuide[] = [
       {
         id: 3,
         title: "Where You Can Consume",
-        content: "Cannabis can be consumed anywhere tobacco smoking is permitted under NY law. This includes sidewalks, public outdoor spaces, and private residences. Licensed consumption lounges like Battles Budz offer premium on-site experiences.",
+        content: "Cannabis can be consumed anywhere tobacco smoking is permitted under NY law. This includes sidewalks, public outdoor spaces, and private residences. Licensed consumption lounges like Garden of Weeden offer premium on-site experiences.",
         tips: "Official NY regulation: You can legally smoke cannabis anywhere you can smoke tobacco cigarettes in public spaces.",
         warnings: "NEVER consume in vehicles (even parked), most parks, near schools/playgrounds, on public transit, or in indoor public spaces. Violations can result in fines. Source: NY Cannabis Law Section 222 & 9 NYCRR Part 125 - Visit cannabis.ny.gov for complete regulations."
       },

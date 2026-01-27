@@ -21,7 +21,7 @@ export async function sendNewSubscriberNotification(subscriberEmail: string) {
     await mailService.send({
       to: 'info@gardenofweeden.com',
       from: 'info@gardenofweeden.com', // Use your verified email
-      subject: 'New Newsletter Subscriber - Battles Budz',
+      subject: 'New Newsletter Subscriber - Garden of Weeden',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
@@ -32,7 +32,7 @@ export async function sendNewSubscriberNotification(subscriberEmail: string) {
             <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
-            <p><strong>Battles Budz Admin</strong></p>
+            <p><strong>Garden of Weeden Admin</strong></p>
             <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
           </div>
         </div>
@@ -55,7 +55,7 @@ export async function sendJobApplicationNotification(application: any) {
     await mailService.send({
       to: 'info@gardenofweeden.com',
       from: 'info@gardenofweeden.com',
-      subject: 'New Job Application - Battles Budz',
+      subject: 'New Job Application - Garden of Weeden',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
@@ -88,11 +88,11 @@ export async function sendWelcomeEmail(subscriberEmail: string) {
     await mailService.send({
       to: subscriberEmail,
       from: 'info@gardenofweeden.com', // Use your verified email
-      subject: 'Welcome to Battles Budz Newsletter! 🌿',
+      subject: 'Welcome to Garden of Weeden Newsletter! 🌿',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
-            Welcome to Battles Budz! 🌿
+            Welcome to Garden of Weeden! 🌿
           </h2>
           <div style="padding: 20px; background-color: #f9f9f9;">
             <p>Thank you for subscribing to our newsletter!</p>
@@ -105,10 +105,10 @@ export async function sendWelcomeEmail(subscriberEmail: string) {
             </ul>
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
-            <p><strong>Battles Budz</strong></p>
+            <p><strong>Garden of Weeden</strong></p>
             <p>Premium Cannabis Tourism Experience</p>
             <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
-            <p>Instagram: @Battles_budz</p>
+            <p>Instagram: @GardenOfWeedenNY</p>
           </div>
         </div>
       `
@@ -129,7 +129,7 @@ export async function sendMeetingRequestNotification(request: MeetingRequest) {
     await mailService.send({
       to: 'info@gardenofweeden.com',
       from: 'info@gardenofweeden.com',
-      subject: 'New Expert Session Request - Battles Budz',
+      subject: 'New Expert Session Request - Garden of Weeden',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
@@ -167,7 +167,7 @@ export async function sendExperienceBookingConfirmation(booking: any) {
     await mailService.send({
       to: booking.email,
       from: 'info@gardenofweeden.com',
-      subject: 'Experience Booking Confirmed - Battles Budz',
+      subject: 'Experience Booking Confirmed - Garden of Weeden',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
@@ -175,7 +175,7 @@ export async function sendExperienceBookingConfirmation(booking: any) {
           </h2>
           <div style="padding: 20px; background-color: #f9f9f9;">
             <p>Hi ${booking.name},</p>
-            <p>Thank you for booking an experience with Battles Budz! We've received your request and will contact you within 24 hours to confirm availability and finalize the details.</p>
+            <p>Thank you for booking an experience with Garden of Weeden! We've received your request and will contact you within 24 hours to confirm availability and finalize the details.</p>
             
             <h3 style="color: #FFD700;">Your Booking Details:</h3>
             <div style="background-color: white; padding: 15px; border-left: 3px solid #FFD700; margin: 15px 0;">
@@ -196,7 +196,7 @@ export async function sendExperienceBookingConfirmation(booking: any) {
             </ul>
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
-            <p><strong>Battles Budz</strong></p>
+            <p><strong>Garden of Weeden</strong></p>
             <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
             <p>Premium Cannabis Tourism • Buffalo, NY</p>
           </div>
@@ -220,7 +220,7 @@ export async function sendExperienceBookingNotification(booking: any) {
     await mailService.send({
       to: 'info@gardenofweeden.com',
       from: 'info@gardenofweeden.com',
-      subject: 'New Experience Booking - Battles Budz',
+      subject: 'New Experience Booking - Garden of Weeden',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
@@ -244,7 +244,7 @@ export async function sendExperienceBookingNotification(booking: any) {
             <p><strong>⏰ Action Required:</strong> Contact customer within 24 hours to confirm availability and pricing.</p>
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
-            <p><strong>Battles Budz Admin Dashboard</strong></p>
+            <p><strong>Garden of Weeden Admin Dashboard</strong></p>
             <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
           </div>
         </div>
@@ -268,7 +268,7 @@ export async function sendInvestorAccessRequestNotification(request: InvestorAcc
     await mailService.send({
       to: 'info@gardenofweeden.com',
       from: 'info@gardenofweeden.com', 
-      subject: `New Investor Access Request: ${request.firstName} ${request.lastName} - Battles Budz`,
+      subject: `New Investor Access Request: ${request.firstName} ${request.lastName} - Garden of Weeden`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
@@ -295,7 +295,7 @@ export async function sendInvestorAccessRequestNotification(request: InvestorAcc
             <p><strong>⏰ Action Required:</strong> Review and approve/deny this investor access request in the admin portal.</p>
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
-            <p><strong>Battles Budz Investor Admin</strong></p>
+            <p><strong>Garden of Weeden Investor Admin</strong></p>
             <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
           </div>
         </div>
@@ -319,7 +319,7 @@ export async function sendInvestorMessageNotification(message: InvestorMessage) 
     await mailService.send({
       to: 'info@gardenofweeden.com',
       from: 'info@gardenofweeden.com',
-      subject: `New Investor Message: ${message.subject} - Battles Budz`,
+      subject: `New Investor Message: ${message.subject} - Garden of Weeden`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
@@ -342,7 +342,7 @@ export async function sendInvestorMessageNotification(message: InvestorMessage) 
             <p><strong>⏰ Action Required:</strong> Respond to investor within 24 hours via portal admin or direct email.</p>
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
-            <p><strong>Battles Budz Investor Portal</strong></p>
+            <p><strong>Garden of Weeden Investor Portal</strong></p>
             <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
           </div>
         </div>
@@ -365,11 +365,11 @@ export async function sendInvestorReplyNotification(message: InvestorMessage) {
     await mailService.send({
       to: message.investorEmail,
       from: 'info@gardenofweeden.com',
-      subject: `Reply to your message: ${message.subject} - Battles Budz`,
+      subject: `Reply to your message: ${message.subject} - Garden of Weeden`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #FFD700; background-color: #000; padding: 15px; text-align: center;">
-            💬 Reply from Battles Budz Team
+            💬 Reply from Garden of Weeden Team
           </h2>
           <div style="padding: 20px; background-color: #f9f9f9;">
             <h3>Your Original Message:</h3>
@@ -392,7 +392,7 @@ export async function sendInvestorReplyNotification(message: InvestorMessage) {
             </div>
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
-            <p><strong>Battles Budz LLC - Investor Relations</strong></p>
+            <p><strong>Garden of Weeden LLC - Investor Relations</strong></p>
             <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
             <p style="font-size: 11px; color: #ccc; margin-top: 10px;">
               This is an automated message. Please do not reply directly to this email.

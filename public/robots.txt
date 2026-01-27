@@ -18,7 +18,7 @@ Allow: /privacy-policy
 Allow: /terms-of-service
 
 # Sitemap location
-Sitemap: https://battlesbudz.com/sitemap.xml
+Sitemap: https://gardenofweeden.com/sitemap.xml
 
 # Crawl delay for responsible crawling
 Crawl-delay: 1

@@ -25,7 +25,7 @@ export default function ProductsManager() {
     name: "",
     description: "",
     price: "",
-    category: "cannabis",
+    category: "flower",
     brandId: null as number | null,
     imageUrl: "",
     inStock: true,
@@ -136,7 +136,7 @@ export default function ProductsManager() {
       name: "",
       description: "",
       price: "",
-      category: "cannabis",
+      category: "flower",
       brandId: null,
       imageUrl: "",
       inStock: true,
@@ -222,10 +222,18 @@ export default function ProductsManager() {
             <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
-            <SelectContent className="bg-zinc-800 border-zinc-700">
-              <SelectItem value="cannabis">Cannabis</SelectItem>
-              <SelectItem value="merchandise">Merchandise</SelectItem>
+            <SelectContent className="bg-zinc-800 border-zinc-700 max-h-[300px]">
+              <SelectItem value="flower">Flower</SelectItem>
+              <SelectItem value="pre-rolls">Pre-Rolls</SelectItem>
+              <SelectItem value="edibles">Edibles</SelectItem>
+              <SelectItem value="concentrates">Concentrates</SelectItem>
+              <SelectItem value="vapes">Vapes & Cartridges</SelectItem>
+              <SelectItem value="tinctures">Tinctures</SelectItem>
+              <SelectItem value="topicals">Topicals</SelectItem>
+              <SelectItem value="capsules">Capsules</SelectItem>
+              <SelectItem value="beverages">Beverages</SelectItem>
               <SelectItem value="accessories">Accessories</SelectItem>
+              <SelectItem value="merchandise">Merchandise</SelectItem>
             </SelectContent>
           </Select>
         </div>
