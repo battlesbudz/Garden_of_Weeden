@@ -1,20 +1,24 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ShoppingBag, Package, Tags, Filter } from "lucide-react";
+import { ShoppingBag, Package, Tags, Filter, ArrowUpDown, X } from "lucide-react";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SEOHead from "@/components/seo/SEOHead";
 import { getCanonicalUrl, getPageTitle } from "@/utils/seo";
 import type { Brand, Product } from "@shared/schema";
 
 type ProductWithBrand = Product & { brand?: Brand };
+type SortOption = "name-asc" | "name-desc" | "price-asc" | "price-desc" | "newest";
 
 export default function Shop() {
   const [selectedBrand, setSelectedBrand] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showOutOfStock, setShowOutOfStock] = useState(false);
+  const [sortBy, setSortBy] = useState<SortOption>("name-asc");
 
   const { data: brands, isLoading: brandsLoading } = useQuery<Brand[]>({
     queryKey: ["/api/brands"],
@@ -24,14 +28,47 @@ export default function Shop() {
     queryKey: ["/api/products"],
   });
 
-  const filteredProducts = products?.filter((product) => {
-    if (selectedBrand && product.brandId !== selectedBrand) return false;
-    if (selectedCategory && product.category !== selectedCategory) return false;
-    return product.inStock !== false;
-  });
+  const filteredAndSortedProducts = useMemo(() => {
+    if (!products) return [];
+    
+    // Filter
+    let result = products.filter((product) => {
+      if (selectedBrand && product.brandId !== selectedBrand) return false;
+      if (selectedCategory && product.category !== selectedCategory) return false;
+      if (!showOutOfStock && product.inStock === false) return false;
+      return true;
+    });
+    
+    // Sort
+    result.sort((a, b) => {
+      switch (sortBy) {
+        case "name-asc":
+          return a.name.localeCompare(b.name);
+        case "name-desc":
+          return b.name.localeCompare(a.name);
+        case "price-asc":
+          return parseFloat(a.price) - parseFloat(b.price);
+        case "price-desc":
+          return parseFloat(b.price) - parseFloat(a.price);
+        case "newest":
+          return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
+        default:
+          return 0;
+      }
+    });
+    
+    return result;
+  }, [products, selectedBrand, selectedCategory, showOutOfStock, sortBy]);
 
   const categories = [...new Set(products?.map((p) => p.category) || [])];
   const hasContent = (brands?.length || 0) > 0 || (products?.length || 0) > 0;
+  const hasActiveFilters = selectedBrand !== null || selectedCategory !== null || showOutOfStock;
+
+  const clearAllFilters = () => {
+    setSelectedBrand(null);
+    setSelectedCategory(null);
+    setShowOutOfStock(false);
+  };
 
   if (brandsLoading || productsLoading) {
     return (
@@ -157,98 +194,166 @@ export default function Shop() {
           </div>
         )}
 
-        {categories.length > 0 && (
-          <div className="mb-8 flex flex-wrap items-center gap-2">
-            <Filter className="w-5 h-5 text-gray-400" />
-            <span className="text-gray-400 mr-2">Filter by:</span>
-            <Button
-              size="sm"
-              variant={selectedCategory === null ? "default" : "outline"}
-              onClick={() => setSelectedCategory(null)}
-              className={selectedCategory === null ? "bg-battles-gold text-black" : "border-zinc-700 text-gray-300"}
-            >
-              All
-            </Button>
-            {categories.map((category) => (
-              <Button
-                key={category}
-                size="sm"
-                variant={selectedCategory === category ? "default" : "outline"}
-                onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
-                className={selectedCategory === category ? "bg-battles-gold text-black" : "border-zinc-700 text-gray-300"}
-              >
-                {category.charAt(0).toUpperCase() + category.slice(1)}
-              </Button>
-            ))}
-            {(selectedBrand || selectedCategory) && (
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => {
-                  setSelectedBrand(null);
-                  setSelectedCategory(null);
-                }}
-                className="text-red-400 hover:text-red-300"
-              >
-                Clear filters
-              </Button>
-            )}
-          </div>
-        )}
+        {/* Filter and Sort Toolbar */}
+        <div className="mb-8 bg-zinc-900/50 rounded-lg p-4 border border-zinc-800">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            {/* Left side - Filters */}
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-battles-gold" />
+                <span className="text-gray-300 text-sm font-medium">Category:</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  size="sm"
+                  variant={selectedCategory === null ? "default" : "outline"}
+                  onClick={() => setSelectedCategory(null)}
+                  className={selectedCategory === null ? "bg-battles-gold text-black hover:bg-battles-gold/90" : "border-zinc-700 text-gray-300 hover:bg-zinc-800"}
+                >
+                  All
+                </Button>
+                {categories.map((category) => (
+                  <Button
+                    key={category}
+                    size="sm"
+                    variant={selectedCategory === category ? "default" : "outline"}
+                    onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
+                    className={selectedCategory === category ? "bg-battles-gold text-black hover:bg-battles-gold/90" : "border-zinc-700 text-gray-300 hover:bg-zinc-800"}
+                  >
+                    {category.charAt(0).toUpperCase() + category.slice(1)}
+                  </Button>
+                ))}
+              </div>
+            </div>
 
-        {filteredProducts && filteredProducts.length > 0 ? (
+            {/* Right side - Sort and options */}
+            <div className="flex flex-wrap items-center gap-3">
+              {/* Show out of stock toggle */}
+              <Button
+                size="sm"
+                variant={showOutOfStock ? "default" : "outline"}
+                onClick={() => setShowOutOfStock(!showOutOfStock)}
+                className={showOutOfStock ? "bg-zinc-700 text-white hover:bg-zinc-600" : "border-zinc-700 text-gray-300 hover:bg-zinc-800"}
+              >
+                {showOutOfStock ? "Showing All" : "In Stock Only"}
+              </Button>
+
+              {/* Sort dropdown */}
+              <div className="flex items-center gap-2">
+                <ArrowUpDown className="w-4 h-4 text-battles-gold" />
+                <Select value={sortBy} onValueChange={(value: SortOption) => setSortBy(value)}>
+                  <SelectTrigger className="w-[160px] bg-zinc-800 border-zinc-700 text-white">
+                    <SelectValue placeholder="Sort by" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-zinc-800 border-zinc-700">
+                    <SelectItem value="name-asc">Name (A-Z)</SelectItem>
+                    <SelectItem value="name-desc">Name (Z-A)</SelectItem>
+                    <SelectItem value="price-asc">Price (Low-High)</SelectItem>
+                    <SelectItem value="price-desc">Price (High-Low)</SelectItem>
+                    <SelectItem value="newest">Newest First</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Clear filters */}
+              {hasActiveFilters && (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={clearAllFilters}
+                  className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
+                >
+                  <X className="w-4 h-4 mr-1" />
+                  Clear
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {/* Results count */}
+          <div className="mt-3 pt-3 border-t border-zinc-800">
+            <p className="text-sm text-gray-400">
+              Showing <span className="text-white font-medium">{filteredAndSortedProducts.length}</span> of{" "}
+              <span className="text-white font-medium">{products?.length || 0}</span> products
+              {selectedBrand && brands && (
+                <span>
+                  {" "}from <span className="text-battles-gold">{brands.find(b => b.id === selectedBrand)?.name}</span>
+                </span>
+              )}
+            </p>
+          </div>
+        </div>
+
+        {filteredAndSortedProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <Card key={product.id} className="bg-zinc-900 border-zinc-800 overflow-hidden group">
+            {filteredAndSortedProducts.map((product) => (
+              <Card key={product.id} className="bg-zinc-900 border-zinc-800 overflow-hidden group hover:border-battles-gold/50 transition-colors">
                 <div className="aspect-square bg-zinc-800 relative overflow-hidden">
                   {product.imageUrl ? (
                     <img
                       src={product.imageUrl}
                       alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${
+                        product.inStock === false ? "opacity-50 grayscale" : ""
+                      }`}
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
                       <Package className="w-16 h-16 text-zinc-600" />
                     </div>
                   )}
-                  {product.isFeatured && (
-                    <Badge className="absolute top-2 left-2 bg-battles-gold text-black">
-                      Featured
-                    </Badge>
-                  )}
+                  {/* Badges container */}
+                  <div className="absolute top-2 left-2 flex flex-col gap-1">
+                    {product.isFeatured && (
+                      <Badge className="bg-battles-gold text-black font-semibold">
+                        Featured
+                      </Badge>
+                    )}
+                    {product.inStock === false && (
+                      <Badge className="bg-red-600 text-white">
+                        Out of Stock
+                      </Badge>
+                    )}
+                  </div>
                   {product.brand && (
-                    <Badge className="absolute top-2 right-2 bg-zinc-700 text-white">
+                    <Badge className="absolute top-2 right-2 bg-zinc-700/90 text-white backdrop-blur-sm">
                       {product.brand.name}
                     </Badge>
                   )}
                 </div>
                 <CardContent className="p-4">
-                  <h3 className="text-white font-semibold mb-1 line-clamp-2">{product.name}</h3>
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <h3 className="text-white font-semibold line-clamp-2 flex-1">{product.name}</h3>
+                    <span className="text-battles-gold font-bold text-lg whitespace-nowrap">
+                      ${parseFloat(product.price).toFixed(2)}
+                    </span>
+                  </div>
                   {product.description && (
-                    <p className="text-gray-400 text-sm mb-2 line-clamp-2">{product.description}</p>
+                    <p className="text-gray-400 text-sm mb-3 line-clamp-2">{product.description}</p>
                   )}
-                  <div className="flex items-center justify-between">
-                    <span className="text-battles-gold font-bold text-lg">${product.price}</span>
-                    <Badge variant="outline" className="border-zinc-700 text-gray-400">
-                      {product.category}
+                  <div className="flex items-center justify-between pt-2 border-t border-zinc-800">
+                    <Badge variant="outline" className="border-zinc-700 text-gray-400 text-xs">
+                      {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
                     </Badge>
+                    {product.inStock !== false ? (
+                      <span className="text-green-500 text-xs font-medium">In Stock</span>
+                    ) : (
+                      <span className="text-red-400 text-xs font-medium">Out of Stock</span>
+                    )}
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 bg-zinc-900 rounded-lg">
+          <div className="text-center py-12 bg-zinc-900 rounded-lg border border-zinc-800">
             <Package className="w-16 h-16 mx-auto text-gray-600 mb-4" />
-            <p className="text-gray-400">No products match your filters</p>
+            <p className="text-gray-400 mb-2">No products match your filters</p>
+            <p className="text-gray-500 text-sm mb-4">Try adjusting your search criteria</p>
             <Button
-              variant="link"
-              onClick={() => {
-                setSelectedBrand(null);
-                setSelectedCategory(null);
-              }}
-              className="text-battles-gold mt-2"
+              variant="outline"
+              onClick={clearAllFilters}
+              className="border-battles-gold text-battles-gold hover:bg-battles-gold hover:text-black"
             >
               Clear all filters
             </Button>
