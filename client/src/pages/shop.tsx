@@ -79,7 +79,7 @@ export default function Shop() {
     return result;
   }, [products, selectedBrand, selectedCategory, showOutOfStock, sortBy]);
 
-  const categories = [...new Set(products?.map((p) => p.category) || [])];
+  const categories = Array.from(new Set(products?.map((p) => p.category) || []));
   const hasContent = (brands?.length || 0) > 0 || (products?.length || 0) > 0;
   const hasActiveFilters = selectedBrand !== null || selectedCategory !== null || showOutOfStock;
 

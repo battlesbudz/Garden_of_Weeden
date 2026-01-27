@@ -23,7 +23,7 @@ export default function BrandsManager() {
     description: "",
     logoUrl: "",
     isActive: true,
-    sortOrder: 0,
+    sortOrder: "0",
   });
 
   const handleFileUpload = async (file: File) => {
@@ -71,7 +71,10 @@ export default function BrandsManager() {
 
   const createMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      return await apiRequest("POST", "/api/admin/brands", data);
+      return await apiRequest("POST", "/api/admin/brands", {
+        ...data,
+        sortOrder: data.sortOrder === "" ? 0 : parseInt(data.sortOrder, 10),
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/brands"] });
@@ -87,7 +90,10 @@ export default function BrandsManager() {
 
   const updateMutation = useMutation({
     mutationFn: async ({ id, data }: { id: number; data: typeof formData }) => {
-      return await apiRequest("PATCH", `/api/admin/brands/${id}`, data);
+      return await apiRequest("PATCH", `/api/admin/brands/${id}`, {
+        ...data,
+        sortOrder: data.sortOrder === "" ? 0 : parseInt(data.sortOrder, 10),
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/brands"] });
@@ -121,7 +127,7 @@ export default function BrandsManager() {
       description: "",
       logoUrl: "",
       isActive: true,
-      sortOrder: 0,
+      sortOrder: "0",
     });
     setLogoPreview(null);
     if (fileInputRef.current) {
@@ -136,7 +142,7 @@ export default function BrandsManager() {
       description: brand.description || "",
       logoUrl: brand.logoUrl || "",
       isActive: brand.isActive ?? true,
-      sortOrder: brand.sortOrder ?? 0,
+      sortOrder: String(brand.sortOrder ?? 0),
     });
     setLogoPreview(brand.logoUrl || null);
   };
@@ -243,14 +249,16 @@ export default function BrandsManager() {
         </div>
       </div>
       <div>
-        <Label htmlFor="sortOrder" className="text-white">Sort Order</Label>
+        <Label htmlFor="sortOrder" className="text-white">Display Order</Label>
         <Input
           id="sortOrder"
           type="number"
           value={formData.sortOrder}
-          onChange={(e) => setFormData({ ...formData, sortOrder: parseInt(e.target.value) || 0 })}
+          onChange={(e) => setFormData({ ...formData, sortOrder: e.target.value })}
+          placeholder="0"
           className="bg-zinc-800 border-zinc-700 text-white"
         />
+        <p className="text-xs text-gray-500 mt-1">Lower numbers appear first in the list</p>
       </div>
       <div className="flex items-center space-x-2">
         <Switch
