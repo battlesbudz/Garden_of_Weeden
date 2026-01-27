@@ -18,6 +18,7 @@ interface SiteSettings {
   ctaButton1Text?: string;
   ctaButton2Text?: string;
   ctaButton3Text?: string;
+  locationText?: string;
 }
 
 export default function HeroSection() {
@@ -39,6 +40,7 @@ export default function HeroSection() {
   const cta1Text = settings?.ctaButton1Text || "Our Story";
   const cta2Text = settings?.ctaButton2Text || "Learn More";
   const cta3Text = settings?.ctaButton3Text || "Get Updates";
+  const locationText = settings?.locationText || "Proudly Cultivated in Buffalo, NY";
   
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -170,7 +172,7 @@ export default function HeroSection() {
         {/* Location Badge */}
         <div className="inline-flex items-center gap-2 bg-midnight-grove/60 backdrop-blur-sm border border-green-500/40 rounded-full px-6 py-3 animate-fade-in-up animation-delay-1000">
           <MapPin className="h-4 w-4 text-green-500" />
-          <span className="font-garden text-sm text-parchment font-medium">Proudly Cultivated in Buffalo, NY</span>
+          <span className="font-garden text-sm text-parchment font-medium">{locationText}</span>
         </div>
       </div>
 
