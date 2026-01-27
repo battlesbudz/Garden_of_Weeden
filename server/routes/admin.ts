@@ -308,7 +308,20 @@ export function registerAdminRoutes(app: Express) {
 
   // ========== SITE SETTINGS MANAGEMENT ==========
   
-  // Get all site settings
+  // Public endpoint to get site settings (for homepage, etc.)
+  app.get("/api/site-settings", async (req: any, res) => {
+    try {
+      const settings = await storage.getAllSiteSettings();
+      const settingsMap: Record<string, string | null> = {};
+      settings.forEach(s => { settingsMap[s.key] = s.value; });
+      res.json(settingsMap);
+    } catch (error) {
+      console.error("Error fetching public settings:", error);
+      res.status(500).json({ message: "Failed to fetch settings" });
+    }
+  });
+
+  // Get all site settings (admin)
   app.get("/api/admin/settings", isAdmin, async (req: any, res) => {
     try {
       const settings = await storage.getAllSiteSettings();

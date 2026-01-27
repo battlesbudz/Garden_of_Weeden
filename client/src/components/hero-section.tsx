@@ -1,11 +1,44 @@
 import { ChevronDown, Award, MapPin, Heart } from "lucide-react";
 import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 import { VideoBackground } from "@/components/video-background";
 import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
 
+interface SiteSettings {
+  heroTitle?: string;
+  heroTagline?: string;
+  heroSubtitle?: string;
+  pillar1Title?: string;
+  pillar1Description?: string;
+  pillar2Title?: string;
+  pillar2Description?: string;
+  pillar3Title?: string;
+  pillar3Description?: string;
+  ctaButton1Text?: string;
+  ctaButton2Text?: string;
+  ctaButton3Text?: string;
+}
+
 export default function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
+  
+  const { data: settings } = useQuery<SiteSettings>({
+    queryKey: ['/api/site-settings'],
+  });
+
+  const heroTitle = settings?.heroTitle || "Garden of Weeden";
+  const heroTagline = settings?.heroTagline || "From Service to Soil";
+  const heroSubtitle = settings?.heroSubtitle || "Veteran-Owned Cannabis Microbusiness in Buffalo, NY";
+  const pillar1Title = settings?.pillar1Title || "Veteran-Owned";
+  const pillar1Desc = settings?.pillar1Description || "Quality cultivation by those who served";
+  const pillar2Title = settings?.pillar2Title || "Buffalo Roots";
+  const pillar2Desc = settings?.pillar2Description || "Grown in Western NY's micro-terroir";
+  const pillar3Title = settings?.pillar3Title || "Wellness Focused";
+  const pillar3Desc = settings?.pillar3Description || "Supporting veteran healing journeys";
+  const cta1Text = settings?.ctaButton1Text || "Our Story";
+  const cta2Text = settings?.ctaButton2Text || "Learn More";
+  const cta3Text = settings?.ctaButton3Text || "Get Updates";
   
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -48,7 +81,7 @@ export default function HeroSection() {
           transition={{ duration: prefersReducedMotion ? 0 : 1, ease: "easeOut" }}
         >
           <h1 className="font-enchanted text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] text-parchment mb-6 leading-[0.9] tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
-            Garden of Weeden
+            {heroTitle}
           </h1>
           <div className="h-1.5 w-40 bg-gradient-to-r from-green-400 via-green-500 to-green-600 mx-auto mb-8 rounded-full shadow-lg shadow-green-500/50"></div>
         </motion.div>
@@ -61,10 +94,10 @@ export default function HeroSection() {
           transition={{ duration: prefersReducedMotion ? 0 : 1, delay: prefersReducedMotion ? 0 : 0.3, ease: "easeOut" }}
         >
           <h2 className="font-storybook text-3xl md:text-5xl lg:text-6xl text-parchment drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] mb-6 tracking-wide">
-            From Service to Soil
+            {heroTagline}
           </h2>
           <p className="font-garden text-xl md:text-3xl lg:text-4xl text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] max-w-4xl mx-auto leading-relaxed">
-            Veteran-Owned Cannabis Microbusiness in Buffalo, NY
+            {heroSubtitle}
           </p>
         </motion.div>
 
@@ -79,8 +112,8 @@ export default function HeroSection() {
             <div className="transform group-hover:scale-110 transition-transform duration-300">
               <Award className="h-12 w-12 text-green-500 mx-auto mb-4 group-hover:text-green-400 transition-colors" />
             </div>
-            <h3 className="font-storybook text-2xl text-parchment mb-3 group-hover:text-green-400 transition-colors">Veteran-Owned</h3>
-            <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors">Quality cultivation by those who served</p>
+            <h3 className="font-storybook text-2xl text-parchment mb-3 group-hover:text-green-400 transition-colors">{pillar1Title}</h3>
+            <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors">{pillar1Desc}</p>
           </motion.div>
           <motion.div 
             className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
@@ -91,8 +124,8 @@ export default function HeroSection() {
             <div className="transform group-hover:scale-110 transition-transform duration-300">
               <MapPin className="h-12 w-12 text-green-500 mx-auto mb-4 group-hover:text-green-400 transition-colors" />
             </div>
-            <h3 className="font-storybook text-2xl text-parchment mb-3 group-hover:text-green-400 transition-colors">Buffalo Roots</h3>
-            <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors">Grown in Western NY's micro-terroir</p>
+            <h3 className="font-storybook text-2xl text-parchment mb-3 group-hover:text-green-400 transition-colors">{pillar2Title}</h3>
+            <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors">{pillar2Desc}</p>
           </motion.div>
           <motion.div 
             className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
@@ -103,8 +136,8 @@ export default function HeroSection() {
             <div className="transform group-hover:scale-110 transition-transform duration-300">
               <Heart className="h-12 w-12 text-green-500 mx-auto mb-4 group-hover:text-green-400 transition-colors" />
             </div>
-            <h3 className="font-storybook text-2xl text-parchment mb-3 group-hover:text-green-400 transition-colors">Wellness Focused</h3>
-            <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors">Supporting veteran healing journeys</p>
+            <h3 className="font-storybook text-2xl text-parchment mb-3 group-hover:text-green-400 transition-colors">{pillar3Title}</h3>
+            <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors">{pillar3Desc}</p>
           </motion.div>
         </div>
 
@@ -115,7 +148,7 @@ export default function HeroSection() {
               className="bg-green-500 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-garden font-semibold text-base shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
               data-testid="hero-cta-story"
             >
-              Our Story
+              {cta1Text}
             </button>
           </Link>
           <button
@@ -123,14 +156,14 @@ export default function HeroSection() {
             className="border-2 border-green-500 text-parchment px-8 py-4 rounded-lg font-garden font-semibold text-base hover:bg-green-700/20 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             data-testid="hero-cta-products"
           >
-            Learn More
+            {cta2Text}
           </button>
           <button
             onClick={() => scrollToSection("newsletter")}
             className="bg-parchment hover:bg-parchment/90 text-black px-8 py-4 rounded-lg font-garden font-semibold text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             data-testid="hero-cta-newsletter"
           >
-            Get Updates
+            {cta3Text}
           </button>
         </div>
 
