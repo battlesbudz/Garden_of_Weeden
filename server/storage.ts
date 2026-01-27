@@ -146,6 +146,7 @@ export interface IStorage {
   getAllOrders(): Promise<Order[]>;
   getUserOrders(userId: string): Promise<Order[]>;
   getOrder(id: number): Promise<Order | undefined>;
+  getOrderItemsWithProducts(orderId: number): Promise<(OrderItem & { product: Product })[]>;
   updateOrderStatus(id: number, status: string): Promise<Order>;
   updateOrderPayment(id: number, paymentStatus: string, transactionId?: string, paidAt?: Date): Promise<Order>;
   
@@ -454,6 +455,7 @@ export class MemStorage implements IStorage {
   async getAllOrders(): Promise<Order[]> { return []; }
   async getUserOrders(userId: number): Promise<Order[]> { return []; }
   async getOrder(id: number): Promise<Order | undefined> { return undefined; }
+  async getOrderItemsWithProducts(orderId: number): Promise<(OrderItem & { product: Product })[]> { return []; }
   async getAllInvestorUpdates(): Promise<InvestorUpdate[]> { return []; }
   async getPublishedInvestorUpdates(): Promise<InvestorUpdate[]> { return []; }
   async createInvestorUpdate(update: InsertInvestorUpdate): Promise<InvestorUpdate> { throw new Error("Not implemented in MemStorage"); }
@@ -897,6 +899,23 @@ export class DatabaseStorage implements IStorage {
   async getOrder(id: number): Promise<Order | undefined> {
     const [order] = await db.select().from(orders).where(eq(orders.id, id));
     return order || undefined;
+  }
+
+  async getOrderItemsWithProducts(orderId: number): Promise<(OrderItem & { product: Product })[]> {
+    const items = await db
+      .select()
+      .from(orderItems)
+      .innerJoin(products, eq(orderItems.productId, products.id))
+      .where(eq(orderItems.orderId, orderId));
+    
+    return items.map(item => ({
+      id: item.order_items.id,
+      orderId: item.order_items.orderId,
+      productId: item.order_items.productId,
+      quantity: item.order_items.quantity,
+      price: item.order_items.price,
+      product: item.products,
+    }));
   }
 
   async updateOrderStatus(id: number, status: string): Promise<Order> {

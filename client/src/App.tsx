@@ -9,6 +9,7 @@ import LoginPage from "@/pages/login";
 import Shop from "@/pages/shop";
 import Cart from "@/pages/cart";
 import Checkout from "@/pages/checkout";
+import OrderDetails from "@/pages/order";
 import About from "@/pages/about";
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
@@ -50,6 +51,7 @@ function Router() {
         <Route path="/shop" component={Shop} />
         <Route path="/cart" component={Cart} />
         <Route path="/checkout" component={Checkout} />
+        <Route path="/orders/:id" component={OrderDetails} />
         <Route path="/about" component={About} />
         
         {/* Blog Pages */}

@@ -162,12 +162,15 @@ export function registerCheckoutRoutes(app: Express) {
       }
       
       // Only allow users to view their own orders (or if not logged in, by session match)
-      const userId = (req as any).user?.id;
+      const userId = (req as any).user?.claims?.sub;
       if (order.userId && order.userId !== userId) {
         return res.status(403).json({ message: "Access denied" });
       }
       
-      res.json(order);
+      // Get order items with product details
+      const items = await storage.getOrderItemsWithProducts(orderId);
+      
+      res.json({ ...order, items });
     } catch (error) {
       console.error("Error fetching order:", error);
       res.status(500).json({ message: "Failed to fetch order" });
