@@ -95,3 +95,47 @@ The admin dashboard (/admin) provides comprehensive site management for site own
 - `site_settings`: Key-value store for configurable settings
 - `media_items`: Tracks uploaded files (filename, url, mimeType, size)
 - `blog_posts`: Blog content with draft/published states
+
+## E-Commerce & Payment System
+
+The platform includes a complete shopping cart and checkout system designed for cannabis-friendly payment processors.
+
+**Payment Processing:**
+- **Provider-Agnostic Architecture**: Supports multiple cannabis-friendly payment providers through a unified interface
+- **Supported Providers**: Paybotic, WebJoint Pay, and sandbox mode for development
+- **Payment Methods**: ACH bank transfer, PIN Debit, and Cash (Pay in Store)
+- **Provider Selection**: Set via `PAYMENT_PROVIDER` environment variable ("paybotic", "webjoint", or "sandbox")
+
+**Cart System:**
+- Session-based cart for anonymous users (persisted via `cartSessionId` cookie)
+- User-linked carts for authenticated users
+- Real-time cart badge in navigation showing item count
+- Add to cart functionality on shop product cards
+
+**Checkout Flow:**
+- Customer information collection (name, email, phone, address)
+- Payment method selection with fee display
+- Tax calculation (8% NY cannabis tax)
+- Order confirmation with order number
+
+**API Routes:**
+- `GET /api/cart` - Get current cart with items
+- `POST /api/cart/items` - Add item to cart
+- `PATCH /api/cart/items/:id` - Update item quantity
+- `DELETE /api/cart/items/:id` - Remove item from cart
+- `DELETE /api/cart` - Clear entire cart
+- `POST /api/checkout` - Process checkout and create order
+- `GET /api/checkout/payment-info` - Get payment provider info
+
+**Database Tables:**
+- `carts`: Shopping carts linked to users or sessions
+- `cart_items`: Individual items in carts with pricing
+- `orders`: Completed orders with customer info and payment status
+- `order_items`: Line items for each order
+
+**To Enable Live Payments:**
+1. Apply for a merchant account with Paybotic or WebJoint Pay
+2. Add API credentials to environment variables:
+   - For Paybotic: `PAYBOTIC_API_KEY`, `PAYBOTIC_MERCHANT_ID`
+   - For WebJoint: `WEBJOINT_API_KEY`, `WEBJOINT_MERCHANT_ID`
+3. Set `PAYMENT_PROVIDER` to "paybotic" or "webjoint"
