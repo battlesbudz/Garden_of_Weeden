@@ -140,12 +140,19 @@ const tutorialSteps: TutorialStep[] = [
   {
     id: "settings",
     title: "Site Settings",
-    description: "Configure your website's core information like business name, contact details, and social media links. These appear throughout your site.",
+    description: "Configure your website's core information. Each setting changes what visitors see on your site. Here's what each setting controls:",
     targetTab: "settings",
     tips: [
-      "Update contact info so customers can reach you",
-      "Add social media links to grow your following",
-      "Business hours help customers know when you're available"
+      "Site Name → Changes the brand name in the footer and copyright text",
+      "Site Tagline → Updates the description under your brand name in the footer",
+      "Contact Email → Updates the email link visitors can click in the footer",
+      "Contact Phone → Updates the phone number link in the footer",
+      "Business Address → Shows your location in the footer",
+      "Business Hours → Saved for future use on contact pages",
+      "Facebook URL → Adds a Facebook link button to the footer (leave empty to hide)",
+      "Instagram URL → Adds an Instagram link button to the footer",
+      "Twitter/X URL → Adds a Twitter link button to the footer (leave empty to hide)",
+      "Footer Text → Adds custom text at the bottom of every page"
     ]
   },
   {
