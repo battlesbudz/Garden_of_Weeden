@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { X, ChevronRight, ChevronLeft, CheckCircle2, PlayCircle, RotateCcw, HelpCircle, Tags, Package, Mail, Settings, FileText, Users, Image } from "lucide-react";
+import { X, ChevronRight, ChevronLeft, CheckCircle2, PlayCircle, RotateCcw, HelpCircle, Tags, Package, Mail, Settings, FileText, Users, Image, ShoppingBag } from "lucide-react";
 
 interface TutorialStep {
   id: string;
@@ -80,6 +80,41 @@ const tutorialSteps: TutorialStep[] = [
       "Deleted products cannot be recovered",
       "Editing a product updates it immediately on the site",
       "You can change the brand association at any time"
+    ]
+  },
+  {
+    id: "shop-intro",
+    title: "Shop Management",
+    description: "The Shop tab lets you control which products appear on your public Shop page. Products in the Products tab are your full catalog - here you choose which ones to actually sell.",
+    targetTab: "shop",
+    tips: [
+      "Products tab = your complete informational catalog",
+      "Shop tab = what you're currently selling",
+      "Shop items can have different prices than catalog prices"
+    ]
+  },
+  {
+    id: "shop-import",
+    title: "Importing Products to Shop",
+    description: "Use the 'Import Product to Shop' button to add products from your catalog. Select a product from the dropdown to add it to your shop inventory.",
+    targetTab: "shop",
+    action: "Try clicking 'Import Product to Shop' to see available products",
+    tips: [
+      "Only products not already in the shop will appear in the dropdown",
+      "Each product can only be imported once",
+      "You can set custom pricing when importing"
+    ]
+  },
+  {
+    id: "shop-customize",
+    title: "Customizing Shop Items",
+    description: "Once imported, you can set shop-specific pricing and quantities. The shop price can be different from the catalog price, and you control exactly how many are in stock.",
+    targetTab: "shop",
+    tips: [
+      "Leave price blank to use the product's catalog price",
+      "Set quantity to 0 to show 'Out of Stock'",
+      "Toggle 'Active' off to temporarily hide an item without deleting it",
+      "Remove items from shop to stop selling them (product stays in catalog)"
     ]
   },
   {
