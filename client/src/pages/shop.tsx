@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { ShoppingBag, Package, Tags, Filter, ArrowUpDown, X } from "lucide-react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { ShoppingBag, Package, Tags, Filter, ArrowUpDown, X, ShoppingCart, Check, Loader2 } from "lucide-react";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SEOHead from "@/components/seo/SEOHead";
 import { getCanonicalUrl, getPageTitle } from "@/utils/seo";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 import type { Brand, Product, ShopItem } from "@shared/schema";
 
 type ProductWithBrand = Product & { brand?: Brand };
@@ -39,9 +41,39 @@ export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showOutOfStock, setShowOutOfStock] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>("name-asc");
+  const [addedItems, setAddedItems] = useState<Set<number>>(new Set());
+  const { toast } = useToast();
 
   const { data: shopItems, isLoading: shopItemsLoading } = useQuery<ShopItemWithProduct[]>({
     queryKey: ["/api/shop-items"],
+  });
+
+  const addToCartMutation = useMutation({
+    mutationFn: async ({ productId, shopItemId }: { productId: number; shopItemId: number }) => {
+      return apiRequest("POST", "/api/cart/items", { productId, shopItemId, quantity: 1 });
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
+      setAddedItems(prev => new Set(prev).add(variables.shopItemId));
+      toast({
+        title: "Added to cart",
+        description: "Item has been added to your cart",
+      });
+      setTimeout(() => {
+        setAddedItems(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(variables.shopItemId);
+          return newSet;
+        });
+      }, 2000);
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to add item to cart",
+        variant: "destructive",
+      });
+    },
   });
 
   const getItemPrice = (item: ShopItemWithProduct) => {
@@ -376,6 +408,34 @@ export default function Shop() {
                       <span className="text-red-400 text-xs font-medium">Out of Stock</span>
                     )}
                   </div>
+                  {getItemInStock(item) && (
+                    <Button
+                      className={`w-full mt-3 transition-colors ${
+                        addedItems.has(item.id) 
+                          ? "bg-green-600 hover:bg-green-600 text-white" 
+                          : "bg-battles-gold text-black hover:bg-battles-gold/90"
+                      }`}
+                      onClick={() => addToCartMutation.mutate({ productId: item.product?.id || 0, shopItemId: item.id })}
+                      disabled={addToCartMutation.isPending || addedItems.has(item.id)}
+                    >
+                      {addedItems.has(item.id) ? (
+                        <>
+                          <Check className="w-4 h-4 mr-2" />
+                          Added!
+                        </>
+                      ) : addToCartMutation.isPending ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Adding...
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingCart className="w-4 h-4 mr-2" />
+                          Add to Cart
+                        </>
+                      )}
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
             ))}

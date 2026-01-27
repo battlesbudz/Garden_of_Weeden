@@ -7,6 +7,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import LoginPage from "@/pages/login";
 import Shop from "@/pages/shop";
+import Cart from "@/pages/cart";
+import Checkout from "@/pages/checkout";
 import About from "@/pages/about";
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
@@ -46,6 +48,8 @@ function Router() {
           <Route path="/" component={Home} />
         <Route path="/login" component={LoginPage} />
         <Route path="/shop" component={Shop} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/checkout" component={Checkout} />
         <Route path="/about" component={About} />
         
         {/* Blog Pages */}

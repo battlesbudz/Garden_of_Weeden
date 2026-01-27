@@ -4,6 +4,8 @@ import {
   products,
   orders,
   orderItems,
+  carts,
+  cartItems,
   newsletterSubscribers, 
   contactSubmissions,
   eventBookings,
@@ -40,6 +42,11 @@ import {
   type InsertOrder,
   type OrderItem,
   type InsertOrderItem,
+  type Cart,
+  type InsertCart,
+  type CartItem,
+  type InsertCartItem,
+  type CartWithItems,
   type NewsletterSubscriber,
   type InsertNewsletterSubscriber,
   type ContactSubmission,
@@ -125,12 +132,22 @@ export interface IStorage {
   updateShopItem(id: number, item: Partial<InsertShopItem>): Promise<ShopItem>;
   deleteShopItem(id: number): Promise<void>;
   
+  // Cart operations
+  getOrCreateCart(userId?: string, sessionId?: string): Promise<Cart>;
+  getCartWithItems(cartId: number): Promise<CartWithItems | null>;
+  addToCart(cartId: number, productId: number, shopItemId: number, quantity: number, priceAtAdd: string): Promise<CartItem>;
+  updateCartItemQuantity(cartItemId: number, quantity: number): Promise<CartItem>;
+  removeFromCart(cartItemId: number): Promise<void>;
+  clearCart(cartId: number): Promise<void>;
+  
   // Orders  
   createOrder(order: InsertOrder): Promise<Order>;
   createOrderItem(orderItem: InsertOrderItem): Promise<OrderItem>;
   getAllOrders(): Promise<Order[]>;
-  getUserOrders(userId: number): Promise<Order[]>;
+  getUserOrders(userId: string): Promise<Order[]>;
   getOrder(id: number): Promise<Order | undefined>;
+  updateOrderStatus(id: number, status: string): Promise<Order>;
+  updateOrderPayment(id: number, paymentStatus: string, transactionId?: string, paidAt?: Date): Promise<Order>;
   
   // Newsletter subscribers
   createNewsletterSubscriber(subscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber>;
@@ -689,6 +706,100 @@ export class DatabaseStorage implements IStorage {
     await db.delete(shopItems).where(eq(shopItems.id, id));
   }
 
+  // Cart methods
+  async getOrCreateCart(userId?: string, sessionId?: string): Promise<Cart> {
+    let cart: Cart | undefined;
+    
+    if (userId) {
+      const [existingCart] = await db.select().from(carts).where(eq(carts.userId, userId));
+      cart = existingCart;
+    } else if (sessionId) {
+      const [existingCart] = await db.select().from(carts).where(eq(carts.sessionId, sessionId));
+      cart = existingCart;
+    }
+    
+    if (!cart) {
+      const [newCart] = await db.insert(carts).values({
+        userId: userId || null,
+        sessionId: sessionId || null,
+      }).returning();
+      return newCart;
+    }
+    
+    return cart;
+  }
+
+  async getCartWithItems(cartId: number): Promise<CartWithItems | null> {
+    const [cart] = await db.select().from(carts).where(eq(carts.id, cartId));
+    if (!cart) return null;
+
+    const items = await db.select().from(cartItems).where(eq(cartItems.cartId, cartId));
+    
+    const itemsWithProducts = await Promise.all(items.map(async (item) => {
+      const [product] = await db.select().from(products).where(eq(products.id, item.productId));
+      const [shopItem] = await db.select().from(shopItems).where(eq(shopItems.id, item.shopItemId));
+      
+      let brand: Brand | undefined;
+      if (product?.brandId) {
+        const [brandResult] = await db.select().from(brands).where(eq(brands.id, product.brandId));
+        brand = brandResult;
+      }
+      
+      return {
+        ...item,
+        product: { ...product, brand },
+        shopItem,
+      };
+    }));
+
+    const total = items.reduce((sum, item) => sum + (parseFloat(item.priceAtAdd) * item.quantity), 0);
+    
+    return {
+      ...cart,
+      items: itemsWithProducts,
+      itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
+      total: total.toFixed(2),
+    };
+  }
+
+  async addToCart(cartId: number, productId: number, shopItemId: number, quantity: number, priceAtAdd: string): Promise<CartItem> {
+    const [existingItem] = await db.select().from(cartItems)
+      .where(and(eq(cartItems.cartId, cartId), eq(cartItems.productId, productId)));
+    
+    if (existingItem) {
+      const [updated] = await db.update(cartItems)
+        .set({ quantity: existingItem.quantity + quantity })
+        .where(eq(cartItems.id, existingItem.id))
+        .returning();
+      return updated;
+    }
+    
+    const [newItem] = await db.insert(cartItems).values({
+      cartId,
+      productId,
+      shopItemId,
+      quantity,
+      priceAtAdd,
+    }).returning();
+    return newItem;
+  }
+
+  async updateCartItemQuantity(cartItemId: number, quantity: number): Promise<CartItem> {
+    const [updated] = await db.update(cartItems)
+      .set({ quantity })
+      .where(eq(cartItems.id, cartItemId))
+      .returning();
+    return updated;
+  }
+
+  async removeFromCart(cartItemId: number): Promise<void> {
+    await db.delete(cartItems).where(eq(cartItems.id, cartItemId));
+  }
+
+  async clearCart(cartId: number): Promise<void> {
+    await db.delete(cartItems).where(eq(cartItems.cartId, cartId));
+  }
+
   // Order methods
   async createOrder(insertOrder: InsertOrder): Promise<Order> {
     const [order] = await db
@@ -707,16 +818,37 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAllOrders(): Promise<Order[]> {
-    return await db.select().from(orders);
+    return await db.select().from(orders).orderBy(desc(orders.createdAt));
   }
 
-  async getUserOrders(userId: number): Promise<Order[]> {
-    return await db.select().from(orders).where(eq(orders.userId, userId));
+  async getUserOrders(userId: string): Promise<Order[]> {
+    return await db.select().from(orders).where(eq(orders.userId, userId)).orderBy(desc(orders.createdAt));
   }
 
   async getOrder(id: number): Promise<Order | undefined> {
     const [order] = await db.select().from(orders).where(eq(orders.id, id));
     return order || undefined;
+  }
+
+  async updateOrderStatus(id: number, status: string): Promise<Order> {
+    const [updated] = await db.update(orders)
+      .set({ status })
+      .where(eq(orders.id, id))
+      .returning();
+    return updated;
+  }
+
+  async updateOrderPayment(id: number, paymentStatus: string, transactionId?: string, paidAt?: Date): Promise<Order> {
+    const [updated] = await db.update(orders)
+      .set({ 
+        paymentStatus,
+        paymentTransactionId: transactionId,
+        paidAt: paidAt,
+        status: paymentStatus === 'completed' ? 'paid' : undefined,
+      })
+      .where(eq(orders.id, id))
+      .returning();
+    return updated;
   }
 
   async createNewsletterSubscriber(insertSubscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber> {
