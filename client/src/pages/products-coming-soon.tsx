@@ -8,7 +8,7 @@ export default function ProductsComingSoon() {
     <div className="min-h-screen bg-white dark:bg-gray-900">
       <Navigation />
       
-      <div className="container mx-auto px-4 py-16 sm:py-24">
+      <div className="container mx-auto px-4 pt-28 pb-16 sm:pb-24">
         <div className="max-w-3xl mx-auto text-center">
           <div className="mb-8 flex justify-center">
             <div className="bg-garden-green/10 p-6 rounded-full">

@@ -35,7 +35,7 @@ export default function AdminDashboard() {
     return (
       <div className="min-h-screen bg-battles-black">
         <Navigation />
-        <div className="container mx-auto px-4 py-20 text-center">
+        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
           <Shield className="w-16 h-16 mx-auto text-battles-gold mb-4" />
           <h1 className="text-3xl font-bold text-white mb-4">Admin Access Required</h1>
           <p className="text-gray-400 mb-8">Please log in to access the admin dashboard.</p>
@@ -52,7 +52,7 @@ export default function AdminDashboard() {
     return (
       <div className="min-h-screen bg-battles-black">
         <Navigation />
-        <div className="container mx-auto px-4 py-20 text-center">
+        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
           <div className="animate-spin w-12 h-12 border-4 border-battles-gold border-t-transparent rounded-full mx-auto mb-4"></div>
           <p className="text-gray-400">Verifying admin access...</p>
         </div>
@@ -65,7 +65,7 @@ export default function AdminDashboard() {
     return (
       <div className="min-h-screen bg-battles-black">
         <Navigation />
-        <div className="container mx-auto px-4 py-20 text-center">
+        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
           <Shield className="w-16 h-16 mx-auto text-red-500 mb-4" />
           <h1 className="text-3xl font-bold text-white mb-4">Access Denied</h1>
           <p className="text-gray-400 mb-8">You do not have permission to access the admin dashboard.</p>
@@ -81,7 +81,7 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-battles-black">
       <Navigation />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 pt-24 pb-8">
         <div className="flex items-center gap-4 mb-8">
           <LayoutDashboard className="w-10 h-10 text-battles-gold" />
           <div>

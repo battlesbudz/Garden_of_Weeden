@@ -34,7 +34,7 @@ export default function LocationPage() {
       />
       <Navigation />
       
-      <div className="pt-20">
+      <div className="pt-24">
         {/* Breadcrumb */}
         <div className="bg-black border-b border-gray-800 py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
