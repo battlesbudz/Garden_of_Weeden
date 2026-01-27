@@ -23,6 +23,7 @@ export const products = pgTable("products", {
   brandId: integer("brand_id").references(() => brands.id),
   imageUrl: text("image_url"),
   inStock: boolean("in_stock").default(true),
+  stockQuantity: integer("stock_quantity").default(0),
   isFeatured: boolean("is_featured").default(false),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -78,6 +79,7 @@ export const insertProductSchema = createInsertSchema(products).pick({
   brandId: true,
   imageUrl: true,
   inStock: true,
+  stockQuantity: true,
   isFeatured: true,
 });
 

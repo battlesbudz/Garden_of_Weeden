@@ -28,7 +28,7 @@ export default function ProductsManager() {
     category: "flower",
     brandId: null as number | null,
     imageUrl: "",
-    inStock: true,
+    stockQuantity: 0,
     isFeatured: false,
   });
 
@@ -84,6 +84,7 @@ export default function ProductsManager() {
       return await apiRequest("POST", "/api/admin/products", {
         ...data,
         brandId: data.brandId || null,
+        inStock: data.stockQuantity > 0,
       });
     },
     onSuccess: () => {
@@ -103,6 +104,7 @@ export default function ProductsManager() {
       return await apiRequest("PATCH", `/api/admin/products/${id}`, {
         ...data,
         brandId: data.brandId || null,
+        inStock: data.stockQuantity > 0,
       });
     },
     onSuccess: () => {
@@ -139,7 +141,7 @@ export default function ProductsManager() {
       category: "flower",
       brandId: null,
       imageUrl: "",
-      inStock: true,
+      stockQuantity: 0,
       isFeatured: false,
     });
     setImagePreview(null);
@@ -157,7 +159,7 @@ export default function ProductsManager() {
       category: product.category,
       brandId: product.brandId || null,
       imageUrl: product.imageUrl || "",
-      inStock: product.inStock ?? true,
+      stockQuantity: (product as any).stockQuantity ?? 0,
       isFeatured: product.isFeatured ?? false,
     });
     setImagePreview(product.imageUrl || null);
@@ -317,22 +319,29 @@ export default function ProductsManager() {
           )}
         </div>
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="inStock"
-            checked={formData.inStock}
-            onCheckedChange={(checked) => setFormData({ ...formData, inStock: checked })}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="stockQuantity" className="text-white">Stock Quantity</Label>
+          <Input
+            id="stockQuantity"
+            type="number"
+            min="0"
+            value={formData.stockQuantity}
+            onChange={(e) => setFormData({ ...formData, stockQuantity: parseInt(e.target.value) || 0 })}
+            placeholder="0"
+            className="bg-zinc-800 border-zinc-700 text-white"
           />
-          <Label htmlFor="inStock" className="text-white">In Stock</Label>
+          <p className="text-gray-500 text-xs mt-1">
+            {formData.stockQuantity > 0 ? "In Stock" : "Out of Stock"}
+          </p>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 pt-6">
           <Switch
             id="isFeatured"
             checked={formData.isFeatured}
             onCheckedChange={(checked) => setFormData({ ...formData, isFeatured: checked })}
           />
-          <Label htmlFor="isFeatured" className="text-white">Featured</Label>
+          <Label htmlFor="isFeatured" className="text-white">Featured Product</Label>
         </div>
       </div>
       <div className="flex justify-end gap-2 pt-4">
@@ -422,8 +431,8 @@ export default function ProductsManager() {
                         {product.brand.name}
                       </span>
                     )}
-                    <span className={`text-xs px-2 py-0.5 rounded ${product.inStock ? "bg-green-900 text-green-300" : "bg-red-900 text-red-300"}`}>
-                      {product.inStock ? "In Stock" : "Out of Stock"}
+                    <span className={`text-xs px-2 py-0.5 rounded ${(product as any).stockQuantity > 0 ? "bg-green-900 text-green-300" : "bg-red-900 text-red-300"}`}>
+                      {(product as any).stockQuantity > 0 ? `${(product as any).stockQuantity} in stock` : "Out of Stock"}
                     </span>
                     {product.isFeatured && (
                       <span className="text-xs px-2 py-0.5 rounded bg-purple-900 text-purple-300">
