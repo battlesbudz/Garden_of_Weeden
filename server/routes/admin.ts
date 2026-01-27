@@ -245,4 +245,15 @@ export function registerAdminRoutes(app: Express) {
       res.status(500).json({ message: "Failed to check admin status" });
     }
   });
+
+  // Get all newsletter subscribers
+  app.get("/api/admin/subscribers", isAdmin, async (req: any, res) => {
+    try {
+      const subscribers = await storage.getAllNewsletterSubscribers();
+      res.json(subscribers);
+    } catch (error) {
+      console.error("Error fetching subscribers:", error);
+      res.status(500).json({ message: "Failed to fetch subscribers" });
+    }
+  });
 }
