@@ -65,6 +65,7 @@ export default function SettingsManager() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/settings"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/site-settings"] });
       toast({ title: "Settings saved successfully" });
     },
     onError: () => {

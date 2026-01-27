@@ -76,6 +76,7 @@ export default function HomepageManager() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/settings"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/site-settings"] });
       setHasChanges(false);
       toast({ title: "Homepage content saved successfully" });
     },
