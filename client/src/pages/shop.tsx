@@ -9,9 +9,10 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SEOHead from "@/components/seo/SEOHead";
 import { getCanonicalUrl, getPageTitle } from "@/utils/seo";
-import type { Brand, Product } from "@shared/schema";
+import type { Brand, Product, ShopItem } from "@shared/schema";
 
 type ProductWithBrand = Product & { brand?: Brand };
+type ShopItemWithProduct = ShopItem & { product: ProductWithBrand };
 type SortOption = "name-asc" | "name-desc" | "price-asc" | "price-desc" | "newest";
 
 const categoryLabels: Record<string, string> = {
@@ -39,22 +40,26 @@ export default function Shop() {
   const [showOutOfStock, setShowOutOfStock] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>("name-asc");
 
-  const { data: brands, isLoading: brandsLoading } = useQuery<Brand[]>({
-    queryKey: ["/api/brands"],
+  const { data: shopItems, isLoading: shopItemsLoading } = useQuery<ShopItemWithProduct[]>({
+    queryKey: ["/api/shop-items"],
   });
 
-  const { data: products, isLoading: productsLoading } = useQuery<ProductWithBrand[]>({
-    queryKey: ["/api/products"],
-  });
+  const getItemPrice = (item: ShopItemWithProduct) => {
+    return item.shopPrice || item.product?.price || "0";
+  };
 
-  const filteredAndSortedProducts = useMemo(() => {
-    if (!products) return [];
+  const getItemInStock = (item: ShopItemWithProduct) => {
+    return (item.shopQuantity || 0) > 0;
+  };
+
+  const filteredAndSortedItems = useMemo(() => {
+    if (!shopItems) return [];
     
     // Filter
-    let result = products.filter((product) => {
-      if (selectedBrand && product.brandId !== selectedBrand) return false;
-      if (selectedCategory && product.category !== selectedCategory) return false;
-      if (!showOutOfStock && product.inStock === false) return false;
+    let result = shopItems.filter((item) => {
+      if (selectedBrand && item.product?.brandId !== selectedBrand) return false;
+      if (selectedCategory && item.product?.category !== selectedCategory) return false;
+      if (!showOutOfStock && !getItemInStock(item)) return false;
       return true;
     });
     
@@ -62,13 +67,13 @@ export default function Shop() {
     result.sort((a, b) => {
       switch (sortBy) {
         case "name-asc":
-          return a.name.localeCompare(b.name);
+          return (a.product?.name || "").localeCompare(b.product?.name || "");
         case "name-desc":
-          return b.name.localeCompare(a.name);
+          return (b.product?.name || "").localeCompare(a.product?.name || "");
         case "price-asc":
-          return parseFloat(a.price) - parseFloat(b.price);
+          return parseFloat(getItemPrice(a)) - parseFloat(getItemPrice(b));
         case "price-desc":
-          return parseFloat(b.price) - parseFloat(a.price);
+          return parseFloat(getItemPrice(b)) - parseFloat(getItemPrice(a));
         case "newest":
           return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
         default:
@@ -77,10 +82,21 @@ export default function Shop() {
     });
     
     return result;
-  }, [products, selectedBrand, selectedCategory, showOutOfStock, sortBy]);
+  }, [shopItems, selectedBrand, selectedCategory, showOutOfStock, sortBy]);
 
-  const categories = Array.from(new Set(products?.map((p) => p.category) || []));
-  const hasContent = (brands?.length || 0) > 0 || (products?.length || 0) > 0;
+  const brands = useMemo(() => {
+    if (!shopItems) return [];
+    const brandMap = new Map<number, Brand>();
+    shopItems.forEach(item => {
+      if (item.product?.brand) {
+        brandMap.set(item.product.brand.id, item.product.brand);
+      }
+    });
+    return Array.from(brandMap.values());
+  }, [shopItems]);
+
+  const categories = Array.from(new Set(shopItems?.map((item) => item.product?.category).filter(Boolean) || []));
+  const hasContent = shopItems && shopItems.length > 0;
   const hasActiveFilters = selectedBrand !== null || selectedCategory !== null || showOutOfStock;
 
   const clearAllFilters = () => {
@@ -89,7 +105,7 @@ export default function Shop() {
     setShowOutOfStock(false);
   };
 
-  if (brandsLoading || productsLoading) {
+  if (shopItemsLoading) {
     return (
       <div className="min-h-screen bg-black text-white">
         <Navigation />
@@ -292,8 +308,8 @@ export default function Shop() {
           {/* Results count */}
           <div className="mt-3 pt-3 border-t border-zinc-800">
             <p className="text-sm text-gray-400">
-              Showing <span className="text-white font-medium">{filteredAndSortedProducts.length}</span> of{" "}
-              <span className="text-white font-medium">{products?.length || 0}</span> products
+              Showing <span className="text-white font-medium">{filteredAndSortedItems.length}</span> of{" "}
+              <span className="text-white font-medium">{shopItems?.length || 0}</span> products
               {selectedBrand && brands && (
                 <span>
                   {" "}from <span className="text-battles-gold">{brands.find(b => b.id === selectedBrand)?.name}</span>
@@ -303,17 +319,17 @@ export default function Shop() {
           </div>
         </div>
 
-        {filteredAndSortedProducts.length > 0 ? (
+        {filteredAndSortedItems.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {filteredAndSortedProducts.map((product) => (
-              <Card key={product.id} className="bg-zinc-900 border-zinc-800 overflow-hidden group hover:border-battles-gold/50 transition-colors">
+            {filteredAndSortedItems.map((item) => (
+              <Card key={item.id} className="bg-zinc-900 border-zinc-800 overflow-hidden group hover:border-battles-gold/50 transition-colors">
                 <div className="aspect-square bg-zinc-800 relative overflow-hidden">
-                  {product.imageUrl ? (
+                  {item.product?.imageUrl ? (
                     <img
-                      src={product.imageUrl}
-                      alt={product.name}
+                      src={item.product.imageUrl}
+                      alt={item.product?.name}
                       className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${
-                        product.inStock === false ? "opacity-50 grayscale" : ""
+                        !getItemInStock(item) ? "opacity-50 grayscale" : ""
                       }`}
                     />
                   ) : (
@@ -323,39 +339,39 @@ export default function Shop() {
                   )}
                   {/* Badges container */}
                   <div className="absolute top-2 left-2 flex flex-col gap-1">
-                    {product.isFeatured && (
+                    {item.product?.isFeatured && (
                       <Badge className="bg-battles-gold text-black font-semibold">
                         Featured
                       </Badge>
                     )}
-                    {product.inStock === false && (
+                    {!getItemInStock(item) && (
                       <Badge className="bg-red-600 text-white">
                         Out of Stock
                       </Badge>
                     )}
                   </div>
-                  {product.brand && (
+                  {item.product?.brand && (
                     <Badge className="absolute top-2 right-2 bg-zinc-700/90 text-white backdrop-blur-sm">
-                      {product.brand.name}
+                      {item.product.brand.name}
                     </Badge>
                   )}
                 </div>
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between gap-2 mb-2">
-                    <h3 className="text-white font-semibold line-clamp-2 flex-1">{product.name}</h3>
+                    <h3 className="text-white font-semibold line-clamp-2 flex-1">{item.product?.name}</h3>
                     <span className="text-battles-gold font-bold text-lg whitespace-nowrap">
-                      ${parseFloat(product.price).toFixed(2)}
+                      ${parseFloat(getItemPrice(item)).toFixed(2)}
                     </span>
                   </div>
-                  {product.description && (
-                    <p className="text-gray-400 text-sm mb-3 line-clamp-2">{product.description}</p>
+                  {item.product?.description && (
+                    <p className="text-gray-400 text-sm mb-3 line-clamp-2">{item.product.description}</p>
                   )}
                   <div className="flex items-center justify-between pt-2 border-t border-zinc-800">
                     <Badge variant="outline" className="border-zinc-700 text-gray-400 text-xs">
-                      {formatCategory(product.category)}
+                      {formatCategory(item.product?.category || "")}
                     </Badge>
-                    {product.inStock !== false ? (
-                      <span className="text-green-500 text-xs font-medium">In Stock</span>
+                    {getItemInStock(item) ? (
+                      <span className="text-green-500 text-xs font-medium">In Stock ({item.shopQuantity})</span>
                     ) : (
                       <span className="text-red-400 text-xs font-medium">Out of Stock</span>
                     )}

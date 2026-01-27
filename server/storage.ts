@@ -27,6 +27,7 @@ import {
   documentPermissions,
   blogPosts,
   siteSettings,
+  shopItems,
   type User, 
   type UpsertUser,
   type SiteSetting,
@@ -84,7 +85,9 @@ import {
   type InsertBlogPost,
   mediaItems,
   type MediaItem,
-  type InsertMediaItem
+  type InsertMediaItem,
+  type ShopItem,
+  type InsertShopItem
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, sql } from "drizzle-orm";
@@ -112,6 +115,15 @@ export interface IStorage {
   createProduct(product: InsertProduct): Promise<Product>;
   updateProduct(id: number, product: Partial<InsertProduct>): Promise<Product>;
   deleteProduct(id: number): Promise<void>;
+  
+  // Shop Items
+  getAllShopItems(): Promise<ShopItem[]>;
+  getShopItemsWithProducts(): Promise<(ShopItem & { product: Product & { brand?: Brand } })[]>;
+  getShopItem(id: number): Promise<ShopItem | undefined>;
+  getShopItemByProductId(productId: number): Promise<ShopItem | undefined>;
+  createShopItem(item: InsertShopItem): Promise<ShopItem>;
+  updateShopItem(id: number, item: Partial<InsertShopItem>): Promise<ShopItem>;
+  deleteShopItem(id: number): Promise<void>;
   
   // Orders  
   createOrder(order: InsertOrder): Promise<Order>;
@@ -413,6 +425,13 @@ export class MemStorage implements IStorage {
   async createProduct(product: InsertProduct): Promise<Product> { throw new Error("Not implemented in MemStorage"); }
   async updateProduct(id: number, product: Partial<InsertProduct>): Promise<Product> { throw new Error("Not implemented in MemStorage"); }
   async deleteProduct(id: number): Promise<void> { throw new Error("Not implemented in MemStorage"); }
+  async getAllShopItems(): Promise<ShopItem[]> { return []; }
+  async getShopItemsWithProducts(): Promise<(ShopItem & { product: Product & { brand?: Brand } })[]> { return []; }
+  async getShopItem(id: number): Promise<ShopItem | undefined> { return undefined; }
+  async getShopItemByProductId(productId: number): Promise<ShopItem | undefined> { return undefined; }
+  async createShopItem(item: InsertShopItem): Promise<ShopItem> { throw new Error("Not implemented in MemStorage"); }
+  async updateShopItem(id: number, item: Partial<InsertShopItem>): Promise<ShopItem> { throw new Error("Not implemented in MemStorage"); }
+  async deleteShopItem(id: number): Promise<void> { throw new Error("Not implemented in MemStorage"); }
   async createOrder(order: InsertOrder): Promise<Order> { throw new Error("Not implemented in MemStorage"); }
   async createOrderItem(orderItem: InsertOrderItem): Promise<OrderItem> { throw new Error("Not implemented in MemStorage"); }
   async getAllOrders(): Promise<Order[]> { return []; }
@@ -602,6 +621,72 @@ export class DatabaseStorage implements IStorage {
 
   async deleteProduct(id: number): Promise<void> {
     await db.delete(products).where(eq(products.id, id));
+  }
+
+  // Shop Items methods
+  async getAllShopItems(): Promise<ShopItem[]> {
+    return await db.select().from(shopItems).orderBy(shopItems.sortOrder);
+  }
+
+  async getShopItemsWithProducts(): Promise<(ShopItem & { product: Product & { brand?: Brand } })[]> {
+    const items = await db
+      .select()
+      .from(shopItems)
+      .where(eq(shopItems.isActive, true))
+      .orderBy(shopItems.sortOrder);
+
+    const itemsWithProducts = await Promise.all(
+      items.map(async (item) => {
+        const [product] = await db
+          .select()
+          .from(products)
+          .where(eq(products.id, item.productId));
+        
+        let brand: Brand | undefined;
+        if (product?.brandId) {
+          const [b] = await db
+            .select()
+            .from(brands)
+            .where(eq(brands.id, product.brandId));
+          brand = b;
+        }
+        
+        return {
+          ...item,
+          product: { ...product, brand }
+        };
+      })
+    );
+
+    return itemsWithProducts;
+  }
+
+  async getShopItem(id: number): Promise<ShopItem | undefined> {
+    const [item] = await db.select().from(shopItems).where(eq(shopItems.id, id));
+    return item;
+  }
+
+  async getShopItemByProductId(productId: number): Promise<ShopItem | undefined> {
+    const [item] = await db.select().from(shopItems).where(eq(shopItems.productId, productId));
+    return item;
+  }
+
+  async createShopItem(insertItem: InsertShopItem): Promise<ShopItem> {
+    const [item] = await db.insert(shopItems).values(insertItem).returning();
+    return item;
+  }
+
+  async updateShopItem(id: number, updateData: Partial<InsertShopItem>): Promise<ShopItem> {
+    const [item] = await db
+      .update(shopItems)
+      .set(updateData)
+      .where(eq(shopItems.id, id))
+      .returning();
+    return item;
+  }
+
+  async deleteShopItem(id: number): Promise<void> {
+    await db.delete(shopItems).where(eq(shopItems.id, id));
   }
 
   // Order methods

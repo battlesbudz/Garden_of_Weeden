@@ -2,7 +2,7 @@
 import type { Express } from "express";
 import { isAdmin, isAuthenticated } from "../replitAuth";
 import { storage } from "../storage";
-import { insertBrandSchema, insertProductSchema, insertSiteSettingSchema } from "@shared/schema";
+import { insertBrandSchema, insertProductSchema, insertSiteSettingSchema, insertShopItemSchema } from "@shared/schema";
 import { z } from "zod";
 import multer from "multer";
 import { randomUUID } from "crypto";
@@ -201,6 +201,85 @@ export function registerAdminRoutes(app: Express) {
     } catch (error) {
       console.error("Error deleting product:", error);
       res.status(500).json({ message: "Failed to delete product" });
+    }
+  });
+
+  // ========== SHOP ITEMS MANAGEMENT ==========
+  
+  // Get all shop items (admin)
+  app.get("/api/admin/shop-items", isAdmin, async (req: any, res) => {
+    try {
+      const items = await storage.getAllShopItems();
+      res.json(items);
+    } catch (error) {
+      console.error("Error fetching shop items:", error);
+      res.status(500).json({ message: "Failed to fetch shop items" });
+    }
+  });
+
+  // Get shop items with product details (admin)
+  app.get("/api/admin/shop-items/with-products", isAdmin, async (req: any, res) => {
+    try {
+      const items = await storage.getShopItemsWithProducts();
+      res.json(items);
+    } catch (error) {
+      console.error("Error fetching shop items with products:", error);
+      res.status(500).json({ message: "Failed to fetch shop items" });
+    }
+  });
+
+  // Create shop item (import product to shop)
+  app.post("/api/admin/shop-items", isAdmin, async (req: any, res) => {
+    try {
+      const validatedData = insertShopItemSchema.parse(req.body);
+      
+      // Check if product is already in shop
+      const existing = await storage.getShopItemByProductId(validatedData.productId);
+      if (existing) {
+        return res.status(400).json({ message: "Product is already in the shop" });
+      }
+      
+      const item = await storage.createShopItem(validatedData);
+      res.status(201).json(item);
+    } catch (error) {
+      console.error("Error creating shop item:", error);
+      res.status(500).json({ message: "Failed to add product to shop" });
+    }
+  });
+
+  // Update shop item
+  app.patch("/api/admin/shop-items/:id", isAdmin, async (req: any, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const validatedData = insertShopItemSchema.partial().parse(req.body);
+      const item = await storage.updateShopItem(id, validatedData);
+      res.json(item);
+    } catch (error) {
+      console.error("Error updating shop item:", error);
+      res.status(500).json({ message: "Failed to update shop item" });
+    }
+  });
+
+  // Delete shop item (remove product from shop)
+  app.delete("/api/admin/shop-items/:id", isAdmin, async (req: any, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteShopItem(id);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting shop item:", error);
+      res.status(500).json({ message: "Failed to remove product from shop" });
+    }
+  });
+
+  // Public endpoint for shop items (for the shop page)
+  app.get("/api/shop-items", async (req: any, res) => {
+    try {
+      const items = await storage.getShopItemsWithProducts();
+      res.json(items);
+    } catch (error) {
+      console.error("Error fetching shop items:", error);
+      res.status(500).json({ message: "Failed to fetch shop items" });
     }
   });
 

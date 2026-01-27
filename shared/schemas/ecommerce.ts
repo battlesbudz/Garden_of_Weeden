@@ -62,6 +62,16 @@ export const contactSubmissions = pgTable("contact_submissions", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const shopItems = pgTable("shop_items", {
+  id: serial("id").primaryKey(),
+  productId: integer("product_id").references(() => products.id).notNull().unique(),
+  shopPrice: decimal("shop_price", { precision: 10, scale: 2 }),
+  shopQuantity: integer("shop_quantity").default(0),
+  isActive: boolean("is_active").default(true),
+  sortOrder: integer("sort_order").default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Insert schemas
 export const insertBrandSchema = createInsertSchema(brands).pick({
   name: true,
@@ -108,6 +118,14 @@ export const insertContactSubmissionSchema = createInsertSchema(contactSubmissio
   message: true,
 });
 
+export const insertShopItemSchema = createInsertSchema(shopItems).pick({
+  productId: true,
+  shopPrice: true,
+  shopQuantity: true,
+  isActive: true,
+  sortOrder: true,
+});
+
 // Types
 export type InsertBrand = z.infer<typeof insertBrandSchema>;
 export type Brand = typeof brands.$inferSelect;
@@ -121,3 +139,5 @@ export type InsertNewsletterSubscriber = z.infer<typeof insertNewsletterSubscrib
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSchema>;
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
+export type InsertShopItem = z.infer<typeof insertShopItemSchema>;
+export type ShopItem = typeof shopItems.$inferSelect;
