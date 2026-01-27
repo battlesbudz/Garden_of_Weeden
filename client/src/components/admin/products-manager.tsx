@@ -28,7 +28,7 @@ export default function ProductsManager() {
     category: "flower",
     brandId: null as number | null,
     imageUrl: "",
-    stockQuantity: 0,
+    stockQuantity: "" as string | number,
     isFeatured: false,
   });
 
@@ -81,10 +81,12 @@ export default function ProductsManager() {
 
   const createMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
+      const qty = typeof data.stockQuantity === 'string' ? parseInt(data.stockQuantity) || 0 : data.stockQuantity;
       return await apiRequest("POST", "/api/admin/products", {
         ...data,
+        stockQuantity: qty,
         brandId: data.brandId || null,
-        inStock: data.stockQuantity > 0,
+        inStock: qty > 0,
       });
     },
     onSuccess: () => {
@@ -101,10 +103,12 @@ export default function ProductsManager() {
 
   const updateMutation = useMutation({
     mutationFn: async ({ id, data }: { id: number; data: typeof formData }) => {
+      const qty = typeof data.stockQuantity === 'string' ? parseInt(data.stockQuantity) || 0 : data.stockQuantity;
       return await apiRequest("PATCH", `/api/admin/products/${id}`, {
         ...data,
+        stockQuantity: qty,
         brandId: data.brandId || null,
-        inStock: data.stockQuantity > 0,
+        inStock: qty > 0,
       });
     },
     onSuccess: () => {
@@ -141,7 +145,7 @@ export default function ProductsManager() {
       category: "flower",
       brandId: null,
       imageUrl: "",
-      stockQuantity: 0,
+      stockQuantity: "",
       isFeatured: false,
     });
     setImagePreview(null);
@@ -159,7 +163,7 @@ export default function ProductsManager() {
       category: product.category,
       brandId: product.brandId || null,
       imageUrl: product.imageUrl || "",
-      stockQuantity: (product as any).stockQuantity ?? 0,
+      stockQuantity: String((product as any).stockQuantity ?? 0),
       isFeatured: product.isFeatured ?? false,
     });
     setImagePreview(product.imageUrl || null);
@@ -327,12 +331,12 @@ export default function ProductsManager() {
             type="number"
             min="0"
             value={formData.stockQuantity}
-            onChange={(e) => setFormData({ ...formData, stockQuantity: parseInt(e.target.value) || 0 })}
+            onChange={(e) => setFormData({ ...formData, stockQuantity: e.target.value })}
             placeholder="0"
             className="bg-zinc-800 border-zinc-700 text-white"
           />
           <p className="text-gray-500 text-xs mt-1">
-            {formData.stockQuantity > 0 ? "In Stock" : "Out of Stock"}
+            {Number(formData.stockQuantity) > 0 ? "In Stock" : "Out of Stock"}
           </p>
         </div>
         <div className="flex items-center space-x-2 pt-6">
