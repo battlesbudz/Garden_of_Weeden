@@ -708,25 +708,94 @@ export class DatabaseStorage implements IStorage {
 
   // Cart methods
   async getOrCreateCart(userId?: string, sessionId?: string): Promise<Cart> {
-    let cart: Cart | undefined;
+    let userCart: Cart | undefined;
+    let sessionCart: Cart | undefined;
     
+    // First, try to find user's cart if logged in
     if (userId) {
       const [existingCart] = await db.select().from(carts).where(eq(carts.userId, userId));
-      cart = existingCart;
-    } else if (sessionId) {
-      const [existingCart] = await db.select().from(carts).where(eq(carts.sessionId, sessionId));
-      cart = existingCart;
+      userCart = existingCart;
     }
     
-    if (!cart) {
+    // Also check for session-based cart
+    if (sessionId) {
+      const [existingCart] = await db.select().from(carts).where(eq(carts.sessionId, sessionId));
+      sessionCart = existingCart;
+    }
+    
+    // If user is logged in
+    if (userId) {
+      // If user has a cart, merge any session cart items into it
+      if (userCart && sessionCart && userCart.id !== sessionCart.id) {
+        await this.mergeCartsInternal(sessionCart.id, userCart.id);
+        // Delete the session cart after merging
+        await db.delete(carts).where(eq(carts.id, sessionCart.id));
+        return userCart;
+      }
+      
+      // If user has no cart but has session cart, convert it to user cart
+      if (!userCart && sessionCart) {
+        const [updatedCart] = await db.update(carts)
+          .set({ userId, sessionId: null })
+          .where(eq(carts.id, sessionCart.id))
+          .returning();
+        return updatedCart;
+      }
+      
+      // If user has a cart, return it
+      if (userCart) {
+        return userCart;
+      }
+      
+      // Create new cart for user
       const [newCart] = await db.insert(carts).values({
-        userId: userId || null,
-        sessionId: sessionId || null,
+        userId,
+        sessionId: null,
       }).returning();
       return newCart;
     }
     
-    return cart;
+    // Not logged in - use session cart
+    if (sessionCart) {
+      return sessionCart;
+    }
+    
+    // Create new session cart
+    const [newCart] = await db.insert(carts).values({
+      userId: null,
+      sessionId: sessionId || null,
+    }).returning();
+    return newCart;
+  }
+  
+  // Internal method to merge items from one cart to another
+  private async mergeCartsInternal(sourceCartId: number, targetCartId: number): Promise<void> {
+    const sourceItems = await db.select().from(cartItems).where(eq(cartItems.cartId, sourceCartId));
+    
+    for (const item of sourceItems) {
+      // Check if product already exists in target cart
+      const [existingItem] = await db.select().from(cartItems)
+        .where(and(eq(cartItems.cartId, targetCartId), eq(cartItems.productId, item.productId)));
+      
+      if (existingItem) {
+        // Add quantities together
+        await db.update(cartItems)
+          .set({ quantity: existingItem.quantity + item.quantity })
+          .where(eq(cartItems.id, existingItem.id));
+      } else {
+        // Move item to target cart
+        await db.insert(cartItems).values({
+          cartId: targetCartId,
+          productId: item.productId,
+          shopItemId: item.shopItemId,
+          quantity: item.quantity,
+          priceAtAdd: item.priceAtAdd,
+        });
+      }
+    }
+    
+    // Delete source cart items
+    await db.delete(cartItems).where(eq(cartItems.cartId, sourceCartId));
   }
 
   async getCartWithItems(cartId: number): Promise<CartWithItems | null> {
