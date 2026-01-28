@@ -18,186 +18,162 @@ const tutorialSteps: TutorialStep[] = [
   {
     id: "welcome",
     title: "Welcome to Your Admin Dashboard",
-    description: "This tutorial will guide you through all the features available to manage your website. You'll learn how to add products, manage brands, and customize your site content.",
+    description: "This tutorial will guide you through all 10 tabs of your admin dashboard. You'll learn how to manage products, process orders, customize your homepage, and more.",
     tips: [
-      "You can restart this tutorial anytime from the Help button",
-      "Each section has its own tab - click the tabs to navigate",
-      "Changes you make are saved automatically"
+      "Restart this tutorial anytime using the Help button",
+      "Click tabs at the top to navigate between sections",
+      "All changes save to your database and go live immediately"
     ]
   },
   {
-    id: "brands-intro",
-    title: "Managing Brands",
-    description: "Brands help organize your products. Each product can be associated with a brand, making it easier for customers to find what they're looking for.",
+    id: "brands",
+    title: "Brands Tab",
+    description: "Organize your products by brand. Customers can filter the shop by brand, making it easier to find what they want.",
     targetTab: "brands",
     tips: [
-      "Brands appear in the shop filter sidebar",
-      "You can upload custom logos for each brand",
-      "Use Display Order to control the order brands appear (lower numbers first)"
+      "Add Brand: Create new brands with name, description, and logo",
+      "Logo Upload: Square images work best (shown in shop sidebar)",
+      "Display Order: Lower numbers appear first in the filter list",
+      "Active Toggle: Hide a brand temporarily without deleting it",
+      "Edit/Delete: Use pencil and trash icons on each row"
     ]
   },
   {
-    id: "brands-add",
-    title: "Adding a New Brand",
-    description: "Click the 'Add Brand' button to create a new brand. Fill in the name, description, and optionally upload a logo image.",
-    targetTab: "brands",
-    action: "Try clicking 'Add Brand' to see the form",
-    tips: [
-      "Brand names should be unique",
-      "Logos look best when they're square images",
-      "Toggle 'Active' off to hide a brand without deleting it"
-    ]
-  },
-  {
-    id: "products-intro",
-    title: "Managing Products",
-    description: "Products are the main items displayed on your shop page. You can add, edit, and remove products at any time.",
+    id: "products",
+    title: "Products Tab (Catalog)",
+    description: "Your complete product catalog. This is where you define all product details - the Shop tab controls which ones are actually for sale.",
     targetTab: "products",
     tips: [
-      "Each product needs a name and price",
-      "Categories help customers filter products",
-      "Featured products get highlighted on the homepage"
+      "Add Product: Name, price, category, description, and images",
+      "Brand Association: Link products to brands for filtering",
+      "Stock Quantity: Track inventory levels",
+      "Featured Toggle: Featured products appear on the homepage",
+      "Categories: Flower, Edibles, Concentrates, Pre-Rolls, etc.",
+      "Strain Types: Indica, Sativa, Hybrid (for customer preferences)"
     ]
   },
   {
-    id: "products-add",
-    title: "Adding a New Product",
-    description: "Click 'Add Product' to create a new listing. You'll set the name, price, category, and can optionally associate it with a brand.",
-    targetTab: "products",
-    action: "Try clicking 'Add Product' to see all available options",
-    tips: [
-      "Upload high-quality product images for best results",
-      "Set 'In Stock' to false to show products as unavailable",
-      "Mark products as 'Featured' to highlight them"
-    ]
-  },
-  {
-    id: "products-edit",
-    title: "Editing and Deleting Products",
-    description: "Each product has edit (pencil) and delete (trash) buttons. Click edit to modify any details, or delete to remove a product entirely.",
-    targetTab: "products",
-    tips: [
-      "Deleted products cannot be recovered",
-      "Editing a product updates it immediately on the site",
-      "You can change the brand association at any time"
-    ]
-  },
-  {
-    id: "shop-intro",
-    title: "Shop Management",
-    description: "The Shop tab lets you control which products appear on your public Shop page. Products in the Products tab are your full catalog - here you choose which ones to actually sell.",
+    id: "shop",
+    title: "Shop Tab (What's For Sale)",
+    description: "Controls what appears on your public Shop page. Import products from your catalog, set sale prices, and manage stock quantities.",
     targetTab: "shop",
     tips: [
-      "Products tab = your complete informational catalog",
-      "Shop tab = what you're currently selling",
-      "Shop items can have different prices than catalog prices"
+      "Import Product: Add catalog products to your shop",
+      "Shop Price: Set a different price than the catalog price",
+      "Quantity: How many you have in stock to sell",
+      "Active Toggle: Hide items without removing them",
+      "Auto Stock Sync: Quantity decreases when orders are placed",
+      "Out of Stock: Items with 0 quantity show as unavailable"
     ]
   },
   {
-    id: "shop-import",
-    title: "Importing Products to Shop",
-    description: "Use the 'Import Product to Shop' button to add products from your catalog. Select a product from the dropdown to add it to your shop inventory.",
-    targetTab: "shop",
-    action: "Try clicking 'Import Product to Shop' to see available products",
+    id: "orders",
+    title: "Orders Tab",
+    description: "View and manage all customer orders. See order details, update status, and track payments.",
+    targetTab: "orders",
     tips: [
-      "Only products not already in the shop will appear in the dropdown",
-      "Each product can only be imported once",
-      "You can set custom pricing when importing"
-    ]
-  },
-  {
-    id: "shop-customize",
-    title: "Customizing Shop Items",
-    description: "Once imported, you can set shop-specific pricing and quantities. The shop price can be different from the catalog price, and you control exactly how many are in stock.",
-    targetTab: "shop",
-    tips: [
-      "Leave price blank to use the product's catalog price",
-      "Set quantity to 0 to show 'Out of Stock'",
-      "Toggle 'Active' off to temporarily hide an item without deleting it",
-      "Remove items from shop to stop selling them (product stays in catalog)"
+      "Order List: Shows order number, customer, total, and status",
+      "Order Details: Click to see items, quantities, and customer info",
+      "Status Updates: Mark orders as Processing, Completed, or Cancelled",
+      "Payment Status: Pending, Paid, or Failed",
+      "Customer Info: Name, email, phone, and delivery address",
+      "Order History: All orders are preserved even if products are deleted"
     ]
   },
   {
     id: "subscribers",
-    title: "Newsletter Subscribers",
-    description: "View everyone who has signed up for email updates. You can see when they subscribed and export the list.",
+    title: "Subscribers Tab",
+    description: "Everyone who signed up for your newsletter. Export the list for email marketing.",
     targetTab: "subscribers",
     tips: [
-      "New subscribers appear automatically when they sign up",
-      "You can download the subscriber list as a CSV file",
-      "Use this list for email marketing campaigns"
+      "Subscriber List: Email addresses and signup dates",
+      "Export CSV: Download the full list for email services",
+      "Auto-Updated: New signups appear immediately"
     ]
   },
   {
     id: "blog",
-    title: "Blog Management",
-    description: "Create and manage blog posts to share news, updates, and educational content with your audience. You can save posts as drafts before publishing.",
+    title: "Blog Tab",
+    description: "Create blog posts to share news, education, and updates. Posts can be saved as drafts before publishing.",
     targetTab: "blog",
     tips: [
-      "Draft posts are not visible to visitors until published",
-      "Add a featured image to make posts more engaging",
-      "Use categories and tags to help readers find related content"
+      "Add Post: Title, content, featured image, and excerpt",
+      "Draft/Publish: Save drafts that only you can see",
+      "Categories & Tags: Organize posts for easy navigation",
+      "SEO Fields: Custom meta title, description, and URL slug",
+      "Featured Image: Displayed in blog listings and social shares",
+      "Edit/Delete: Modify or remove posts anytime"
     ]
   },
   {
     id: "homepage",
-    title: "Homepage Content",
-    description: "Customize the text and messaging on your homepage. Change headlines, taglines, and feature descriptions without needing technical skills.",
+    title: "Homepage Tab",
+    description: "Customize every section of your homepage without any coding. Each section is collapsible for easy editing.",
     targetTab: "homepage",
     tips: [
-      "Preview changes before saving",
-      "Keep headlines short and impactful",
-      "Reset to defaults if you want to start over"
+      "Hero Section: Main headline, tagline, subtitle, and button text",
+      "Trust Badges: Veteran-owned, Buffalo-Proud, and other badges",
+      "Featured Products: Section title, subtitle, and placeholder text",
+      "Brand Story: Your story text and button labels",
+      "Urgency Banner: Limited-time offers and call-to-action",
+      "Benefits Section: All 6 benefit cards (titles and descriptions)",
+      "Newsletter Section: Headline, subtitle, and benefit bullets",
+      "Preview Button: See changes before saving",
+      "Reset Button: Restore all defaults if needed"
     ]
   },
   {
     id: "media",
-    title: "Media Library",
-    description: "Upload and manage images for use across your website. All your uploaded files are organized here for easy access.",
+    title: "Media Tab",
+    description: "Upload and manage all your website images. Use these for products, blog posts, and branding.",
     targetTab: "media",
     tips: [
-      "Click any image to copy its URL for use elsewhere",
-      "Supports JPG, PNG, and GIF up to 10MB",
-      "Delete unused images to keep things organized"
+      "Upload: Drag-and-drop or click to upload images",
+      "File Types: JPG, PNG, GIF, and WebP supported",
+      "Size Limit: Up to 10MB per image",
+      "Copy URL: Click any image to copy its URL",
+      "Grid/List View: Toggle between viewing modes",
+      "Search: Find images by filename",
+      "Delete: Remove unused images to stay organized"
     ]
   },
   {
     id: "users",
-    title: "User Management",
-    description: "View all registered users and control their access levels. You can promote users to admin status or demote them back to regular customers.",
+    title: "Users Tab",
+    description: "View all registered users and manage access levels. Control who can access this admin dashboard.",
     targetTab: "users",
     tips: [
-      "Admins have full access to this dashboard",
-      "Customers can only browse the shop and manage their account",
-      "Be careful when granting admin access - only give it to trusted people"
+      "User List: Email, name, role, and registration date",
+      "Roles: Admin (full dashboard access) or Customer (shop only)",
+      "Promote to Admin: Grant dashboard access to trusted users",
+      "Demote to Customer: Remove admin access",
+      "Cannot delete users: This protects order history integrity"
     ]
   },
   {
     id: "settings",
-    title: "Site Settings",
-    description: "Configure your website's core information. Each setting changes what visitors see on your site:",
+    title: "Settings Tab",
+    description: "Configure your website's core business information. These appear throughout your site.",
     targetTab: "settings",
     tips: [
-      "Site Name → Brand name in footer and copyright",
-      "Site Tagline → Description under brand name in footer",
-      "Contact Email → Email link in footer",
-      "Contact Phone → Phone link in footer",
-      "Business Address → Location shown in footer",
-      "Business Hours → Saved for contact pages",
-      "Facebook URL → Facebook button in footer (leave empty to hide)",
-      "Instagram URL → Instagram button in footer",
-      "Twitter/X URL → Twitter button in footer (leave empty to hide)",
-      "Footer Text → Custom text at bottom of every page"
+      "Site Name: Appears in footer and browser title",
+      "Site Tagline: Shown under your brand name",
+      "Contact Email: Creates clickable email link in footer",
+      "Contact Phone: Creates clickable phone link in footer",
+      "Business Address: Displayed in footer and contact pages",
+      "Business Hours: Shown on contact pages",
+      "Social Links: Facebook, Instagram, Twitter/X URLs",
+      "Footer Text: Custom message at bottom of every page"
     ]
   },
   {
     id: "complete",
     title: "You're All Set!",
-    description: "You now know how to manage all the features of your admin dashboard. Remember, you can always restart this tutorial from the Help button in the top right.",
+    description: "You now know how to use every feature of your admin dashboard. All 10 tabs are at your command!",
     tips: [
-      "Check back regularly for new features",
-      "Contact support if you need help with anything",
-      "Your changes go live immediately after saving"
+      "Help Button: Restart this tutorial anytime",
+      "Changes are instant: No need to republish",
+      "Questions? Contact support for help"
     ]
   }
 ];
