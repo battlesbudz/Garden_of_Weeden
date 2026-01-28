@@ -437,17 +437,15 @@ export default function OrdersManager() {
 
               <div className="border-t border-zinc-800 pt-4 flex gap-2">
                 <Button
-                  variant="outline"
                   onClick={() => openEditDialog(orderDetails)}
-                  className="border-zinc-700 text-white hover:bg-zinc-800"
+                  className="bg-blue-600 text-white hover:bg-blue-700 border-0"
                 >
                   <Edit className="w-4 h-4 mr-2" />
                   Edit Order
                 </Button>
                 <Button
-                  variant="outline"
                   onClick={() => openDeleteDialog(orderDetails)}
-                  className="border-red-500/50 text-red-400 hover:bg-red-500/10"
+                  className="bg-red-600 text-white hover:bg-red-700 border-0"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
                   Delete Order
