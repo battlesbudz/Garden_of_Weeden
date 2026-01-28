@@ -1,10 +1,27 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, Award, Heart, Users } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
+
+interface SiteSettings {
+  storyTitle?: string;
+  storyText?: string;
+  storyButton1Text?: string;
+  storyButton2Text?: string;
+}
 
 export default function BrandStorySection() {
   const prefersReducedMotion = useReducedMotion();
+
+  const { data: settings } = useQuery<SiteSettings>({
+    queryKey: ['/api/site-settings'],
+  });
+
+  const storyTitle = settings?.storyTitle || "From Service to Soil";
+  const storyText = settings?.storyText || "Garden of Weeden was founded by veterans who believe in bringing the same dedication, discipline, and attention to detail from military service to cannabis cultivation. Our Buffalo roots run deep, and we're committed to growing premium craft cannabis that honors both our service and our community.";
+  const storyButton1Text = settings?.storyButton1Text || "Read Our Full Story";
+  const storyButton2Text = settings?.storyButton2Text || "Explore Products";
 
   return (
     <section id="our-story" className="relative py-24 bg-battles-black overflow-hidden">
@@ -20,18 +37,12 @@ export default function BrandStorySection() {
             transition={{ duration: prefersReducedMotion ? 0 : 0.8 }}
           >
             <h2 className="font-enchanted text-4xl md:text-5xl lg:text-6xl text-parchment mb-6 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
-              From Service to Soil
+              {storyTitle}
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-green-600 mb-8 rounded-full"></div>
             
-            <p className="font-garden text-lg text-gray-300 mb-6 leading-relaxed">
-              Garden of Weeden was born from a veteran's journey—channeling the discipline, attention to detail, 
-              and commitment to excellence learned in service into cultivating premium cannabis.
-            </p>
-            
             <p className="font-garden text-lg text-gray-300 mb-8 leading-relaxed">
-              Based in Buffalo, NY, we harness Western New York's unique micro-terroir to grow sun-kissed, 
-              naturally-cultivated cannabis that honors both the plant and our community.
+              {storyText}
             </p>
 
             <div className="grid grid-cols-3 gap-4 mb-10">
@@ -52,13 +63,13 @@ export default function BrandStorySection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/about">
                 <button className="group bg-transparent border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white px-8 py-4 rounded-xl font-garden font-semibold text-base transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-2">
-                  <span>Read Our Full Story</span>
+                  <span>{storyButton1Text}</span>
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
               <Link href="/shop">
                 <button className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-garden font-semibold text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                  Explore Products
+                  {storyButton2Text}
                 </button>
               </Link>
             </div>

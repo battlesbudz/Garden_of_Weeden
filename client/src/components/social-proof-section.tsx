@@ -1,29 +1,50 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Star, Shield, Leaf, Award } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+
+interface SiteSettings {
+  socialProofSubtitle?: string;
+  trustBadge1Title?: string;
+  trustBadge1Desc?: string;
+  trustBadge2Title?: string;
+  trustBadge2Desc?: string;
+  trustBadge3Title?: string;
+  trustBadge3Desc?: string;
+  trustBadge4Title?: string;
+  trustBadge4Desc?: string;
+  socialProofQuote?: string;
+}
 
 export default function SocialProofSection() {
   const prefersReducedMotion = useReducedMotion();
 
+  const { data: settings } = useQuery<SiteSettings>({
+    queryKey: ['/api/site-settings'],
+  });
+
+  const subtitle = settings?.socialProofSubtitle || "Trusted by Buffalo & Beyond";
+  const quote = settings?.socialProofQuote || "From service to soil — bringing veteran values to cannabis cultivation";
+
   const trustBadges = [
     {
       icon: Shield,
-      title: "Licensed & Compliant",
-      description: "NYS Cannabis License Holder"
+      title: settings?.trustBadge1Title || "Licensed & Compliant",
+      description: settings?.trustBadge1Desc || "NYS Cannabis License Holder"
     },
     {
       icon: Award,
-      title: "Veteran Excellence",
-      description: "Military precision in cultivation"
+      title: settings?.trustBadge2Title || "Veteran Excellence",
+      description: settings?.trustBadge2Desc || "Military precision in cultivation"
     },
     {
       icon: Leaf,
-      title: "Sun-Grown Quality",
-      description: "Natural outdoor cultivation"
+      title: settings?.trustBadge3Title || "Sun-Grown Quality",
+      description: settings?.trustBadge3Desc || "Natural outdoor cultivation"
     },
     {
       icon: Star,
-      title: "Buffalo Proud",
-      description: "Local roots, local impact"
+      title: settings?.trustBadge4Title || "Buffalo Proud",
+      description: settings?.trustBadge4Desc || "Local roots, local impact"
     }
   ];
 
@@ -38,7 +59,7 @@ export default function SocialProofSection() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
         >
           <p className="font-garden text-lg text-gray-400 uppercase tracking-widest">
-            Trusted by Buffalo & Beyond
+            {subtitle}
           </p>
         </motion.div>
 
@@ -77,7 +98,7 @@ export default function SocialProofSection() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: prefersReducedMotion ? 0 : 0.4 }}
         >
           <p className="font-garden text-gray-500 italic">
-            "From service to soil — bringing veteran values to cannabis cultivation"
+            "{quote}"
           </p>
         </motion.div>
       </div>

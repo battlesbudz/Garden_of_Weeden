@@ -1,9 +1,26 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, Clock, Leaf } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+
+interface SiteSettings {
+  urgencyBadge?: string;
+  urgencyTitle?: string;
+  urgencyDesc?: string;
+  urgencyCtaText?: string;
+}
 
 export default function UrgencyBanner() {
   const prefersReducedMotion = useReducedMotion();
+
+  const { data: settings } = useQuery<SiteSettings>({
+    queryKey: ['/api/site-settings'],
+  });
+
+  const urgencyBadge = settings?.urgencyBadge || "Limited Availability";
+  const urgencyTitle = settings?.urgencyTitle || "Fresh Batch Now Available";
+  const urgencyDesc = settings?.urgencyDesc || "Small-batch, sun-grown craft cannabis — while supplies last";
+  const urgencyCtaText = settings?.urgencyCtaText || "Shop Now";
 
   return (
     <section className="relative py-16 bg-gradient-to-r from-green-600 via-green-500 to-green-600 overflow-hidden">
@@ -24,20 +41,20 @@ export default function UrgencyBanner() {
             <div>
               <div className="flex items-center justify-center lg:justify-start gap-2 mb-2">
                 <Clock className="h-4 w-4 text-white/80" />
-                <span className="font-garden text-sm text-white/80 uppercase tracking-wide">Limited Availability</span>
+                <span className="font-garden text-sm text-white/80 uppercase tracking-wide">{urgencyBadge}</span>
               </div>
               <h3 className="font-storybook text-2xl md:text-3xl text-white mb-1">
-                Fresh Batch Now Available
+                {urgencyTitle}
               </h3>
               <p className="font-garden text-white/80">
-                Small-batch, sun-grown craft cannabis — while supplies last
+                {urgencyDesc}
               </p>
             </div>
           </div>
 
           <Link href="/shop">
             <button className="group bg-white hover:bg-parchment text-green-600 px-10 py-4 rounded-xl font-garden font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-3 whitespace-nowrap">
-              <span>Shop Now</span>
+              <span>{urgencyCtaText}</span>
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>

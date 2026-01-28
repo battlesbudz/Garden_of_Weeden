@@ -2,40 +2,69 @@ import { Award, Heart, Users, Leaf, Shield, Sparkles } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, ShoppingBag } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+
+interface SiteSettings {
+  benefitsTitle?: string;
+  benefitsSubtitle?: string;
+  benefit1Title?: string;
+  benefit1Desc?: string;
+  benefit2Title?: string;
+  benefit2Desc?: string;
+  benefit3Title?: string;
+  benefit3Desc?: string;
+  benefit4Title?: string;
+  benefit4Desc?: string;
+  benefit5Title?: string;
+  benefit5Desc?: string;
+  benefit6Title?: string;
+  benefit6Desc?: string;
+  benefitsCtaText?: string;
+}
 
 export default function ServicesSection() {
   const prefersReducedMotion = useReducedMotion();
   
+  const { data: settings } = useQuery<SiteSettings>({
+    queryKey: ['/api/site-settings'],
+  });
+
+  const benefitsTitle = settings?.benefitsTitle || "Why Choose Garden of Weeden?";
+  const benefitsSubtitle = settings?.benefitsSubtitle || "Experience the difference that veteran values and Buffalo's unique terroir make";
+  const benefitsCtaText = settings?.benefitsCtaText || "Shop Premium Cannabis";
+
+  const icons = [Award, Leaf, Shield, Sparkles, Heart, Users];
+
   const benefits = [
     {
-      icon: Award,
-      title: "Veteran-Crafted Quality",
-      description: "Military precision in every harvest",
+      icon: icons[0],
+      title: settings?.benefit1Title || "Veteran-Crafted Quality",
+      description: settings?.benefit1Desc || "Military precision in every harvest",
     },
     {
-      icon: Leaf,
-      title: "Sun-Grown Excellence",
-      description: "Natural outdoor cultivation",
+      icon: icons[1],
+      title: settings?.benefit2Title || "Sun-Grown Excellence",
+      description: settings?.benefit2Desc || "Natural outdoor cultivation",
     },
     {
-      icon: Shield,
-      title: "Lab-Tested & Safe",
-      description: "Rigorous quality assurance",
+      icon: icons[2],
+      title: settings?.benefit3Title || "Lab-Tested & Safe",
+      description: settings?.benefit3Desc || "Rigorous quality assurance",
     },
     {
-      icon: Sparkles,
-      title: "Small-Batch Freshness",
-      description: "Limited harvests, maximum care",
+      icon: icons[3],
+      title: settings?.benefit4Title || "Small-Batch Freshness",
+      description: settings?.benefit4Desc || "Limited harvests, maximum care",
     },
     {
-      icon: Heart,
-      title: "Wellness-Focused",
-      description: "Supporting healing journeys",
+      icon: icons[4],
+      title: settings?.benefit5Title || "Wellness-Focused",
+      description: settings?.benefit5Desc || "Supporting healing journeys",
     },
     {
-      icon: Users,
-      title: "Buffalo Local",
-      description: "Community-rooted cultivation",
+      icon: icons[5],
+      title: settings?.benefit6Title || "Buffalo Local",
+      description: settings?.benefit6Desc || "Community-rooted cultivation",
     },
   ];
 
@@ -52,11 +81,11 @@ export default function ServicesSection() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.8, ease: "easeOut" }}
         >
           <h2 className="font-enchanted text-4xl md:text-5xl lg:text-6xl text-parchment mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
-            Why Choose Garden of Weeden?
+            {benefitsTitle}
           </h2>
           <div className="h-1 w-32 bg-gradient-to-r from-green-400 via-green-500 to-green-600 mx-auto mb-6 rounded-full shadow-lg shadow-green-500/50"></div>
           <p className="font-garden text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
-            Experience the difference that veteran values and Buffalo's unique terroir make
+            {benefitsSubtitle}
           </p>
         </motion.div>
 
@@ -98,7 +127,7 @@ export default function ServicesSection() {
           <Link href="/shop">
             <button className="group bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-garden font-bold text-base shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-3">
               <ShoppingBag className="h-5 w-5" />
-              <span>Shop Premium Cannabis</span>
+              <span>{benefitsCtaText}</span>
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>

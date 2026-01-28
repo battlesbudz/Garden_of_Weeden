@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -8,11 +8,33 @@ import { Loader2, Gift, Bell, Star, Instagram } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { SITE_CONFIG } from "@/utils/seo";
 
+interface SiteSettings {
+  newsletterTitle?: string;
+  newsletterSubtitle?: string;
+  newsletterBenefit1?: string;
+  newsletterBenefit2?: string;
+  newsletterBenefit3?: string;
+  newsletterCtaText?: string;
+  newsletterDisclaimer?: string;
+}
+
 export default function NewsletterSection() {
   const [email, setEmail] = useState("");
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const prefersReducedMotion = useReducedMotion();
+
+  const { data: settings } = useQuery<SiteSettings>({
+    queryKey: ['/api/site-settings'],
+  });
+
+  const newsletterTitle = settings?.newsletterTitle || "Join the Garden Guild";
+  const newsletterSubtitle = settings?.newsletterSubtitle || "Get exclusive early access, member-only discounts, and be first to know about new harvests";
+  const newsletterBenefit1 = settings?.newsletterBenefit1 || "Early access to limited batches";
+  const newsletterBenefit2 = settings?.newsletterBenefit2 || "Member-only discounts";
+  const newsletterBenefit3 = settings?.newsletterBenefit3 || "Buffalo cannabis community updates";
+  const newsletterCtaText = settings?.newsletterCtaText || "Join Now — It's Free";
+  const newsletterDisclaimer = settings?.newsletterDisclaimer || "No spam, ever. Unsubscribe anytime.";
 
   const newsletterMutation = useMutation({
     mutationFn: async (email: string) => {
@@ -43,9 +65,9 @@ export default function NewsletterSection() {
   };
 
   const benefits = [
-    { icon: Gift, text: "Exclusive member discounts" },
-    { icon: Bell, text: "Early access to new strains" },
-    { icon: Star, text: "VIP harvest notifications" },
+    { icon: Gift, text: newsletterBenefit1 },
+    { icon: Bell, text: newsletterBenefit2 },
+    { icon: Star, text: newsletterBenefit3 },
   ];
 
   return (
@@ -66,10 +88,10 @@ export default function NewsletterSection() {
               <span className="font-garden text-sm text-green-400 uppercase tracking-wide">Exclusive Benefits</span>
             </div>
             <h2 className="font-enchanted text-4xl md:text-5xl lg:text-6xl text-parchment mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
-              Join the Garden Guild
+              {newsletterTitle}
             </h2>
             <p className="font-garden text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
-              Get exclusive early access, member-only discounts, and be first to know about new harvests
+              {newsletterSubtitle}
             </p>
           </div>
 
@@ -109,12 +131,12 @@ export default function NewsletterSection() {
                     Joining...
                   </>
                 ) : (
-                  "Join Now — It's Free"
+                  newsletterCtaText
                 )}
               </Button>
             </div>
             <p className="font-garden text-gray-500 text-sm mt-4 text-center">
-              No spam, ever. Unsubscribe anytime with one click.
+              {newsletterDisclaimer}
             </p>
           </form>
 

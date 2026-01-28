@@ -9,15 +9,12 @@ interface SiteSettings {
   heroTitle?: string;
   heroTagline?: string;
   heroSubtitle?: string;
+  heroShopButtonText?: string;
+  heroStoryButtonText?: string;
+  heroVeteranBadge?: string;
   pillar1Title?: string;
-  pillar1Text?: string;
   pillar2Title?: string;
-  pillar2Text?: string;
   pillar3Title?: string;
-  pillar3Text?: string;
-  ctaButton1Text?: string;
-  ctaButton2Text?: string;
-  ctaButton3Text?: string;
   locationText?: string;
 }
 
@@ -30,13 +27,13 @@ export default function HeroSection() {
 
   const heroTitle = settings?.heroTitle || "Garden of Weeden";
   const heroTagline = settings?.heroTagline || "Premium Craft Cannabis";
-  const heroSubtitle = settings?.heroSubtitle || "Veteran-owned. Buffalo-grown. Wellness-driven.";
+  const heroSubtitle = settings?.heroSubtitle || "Veteran-owned. Buffalo-grown. Crafted with precision and care for those who appreciate quality.";
+  const heroShopButtonText = settings?.heroShopButtonText || "Shop Our Collection";
+  const heroStoryButtonText = settings?.heroStoryButtonText || "Our Story";
+  const heroVeteranBadge = settings?.heroVeteranBadge || "Veteran-Owned & Operated";
   const pillar1Title = settings?.pillar1Title || "Veteran-Owned";
-  const pillar1Desc = settings?.pillar1Text || "Quality cultivation by those who served";
   const pillar2Title = settings?.pillar2Title || "Buffalo Roots";
-  const pillar2Desc = settings?.pillar2Text || "Grown in Western NY's micro-terroir";
   const pillar3Title = settings?.pillar3Title || "Wellness Focused";
-  const pillar3Desc = settings?.pillar3Text || "Supporting veteran healing journeys";
   const locationText = settings?.locationText || "Proudly Cultivated in Buffalo, NY";
 
   return (
@@ -44,7 +41,6 @@ export default function HeroSection() {
       id="home"
       className="relative flex flex-col items-center justify-center bg-battles-black min-h-screen overflow-hidden"
     >
-      {/* Background Video/Image with Enhanced Overlays */}
       <div className="absolute inset-0 z-0">
         <div className="w-full h-full opacity-50">
           <VideoBackground
@@ -62,9 +58,7 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-battles-black/40"></div>
       </div>
 
-      {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 text-center">
-        {/* Veteran Badge - Trust Signal */}
         <motion.div
           className="inline-flex items-center gap-2 bg-green-500/20 backdrop-blur-sm border border-green-500/50 rounded-full px-5 py-2 mb-8"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -20 }}
@@ -72,10 +66,9 @@ export default function HeroSection() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.6, ease: "easeOut" }}
         >
           <Award className="h-4 w-4 text-green-400" />
-          <span className="font-garden text-sm text-green-400 font-semibold tracking-wide uppercase">Veteran-Owned & Operated</span>
+          <span className="font-garden text-sm text-green-400 font-semibold tracking-wide uppercase">{heroVeteranBadge}</span>
         </motion.div>
 
-        {/* Main Headline - Benefit-Focused */}
         <motion.div 
           className="mb-6"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -30 }}
@@ -88,7 +81,6 @@ export default function HeroSection() {
           <div className="h-1.5 w-32 bg-gradient-to-r from-green-400 via-green-500 to-green-600 mx-auto mb-6 rounded-full shadow-lg shadow-green-500/50"></div>
         </motion.div>
 
-        {/* Value Proposition - Clear & Compelling */}
         <motion.div 
           className="mb-8"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
@@ -103,7 +95,6 @@ export default function HeroSection() {
           </p>
         </motion.div>
 
-        {/* Primary CTA - Shop Focus */}
         <motion.div 
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
@@ -116,7 +107,7 @@ export default function HeroSection() {
               data-testid="hero-cta-shop"
             >
               <ShoppingBag className="h-5 w-5" />
-              <span>Shop Our Collection</span>
+              <span>{heroShopButtonText}</span>
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
@@ -125,12 +116,11 @@ export default function HeroSection() {
               className="border-2 border-parchment/60 text-parchment px-8 py-4 rounded-xl font-garden font-semibold text-base hover:bg-parchment/10 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               data-testid="hero-cta-story"
             >
-              Our Story
+              {heroStoryButtonText}
             </button>
           </Link>
         </motion.div>
 
-        {/* Quick Value Props - Scannable */}
         <motion.div 
           className="flex flex-wrap justify-center gap-6 md:gap-10 mb-12"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 40 }}
@@ -155,7 +145,6 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Location Badge */}
         <motion.div 
           className="inline-flex items-center gap-2 bg-midnight-grove/60 backdrop-blur-sm border border-green-500/40 rounded-full px-6 py-3"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}

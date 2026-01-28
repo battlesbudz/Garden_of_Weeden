@@ -13,6 +13,20 @@ interface Product {
   imageUrl?: string;
 }
 
+interface SiteSettings {
+  featuredTitle?: string;
+  featuredSubtitle?: string;
+  featuredBadgeText?: string;
+  featuredCtaText?: string;
+  featuredShippingNote?: string;
+  placeholder1Name?: string;
+  placeholder1Desc?: string;
+  placeholder2Name?: string;
+  placeholder2Desc?: string;
+  placeholder3Name?: string;
+  placeholder3Desc?: string;
+}
+
 export default function FeaturedProductsSection() {
   const prefersReducedMotion = useReducedMotion();
 
@@ -20,29 +34,39 @@ export default function FeaturedProductsSection() {
     queryKey: ['/api/products'],
   });
 
+  const { data: settings } = useQuery<SiteSettings>({
+    queryKey: ['/api/site-settings'],
+  });
+
+  const featuredTitle = settings?.featuredTitle || "Discover Our Harvest";
+  const featuredSubtitle = settings?.featuredSubtitle || "Carefully cultivated in Buffalo's unique micro-terroir for exceptional quality and flavor";
+  const featuredBadgeText = settings?.featuredBadgeText || "Featured Collection";
+  const featuredCtaText = settings?.featuredCtaText || "View Full Collection";
+  const featuredShippingNote = settings?.featuredShippingNote || "Free local delivery on orders over $100";
+
   const realProducts = products?.slice(0, 3) || [];
 
   const placeholderProducts = [
     {
       id: "placeholder-1",
-      name: "Premium Flower",
-      description: "Hand-selected craft cannabis",
+      name: settings?.placeholder1Name || "Premium Flower",
+      description: settings?.placeholder1Desc || "Hand-selected craft cannabis",
       image: flowerCloseupImage,
       tag: "Coming Soon",
       isPlaceholder: true
     },
     {
       id: "placeholder-2",
-      name: "Artisan Pre-Rolls",
-      description: "Expertly rolled for convenience",
+      name: settings?.placeholder2Name || "Artisan Pre-Rolls",
+      description: settings?.placeholder2Desc || "Expertly rolled for convenience",
       image: dryingRacksImage,
       tag: "Coming Soon",
       isPlaceholder: true
     },
     {
       id: "placeholder-3",
-      name: "Seasonal Harvest",
-      description: "Limited batch releases",
+      name: settings?.placeholder3Name || "Seasonal Harvest",
+      description: settings?.placeholder3Desc || "Limited batch releases",
       image: flowerCloseupImage,
       tag: "Coming Soon",
       isPlaceholder: true
@@ -68,13 +92,13 @@ export default function FeaturedProductsSection() {
         >
           <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 rounded-full px-4 py-2 mb-6">
             <Sparkles className="h-4 w-4 text-green-400" />
-            <span className="font-garden text-sm text-green-400 uppercase tracking-wide">Featured Collection</span>
+            <span className="font-garden text-sm text-green-400 uppercase tracking-wide">{featuredBadgeText}</span>
           </div>
           <h2 className="font-enchanted text-4xl md:text-5xl lg:text-6xl text-parchment mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
-            Discover Our Harvest
+            {featuredTitle}
           </h2>
           <p className="font-garden text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
-            Carefully cultivated in Buffalo's unique micro-terroir for exceptional quality and flavor
+            {featuredSubtitle}
           </p>
         </motion.div>
 
@@ -133,12 +157,12 @@ export default function FeaturedProductsSection() {
           <Link href="/shop">
             <button className="group bg-green-500 hover:bg-green-600 text-white px-10 py-4 rounded-xl font-garden font-bold text-lg shadow-xl hover:shadow-2xl hover:shadow-green-500/40 transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-3">
               <ShoppingBag className="h-5 w-5" />
-              <span>View Full Collection</span>
+              <span>{featuredCtaText}</span>
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
           <p className="font-garden text-sm text-gray-500 mt-4">
-            Free local delivery on orders over $100
+            {featuredShippingNote}
           </p>
         </motion.div>
       </div>
