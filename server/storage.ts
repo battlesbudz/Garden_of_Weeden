@@ -606,9 +606,11 @@ export class DatabaseStorage implements IStorage {
     // First, get all products for this brand
     const brandProducts = await db.select().from(products).where(eq(products.brandId, id));
     
-    // Delete all related records for each product
+    // Handle all related records for each product
     for (const product of brandProducts) {
-      await db.delete(orderItems).where(eq(orderItems.productId, product.id));
+      // Preserve order history by setting productId to null
+      await db.update(orderItems).set({ productId: null }).where(eq(orderItems.productId, product.id));
+      // Delete cart items and shop items
       await db.delete(cartItems).where(eq(cartItems.productId, product.id));
       await db.delete(shopItems).where(eq(shopItems.productId, product.id));
     }
@@ -660,8 +662,10 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteProduct(id: number): Promise<void> {
-    // Delete all records that reference this product
-    await db.delete(orderItems).where(eq(orderItems.productId, id));
+    // Preserve order history by setting productId to null (product_name is already stored)
+    await db.update(orderItems).set({ productId: null }).where(eq(orderItems.productId, id));
+    
+    // Delete cart items and shop items that reference this product
     await db.delete(cartItems).where(eq(cartItems.productId, id));
     await db.delete(shopItems).where(eq(shopItems.productId, id));
     

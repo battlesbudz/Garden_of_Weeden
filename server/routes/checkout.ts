@@ -104,6 +104,7 @@ export function registerCheckoutRoutes(app: Express) {
         await storage.createOrderItem({
           orderId: order.id,
           productId: item.productId,
+          productName: item.product?.name || "Product",
           quantity: item.quantity,
           price: item.priceAtAdd,
         });

@@ -72,7 +72,8 @@ export const orders = pgTable("orders", {
 export const orderItems = pgTable("order_items", {
   id: serial("id").primaryKey(),
   orderId: integer("order_id").references(() => orders.id).notNull(),
-  productId: integer("product_id").references(() => products.id).notNull(),
+  productId: integer("product_id"),
+  productName: text("product_name"),
   quantity: integer("quantity").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
 });
@@ -153,6 +154,7 @@ export const insertOrderSchema = createInsertSchema(orders).pick({
 export const insertOrderItemSchema = createInsertSchema(orderItems).pick({
   orderId: true,
   productId: true,
+  productName: true,
   quantity: true,
   price: true,
 });
