@@ -93,7 +93,7 @@ export default function HomepageManager() {
   const handleReset = () => {
     if (confirm("Reset all homepage content to defaults? This cannot be undone.")) {
       setFormData(defaultSettings);
-      setHasChanges(true);
+      saveMutation.mutate(defaultSettings);
     }
   };
 
