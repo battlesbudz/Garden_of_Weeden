@@ -149,6 +149,8 @@ export interface IStorage {
   getOrderItemsWithProducts(orderId: number): Promise<(OrderItem & { product: Product })[]>;
   updateOrderStatus(id: number, status: string): Promise<Order>;
   updateOrderPayment(id: number, paymentStatus: string, transactionId?: string, paidAt?: Date): Promise<Order>;
+  updateOrder(id: number, data: { customerName?: string; customerEmail?: string; customerPhone?: string; shippingAddress?: string; notes?: string }): Promise<Order>;
+  deleteOrder(id: number): Promise<void>;
   
   // Newsletter subscribers
   createNewsletterSubscriber(subscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber>;
@@ -950,6 +952,21 @@ export class DatabaseStorage implements IStorage {
       .where(eq(orders.id, id))
       .returning();
     return updated;
+  }
+
+  async updateOrder(id: number, data: { customerName?: string; customerEmail?: string; customerPhone?: string; shippingAddress?: string; notes?: string }): Promise<Order> {
+    const [updated] = await db.update(orders)
+      .set(data)
+      .where(eq(orders.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteOrder(id: number): Promise<void> {
+    // First delete order items
+    await db.delete(orderItems).where(eq(orderItems.orderId, id));
+    // Then delete the order
+    await db.delete(orders).where(eq(orders.id, id));
   }
 
   async createNewsletterSubscriber(insertSubscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber> {

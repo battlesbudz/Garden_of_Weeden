@@ -1,13 +1,16 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { Package, Eye, CheckCircle, Clock, XCircle, Truck, Search } from "lucide-react";
+import { Package, Eye, CheckCircle, Clock, XCircle, Truck, Search, Trash2, Edit, DollarSign, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 interface OrderItem {
   id: number;
@@ -71,9 +74,19 @@ function getPaymentBadge(status?: string) {
 }
 
 export default function OrdersManager() {
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [editForm, setEditForm] = useState({
+    customerName: "",
+    customerEmail: "",
+    customerPhone: "",
+    shippingAddress: "",
+    notes: "",
+  });
 
   const { data: orders, isLoading } = useQuery<Order[]>({
     queryKey: ["/api/admin/orders"],
@@ -81,7 +94,7 @@ export default function OrdersManager() {
 
   const { data: orderDetails, isLoading: loadingDetails } = useQuery<Order>({
     queryKey: ["/api/orders", selectedOrder?.id],
-    enabled: !!selectedOrder?.id,
+    enabled: !!selectedOrder?.id && detailsOpen,
   });
 
   const updateStatusMutation = useMutation({
@@ -94,12 +107,72 @@ export default function OrdersManager() {
       if (selectedOrder) {
         queryClient.invalidateQueries({ queryKey: ["/api/orders", selectedOrder.id] });
       }
+      toast({ title: "Order status updated" });
+    },
+  });
+
+  const updatePaymentMutation = useMutation({
+    mutationFn: async ({ orderId, paymentStatus }: { orderId: number; paymentStatus: string }) => {
+      const response = await apiRequest("PATCH", `/api/admin/orders/${orderId}/payment`, { paymentStatus });
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/orders"] });
+      if (selectedOrder) {
+        queryClient.invalidateQueries({ queryKey: ["/api/orders", selectedOrder.id] });
+      }
+      toast({ title: "Payment status updated" });
+    },
+  });
+
+  const updateOrderMutation = useMutation({
+    mutationFn: async ({ orderId, data }: { orderId: number; data: typeof editForm }) => {
+      const response = await apiRequest("PATCH", `/api/admin/orders/${orderId}`, data);
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/orders"] });
+      if (selectedOrder) {
+        queryClient.invalidateQueries({ queryKey: ["/api/orders", selectedOrder.id] });
+      }
+      setEditOpen(false);
+      toast({ title: "Order updated successfully" });
+    },
+  });
+
+  const deleteOrderMutation = useMutation({
+    mutationFn: async (orderId: number) => {
+      await apiRequest("DELETE", `/api/admin/orders/${orderId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/orders"] });
+      setDeleteOpen(false);
+      setDetailsOpen(false);
+      setSelectedOrder(null);
+      toast({ title: "Order deleted" });
     },
   });
 
   const viewOrderDetails = (order: Order) => {
     setSelectedOrder(order);
     setDetailsOpen(true);
+  };
+
+  const openEditDialog = (order: Order) => {
+    setSelectedOrder(order);
+    setEditForm({
+      customerName: order.customerName || "",
+      customerEmail: order.customerEmail || "",
+      customerPhone: order.customerPhone || "",
+      shippingAddress: order.shippingAddress || "",
+      notes: order.notes || "",
+    });
+    setEditOpen(true);
+  };
+
+  const openDeleteDialog = (order: Order) => {
+    setSelectedOrder(order);
+    setDeleteOpen(true);
   };
 
   const filteredOrders = orders?.filter(order => {
@@ -154,7 +227,11 @@ export default function OrdersManager() {
             </TableHeader>
             <TableBody>
               {filteredOrders.map((order) => (
-                <TableRow key={order.id} className="border-zinc-800 hover:bg-zinc-800/50">
+                <TableRow 
+                  key={order.id} 
+                  className="border-zinc-800 hover:bg-zinc-800/50 cursor-pointer"
+                  onClick={() => viewOrderDetails(order)}
+                >
                   <TableCell className="text-white font-medium">{order.orderNumber || `#${order.id}`}</TableCell>
                   <TableCell>
                     <div>
@@ -172,15 +249,36 @@ export default function OrdersManager() {
                       year: "numeric",
                     })}
                   </TableCell>
-                  <TableCell className="text-right">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => viewOrderDetails(order)}
-                      className="text-gray-400 hover:text-white"
-                    >
-                      <Eye className="w-4 h-4" />
-                    </Button>
+                  <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex items-center justify-end gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => viewOrderDetails(order)}
+                        className="text-gray-400 hover:text-white"
+                        title="View Details"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => openEditDialog(order)}
+                        className="text-gray-400 hover:text-blue-400"
+                        title="Edit Order"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => openDeleteDialog(order)}
+                        className="text-gray-400 hover:text-red-400"
+                        title="Delete Order"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -194,6 +292,7 @@ export default function OrdersManager() {
         </div>
       )}
 
+      {/* Order Details Dialog */}
       <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
         <DialogContent className="bg-zinc-900 border-zinc-800 text-white max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
@@ -278,27 +377,56 @@ export default function OrdersManager() {
                 </div>
               </div>
 
-              <div className="border-t border-zinc-800 pt-4">
-                <p className="text-gray-400 text-sm mb-2">Update Order Status</p>
-                <Select
-                  value={orderDetails.status}
-                  onValueChange={(value) => {
-                    updateStatusMutation.mutate({ orderId: orderDetails.id, status: value });
-                  }}
-                >
-                  <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-zinc-800 border-zinc-700">
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="paid">Paid</SelectItem>
-                    <SelectItem value="confirmed">Confirmed</SelectItem>
-                    <SelectItem value="shipped">Shipped</SelectItem>
-                    <SelectItem value="delivered">Delivered</SelectItem>
-                    <SelectItem value="cancelled">Cancelled</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="border-t border-zinc-800 pt-4 grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-gray-400 text-sm mb-2">Order Status</p>
+                  <Select
+                    value={orderDetails.status}
+                    onValueChange={(value) => {
+                      updateStatusMutation.mutate({ orderId: orderDetails.id, status: value });
+                    }}
+                  >
+                    <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-zinc-800 border-zinc-700">
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="paid">Paid</SelectItem>
+                      <SelectItem value="confirmed">Confirmed</SelectItem>
+                      <SelectItem value="shipped">Shipped</SelectItem>
+                      <SelectItem value="delivered">Delivered</SelectItem>
+                      <SelectItem value="cancelled">Cancelled</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <p className="text-gray-400 text-sm mb-2">Payment Status</p>
+                  <Select
+                    value={orderDetails.paymentStatus || "pending"}
+                    onValueChange={(value) => {
+                      updatePaymentMutation.mutate({ orderId: orderDetails.id, paymentStatus: value });
+                    }}
+                  >
+                    <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-zinc-800 border-zinc-700">
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="processing">Processing</SelectItem>
+                      <SelectItem value="completed">Completed (Paid)</SelectItem>
+                      <SelectItem value="failed">Failed</SelectItem>
+                      <SelectItem value="refunded">Refunded</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
+
+              {orderDetails.paymentMethod && (
+                <div className="flex items-center gap-2 text-gray-400">
+                  <DollarSign className="w-4 h-4" />
+                  <span>Payment Method: <span className="text-white capitalize">{orderDetails.paymentMethod}</span></span>
+                </div>
+              )}
 
               {orderDetails.notes && (
                 <div className="border-t border-zinc-800 pt-4">
@@ -306,10 +434,126 @@ export default function OrdersManager() {
                   <p className="text-white">{orderDetails.notes}</p>
                 </div>
               )}
+
+              <div className="border-t border-zinc-800 pt-4 flex gap-2">
+                <Button
+                  variant="outline"
+                  onClick={() => openEditDialog(orderDetails)}
+                  className="border-zinc-700 text-white hover:bg-zinc-800"
+                >
+                  <Edit className="w-4 h-4 mr-2" />
+                  Edit Order
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => openDeleteDialog(orderDetails)}
+                  className="border-red-500/50 text-red-400 hover:bg-red-500/10"
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Delete Order
+                </Button>
+              </div>
             </div>
           ) : (
             <p className="text-gray-400">Order not found</p>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Order Dialog */}
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <DialogContent className="bg-zinc-900 border-zinc-800 text-white max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-white">Edit Order {selectedOrder?.orderNumber || `#${selectedOrder?.id}`}</DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            <div>
+              <Label className="text-gray-300">Customer Name</Label>
+              <Input
+                value={editForm.customerName}
+                onChange={(e) => setEditForm({ ...editForm, customerName: e.target.value })}
+                className="bg-zinc-800 border-zinc-700 text-white"
+              />
+            </div>
+            <div>
+              <Label className="text-gray-300">Customer Email</Label>
+              <Input
+                type="email"
+                value={editForm.customerEmail}
+                onChange={(e) => setEditForm({ ...editForm, customerEmail: e.target.value })}
+                className="bg-zinc-800 border-zinc-700 text-white"
+              />
+            </div>
+            <div>
+              <Label className="text-gray-300">Customer Phone</Label>
+              <Input
+                value={editForm.customerPhone}
+                onChange={(e) => setEditForm({ ...editForm, customerPhone: e.target.value })}
+                className="bg-zinc-800 border-zinc-700 text-white"
+              />
+            </div>
+            <div>
+              <Label className="text-gray-300">Shipping Address</Label>
+              <Textarea
+                value={editForm.shippingAddress}
+                onChange={(e) => setEditForm({ ...editForm, shippingAddress: e.target.value })}
+                className="bg-zinc-800 border-zinc-700 text-white"
+                rows={3}
+              />
+            </div>
+            <div>
+              <Label className="text-gray-300">Notes</Label>
+              <Textarea
+                value={editForm.notes}
+                onChange={(e) => setEditForm({ ...editForm, notes: e.target.value })}
+                className="bg-zinc-800 border-zinc-700 text-white"
+                rows={2}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditOpen(false)} className="border-zinc-700">
+              Cancel
+            </Button>
+            <Button
+              onClick={() => selectedOrder && updateOrderMutation.mutate({ orderId: selectedOrder.id, data: editForm })}
+              disabled={updateOrderMutation.isPending}
+              className="bg-battles-gold text-black hover:bg-battles-gold/90"
+            >
+              {updateOrderMutation.isPending ? "Saving..." : "Save Changes"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <DialogContent className="bg-zinc-900 border-zinc-800 text-white max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-red-500" />
+              Delete Order
+            </DialogTitle>
+          </DialogHeader>
+
+          <p className="text-gray-300">
+            Are you sure you want to delete order <span className="text-white font-medium">{selectedOrder?.orderNumber || `#${selectedOrder?.id}`}</span>? This action cannot be undone.
+          </p>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleteOpen(false)} className="border-zinc-700">
+              Cancel
+            </Button>
+            <Button
+              onClick={() => selectedOrder && deleteOrderMutation.mutate(selectedOrder.id)}
+              disabled={deleteOrderMutation.isPending}
+              className="bg-red-500 text-white hover:bg-red-600"
+            >
+              {deleteOrderMutation.isPending ? "Deleting..." : "Delete Order"}
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>

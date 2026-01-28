@@ -507,4 +507,63 @@ export function registerAdminRoutes(app: Express) {
       res.status(500).json({ message: "Failed to update order status" });
     }
   });
+
+  // Update payment status (admin only) - for marking orders as paid
+  app.patch("/api/admin/orders/:id/payment", isAdmin, async (req: any, res) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      const { paymentStatus } = req.body;
+      
+      if (!paymentStatus) {
+        return res.status(400).json({ message: "Payment status is required" });
+      }
+      
+      // Update payment status and set paidAt if marking as completed
+      const paidAt = paymentStatus === "completed" ? new Date() : undefined;
+      const order = await storage.updateOrderPayment(orderId, paymentStatus, undefined, paidAt);
+      
+      // If marked as paid, also update order status
+      if (paymentStatus === "completed") {
+        await storage.updateOrderStatus(orderId, "paid");
+      }
+      
+      res.json(order);
+    } catch (error) {
+      console.error("Error updating payment status:", error);
+      res.status(500).json({ message: "Failed to update payment status" });
+    }
+  });
+
+  // Update order details (admin only)
+  app.patch("/api/admin/orders/:id", isAdmin, async (req: any, res) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      const { customerName, customerEmail, customerPhone, shippingAddress, notes } = req.body;
+      
+      const order = await storage.updateOrder(orderId, {
+        customerName,
+        customerEmail,
+        customerPhone,
+        shippingAddress,
+        notes,
+      });
+      
+      res.json(order);
+    } catch (error) {
+      console.error("Error updating order:", error);
+      res.status(500).json({ message: "Failed to update order" });
+    }
+  });
+
+  // Delete order (admin only)
+  app.delete("/api/admin/orders/:id", isAdmin, async (req: any, res) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      await storage.deleteOrder(orderId);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting order:", error);
+      res.status(500).json({ message: "Failed to delete order" });
+    }
+  });
 }
