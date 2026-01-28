@@ -23,20 +23,23 @@ interface SiteSettings {
   [key: string]: string | undefined;
 }
 
+// Default settings that match useSiteSettings.ts
+const defaultSettings: SiteSettings = {
+  siteName: "Garden of Weeden",
+  siteTagline: "Premium Cannabis Experience",
+  contactEmail: "info@gardenofweeden.com",
+  contactPhone: "+1-716-XXX-XXXX",
+  address: "Buffalo, NY",
+  businessHours: "Mon-Sat: 10am-9pm",
+  facebookUrl: "",
+  instagramUrl: "https://www.instagram.com/garden_of_weeden_ny",
+  twitterUrl: "",
+  footerText: "",
+};
+
 export default function SettingsManager() {
   const { toast } = useToast();
-  const [formData, setFormData] = useState<SiteSettings>({
-    siteName: "",
-    siteTagline: "",
-    contactEmail: "",
-    contactPhone: "",
-    address: "",
-    businessHours: "",
-    facebookUrl: "",
-    instagramUrl: "",
-    twitterUrl: "",
-    footerText: "",
-  });
+  const [formData, setFormData] = useState<SiteSettings>({...defaultSettings});
 
   const { data: settings, isLoading } = useQuery<SiteSettings>({
     queryKey: ["/api/admin/settings"],
@@ -45,16 +48,16 @@ export default function SettingsManager() {
   useEffect(() => {
     if (settings) {
       setFormData({
-        siteName: settings.siteName || "",
-        siteTagline: settings.siteTagline || "",
-        contactEmail: settings.contactEmail || "",
-        contactPhone: settings.contactPhone || "",
-        address: settings.address || "",
-        businessHours: settings.businessHours || "",
-        facebookUrl: settings.facebookUrl || "",
-        instagramUrl: settings.instagramUrl || "",
-        twitterUrl: settings.twitterUrl || "",
-        footerText: settings.footerText || "",
+        siteName: settings.siteName || defaultSettings.siteName,
+        siteTagline: settings.siteTagline || defaultSettings.siteTagline,
+        contactEmail: settings.contactEmail || defaultSettings.contactEmail,
+        contactPhone: settings.contactPhone || defaultSettings.contactPhone,
+        address: settings.address || defaultSettings.address,
+        businessHours: settings.businessHours || defaultSettings.businessHours,
+        facebookUrl: settings.facebookUrl || defaultSettings.facebookUrl,
+        instagramUrl: settings.instagramUrl || defaultSettings.instagramUrl,
+        twitterUrl: settings.twitterUrl || defaultSettings.twitterUrl,
+        footerText: settings.footerText || defaultSettings.footerText,
       });
     }
   }, [settings]);

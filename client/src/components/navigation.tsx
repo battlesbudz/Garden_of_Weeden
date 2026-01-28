@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X, User, ShoppingBag, ShoppingCart, LogOut, Shield, ClipboardList } from "lucide-react";
-import { FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
 import { useReducedMotion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
-import { SITE_CONFIG } from "@/utils/seo";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 import logoImage from "@assets/garden_of_weeden_logo_transparent_1762191379653.png";
 import type { CartWithItems } from "@shared/schema";
 
@@ -16,6 +16,7 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [location, setLocation] = useLocation();
   const { user, isAuthenticated, isAdmin } = useAuth();
+  const { settings } = useSiteSettings();
   const prefersReducedMotion = useReducedMotion();
 
   const { data: cart } = useQuery<CartWithItems>({
@@ -23,6 +24,9 @@ export default function Navigation() {
   });
 
   const cartItemCount = cart?.itemCount || 0;
+  
+  // Check which social links are available
+  const hasSocialLinks = settings.instagramUrl || settings.facebookUrl || settings.twitterUrl;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -129,18 +133,46 @@ export default function Navigation() {
               </button>
 
               {/* Social Media Icons */}
-              <div className="flex items-center gap-2 border-l border-green-500/30 pl-4 ml-2">
-                <a
-                  href={SITE_CONFIG.social.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-green-500 transition-all duration-300 hover:scale-110"
-                  aria-label={`Follow ${SITE_CONFIG.name} on Instagram`}
-                  data-testid="nav-social-instagram"
-                >
-                  <FaInstagram className="h-4 w-4" />
-                </a>
-              </div>
+              {hasSocialLinks && (
+                <div className="flex items-center gap-2 border-l border-green-500/30 pl-4 ml-2">
+                  {settings.instagramUrl && (
+                    <a
+                      href={settings.instagramUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-green-500 transition-all duration-300 hover:scale-110"
+                      aria-label={`Follow ${settings.siteName} on Instagram`}
+                      data-testid="nav-social-instagram"
+                    >
+                      <FaInstagram className="h-4 w-4" />
+                    </a>
+                  )}
+                  {settings.facebookUrl && (
+                    <a
+                      href={settings.facebookUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-blue-500 transition-all duration-300 hover:scale-110"
+                      aria-label={`Follow ${settings.siteName} on Facebook`}
+                      data-testid="nav-social-facebook"
+                    >
+                      <FaFacebook className="h-4 w-4" />
+                    </a>
+                  )}
+                  {settings.twitterUrl && (
+                    <a
+                      href={settings.twitterUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-sky-400 transition-all duration-300 hover:scale-110"
+                      aria-label={`Follow ${settings.siteName} on Twitter`}
+                      data-testid="nav-social-twitter"
+                    >
+                      <FaTwitter className="h-4 w-4" />
+                    </a>
+                  )}
+                </div>
+              )}
 
               {/* Admin Link - Only visible to admins */}
               {isAdmin && (
@@ -227,6 +259,45 @@ export default function Navigation() {
             >
               Contact
             </button>
+            
+            {/* Social Links - Mobile */}
+            {hasSocialLinks && (
+              <div className="flex items-center gap-4 px-3 py-3 border-t border-green-500/30 mt-2">
+                {settings.instagramUrl && (
+                  <a
+                    href={settings.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-green-500 transition-colors"
+                    aria-label={`Follow ${settings.siteName} on Instagram`}
+                  >
+                    <FaInstagram className="h-5 w-5" />
+                  </a>
+                )}
+                {settings.facebookUrl && (
+                  <a
+                    href={settings.facebookUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-blue-500 transition-colors"
+                    aria-label={`Follow ${settings.siteName} on Facebook`}
+                  >
+                    <FaFacebook className="h-5 w-5" />
+                  </a>
+                )}
+                {settings.twitterUrl && (
+                  <a
+                    href={settings.twitterUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-sky-400 transition-colors"
+                    aria-label={`Follow ${settings.siteName} on Twitter`}
+                  >
+                    <FaTwitter className="h-5 w-5" />
+                  </a>
+                )}
+              </div>
+            )}
             
             {/* Admin Link - Mobile */}
             {isAdmin && (
