@@ -27,7 +27,7 @@ interface NewsletterSubscriber {
 }
 
 export default function AdminDashboard() {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState("brands");
 
@@ -35,6 +35,9 @@ export default function AdminDashboard() {
     queryKey: ["/api/admin/check"],
     enabled: isAuthenticated,
   });
+  
+  // Show loading while auth is checking OR admin check is in progress
+  const isVerifying = authLoading || (isAuthenticated && checkingAdmin);
 
   const { data: subscribers, isLoading: loadingSubscribers } = useQuery<NewsletterSubscriber[]>({
     queryKey: ["/api/admin/subscribers"],
@@ -45,6 +48,21 @@ export default function AdminDashboard() {
     window.open("/api/admin/download/subscribers", "_blank");
   };
 
+  // Show loading spinner while verifying
+  if (isVerifying) {
+    return (
+      <div className="min-h-screen bg-battles-black">
+        <Navigation />
+        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
+          <div className="animate-spin w-12 h-12 border-4 border-battles-gold border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-gray-400">Verifying admin access...</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Not logged in
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-battles-black">
@@ -62,19 +80,7 @@ export default function AdminDashboard() {
     );
   }
 
-  if (checkingAdmin) {
-    return (
-      <div className="min-h-screen bg-battles-black">
-        <Navigation />
-        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
-          <div className="animate-spin w-12 h-12 border-4 border-battles-gold border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p className="text-gray-400">Verifying admin access...</p>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
+  // Logged in but not admin
   if (!adminCheck?.isAdmin) {
     return (
       <div className="min-h-screen bg-battles-black">
