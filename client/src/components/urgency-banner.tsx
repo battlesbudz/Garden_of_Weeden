@@ -24,10 +24,10 @@ export default function UrgencyBanner() {
             <div>
               <div className="flex items-center justify-center lg:justify-start gap-2 mb-2">
                 <Clock className="h-4 w-4 text-white/80" />
-                <span className="font-garden text-sm text-white/80 uppercase tracking-wide">Limited Batch Release</span>
+                <span className="font-garden text-sm text-white/80 uppercase tracking-wide">Limited Availability</span>
               </div>
               <h3 className="font-storybook text-2xl md:text-3xl text-white mb-1">
-                First Harvest Now Available
+                Fresh Batch Now Available
               </h3>
               <p className="font-garden text-white/80">
                 Small-batch, sun-grown craft cannabis — while supplies last
