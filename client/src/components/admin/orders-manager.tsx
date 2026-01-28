@@ -250,30 +250,30 @@ export default function OrdersManager() {
                     })}
                   </TableCell>
                   <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
-                    <div className="flex items-center justify-end gap-1">
+                    <div className="flex items-center justify-end gap-2">
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => viewOrderDetails(order)}
-                        className="text-gray-400 hover:text-white"
+                        className="border-zinc-600 bg-zinc-800 text-white hover:bg-zinc-700"
                         title="View Details"
                       >
                         <Eye className="w-4 h-4" />
                       </Button>
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => openEditDialog(order)}
-                        className="text-gray-400 hover:text-blue-400"
+                        className="border-blue-500 bg-blue-500/20 text-blue-400 hover:bg-blue-500/30"
                         title="Edit Order"
                       >
                         <Edit className="w-4 h-4" />
                       </Button>
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => openDeleteDialog(order)}
-                        className="text-gray-400 hover:text-red-400"
+                        className="border-red-500 bg-red-500/20 text-red-400 hover:bg-red-500/30"
                         title="Delete Order"
                       >
                         <Trash2 className="w-4 h-4" />
