@@ -58,6 +58,25 @@ export function registerCheckoutRoutes(app: Express) {
         return res.status(400).json({ message: "Cart is empty" });
       }
       
+      // Check stock availability before proceeding
+      const stockCheck = await storage.checkStockAvailability(
+        cartWithItems.items.map(item => ({
+          productId: item.productId,
+          quantity: item.quantity,
+        }))
+      );
+      
+      if (!stockCheck.available) {
+        const itemMessages = stockCheck.insufficientItems.map(item => 
+          `${item.productName}: requested ${item.requested}, only ${item.available} available`
+        );
+        return res.status(400).json({ 
+          message: "Insufficient stock for some items",
+          insufficientItems: stockCheck.insufficientItems,
+          details: itemMessages,
+        });
+      }
+      
       // Calculate totals
       const subtotal = parseFloat(cartWithItems.total);
       const taxRate = 0.08; // 8% tax - adjust as needed for NY cannabis tax
@@ -135,6 +154,14 @@ export function registerCheckoutRoutes(app: Express) {
           // Keep as pending - payment not yet verified
           await storage.updateOrderStatus(order.id, "pending");
         }
+        
+        // Deduct inventory from stock (order reserves the items)
+        await storage.deductInventory(
+          cartWithItems.items.map(item => ({
+            productId: item.productId,
+            quantity: item.quantity,
+          }))
+        );
         
         // Clear the cart after successful order placement
         await storage.clearCart(cart.id);

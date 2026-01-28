@@ -152,6 +152,11 @@ export interface IStorage {
   updateOrder(id: number, data: { customerName?: string; customerEmail?: string; customerPhone?: string; shippingAddress?: string; notes?: string }): Promise<Order>;
   deleteOrder(id: number): Promise<void>;
   
+  // Inventory management
+  checkStockAvailability(items: { productId: number; quantity: number }[]): Promise<{ available: boolean; insufficientItems: { productId: number; productName: string; requested: number; available: number }[] }>;
+  deductInventory(items: { productId: number; quantity: number }[]): Promise<void>;
+  restoreInventory(items: { productId: number; quantity: number }[]): Promise<void>;
+  
   // Newsletter subscribers
   createNewsletterSubscriber(subscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber>;
   getNewsletterSubscriberByEmail(email: string): Promise<NewsletterSubscriber | undefined>;
@@ -967,6 +972,100 @@ export class DatabaseStorage implements IStorage {
     await db.delete(orderItems).where(eq(orderItems.orderId, id));
     // Then delete the order
     await db.delete(orders).where(eq(orders.id, id));
+  }
+
+  async checkStockAvailability(items: { productId: number; quantity: number }[]): Promise<{ available: boolean; insufficientItems: { productId: number; productName: string; requested: number; available: number }[] }> {
+    const insufficientItems: { productId: number; productName: string; requested: number; available: number }[] = [];
+    
+    for (const item of items) {
+      // Get shop item for this product
+      const [shopItem] = await db
+        .select()
+        .from(shopItems)
+        .where(eq(shopItems.productId, item.productId));
+      
+      // Get product info for the name
+      const [product] = await db
+        .select()
+        .from(products)
+        .where(eq(products.id, item.productId));
+      
+      const availableQty = shopItem?.shopQuantity || 0;
+      
+      if (!shopItem || !shopItem.isActive || availableQty < item.quantity) {
+        insufficientItems.push({
+          productId: item.productId,
+          productName: product?.name || `Product #${item.productId}`,
+          requested: item.quantity,
+          available: availableQty,
+        });
+      }
+    }
+    
+    return {
+      available: insufficientItems.length === 0,
+      insufficientItems,
+    };
+  }
+
+  async deductInventory(items: { productId: number; quantity: number }[]): Promise<void> {
+    for (const item of items) {
+      // Get current shop item
+      const [shopItem] = await db
+        .select()
+        .from(shopItems)
+        .where(eq(shopItems.productId, item.productId));
+      
+      if (shopItem) {
+        const newQuantity = Math.max(0, (shopItem.shopQuantity || 0) - item.quantity);
+        
+        // Update shop item quantity and mark inactive if zero
+        await db.update(shopItems)
+          .set({
+            shopQuantity: newQuantity,
+            isActive: newQuantity > 0,
+          })
+          .where(eq(shopItems.id, shopItem.id));
+        
+        // Also update the product's inStock flag
+        await db.update(products)
+          .set({
+            stockQuantity: newQuantity,
+            inStock: newQuantity > 0,
+          })
+          .where(eq(products.id, item.productId));
+      }
+    }
+  }
+
+  async restoreInventory(items: { productId: number; quantity: number }[]): Promise<void> {
+    for (const item of items) {
+      // Get current shop item
+      const [shopItem] = await db
+        .select()
+        .from(shopItems)
+        .where(eq(shopItems.productId, item.productId));
+      
+      if (shopItem) {
+        const newQuantity = (shopItem.shopQuantity || 0) + item.quantity;
+        
+        // Update shop item quantity and mark active
+        await db.update(shopItems)
+          .set({
+            shopQuantity: newQuantity,
+            isActive: true,
+          })
+          .where(eq(shopItems.id, shopItem.id));
+        
+        // Also update the product's stock
+        await db.update(products)
+          .set({
+            stockQuantity: newQuantity,
+            inStock: true,
+          })
+          .where(eq(products.id, item.productId));
+      }
+    }
   }
 
   async createNewsletterSubscriber(insertSubscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber> {
