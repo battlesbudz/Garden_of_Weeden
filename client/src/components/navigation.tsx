@@ -84,7 +84,7 @@ export default function Navigation() {
               variant="ghost"
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
-              className="text-green-500 hover:text-parchment border border-green-500 hover:border-parchment"
+              className="text-green-500 hover:text-green-400 border border-green-500 hover:border-green-400 bg-transparent hover:bg-green-500/10 active:bg-green-500/20"
               data-testid="nav-mobile-menu-button"
               aria-label={isOpen ? "Close menu" : "Open menu"}
             >
