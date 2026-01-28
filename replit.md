@@ -111,6 +111,14 @@ The platform includes a complete shopping cart and checkout system designed for 
 - User-linked carts for authenticated users
 - Real-time cart badge in navigation showing item count
 - Add to cart functionality on shop product cards
+- Stock validation prevents adding more items than available
+
+**Inventory Tracking:**
+- Automatic stock validation when adding items to cart
+- Prevents checkout if any item has insufficient stock
+- Automatic inventory deduction when orders are placed successfully
+- Products marked as inactive (hidden from shop) when quantity reaches zero
+- Syncs between `shop_items.shopQuantity` and `products.stockQuantity`
 
 **Checkout Flow:**
 - Customer information collection (name, email, phone, address)
