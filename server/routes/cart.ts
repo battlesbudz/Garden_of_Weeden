@@ -74,9 +74,34 @@ export function registerCartRoutes(app: Express) {
         return res.status(404).json({ message: "Product not found" });
       }
       
+      // Check if sufficient stock is available
+      const availableQty = shopItem.shopQuantity || 0;
+      if (availableQty < quantity) {
+        return res.status(400).json({ 
+          message: availableQty === 0 
+            ? `${product.name} is out of stock` 
+            : `Only ${availableQty} units of ${product.name} available`,
+          availableQuantity: availableQty,
+        });
+      }
+      
       const price = shopItem.shopPrice || product.price;
       
       const cart = await storage.getOrCreateCart(userId, sessionId);
+      
+      // Check if updating would exceed available stock (for existing cart items)
+      const existingCart = await storage.getCartWithItems(cart.id);
+      const existingItem = existingCart?.items.find(item => item.productId === productId);
+      const totalRequestedQty = (existingItem?.quantity || 0) + quantity;
+      
+      if (totalRequestedQty > availableQty) {
+        return res.status(400).json({ 
+          message: `Cannot add ${quantity} more. You already have ${existingItem?.quantity || 0} in cart, and only ${availableQty} total available.`,
+          availableQuantity: availableQty,
+          currentInCart: existingItem?.quantity || 0,
+        });
+      }
+      
       const cartItem = await storage.addToCart(cart.id, productId, shopItemId, quantity, price);
       
       // Return updated cart
@@ -103,6 +128,27 @@ export function registerCartRoutes(app: Express) {
       if (quantity === 0) {
         await storage.removeFromCart(itemId);
       } else {
+        // Get the cart item to check the product and shop item
+        const userId = (req as any).user?.claims?.sub;
+        const sessionId = getCartSessionId(req, res);
+        const cart = await storage.getOrCreateCart(userId, sessionId);
+        const existingCart = await storage.getCartWithItems(cart.id);
+        const cartItem = existingCart?.items.find(item => item.id === itemId);
+        
+        if (cartItem) {
+          // Check stock availability
+          const shopItem = await storage.getShopItem(cartItem.shopItemId);
+          const product = await storage.getProduct(cartItem.productId);
+          const availableQty = shopItem?.shopQuantity || 0;
+          
+          if (quantity > availableQty) {
+            return res.status(400).json({ 
+              message: `Only ${availableQty} units of ${product?.name || 'this item'} available`,
+              availableQuantity: availableQty,
+            });
+          }
+        }
+        
         await storage.updateCartItemQuantity(itemId, quantity);
       }
       
