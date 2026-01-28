@@ -1,6 +1,9 @@
 import Navigation from "@/components/navigation";
 import HeroSection from "@/components/hero-section";
-import RetailSection from "@/components/retail-section";
+import SocialProofSection from "@/components/social-proof-section";
+import FeaturedProductsSection from "@/components/featured-products-section";
+import BrandStorySection from "@/components/brand-story-section";
+import UrgencyBanner from "@/components/urgency-banner";
 import ServicesSection from "@/components/services-section";
 import NewsletterSection from "@/components/newsletter-section";
 import Footer from "@/components/footer";
@@ -17,16 +20,16 @@ export default function Home() {
     <div className="min-h-screen overflow-x-hidden bg-battles-black">
       <SEOHead
         title="Garden of Weeden - Veteran-Owned Cannabis | Buffalo, NY"
-        description="Garden of Weeden: Veteran-owned cannabis microbusiness in Buffalo, NY. From service to soil—cultivating premium craft flower in Western New York's micro-terroir."
+        description="Garden of Weeden: Veteran-owned cannabis microbusiness in Buffalo, NY. Shop premium craft flower grown with military precision. From service to soil."
         keywords={[
           "Garden of Weeden",
           "veteran-owned cannabis Buffalo",
-          "Buffalo cannabis",
+          "Buffalo cannabis shop",
           "Western New York cannabis",
           "veteran cannabis business",
           "Buffalo micro-terroir",
           "craft cannabis Buffalo",
-          "craft cannabis cultivation",
+          "buy cannabis Buffalo NY",
           "veteran wellness cannabis",
           "Buffalo NY dispensary"
         ]}
@@ -36,7 +39,10 @@ export default function Home() {
       />
       <Navigation />
       <HeroSection />
-      <RetailSection />
+      <SocialProofSection />
+      <FeaturedProductsSection />
+      <BrandStorySection />
+      <UrgencyBanner />
       <ServicesSection />
       <NewsletterSection />
       <Footer />

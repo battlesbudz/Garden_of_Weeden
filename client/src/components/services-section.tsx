@@ -1,97 +1,108 @@
-import { Award, Heart, Users, BookOpen, Leaf, Shield } from "lucide-react";
+import { Award, Heart, Users, Leaf, Shield, Sparkles } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "wouter";
+import { ArrowRight, ShoppingBag } from "lucide-react";
 
 export default function ServicesSection() {
   const prefersReducedMotion = useReducedMotion();
   
-  const services = [
+  const benefits = [
     {
       icon: Award,
-      title: "Veteran Excellence",
-      description: "Our commitment to quality comes from years of service. From seed selection to final cure, we bring the same care and attention to detail that defined our work.",
-    },
-    {
-      icon: Heart,
-      title: "Veteran Wellness Advocacy",
-      description: "Supporting fellow veterans' healing journeys through education, access, and community. Cannabis wellness rooted in service and compassion.",
-    },
-    {
-      icon: Users,
-      title: "Community Commitment",
-      description: "Building Buffalo's cannabis community with integrity and transparency. Local cultivation supporting local wellness and economic growth.",
-    },
-    {
-      icon: BookOpen,
-      title: "Education & Resources",
-      description: "Sharing cultivation knowledge and cannabis education. From plant science to consumption best practices, we're here to guide your journey.",
+      title: "Veteran-Crafted Quality",
+      description: "Military precision in every harvest",
     },
     {
       icon: Leaf,
-      title: "Sustainable Cultivation",
-      description: "Outdoor growing that respects the land and honors Buffalo's micro-terroir. Sun-grown cannabis with minimal environmental impact.",
+      title: "Sun-Grown Excellence",
+      description: "Natural outdoor cultivation",
     },
     {
       icon: Shield,
-      title: "Quality Assurance",
-      description: "Rigorous testing and quality control at every stage. Your safety and satisfaction are our mission, backed by veteran values of honor and integrity.",
+      title: "Lab-Tested & Safe",
+      description: "Rigorous quality assurance",
+    },
+    {
+      icon: Sparkles,
+      title: "Small-Batch Freshness",
+      description: "Limited harvests, maximum care",
+    },
+    {
+      icon: Heart,
+      title: "Wellness-Focused",
+      description: "Supporting healing journeys",
+    },
+    {
+      icon: Users,
+      title: "Buffalo Local",
+      description: "Community-rooted cultivation",
     },
   ];
 
   return (
-    <section id="services" className="relative py-24 text-white overflow-hidden">
-      {/* Enhanced gradient background with multiple layers */}
-      <div className="absolute inset-0 bg-gradient-to-b from-battles-black via-midnight-grove/30 to-battles-black"></div>
-      <div className="absolute inset-0 bg-gradient-radial from-green-500/5 via-transparent to-transparent"></div>
+    <section id="services" className="relative py-20 text-white overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-battles-black via-midnight-grove/20 to-battles-black"></div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
-          className="text-center mb-20"
+          className="text-center mb-14"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.8, ease: "easeOut" }}
         >
-          <h2 className="font-enchanted text-5xl md:text-6xl lg:text-7xl text-parchment mb-6 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
-            Our Values
+          <h2 className="font-enchanted text-4xl md:text-5xl lg:text-6xl text-parchment mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
+            Why Choose Garden of Weeden?
           </h2>
-          <div className="h-1.5 w-40 bg-gradient-to-r from-green-400 via-green-500 to-green-600 mx-auto mb-8 rounded-full shadow-lg shadow-green-500/50"></div>
-          <p className="font-storybook text-2xl md:text-3xl text-green-400 max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-            Service, Quality, and Community
+          <div className="h-1 w-32 bg-gradient-to-r from-green-400 via-green-500 to-green-600 mx-auto mb-6 rounded-full shadow-lg shadow-green-500/50"></div>
+          <p className="font-garden text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
+            Experience the difference that veteran values and Buffalo's unique terroir make
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => {
-            const IconComponent = service.icon;
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 mb-12">
+          {benefits.map((benefit, index) => {
+            const IconComponent = benefit.icon;
             return (
               <motion.div
                 key={index}
-                className="group relative bg-midnight-grove/40 backdrop-blur-md border border-green-500/30 rounded-2xl p-8 text-center hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
-                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 50 }}
+                className="group bg-midnight-grove/30 backdrop-blur-sm border border-green-500/20 rounded-xl p-5 text-center hover:border-green-500/50 hover:bg-midnight-grove/50 transition-all duration-300"
+                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ 
-                  duration: prefersReducedMotion ? 0 : 0.6, 
-                  delay: prefersReducedMotion ? 0 : index * 0.1,
+                  duration: prefersReducedMotion ? 0 : 0.5, 
+                  delay: prefersReducedMotion ? 0 : index * 0.05,
                   ease: "easeOut" 
                 }}
               >
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-green-500/0 via-green-500/0 to-green-500/0 group-hover:from-green-500/5 group-hover:via-green-500/0 group-hover:to-green-500/10 rounded-2xl transition-all duration-500"></div>
-                
-                <div className="relative z-10">
-                  <div className="bg-gradient-to-br from-green-500/20 to-green-700/30 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:from-green-400/30 group-hover:to-green-600/40 transition-all duration-300 group-hover:scale-110 shadow-lg shadow-green-500/20">
-                    <IconComponent className="text-green-500 h-10 w-10 group-hover:text-green-400 transition-colors" />
-                  </div>
-                  <h3 className="font-storybook text-2xl md:text-3xl mb-4 text-parchment group-hover:text-green-400 transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors leading-relaxed">{service.description}</p>
+                <div className="bg-green-500/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 group-hover:bg-green-500/20 transition-colors">
+                  <IconComponent className="text-green-500 h-6 w-6" />
                 </div>
+                <h3 className="font-storybook text-sm md:text-base mb-1 text-parchment">
+                  {benefit.title}
+                </h3>
+                <p className="font-garden text-xs text-gray-400">{benefit.description}</p>
               </motion.div>
             );
           })}
         </div>
+
+        <motion.div
+          className="text-center"
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: prefersReducedMotion ? 0 : 0.3 }}
+        >
+          <Link href="/shop">
+            <button className="group bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-garden font-bold text-base shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-3">
+              <ShoppingBag className="h-5 w-5" />
+              <span>Shop Premium Cannabis</span>
+              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

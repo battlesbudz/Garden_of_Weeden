@@ -1,4 +1,4 @@
-import { ChevronDown, Award, MapPin, Heart } from "lucide-react";
+import { Award, MapPin, Heart, ShoppingBag, ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -29,25 +29,15 @@ export default function HeroSection() {
   });
 
   const heroTitle = settings?.heroTitle || "Garden of Weeden";
-  const heroTagline = settings?.heroTagline || "From Service to Soil";
-  const heroSubtitle = settings?.heroSubtitle || "Veteran-Owned Cannabis Microbusiness in Buffalo, NY";
+  const heroTagline = settings?.heroTagline || "Premium Craft Cannabis";
+  const heroSubtitle = settings?.heroSubtitle || "Veteran-owned. Buffalo-grown. Wellness-driven.";
   const pillar1Title = settings?.pillar1Title || "Veteran-Owned";
   const pillar1Desc = settings?.pillar1Text || "Quality cultivation by those who served";
   const pillar2Title = settings?.pillar2Title || "Buffalo Roots";
   const pillar2Desc = settings?.pillar2Text || "Grown in Western NY's micro-terroir";
   const pillar3Title = settings?.pillar3Title || "Wellness Focused";
   const pillar3Desc = settings?.pillar3Text || "Supporting veteran healing journeys";
-  const cta1Text = settings?.ctaButton1Text || "Our Story";
-  const cta2Text = settings?.ctaButton2Text || "Learn More";
-  const cta3Text = settings?.ctaButton3Text || "Get Updates";
   const locationText = settings?.locationText || "Proudly Cultivated in Buffalo, NY";
-  
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
-    }
-  };
 
   return (
     <section
@@ -58,7 +48,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 z-0">
         <div className="w-full h-full opacity-50">
           <VideoBackground
-            videoSrc={undefined} // Replace with actual video URL when available: "/videos/garden-story.mp4"
+            videoSrc={undefined}
             posterImage={fieldRowsImage}
             alt="Garden of Weeden cannabis cultivation fields in Buffalo, NY"
             className=""
@@ -68,114 +58,114 @@ export default function HeroSection() {
             loop={true}
           />
         </div>
-        {/* Sophisticated gradient overlays for depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-battles-black/90 via-battles-black/50 to-battles-black/95"></div>
         <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-battles-black/40"></div>
       </div>
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 text-center">
-        {/* Main Headline - Larger & Bolder */}
+        {/* Veteran Badge - Trust Signal */}
+        <motion.div
+          className="inline-flex items-center gap-2 bg-green-500/20 backdrop-blur-sm border border-green-500/50 rounded-full px-5 py-2 mb-8"
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.6, ease: "easeOut" }}
+        >
+          <Award className="h-4 w-4 text-green-400" />
+          <span className="font-garden text-sm text-green-400 font-semibold tracking-wide uppercase">Veteran-Owned & Operated</span>
+        </motion.div>
+
+        {/* Main Headline - Benefit-Focused */}
         <motion.div 
-          className="mb-8"
+          className="mb-6"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 1, ease: "easeOut" }}
         >
-          <h1 className="font-enchanted text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] text-parchment mb-6 leading-[0.9] tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
+          <h1 className="font-enchanted text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-parchment mb-4 leading-[0.9] tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
             {heroTitle}
           </h1>
-          <div className="h-1.5 w-40 bg-gradient-to-r from-green-400 via-green-500 to-green-600 mx-auto mb-8 rounded-full shadow-lg shadow-green-500/50"></div>
+          <div className="h-1.5 w-32 bg-gradient-to-r from-green-400 via-green-500 to-green-600 mx-auto mb-6 rounded-full shadow-lg shadow-green-500/50"></div>
         </motion.div>
 
-        {/* Veteran-Owned Tagline - Enhanced */}
+        {/* Value Proposition - Clear & Compelling */}
         <motion.div 
-          className="mb-10"
+          className="mb-8"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 1, delay: prefersReducedMotion ? 0 : 0.3, ease: "easeOut" }}
         >
-          <h2 className="font-storybook text-3xl md:text-5xl lg:text-6xl text-parchment drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] mb-6 tracking-wide">
+          <h2 className="font-storybook text-2xl md:text-4xl lg:text-5xl text-green-400 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] mb-4 tracking-wide">
             {heroTagline}
           </h2>
-          <p className="font-garden text-xl md:text-3xl lg:text-4xl text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] max-w-4xl mx-auto leading-relaxed">
+          <p className="font-garden text-lg md:text-xl lg:text-2xl text-gray-200 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] max-w-3xl mx-auto leading-relaxed">
             {heroSubtitle}
           </p>
         </motion.div>
 
-        {/* Three Pillars - Enhanced with sophisticated hover effects */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-14">
-          <motion.div 
-            className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.5, ease: "easeOut" }}
-          >
-            <div className="transform group-hover:scale-110 transition-transform duration-300">
-              <Award className="h-12 w-12 text-green-500 mx-auto mb-4 group-hover:text-green-400 transition-colors" />
-            </div>
-            <h3 className="font-storybook text-2xl text-parchment mb-3 group-hover:text-green-400 transition-colors">{pillar1Title}</h3>
-            <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors">{pillar1Desc}</p>
-          </motion.div>
-          <motion.div 
-            className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.6, ease: "easeOut" }}
-          >
-            <div className="transform group-hover:scale-110 transition-transform duration-300">
-              <MapPin className="h-12 w-12 text-green-500 mx-auto mb-4 group-hover:text-green-400 transition-colors" />
-            </div>
-            <h3 className="font-storybook text-2xl text-parchment mb-3 group-hover:text-green-400 transition-colors">{pillar2Title}</h3>
-            <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors">{pillar2Desc}</p>
-          </motion.div>
-          <motion.div 
-            className="group bg-midnight-grove/40 backdrop-blur-sm border border-green-500/30 rounded-xl p-8 hover:border-green-500/70 hover:bg-midnight-grove/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer"
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.7, ease: "easeOut" }}
-          >
-            <div className="transform group-hover:scale-110 transition-transform duration-300">
-              <Heart className="h-12 w-12 text-green-500 mx-auto mb-4 group-hover:text-green-400 transition-colors" />
-            </div>
-            <h3 className="font-storybook text-2xl text-parchment mb-3 group-hover:text-green-400 transition-colors">{pillar3Title}</h3>
-            <p className="font-garden text-base text-gray-300 group-hover:text-gray-200 transition-colors">{pillar3Desc}</p>
-          </motion.div>
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400 mb-12">
-          <Link href="/about">
+        {/* Primary CTA - Shop Focus */}
+        <motion.div 
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.5, ease: "easeOut" }}
+        >
+          <Link href="/shop">
             <button
-              className="bg-green-500 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-garden font-semibold text-base shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
-              data-testid="hero-cta-story"
+              className="group bg-green-500 hover:bg-green-600 text-white px-10 py-5 rounded-xl font-garden font-bold text-lg shadow-xl hover:shadow-2xl hover:shadow-green-500/40 transform hover:scale-105 transition-all duration-300 flex items-center gap-3"
+              data-testid="hero-cta-shop"
             >
-              {cta1Text}
+              <ShoppingBag className="h-5 w-5" />
+              <span>Shop Our Collection</span>
+              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
-          <button
-            onClick={() => scrollToSection("retail")}
-            className="border-2 border-green-500 text-parchment px-8 py-4 rounded-lg font-garden font-semibold text-base hover:bg-green-700/20 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
-            data-testid="hero-cta-products"
-          >
-            {cta2Text}
-          </button>
-          <button
-            onClick={() => scrollToSection("newsletter")}
-            className="bg-parchment hover:bg-parchment/90 text-black px-8 py-4 rounded-lg font-garden font-semibold text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
-            data-testid="hero-cta-newsletter"
-          >
-            {cta3Text}
-          </button>
-        </div>
+          <Link href="/about">
+            <button
+              className="border-2 border-parchment/60 text-parchment px-8 py-4 rounded-xl font-garden font-semibold text-base hover:bg-parchment/10 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              data-testid="hero-cta-story"
+            >
+              Our Story
+            </button>
+          </Link>
+        </motion.div>
+
+        {/* Quick Value Props - Scannable */}
+        <motion.div 
+          className="flex flex-wrap justify-center gap-6 md:gap-10 mb-12"
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.6, ease: "easeOut" }}
+        >
+          <div className="flex items-center gap-2 text-gray-300">
+            <Award className="h-5 w-5 text-green-500" />
+            <span className="font-garden text-sm md:text-base">{pillar1Title}</span>
+          </div>
+          <div className="flex items-center gap-2 text-gray-300">
+            <MapPin className="h-5 w-5 text-green-500" />
+            <span className="font-garden text-sm md:text-base">{pillar2Title}</span>
+          </div>
+          <div className="flex items-center gap-2 text-gray-300">
+            <Heart className="h-5 w-5 text-green-500" />
+            <span className="font-garden text-sm md:text-base">{pillar3Title}</span>
+          </div>
+          <div className="flex items-center gap-2 text-gray-300">
+            <Sparkles className="h-5 w-5 text-green-500" />
+            <span className="font-garden text-sm md:text-base">Sun-Grown Quality</span>
+          </div>
+        </motion.div>
 
         {/* Location Badge */}
-        <div className="inline-flex items-center gap-2 bg-midnight-grove/60 backdrop-blur-sm border border-green-500/40 rounded-full px-6 py-3 animate-fade-in-up animation-delay-1000">
+        <motion.div 
+          className="inline-flex items-center gap-2 bg-midnight-grove/60 backdrop-blur-sm border border-green-500/40 rounded-full px-6 py-3"
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 1, delay: prefersReducedMotion ? 0 : 0.8, ease: "easeOut" }}
+        >
           <MapPin className="h-4 w-4 text-green-500" />
           <span className="font-garden text-sm text-parchment font-medium">{locationText}</span>
-        </div>
+        </motion.div>
       </div>
-
-      </section>
+    </section>
   );
 }
