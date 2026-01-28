@@ -252,16 +252,16 @@ export default function HomepageManager() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between mb-4 sticky top-0 bg-zinc-900 py-4 z-10">
+      <div className="flex flex-col gap-3 mb-4 sticky top-0 bg-zinc-900 py-4 z-10">
         <div className="flex items-center gap-2">
-          <Home className="w-5 h-5 text-green-500" />
-          <span className="text-gray-400">Customize every section of your homepage</span>
+          <Home className="w-5 h-5 text-green-500 flex-shrink-0" />
+          <span className="text-gray-400 text-sm">Customize every section of your homepage</span>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button
             variant="outline"
             onClick={() => window.open("/", "_blank")}
-            className="border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            className="border-zinc-700 text-gray-300 hover:bg-zinc-800 flex-1 sm:flex-none"
           >
             <Eye className="w-4 h-4 mr-2" />
             Preview
@@ -269,7 +269,7 @@ export default function HomepageManager() {
           <Button
             variant="outline"
             onClick={handleReset}
-            className="border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            className="border-zinc-700 text-gray-300 hover:bg-zinc-800 flex-1 sm:flex-none"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
             Reset
@@ -277,7 +277,7 @@ export default function HomepageManager() {
           <Button
             onClick={handleSave}
             disabled={!hasChanges || saveMutation.isPending}
-            className="bg-green-600 text-white hover:bg-green-700"
+            className="bg-green-600 text-white hover:bg-green-700 w-full sm:w-auto"
           >
             <Save className="w-4 h-4 mr-2" />
             {saveMutation.isPending ? "Saving..." : "Save Changes"}
