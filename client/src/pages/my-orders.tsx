@@ -12,6 +12,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 interface Order {
   id: number;
+  orderNumber?: string;
   total: string;
   status: string;
   paymentStatus?: string;
@@ -117,7 +118,7 @@ export default function MyOrders() {
                     <div className="flex items-center gap-4">
                       {getStatusIcon(order.status)}
                       <div>
-                        <p className="text-white font-medium">Order #{order.id}</p>
+                        <p className="text-white font-medium">Order {order.orderNumber || `#${order.id}`}</p>
                         <p className="text-gray-400 text-sm">
                           {new Date(order.createdAt).toLocaleDateString("en-US", {
                             year: "numeric",

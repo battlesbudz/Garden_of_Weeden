@@ -23,6 +23,7 @@ interface OrderItem {
 
 interface Order {
   id: number;
+  orderNumber?: string;
   userId?: string;
   total: string;
   subtotal?: string;
@@ -118,8 +119,8 @@ export default function OrderDetails() {
   return (
     <div className="min-h-screen bg-black text-white">
       <SEOHead
-        title={getPageTitle(`Order #${order.id} - Garden of Weeden`)}
-        description={`View your order details for order #${order.id}.`}
+        title={getPageTitle(`Order ${order.orderNumber || `#${order.id}`} - Garden of Weeden`)}
+        description={`View your order details for order ${order.orderNumber || `#${order.id}`}.`}
         keywords={["order", "Garden of Weeden"]}
         canonicalUrl={getCanonicalUrl(`/orders/${order.id}`)}
         ogType="website"
@@ -139,7 +140,7 @@ export default function OrderDetails() {
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
             <div>
-              <h1 className="text-3xl font-playfair font-bold text-white">Order #{order.id}</h1>
+              <h1 className="text-3xl font-playfair font-bold text-white">Order {order.orderNumber || `#${order.id}`}</h1>
               <p className="text-gray-400 mt-1">
                 Placed on {new Date(order.createdAt).toLocaleDateString("en-US", {
                   year: "numeric",

@@ -873,11 +873,24 @@ export class DatabaseStorage implements IStorage {
 
   // Order methods
   async createOrder(insertOrder: InsertOrder): Promise<Order> {
+    // First, insert the order to get the ID
     const [order] = await db
       .insert(orders)
       .values(insertOrder)
       .returning();
-    return order;
+    
+    // Generate formatted order number: GOW-YYYY-XXXX
+    const year = new Date().getFullYear();
+    const orderNumber = `GOW-${year}-${String(order.id).padStart(4, '0')}`;
+    
+    // Update the order with the formatted order number
+    const [updatedOrder] = await db
+      .update(orders)
+      .set({ orderNumber })
+      .where(eq(orders.id, order.id))
+      .returning();
+    
+    return updatedOrder;
   }
 
   async createOrderItem(insertOrderItem: InsertOrderItem): Promise<OrderItem> {

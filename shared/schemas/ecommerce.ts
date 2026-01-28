@@ -49,6 +49,7 @@ export const products = pgTable("products", {
 
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
+  orderNumber: text("order_number").unique(), // Formatted order number like "GOW-2026-0001"
   userId: varchar("user_id").references(() => users.id),
   total: decimal("total", { precision: 10, scale: 2 }).notNull(),
   subtotal: decimal("subtotal", { precision: 10, scale: 2 }),

@@ -23,6 +23,7 @@ interface OrderItem {
 
 interface Order {
   id: number;
+  orderNumber?: string;
   userId?: string;
   total: string;
   subtotal?: string;
@@ -106,6 +107,7 @@ export default function OrdersManager() {
     const query = searchQuery.toLowerCase();
     return (
       order.id.toString().includes(query) ||
+      order.orderNumber?.toLowerCase().includes(query) ||
       order.customerName?.toLowerCase().includes(query) ||
       order.customerEmail?.toLowerCase().includes(query)
     );
@@ -153,7 +155,7 @@ export default function OrdersManager() {
             <TableBody>
               {filteredOrders.map((order) => (
                 <TableRow key={order.id} className="border-zinc-800 hover:bg-zinc-800/50">
-                  <TableCell className="text-white font-medium">#{order.id}</TableCell>
+                  <TableCell className="text-white font-medium">{order.orderNumber || `#${order.id}`}</TableCell>
                   <TableCell>
                     <div>
                       <p className="text-white">{order.customerName || "Anonymous"}</p>
@@ -195,7 +197,7 @@ export default function OrdersManager() {
       <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
         <DialogContent className="bg-zinc-900 border-zinc-800 text-white max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-white">Order #{selectedOrder?.id}</DialogTitle>
+            <DialogTitle className="text-white">Order {selectedOrder?.orderNumber || `#${selectedOrder?.id}`}</DialogTitle>
           </DialogHeader>
 
           {loadingDetails ? (
