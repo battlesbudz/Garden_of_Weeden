@@ -48,7 +48,7 @@ export default function SocialProofSection() {
             return (
               <motion.div
                 key={index}
-                className="text-center group"
+                className="text-center"
                 initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
@@ -57,8 +57,8 @@ export default function SocialProofSection() {
                   delay: prefersReducedMotion ? 0 : index * 0.1 
                 }}
               >
-                <div className="bg-midnight-grove/50 backdrop-blur-sm border border-green-500/20 rounded-xl p-6 hover:border-green-500/50 transition-all duration-300 h-full">
-                  <div className="bg-green-500/10 rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4 group-hover:bg-green-500/20 transition-colors">
+                <div className="bg-midnight-grove/50 backdrop-blur-sm border border-green-500/20 rounded-xl p-6 h-full">
+                  <div className="bg-green-500/10 rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4">
                     <IconComponent className="h-7 w-7 text-green-500" />
                   </div>
                   <h3 className="font-storybook text-lg text-parchment mb-2">{badge.title}</h3>

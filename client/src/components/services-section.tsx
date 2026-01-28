@@ -66,7 +66,7 @@ export default function ServicesSection() {
             return (
               <motion.div
                 key={index}
-                className="group bg-midnight-grove/30 backdrop-blur-sm border border-green-500/20 rounded-xl p-5 text-center hover:border-green-500/50 hover:bg-midnight-grove/50 transition-all duration-300"
+                className="bg-midnight-grove/30 backdrop-blur-sm border border-green-500/20 rounded-xl p-5 text-center"
                 initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
@@ -76,7 +76,7 @@ export default function ServicesSection() {
                   ease: "easeOut" 
                 }}
               >
-                <div className="bg-green-500/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 group-hover:bg-green-500/20 transition-colors">
+                <div className="bg-green-500/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
                   <IconComponent className="text-green-500 h-6 w-6" />
                 </div>
                 <h3 className="font-storybook text-sm md:text-base mb-1 text-parchment">
