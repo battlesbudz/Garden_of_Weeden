@@ -117,14 +117,26 @@ export function registerCheckoutRoutes(app: Express) {
       
       // Update order with payment result
       if (paymentResult.success) {
+        // Only mark as paid if the payment is actually completed (verified by provider)
+        // Pending payments remain pending until confirmed via webhook or status check
+        const isPaid = paymentResult.status === "completed";
+        
         await storage.updateOrderPayment(
           order.id,
           paymentResult.status,
           paymentResult.transactionId,
-          paymentResult.status === "completed" ? new Date() : undefined
+          isPaid ? new Date() : undefined
         );
         
-        // Clear the cart after successful order
+        // Update order status based on payment status
+        if (isPaid) {
+          await storage.updateOrderStatus(order.id, "paid");
+        } else {
+          // Keep as pending - payment not yet verified
+          await storage.updateOrderStatus(order.id, "pending");
+        }
+        
+        // Clear the cart after successful order placement
         await storage.clearCart(cart.id);
         
         res.json({

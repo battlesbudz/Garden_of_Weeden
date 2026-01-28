@@ -42,23 +42,33 @@ export class SandboxProvider implements PaymentProvider {
     // Simulate processing delay
     await new Promise(resolve => setTimeout(resolve, 500));
     
+    // Determine initial status based on payment method
+    // Cash payments are always pending until customer pays in-store
+    // ACH and debit in sandbox are pending because no real payment was processed
+    const isCash = request.paymentMethod === 'cash';
+    const initialStatus = 'pending'; // All sandbox payments start as pending - no real payment processed
+    
     // Store the payment
     sandboxPayments.set(transactionId, {
       transactionId,
       orderId: request.orderId,
       amount: request.amount,
-      status: 'completed', // Sandbox payments complete immediately
+      status: initialStatus,
       createdAt: new Date(),
-      paidAt: new Date(),
+      paidAt: undefined, // Not paid until verified
     });
 
-    console.log(`[Sandbox] Payment created: ${transactionId} for $${(request.amount / 100).toFixed(2)}`);
+    console.log(`[Sandbox] Payment created: ${transactionId} for $${(request.amount / 100).toFixed(2)} - Status: ${initialStatus}`);
+
+    const message = isCash 
+      ? 'Order placed successfully. Please pay when you pick up your order.'
+      : 'Order placed successfully. Payment is pending - you will receive confirmation once payment is verified. (Sandbox mode - configure a payment provider for live payments)';
 
     return {
       success: true,
       transactionId,
-      status: 'completed',
-      message: 'Sandbox payment completed successfully',
+      status: initialStatus,
+      message,
     };
   }
 

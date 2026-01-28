@@ -251,6 +251,15 @@ export default function OrderDetails() {
                       <span className="capitalize">{order.paymentMethod.replace("_", " ")}</span>
                     </div>
                   )}
+                  {(order.paymentStatus === "pending" || !order.paymentStatus) && (
+                    <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 mt-2">
+                      <p className="text-yellow-400 text-sm">
+                        {order.paymentMethod === "cash" 
+                          ? "Payment will be collected when you pick up your order." 
+                          : "Your order has been placed. Payment verification is pending - you will receive confirmation once payment is processed."}
+                      </p>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
