@@ -263,17 +263,6 @@ export default function Navigation() {
             {/* Social Links - Mobile */}
             {hasSocialLinks && (
               <div className="flex items-center gap-4 px-3 py-3 border-t border-green-500/30 mt-2">
-                {settings.instagramUrl && (
-                  <a
-                    href={settings.instagramUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-green-500 transition-colors"
-                    aria-label={`Follow ${settings.siteName} on Instagram`}
-                  >
-                    <FaInstagram className="h-5 w-5" />
-                  </a>
-                )}
                 {settings.facebookUrl && (
                   <a
                     href={settings.facebookUrl}
