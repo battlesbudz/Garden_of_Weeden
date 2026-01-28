@@ -533,12 +533,13 @@ export class DatabaseStorage implements IStorage {
         .where(eq(users.email, userData.email))
         .limit(1);
       
-      // If user exists with this email but different ID, update by email
+      // If user exists with this email but different ID, update by email (but keep the original ID!)
       if (existingByEmail.length > 0 && existingByEmail[0].id !== userData.id) {
+        const { id: _newId, ...updateData } = userData; // Exclude ID from update
         const [updated] = await db
           .update(users)
           .set({
-            ...userData,
+            ...updateData,
             updatedAt: new Date(),
           })
           .where(eq(users.email, userData.email))
@@ -547,17 +548,31 @@ export class DatabaseStorage implements IStorage {
       }
     }
     
-    // Otherwise, use normal upsert by ID
+    // Check if user exists by ID first
+    const existingById = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, userData.id))
+      .limit(1);
+    
+    if (existingById.length > 0) {
+      // Update existing user by ID
+      const { id: _id, ...updateData } = userData;
+      const [updated] = await db
+        .update(users)
+        .set({
+          ...updateData,
+          updatedAt: new Date(),
+        })
+        .where(eq(users.id, userData.id))
+        .returning();
+      return updated;
+    }
+    
+    // Insert new user
     const [user] = await db
       .insert(users)
       .values(userData)
-      .onConflictDoUpdate({
-        target: users.id,
-        set: {
-          ...userData,
-          updatedAt: new Date(),
-        },
-      })
       .returning();
     return user;
   }

@@ -62,7 +62,7 @@ const ADMIN_EMAILS = [
 
 async function upsertUser(
   claims: any,
-) {
+): Promise<{ id: string; email: string | null }> {
   const email = claims["email"];
   const isAdmin = ADMIN_EMAILS.some(adminEmail => 
     adminEmail.toLowerCase() === email?.toLowerCase()
@@ -83,7 +83,8 @@ async function upsertUser(
     userData.role = claims["role"];
   }
   
-  await storage.upsertUser(userData);
+  const user = await storage.upsertUser(userData);
+  return { id: user.id, email: user.email };
 }
 
 export async function setupAuth(app: Express) {
@@ -98,9 +99,15 @@ export async function setupAuth(app: Express) {
     tokens: client.TokenEndpointResponse & client.TokenEndpointResponseHelpers,
     verified: passport.AuthenticateCallback
   ) => {
-    const user = {};
+    const user: any = {};
     updateUserSession(user, tokens);
-    await upsertUser(tokens.claims());
+    // Get the actual user from the database (handles email matching to existing users)
+    const dbUser = await upsertUser(tokens.claims());
+    // Update claims.sub to match the actual database user ID
+    // This is important when an existing user logs in with a different OIDC provider
+    if (user.claims && dbUser.id !== user.claims.sub) {
+      user.claims.sub = dbUser.id;
+    }
     verified(null, user);
   };
 
