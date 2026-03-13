@@ -85,8 +85,25 @@ export function OCMWarning({ className = "", topPlacement = false }: OCMWarningP
           aria-atomic="true"
           role="status"
           aria-label="Rotating health warning"
+          style={{ marginBottom: '10px' }}
         >
           {rotatingWarning}
+        </p>
+
+        {/* HOPEline - Required by PLMA regulations */}
+        <p
+          className="ocm-hopeline-info"
+          data-testid="ocm-hopeline-info"
+        >
+          If you or someone you know has a gambling problem, contact the New York State HOPEline: Call 1-877-8-HOPENY (1-877-846-7369) | Text HOPENY (467369) |{' '}
+          <a
+            href="https://hopeny.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#000', textDecoration: 'underline' }}
+          >
+            hopeny.org
+          </a>
         </p>
       </div>
     </div>
@@ -156,6 +173,23 @@ export function OCMFooterWarning() {
           aria-label="Rotating health warning"
         >
           {rotatingWarning}
+        </p>
+
+        {/* HOPEline - Required by PLMA regulations */}
+        <p
+          className="ocm-hopeline-info"
+          style={{ marginBottom: '10px' }}
+          data-testid="ocm-hopeline-info"
+        >
+          If you or someone you know has a gambling problem, contact the New York State HOPEline: Call 1-877-8-HOPENY (1-877-846-7369) | Text HOPENY (467369) |{' '}
+          <a
+            href="https://hopeny.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#000', textDecoration: 'underline' }}
+          >
+            hopeny.org
+          </a>
         </p>
 
         {/* License Information */}
