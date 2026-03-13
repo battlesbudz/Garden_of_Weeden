@@ -39,7 +39,11 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative flex flex-col items-center justify-center bg-battles-black min-h-screen overflow-hidden"
+      className="relative flex flex-col items-center justify-center bg-battles-black overflow-hidden"
+      style={{
+        marginTop: 'calc(var(--hopeline-banner-height, 40px) + 64px)',
+        minHeight: 'calc(100vh - var(--hopeline-banner-height, 40px) - 64px)',
+      }}
     >
       <div className="absolute inset-0 z-0">
         <div className="w-full h-full opacity-50">
