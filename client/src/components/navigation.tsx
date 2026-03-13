@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
-import { HOPELINE_BANNER_HEIGHT } from "@/components/HOPElineBanner";
 import logoImage from "@assets/garden_of_weeden_logo_transparent_1762191379653.png";
 import type { CartWithItems } from "@shared/schema";
 
@@ -64,7 +63,7 @@ export default function Navigation() {
 
   return (
     <nav
-      style={{ top: `${HOPELINE_BANNER_HEIGHT}px` }}
+      style={{ top: 'var(--hopeline-banner-height, 40px)' }}
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled 
           ? 'bg-battles-black/95 backdrop-blur-md shadow-lg shadow-green-500/10 border-b border-green-500/30' 
