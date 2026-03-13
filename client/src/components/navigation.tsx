@@ -66,8 +66,8 @@ export default function Navigation() {
       style={{ top: 'var(--hopeline-banner-height, 40px)' }}
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled 
-          ? 'bg-battles-black/95 backdrop-blur-md shadow-lg shadow-green-500/10 border-b border-green-500/30' 
-          : 'bg-battles-black/80 backdrop-blur-sm border-b border-green-500/20'
+          ? 'bg-battles-black/95 shadow-lg shadow-green-500/10 border-b border-green-500/30' 
+          : 'bg-battles-black/80 border-b border-green-500/20'
       }`}
       role="navigation"
       aria-label="Main navigation"
