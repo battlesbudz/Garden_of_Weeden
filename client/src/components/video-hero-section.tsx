@@ -20,7 +20,11 @@ export default function VideoHeroSection({
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center text-center text-white overflow-hidden pt-36"
+      className="relative flex items-center justify-center text-center text-white overflow-hidden"
+      style={{
+        marginTop: 'calc(var(--hopeline-banner-height, 40px) + 64px)',
+        minHeight: 'calc(100vh - var(--hopeline-banner-height, 40px) - 64px)',
+      }}
     >
       {/* Background video or image with overlay */}
       <div className="absolute inset-0">
