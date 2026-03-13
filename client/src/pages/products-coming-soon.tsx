@@ -44,7 +44,7 @@ export default function ProductsPage() {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900">
         <Navigation />
-        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
+        <div className="container mx-auto px-4 pt-36 pb-20 text-center">
           <div className="animate-spin w-12 h-12 border-4 border-garden-green border-t-transparent rounded-full mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-400">Loading products...</p>
         </div>
@@ -65,7 +65,7 @@ export default function ProductsPage() {
         />
         <Navigation />
         
-        <div className="container mx-auto px-4 pt-28 pb-16 sm:pb-24">
+        <div className="container mx-auto px-4 pt-36 pb-16 sm:pb-24">
           <div className="max-w-3xl mx-auto text-center">
             <div className="mb-8 flex justify-center">
               <div className="bg-garden-green/10 p-6 rounded-full">
@@ -119,7 +119,7 @@ export default function ProductsPage() {
       />
       <Navigation />
       
-      <div className="container mx-auto px-4 pt-28 pb-12">
+      <div className="container mx-auto px-4 pt-36 pb-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-yeseva font-bold mb-4 text-gray-900 dark:text-white">
             Our <span className="text-garden-green">Products</span>

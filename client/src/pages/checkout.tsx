@@ -78,7 +78,7 @@ export default function Checkout() {
     return (
       <div className="min-h-screen bg-black text-white">
         <Navigation />
-        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
+        <div className="container mx-auto px-4 pt-36 pb-20 text-center">
           <div className="animate-spin w-12 h-12 border-4 border-battles-gold border-t-transparent rounded-full mx-auto mb-4"></div>
           <p className="text-gray-400">Loading checkout...</p>
         </div>
@@ -93,7 +93,7 @@ export default function Checkout() {
     return (
       <div className="min-h-screen bg-black text-white">
         <Navigation />
-        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
+        <div className="container mx-auto px-4 pt-36 pb-20 text-center">
           <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
           <Button onClick={() => navigate("/shop")} className="bg-battles-gold text-black hover:bg-battles-gold/90">
             Continue Shopping
@@ -115,7 +115,7 @@ export default function Checkout() {
           ogType="website"
         />
         <Navigation />
-        <div className="container mx-auto px-4 pt-28 pb-20">
+        <div className="container mx-auto px-4 pt-36 pb-20">
           <div className="max-w-2xl mx-auto text-center">
             <div className="bg-green-500/10 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
               <CheckCircle2 className="w-12 h-12 text-green-500" />
@@ -162,7 +162,7 @@ export default function Checkout() {
       />
       <Navigation />
 
-      <div className="container mx-auto px-4 pt-28 pb-12">
+      <div className="container mx-auto px-4 pt-36 pb-12">
         <h1 className="text-3xl sm:text-4xl font-playfair font-bold text-white mb-8 text-center">
           Checkout
         </h1>

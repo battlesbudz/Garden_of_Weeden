@@ -46,7 +46,7 @@ export default function Cart() {
     return (
       <div className="min-h-screen bg-black text-white">
         <Navigation />
-        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
+        <div className="container mx-auto px-4 pt-36 pb-20 text-center">
           <div className="animate-spin w-12 h-12 border-4 border-battles-gold border-t-transparent rounded-full mx-auto mb-4"></div>
           <p className="text-gray-400">Loading cart...</p>
         </div>
@@ -68,7 +68,7 @@ export default function Cart() {
       />
       <Navigation />
 
-      <div className="container mx-auto px-4 pt-28 pb-12">
+      <div className="container mx-auto px-4 pt-36 pb-12">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-between mb-8">
             <h1 className="text-3xl sm:text-4xl font-playfair font-bold text-white flex items-center gap-3">

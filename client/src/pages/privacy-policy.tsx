@@ -12,7 +12,7 @@ export default function PrivacyPolicy() {
         canonicalUrl={getCanonicalUrl("/privacy-policy")}
         ogType="article"
       />
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      <div className="max-w-4xl mx-auto px-4 py-12 pt-20">
         <Link href="/">
           <button 
             className="flex items-center text-battles-gold hover:text-yellow-400 mb-8 transition-colors"

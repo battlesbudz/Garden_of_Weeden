@@ -141,7 +141,7 @@ export default function Shop() {
     return (
       <div className="min-h-screen bg-black text-white">
         <Navigation />
-        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
+        <div className="container mx-auto px-4 pt-36 pb-20 text-center">
           <div className="animate-spin w-12 h-12 border-4 border-battles-gold border-t-transparent rounded-full mx-auto mb-4"></div>
           <p className="text-gray-400">Loading shop...</p>
         </div>
@@ -162,7 +162,7 @@ export default function Shop() {
         />
         <Navigation />
         
-        <div className="container mx-auto px-4 pt-28 pb-16 sm:pb-24">
+        <div className="container mx-auto px-4 pt-36 pb-16 sm:pb-24">
           <div className="max-w-3xl mx-auto text-center">
             <div className="mb-8 flex justify-center">
               <div className="bg-battles-gold/10 p-6 rounded-full">
@@ -216,7 +216,7 @@ export default function Shop() {
       />
       <Navigation />
       
-      <div className="container mx-auto px-4 pt-28 pb-12">
+      <div className="container mx-auto px-4 pt-36 pb-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-playfair font-bold mb-4 text-white">
             Our <span className="text-battles-gold">Shop</span>

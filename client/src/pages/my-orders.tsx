@@ -64,7 +64,7 @@ export default function MyOrders() {
     return (
       <div className="min-h-screen bg-black text-white">
         <Navigation />
-        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
+        <div className="container mx-auto px-4 pt-36 pb-20 text-center">
           <div className="animate-spin w-12 h-12 border-4 border-battles-gold border-t-transparent rounded-full mx-auto mb-4"></div>
           <p className="text-gray-400">Loading...</p>
         </div>
@@ -77,7 +77,7 @@ export default function MyOrders() {
     return (
       <div className="min-h-screen bg-black text-white">
         <Navigation />
-        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
+        <div className="container mx-auto px-4 pt-36 pb-20 text-center">
           <Package className="w-16 h-16 mx-auto text-gray-600 mb-4" />
           <h1 className="text-2xl font-bold mb-4">Sign In to View Orders</h1>
           <p className="text-gray-400 mb-8">Please sign in to see your order history.</p>
@@ -101,7 +101,7 @@ export default function MyOrders() {
       />
       <Navigation />
 
-      <div className="container mx-auto px-4 pt-28 pb-12">
+      <div className="container mx-auto px-4 pt-36 pb-12">
         <h1 className="text-3xl font-playfair font-bold text-white mb-8">My Orders</h1>
 
         {isLoading ? (

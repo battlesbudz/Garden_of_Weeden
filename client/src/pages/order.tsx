@@ -84,7 +84,7 @@ export default function OrderDetails() {
     return (
       <div className="min-h-screen bg-black text-white">
         <Navigation />
-        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
+        <div className="container mx-auto px-4 pt-36 pb-20 text-center">
           <div className="animate-spin w-12 h-12 border-4 border-battles-gold border-t-transparent rounded-full mx-auto mb-4"></div>
           <p className="text-gray-400">Loading order details...</p>
         </div>
@@ -97,7 +97,7 @@ export default function OrderDetails() {
     return (
       <div className="min-h-screen bg-black text-white">
         <Navigation />
-        <div className="container mx-auto px-4 pt-28 pb-20 text-center">
+        <div className="container mx-auto px-4 pt-36 pb-20 text-center">
           <div className="bg-red-500/10 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
             <AlertCircle className="w-12 h-12 text-red-500" />
           </div>
@@ -127,7 +127,7 @@ export default function OrderDetails() {
       />
       <Navigation />
 
-      <div className="container mx-auto px-4 pt-28 pb-12">
+      <div className="container mx-auto px-4 pt-36 pb-12">
         <Button
           onClick={() => navigate("/shop")}
           variant="ghost"

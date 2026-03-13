@@ -24,7 +24,7 @@ export default function KeywordLandingPage() {
       />
       <Navigation />
       
-      <div className="pt-24">
+      <div className="pt-36">
         {/* Hero Section */}
         <section className="py-16 bg-gradient-to-b from-black to-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
