@@ -61,7 +61,7 @@ export function OCMWarning({ className = "", topPlacement = false }: OCMWarningP
           fontWeight: 'bold',
           fontSize: '12px',
           padding: '12px 16px',
-          margin: topPlacement ? '0 auto 8px' : '8px auto 0',
+          margin: topPlacement ? '0 auto 20px' : '20px auto 0',
           maxWidth: '800px',
           borderRadius: '4px',
           lineHeight: '1.5',
@@ -88,28 +88,6 @@ export function OCMWarning({ className = "", topPlacement = false }: OCMWarningP
         >
           {rotatingWarning}
         </p>
-      </div>
-
-      {/* HOPEline - Required by PLMA regulations - displayed separately from yellow box */}
-      <div
-        style={{
-          fontFamily: 'Arial, Helvetica, sans-serif',
-          fontSize: '12px',
-          textAlign: 'center',
-          margin: '6px auto 0',
-          maxWidth: '800px',
-        }}
-        data-testid="ocm-hopeline-info"
-      >
-        New York State HOPEline: Call 1-877-8-HOPENY (1-877-846-7369) | Text HOPENY (467369) |{' '}
-        <a
-          href="https://hopeny.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ textDecoration: 'underline' }}
-        >
-          hopeny.org
-        </a>
       </div>
     </div>
   );
@@ -151,7 +129,7 @@ export function OCMFooterWarning() {
           fontWeight: 'bold',
           fontSize: '12px',
           padding: '16px',
-          margin: '0 auto 8px',
+          margin: '0 auto',
           maxWidth: '100%',
           borderRadius: '4px',
           lineHeight: '1.6',
@@ -188,27 +166,6 @@ export function OCMFooterWarning() {
         >
           New York State Licensed Microbusiness | OCMMICR-2023-000312
         </p>
-      </div>
-
-      {/* HOPEline - Required by PLMA regulations - displayed separately from yellow box */}
-      <div
-        style={{
-          fontFamily: 'Arial, Helvetica, sans-serif',
-          fontSize: '12px',
-          textAlign: 'center',
-          margin: '6px auto 8px',
-        }}
-        data-testid="ocm-hopeline-info"
-      >
-        New York State HOPEline: Call 1-877-8-HOPENY (1-877-846-7369) | Text HOPENY (467369) |{' '}
-        <a
-          href="https://hopeny.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ textDecoration: 'underline' }}
-        >
-          hopeny.org
-        </a>
       </div>
 
       {/* Link to OCM Consumer Site */}

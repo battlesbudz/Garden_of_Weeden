@@ -29,6 +29,7 @@ import { UserGuideOverlay } from "@/components/user-guide/user-guide-overlay";
 import { HelpButton } from "@/components/user-guide/help-button";
 import { useUserGuide } from "@/hooks/useUserGuide";
 import SkipNavigation from "@/components/accessibility/SkipNavigation";
+import HOPElineBanner from "@/components/HOPElineBanner";
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -43,6 +44,7 @@ function ScrollToTop() {
 function Router() {
   return (
     <>
+      <HOPElineBanner />
       <SkipNavigation />
       <ScrollToTop />
       <main id="main-content" role="main" tabIndex={-1}>
