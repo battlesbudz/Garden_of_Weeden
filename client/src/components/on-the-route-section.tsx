@@ -13,7 +13,7 @@ export default function OnTheRouteSection() {
           </h2>
           <p className="mt-3 max-w-2xl font-garden text-gray-300">
             Passing through by car, on foot, or along the local bike route, Garden of Weeden is an easy
-            stop for Farm to Flame products, lounge events, and local cannabis conversations.
+            stop for Farm to Flame products, lounge events, and local cannabis conversations, with off-street parking available.
           </p>
         </div>
         <div className="flex items-center gap-4 rounded-xl border border-green-500/20 bg-black/25 px-5 py-4">
@@ -22,7 +22,7 @@ export default function OnTheRouteSection() {
             <p className="font-semibold text-parchment">Bike-route friendly stop</p>
             <p className="flex items-center gap-1 text-gray-400">
               <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
-              Buffalo and Western NY rooted
+              Buffalo rooted with off-street parking
             </p>
           </div>
         </div>

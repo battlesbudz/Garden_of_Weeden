@@ -65,7 +65,7 @@ export default function KeywordLandingPage() {
                   </div>
                   <div>
                     <strong className="text-green-500">Location:</strong>
-                    <p className="text-gray-300">Buffalo, NY (Western New York)</p>
+                    <p className="text-gray-300">Buffalo, NY (Western New York) with off-street parking</p>
                   </div>
                   <div>
                     <strong className="text-green-500">Business Type:</strong>
@@ -126,7 +126,7 @@ export default function KeywordLandingPage() {
                   <li>Forbidden Fruit on-site consumption lounge</li>
                   <li>Fun and educational cannabis events</li>
                   <li>Compliant cannabis education support for private events</li>
-                  <li>CONTACT Jennifer Fornell (716) 420-1591 for private event scheduling</li>
+                  <li>Contact Jennifer Fornell at (716) 420-1591 for private event scheduling</li>
                 </ul>
               </div>
             </div>
