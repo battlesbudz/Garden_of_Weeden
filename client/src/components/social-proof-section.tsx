@@ -23,7 +23,7 @@ export default function SocialProofSection() {
   });
 
   const subtitle = settings?.socialProofSubtitle || "Trusted by Buffalo & Beyond";
-  const quote = settings?.socialProofQuote || "From service to soil — bringing veteran values to cannabis cultivation";
+  const quote = settings?.socialProofQuote || "Farm to Flame - local craft cannabis from people who know the farmers behind the flower";
 
   const trustBadges = [
     {
@@ -33,8 +33,8 @@ export default function SocialProofSection() {
     },
     {
       icon: Award,
-      title: settings?.trustBadge2Title || "Veteran Excellence",
-      description: settings?.trustBadge2Desc || "Military precision in cultivation"
+      title: settings?.trustBadge2Title || "Craft Farmer Network",
+      description: settings?.trustBadge2Desc || "Regional small-batch partners"
     },
     {
       icon: Leaf,
@@ -73,14 +73,14 @@ export default function SocialProofSection() {
                 initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ 
-                  duration: prefersReducedMotion ? 0 : 0.5, 
-                  delay: prefersReducedMotion ? 0 : index * 0.1 
+                transition={{
+                  duration: prefersReducedMotion ? 0 : 0.5,
+                  delay: prefersReducedMotion ? 0 : index * 0.1
                 }}
               >
                 <div className="bg-midnight-grove/50 backdrop-blur-sm border border-green-500/20 rounded-xl p-6 h-full">
                   <div className="bg-green-500/10 rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4">
-                    <IconComponent className="h-7 w-7 text-green-500" />
+                    <IconComponent className="h-7 w-7 text-green-500" aria-hidden="true" />
                   </div>
                   <h3 className="font-storybook text-lg text-parchment mb-2">{badge.title}</h3>
                   <p className="font-garden text-sm text-gray-400">{badge.description}</p>

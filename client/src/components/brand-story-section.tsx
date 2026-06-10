@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, Award, Heart, Users } from "lucide-react";
+import { ArrowRight, Award, Leaf, Users } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
 
@@ -18,10 +18,10 @@ export default function BrandStorySection() {
     queryKey: ['/api/site-settings'],
   });
 
-  const storyTitle = settings?.storyTitle || "From Service to Soil";
-  const storyText = settings?.storyText || "Garden of Weeden was founded by veterans who believe in bringing the same dedication, discipline, and attention to detail from military service to cannabis cultivation. Our Buffalo roots run deep, and we're committed to growing premium craft cannabis that honors both our service and our community.";
-  const storyButton1Text = settings?.storyButton1Text || "Read Our Full Story";
-  const storyButton2Text = settings?.storyButton2Text || "Explore Products";
+  const storyTitle = settings?.storyTitle || "Farm to Flame";
+  const storyText = settings?.storyText || "Garden of Weeden is a NYS licensed microbusiness and boutique cannabis dispensary built around a Farm to Flame concept. Our budtenders know the farmer partners, cultivation practices, and craft products we offer, with products sourced from our farm 15 miles south of Buffalo and other small craft growers across Central and Western NY.";
+  const storyButton1Text = settings?.storyButton1Text || "Read Our Farm Story";
+  const storyButton2Text = settings?.storyButton2Text || "Shop Craft Products";
 
   return (
     <section id="our-story" className="relative py-24 bg-battles-black overflow-hidden">
@@ -47,30 +47,32 @@ export default function BrandStorySection() {
 
             <div className="grid grid-cols-3 gap-4 mb-10">
               <div className="text-center p-4 bg-midnight-grove/30 rounded-xl border border-green-500/20">
-                <Award className="h-8 w-8 text-green-500 mx-auto mb-2" />
-                <p className="font-garden text-sm text-gray-400">Veteran Values</p>
+                <Award className="h-8 w-8 text-green-500 mx-auto mb-2" aria-hidden="true" />
+                <p className="font-garden text-sm text-gray-400">Local Farms</p>
               </div>
               <div className="text-center p-4 bg-midnight-grove/30 rounded-xl border border-green-500/20">
-                <Heart className="h-8 w-8 text-green-500 mx-auto mb-2" />
-                <p className="font-garden text-sm text-gray-400">Wellness Focus</p>
+                <Leaf className="h-8 w-8 text-green-500 mx-auto mb-2" aria-hidden="true" />
+                <p className="font-garden text-sm text-gray-400">Craft Products</p>
               </div>
               <div className="text-center p-4 bg-midnight-grove/30 rounded-xl border border-green-500/20">
-                <Users className="h-8 w-8 text-green-500 mx-auto mb-2" />
-                <p className="font-garden text-sm text-gray-400">Community First</p>
+                <Users className="h-8 w-8 text-green-500 mx-auto mb-2" aria-hidden="true" />
+                <p className="font-garden text-sm text-gray-400">Community Events</p>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/about">
-                <button className="group bg-transparent border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white px-8 py-4 rounded-xl font-garden font-semibold text-base transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-2">
-                  <span>{storyButton1Text}</span>
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </button>
+              <Link
+                href="/about"
+                className="group bg-transparent border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white px-8 py-4 rounded-xl font-garden font-semibold text-base transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-2"
+              >
+                <span>{storyButton1Text}</span>
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Link>
-              <Link href="/shop">
-                <button className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-garden font-semibold text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                  {storyButton2Text}
-                </button>
+              <Link
+                href="/shop"
+                className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-garden font-semibold text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              >
+                {storyButton2Text}
               </Link>
             </div>
           </motion.div>

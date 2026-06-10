@@ -1,6 +1,7 @@
 import { useRoute } from 'wouter';
 import { Link } from 'wouter';
 import Navigation from '@/components/navigation';
+import Footer from '@/components/footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { getCanonicalUrl } from '@/utils/seo';
 import { getLocationSEO, getLocationStructuredData, westernNYLocations } from '@/data/locationSEO';
@@ -132,15 +133,15 @@ export default function LocationPage() {
               <div className="bg-black rounded-lg p-6 text-center">
                 <Clock className="h-12 w-12 text-battles-gold mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-battles-gold mb-2">Status</h3>
-                <p className="text-gray-300">Coming 2025</p>
-                <p className="text-gray-400 text-sm">Pre-launch development</p>
+                <p className="text-gray-300">Open</p>
+                <p className="text-gray-400 text-sm">NYS licensed microbusiness</p>
               </div>
               
               <div className="bg-black rounded-lg p-6 text-center">
                 <Phone className="h-12 w-12 text-battles-gold mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-battles-gold mb-2">Contact</h3>
                 <p className="text-gray-300">info@gardenofweeden.com</p>
-                <p className="text-gray-400 text-sm">Stay updated on opening</p>
+                <p className="text-gray-400 text-sm">Ask about current Farm to Flame products</p>
               </div>
             </div>
           </div>
@@ -192,6 +193,7 @@ export default function LocationPage() {
           </div>
         </section>
       </div>
+      <Footer />
     </div>
   );
 }

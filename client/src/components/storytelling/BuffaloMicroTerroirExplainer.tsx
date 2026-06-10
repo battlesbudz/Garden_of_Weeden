@@ -84,7 +84,8 @@ export function BuffaloMicroTerroirExplainer() {
             const isSelected = selectedFactor === index;
 
             return (
-              <motion.div
+              <motion.button
+                type="button"
                 key={index}
                 initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -94,7 +95,9 @@ export function BuffaloMicroTerroirExplainer() {
                 }}
                 onMouseEnter={() => setSelectedFactor(index)}
                 onMouseLeave={() => setSelectedFactor(null)}
-                className={`bg-gray-800 border-2 rounded-lg p-6 transition-all duration-300 cursor-pointer ${
+                onFocus={() => setSelectedFactor(index)}
+                onBlur={() => setSelectedFactor(null)}
+                className={`bg-gray-800 border-2 rounded-lg p-6 text-left transition-all duration-300 ${
                   isSelected 
                     ? 'border-green-500 shadow-lg shadow-green-500/20 scale-105' 
                     : 'border-gray-700 hover:border-green-500/50'
@@ -125,7 +128,7 @@ export function BuffaloMicroTerroirExplainer() {
                 <p className="text-sm text-gray-400 text-center font-garden">
                   {factor.description}
                 </p>
-              </motion.div>
+              </motion.button>
             );
           })}
         </div>

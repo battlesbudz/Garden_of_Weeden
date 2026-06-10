@@ -222,7 +222,7 @@ export default function Shop() {
             Our <span className="text-battles-gold">Shop</span>
           </h1>
           <p className="text-lg text-gray-300">
-            Premium cannabis products from trusted brands
+            Farm to Flame craft cannabis products from trusted local brands
           </p>
         </div>
 
@@ -234,12 +234,15 @@ export default function Shop() {
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {brands.map((brand) => (
-                <Card
+                <button
+                  type="button"
                   key={brand.id}
-                  className={`bg-zinc-900 border-zinc-800 cursor-pointer transition-all hover:border-battles-gold ${
+                  className={`bg-zinc-900 border border-zinc-800 rounded-lg transition-all hover:border-battles-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-battles-gold ${
                     selectedBrand === brand.id ? "border-battles-gold ring-2 ring-battles-gold/50" : ""
                   }`}
                   onClick={() => setSelectedBrand(selectedBrand === brand.id ? null : brand.id)}
+                  aria-pressed={selectedBrand === brand.id}
+                  aria-label={`Filter by ${brand.name}`}
                 >
                   <CardContent className="p-4 flex flex-col items-center text-center">
                     {brand.logoUrl ? (
@@ -250,12 +253,12 @@ export default function Shop() {
                       />
                     ) : (
                       <div className="w-16 h-16 bg-zinc-800 rounded-full flex items-center justify-center mb-2">
-                        <Tags className="w-8 h-8 text-battles-gold" />
+                        <Tags className="w-8 h-8 text-battles-gold" aria-hidden="true" />
                       </div>
                     )}
                     <h3 className="text-white font-medium text-sm">{brand.name}</h3>
                   </CardContent>
-                </Card>
+                </button>
               ))}
             </div>
           </div>

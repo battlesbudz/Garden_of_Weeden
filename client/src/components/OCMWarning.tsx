@@ -10,14 +10,14 @@ interface OCMWarningProps {
 // Exact health warnings mandated by 9 NYCRR § 129.2(d)
 // These four statements must rotate in cannabis advertisements
 const HEALTH_WARNINGS = [
-  "Cannabis may cause impairment and may be habit forming.",
-  "Cannabis can impair concentration, coordination, and judgment. Do not operate a vehicle or machinery under the influence of cannabis.",
+  "Cannabis can be addictive.",
+  "Cannabis can impair concentration and coordination. Do not operate a vehicle or machinery under the influence of cannabis.",
   "There may be health risks associated with consumption of this product.",
   "Cannabis is not recommended for use by persons who are pregnant or nursing.",
 ] as const;
 
 // General safety statement required by § 129.2(c) - must appear on all advertisements
-const GENERAL_SAFETY_WARNING = "For use only by adults 21 years of age and older. Keep out of reach of children and pets. In case of accidental ingestion or overconsumption, contact the Poison Center at 1-800-222-1222 or call 9-1-1. Please consume responsibly." as const;
+const GENERAL_SAFETY_WARNING = "For use only by persons 21 years of age and older. Keep out of reach of children and pets. If someone accidentally consumes cannabis, contact the Poison Center. Consume responsibly." as const;
 
 /**
  * OCMWarning Component
@@ -115,7 +115,7 @@ export function OCMFooterWarning() {
   return (
     <div 
       className="ocm-footer-warning-container"
-      role="contentinfo"
+      role="region"
       aria-label="New York Cannabis Management Office Compliance Information"
       data-testid="ocm-footer-warning-container"
     >

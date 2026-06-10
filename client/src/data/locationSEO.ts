@@ -208,7 +208,7 @@ export const westernNYLocations: LocationSEOData[] = [
       localFacts: [
         "Home to University at Buffalo with 30,000+ students",
         "Affluent community with highest educated demographics",
-        "Progressive attitudes toward cannabis wellness",
+        "Interest in local craft cannabis education",
         "Easy access via I-290 and Maple Road"
       ],
       callToAction: "Discover premium cannabis quality at Garden of Weeden - education and excellence combined."
@@ -225,32 +225,32 @@ export const westernNYLocations: LocationSEOData[] = [
     population: 45920,
     demographics: "Family-oriented suburban community, working professionals, strong local pride",
     distance: "12 miles from Buffalo",
-    seoTitle: "Cannabis Dispensary Near West Seneca NY - Garden of Weeden Family-Friendly Cannabis",
-    seoDescription: "Premium cannabis dispensary serving West Seneca, NY families. Garden of Weeden in Buffalo offers quality cannabis products, 12 miles from West Seneca. Community-focused quality.",
+    seoTitle: "Cannabis Dispensary Near West Seneca NY - Garden of Weeden Farm to Flame",
+    seoDescription: "Premium cannabis dispensary serving adult customers near West Seneca, NY. Garden of Weeden in Buffalo offers Farm to Flame craft cannabis products, 12 miles from West Seneca.",
     keywords: [
       "cannabis near West Seneca NY",
       "West Seneca marijuana dispensary nearby",
-      "family friendly cannabis West Seneca",
+      "Farm to Flame cannabis West Seneca",
       "locally owned dispensary West Seneca",
       "Erie County cannabis"
     ],
     localCompetitors: ["Big box dispensaries", "Chain cannabis stores"],
     uniqueContent: {
-      intro: "West Seneca families trust locally-owned Garden of Weeden for premium cannabis experiences, just 18 minutes away in Buffalo.",
+      intro: "West Seneca adult customers can visit locally-owned Garden of Weeden for Farm to Flame cannabis experiences, just 18 minutes away in Buffalo.",
       benefits: [
         "18-minute drive to premium cannabis quality",
-        "Family-oriented educational approach",
-        "Community-focused business supporting local families",
-        "Safe consumption lounge environment",
+        "Local craft cannabis education",
+        "Community-focused business supporting regional farmers",
+        "Forbidden Fruit on-site consumption lounge",
         "Personal service from dedicated local staff"
       ],
       localFacts: [
-        "Strong family community with local business support",
-        "Growing acceptance of cannabis wellness benefits",
+        "Strong community with local business support",
+        "Growing interest in local craft cannabis",
         "Community seeking authentic local businesses",
         "Easy access via Seneca Street and Route 400"
       ],
-      callToAction: "Experience community-focused premium cannabis at Garden of Weeden, serving West Seneca families."
+      callToAction: "Experience community-focused Farm to Flame cannabis at Garden of Weeden, serving adult customers near West Seneca."
     },
     lastModified: "2025-11-03",
     priority: 0.7

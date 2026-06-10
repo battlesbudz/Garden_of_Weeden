@@ -58,7 +58,7 @@ export default function ProductsPage() {
       <div className="min-h-screen bg-white dark:bg-gray-900">
         <SEOHead
           title={getPageTitle("Products - Garden of Weeden")}
-          description="Explore our premium cannabis products and brands from Garden of Weeden in Buffalo, NY."
+          description="Explore Farm to Flame craft cannabis products and brands from Garden of Weeden in Buffalo, NY."
           keywords={["Garden of Weeden", "cannabis products", "Buffalo NY dispensary", "cannabis brands"]}
           canonicalUrl={getCanonicalUrl("/products")}
           ogType="website"
@@ -74,12 +74,12 @@ export default function ProductsPage() {
             </div>
             
             <h1 className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
-              Products <span className="text-garden-green">Coming Soon</span>
+              Products & <span className="text-garden-green">Brands</span>
             </h1>
             
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-              We're carefully curating a premium selection of cannabis products for you. 
-              Check back soon or visit our shop to stay updated.
+              We are updating the online product catalog. Visit the shop menu or ask our team about current
+              Farm to Flame products from local NYS craft growers.
             </p>
             
             <Card className="mt-12">
@@ -87,16 +87,15 @@ export default function ProductsPage() {
                 <div className="flex justify-center mb-4">
                   <Leaf className="h-12 w-12 text-garden-green" />
                 </div>
-                <CardTitle>Quality is Our Priority</CardTitle>
+                <CardTitle>Farm to Flame Products</CardTitle>
                 <CardDescription>
-                  We're working hard to bring you the finest cannabis products
+                  Local craft products from Garden of Weeden and regional farm partners
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Our team is dedicated to sourcing and developing premium products 
-                  that meet the highest standards. Stay tuned for updates on our 
-                  product launch.
+                  Our team focuses on local, small-batch cannabis products sourced from our farm
+                  south of Buffalo and other NYS small craft growers.
                 </p>
               </CardContent>
             </Card>
@@ -112,7 +111,7 @@ export default function ProductsPage() {
     <div className="min-h-screen bg-white dark:bg-gray-900">
       <SEOHead
         title={getPageTitle("Products - Garden of Weeden")}
-        description="Explore our premium cannabis products and brands from Garden of Weeden in Buffalo, NY."
+        description="Explore Farm to Flame craft cannabis products and brands from Garden of Weeden in Buffalo, NY."
         keywords={["Garden of Weeden", "cannabis products", "Buffalo NY dispensary", "cannabis brands"]}
         canonicalUrl={getCanonicalUrl("/products")}
         ogType="website"
@@ -125,7 +124,7 @@ export default function ProductsPage() {
             Our <span className="text-garden-green">Products</span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Discover our carefully curated selection of premium cannabis products and trusted brands
+            Discover our curated selection of Farm to Flame craft cannabis products and trusted local brands
           </p>
         </div>
 
