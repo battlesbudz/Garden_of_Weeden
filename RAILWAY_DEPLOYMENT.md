@@ -8,7 +8,7 @@ Railway can use the included `railway.json`:
 
 - Build command: `npm run build`
 - Start command: `npm run start`
-- Health check: `/api/auth/user`
+- Health check: `/health`
 
 ## Required environment variables
 
@@ -28,7 +28,7 @@ NODE_ENV=production
 The previous Replit auth integration required `REPLIT_DOMAINS` and `REPL_ID`, which are not available on Railway. The app now uses provider-neutral OpenID Connect when these variables are present:
 
 ```bash
-OIDC_ISSUER_URL=https://<your-identity-provider>/.well-known/openid-configuration-parent
+OIDC_ISSUER_URL=https://<your-identity-provider>
 OIDC_CLIENT_ID=<client id>
 OIDC_CLIENT_SECRET=<client secret>
 ```
@@ -46,7 +46,7 @@ Logout and login routes remain:
 - `GET /api/logout`
 - `GET /api/auth/user`
 
-If OIDC variables are not set, the app still boots and `/api/auth/user` returns unauthenticated responses, but login routes return `503`.
+If OIDC variables are not set, the app still boots and login routes return `503`.
 
 ## Database
 
