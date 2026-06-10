@@ -43,8 +43,8 @@ const quickStartOptions: QuickStartOption[] = [
   },
   {
     id: 'about',
-    title: 'Our Veteran Story',
-    description: 'Learn about our service-forged journey from military to cultivation mastery.',
+    title: 'Farm to Flame',
+    description: 'Learn how local farm partners, craft products, and the Forbidden Fruit lounge shape Garden of Weeden.',
     icon: BookOpen,
     action: 'Read Our Story',
     color: 'bg-green-500/20 text-green-400 border-green-500/30',

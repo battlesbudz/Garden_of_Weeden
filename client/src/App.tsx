@@ -65,7 +65,7 @@ function Router() {
         {/* Admin Dashboard */}
         <Route path="/admin" component={AdminDashboard} />
         
-        {/* Product Pages - Coming Soon */}
+        {/* Product Pages */}
         <Route path="/products" component={ProductsComingSoon} />
         <Route path="/products/:slug" component={ProductsComingSoon} />
         
