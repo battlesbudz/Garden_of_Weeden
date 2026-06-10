@@ -155,8 +155,8 @@ export default function Shop() {
       <div className="min-h-screen bg-black text-white">
         <SEOHead
           title={getPageTitle("Shop - Garden of Weeden")}
-          description="Garden of Weeden shop opening soon. Premium cannabis products and merchandise from your favorite business in Buffalo, NY."
-          keywords={["Garden of Weeden", "cannabis shop", "Buffalo NY dispensary", "cannabis products", "coming soon"]}
+          description="Garden of Weeden current menu updates for Farm to Flame craft cannabis products in Buffalo, NY."
+          keywords={["Garden of Weeden", "cannabis shop", "Buffalo NY dispensary", "Farm to Flame", "cannabis products"]}
           canonicalUrl={getCanonicalUrl("/shop")}
           ogType="website"
         />
@@ -166,17 +166,17 @@ export default function Shop() {
           <div className="max-w-3xl mx-auto text-center">
             <div className="mb-8 flex justify-center">
               <div className="bg-battles-gold/10 p-6 rounded-full">
-                <ShoppingBag className="h-16 w-16 text-battles-gold" />
+                <ShoppingBag className="h-16 w-16 text-battles-gold" aria-hidden="true" />
               </div>
             </div>
             
             <h1 className="text-4xl sm:text-5xl font-playfair font-bold mb-4 text-white">
-              Shop <span className="text-battles-gold">Opening Soon</span>
+              Current <span className="text-battles-gold">Menu Updates</span>
             </h1>
             
             <p className="text-lg text-gray-300 mb-8">
-              We're carefully curating a premium selection of cannabis products for you. 
-              Check back soon for our grand opening!
+              We are updating the online shop menu. Ask our team about current Farm to Flame products,
+              local farm partner releases, and in-store availability.
             </p>
             
             <Card className="mt-12 bg-gray-900 border-battles-gold/20">
@@ -186,14 +186,13 @@ export default function Shop() {
                 </div>
                 <CardTitle className="text-battles-gold">Garden of Weeden</CardTitle>
                 <CardDescription className="text-gray-400">
-                  Quality is Our Priority
+                  Farm to Flame Products
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-300">
-                  Our team is dedicated to sourcing and developing premium products 
-                  that meet the highest standards. Stay tuned for updates on our 
-                  shop launch. We appreciate your patience!
+                  Our team focuses on local, small-batch cannabis products sourced from our farm
+                  south of Buffalo and other NYS small craft growers.
                 </p>
               </CardContent>
             </Card>
