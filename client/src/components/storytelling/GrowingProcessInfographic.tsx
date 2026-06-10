@@ -79,7 +79,7 @@ export function GrowingProcessInfographic() {
             Our Cultivation Journey
           </h2>
           <p className="text-xl text-gray-400 font-garden max-w-3xl mx-auto">
-            From seed to shelf, every step executed with military precision and craft passion
+            From seed to shelf, every step is guided by patient craft, careful handling, and local farm knowledge
           </p>
         </motion.div>
 
@@ -201,7 +201,7 @@ export function GrowingProcessInfographic() {
               <span className="font-semibold">Total Cycle:</span> Approximately 3-6 months from seed to shelf
             </p>
             <p className="text-sm text-green-200 font-garden">
-              Every batch tracked with military precision for consistency and quality
+              Every batch is tracked with care for consistency, quality, and a clear Farm to Flame story
             </p>
           </div>
         </motion.div>

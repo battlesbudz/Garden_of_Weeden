@@ -110,9 +110,10 @@ export default function About() {
               </p>
               <p className="font-garden text-gray-300 mb-6 leading-relaxed">
                 Our mission is to support small family farms, women, veteran, and minority owned
-                businesses instead of large corporate organizations. We care about the products we
-                serve our community and believe patience, attention to detail, and unwavering
-                commitment to excellence help us serve fantastic craft cannabis products.
+                businesses instead of large corporate organizations. Many of our producer
+                relationships are connected through the Cannabis Farmers Alliance. We care about
+                the products we serve our community and believe patience, attention to detail, and
+                unwavering commitment to excellence help us serve fantastic craft cannabis products.
               </p>
               <blockquote className="border-l-4 border-green-500 pl-6 font-script text-xl text-parchment italic">
                 "Quality cannabis, grown with care and integrity."
@@ -168,7 +169,7 @@ export default function About() {
                   </li>
                   <li className="flex items-start gap-2">
                     <MapPin className="h-5 w-5 text-green-500 flex-shrink-0 mt-1" aria-hidden="true" />
-                    <span>CONTACT Jennifer Fornell (716) 420-1591 for private event scheduling</span>
+                    <span>Contact Jennifer Fornell at (716) 420-1591 for private event scheduling</span>
                   </li>
                 </ul>
               </div>
