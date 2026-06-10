@@ -37,15 +37,15 @@ export default function Blog() {
     <div className="min-h-screen overflow-x-hidden bg-battles-black">
       <SEOHead
         title="Cannabis Blog - Garden of Weeden"
-        description="Explore expert insights on cannabis cultivation, wellness, and Buffalo's craft cannabis scene from Garden of Weeden's veteran-owned team."
+        description="Explore insights on cannabis education, local craft products, Farm to Flame sourcing, and Buffalo's cannabis scene from Garden of Weeden."
         keywords={[
           "cannabis blog",
           "Buffalo cannabis",
           "cannabis cultivation guide",
-          "cannabis wellness",
+          "Farm to Flame",
           "craft cannabis",
           "micro-terroir cannabis",
-          "veteran cannabis blog",
+          "local cannabis farmers",
           "Buffalo NY cannabis",
           "cannabis education"
         ]}
@@ -65,8 +65,8 @@ export default function Blog() {
           </p>
           <div className="h-1 w-32 bg-green-500 mx-auto mb-8"></div>
           <p className="font-garden text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Expert insights on craft cannabis cultivation, wellness advocacy, and Buffalo's 
-            emerging cannabis scene from our veteran-owned team.
+            Insights on craft cannabis, Farm to Flame sourcing, local farmer partners, and Buffalo's
+            emerging cannabis scene from Garden of Weeden.
           </p>
         </div>
       </section>

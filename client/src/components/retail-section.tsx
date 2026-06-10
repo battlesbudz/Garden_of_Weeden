@@ -127,7 +127,7 @@ export default function RetailSection() {
                     <Award className="h-10 w-10 text-green-500 mx-auto mb-3 group-hover:text-green-400 transition-colors" />
                   </div>
                   <h4 className="font-storybook text-lg text-parchment mb-2 group-hover:text-green-400 transition-colors">Harvest</h4>
-                  <p className="text-sm text-gray-300 group-hover:text-gray-200 transition-colors">Hand-trimmed with veteran precision</p>
+                  <p className="text-sm text-gray-300 group-hover:text-gray-200 transition-colors">Hand-trimmed with craft care</p>
                 </div>
                 <div className="group bg-midnight-grove/50 backdrop-blur-md border border-green-500/30 rounded-xl p-6 text-center hover:border-green-500/70 hover:bg-midnight-grove/70 hover:scale-105 hover:shadow-xl hover:shadow-green-500/20 transition-all duration-300 cursor-pointer">
                   <div className="transform group-hover:scale-110 transition-transform duration-300">
@@ -141,7 +141,7 @@ export default function RetailSection() {
                     <MapPin className="h-10 w-10 text-green-500 mx-auto mb-3 group-hover:text-green-400 transition-colors" />
                   </div>
                   <h4 className="font-storybook text-lg text-parchment mb-2 group-hover:text-green-400 transition-colors">Local</h4>
-                  <p className="text-sm text-gray-300 group-hover:text-gray-200 transition-colors">Buffalo-proud, veteran-owned</p>
+                  <p className="text-sm text-gray-300 group-hover:text-gray-200 transition-colors">Buffalo-proud, locally rooted</p>
                 </div>
               </div>
             </motion.div>
@@ -164,7 +164,7 @@ export default function RetailSection() {
           </div>
         </div>
 
-        {/* Coming Soon CTA - Enhanced */}
+        {/* Farm to Flame CTA */}
         <motion.div 
           className="relative overflow-hidden text-center bg-midnight-grove/50 backdrop-blur-md border border-green-500/40 rounded-2xl p-16 shadow-2xl hover:border-green-500/70 hover:shadow-3xl hover:shadow-green-500/20 transition-all duration-500"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
@@ -175,19 +175,18 @@ export default function RetailSection() {
           <div className="absolute inset-0 bg-gradient-radial from-green-500/5 via-transparent to-transparent"></div>
           <div className="relative z-10">
           <h3 className="font-storybook text-3xl text-parchment mb-4">
-            The Harvest is Coming
+            Farm to Flame Updates
           </h3>
           <p className="font-garden text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Be among the first to experience Buffalo's veteran-owned cannabis cultivation. 
-            Join the Garden Guild to receive exclusive updates when we launch.
+            Follow current local farm partner releases, Forbidden Fruit lounge events, and seasonal craft products.
           </p>
           <button
             onClick={() => scrollToSection("newsletter")}
             className="bg-green-500 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-garden font-semibold text-lg shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300"
-            aria-label="Subscribe to newsletter to get notified when we launch"
+            aria-label="Subscribe to newsletter for Farm to Flame updates"
             data-testid="retail-join-waitlist"
           >
-            Join the Waitlist
+            Join the Garden List
           </button>
           </div>
         </motion.div>
