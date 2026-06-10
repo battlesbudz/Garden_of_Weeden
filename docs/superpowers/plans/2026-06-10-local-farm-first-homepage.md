@@ -23,7 +23,7 @@
 - Modify: `client/src/components/featured-products-section.tsx`
   - Converts current product preview into a secondary Current Craft Menu bridge.
 - Create: `client/src/components/lounge-events-section.tsx`
-  - Replaces broad service/benefit grid with Forbidden Fruit lounge, private events, compliant cannabis education support, and Jennifer contact path.
+  - Replaces broad service/benefit grid with Forbidden Fruit lounge, private events, bookable mobile weed bar inquiries, and Jennifer contact path.
 - Create: `client/src/components/on-the-route-section.tsx`
   - Adds subtle cyclist/local route stop signal.
 - Modify: `client/src/components/newsletter-section.tsx`
@@ -339,7 +339,7 @@ const eventItems = [
   "Forbidden Fruit on-site consumption lounge",
   "Fun and educational cannabis events",
   "Private events and lounge bookings",
-  "Compliant private event planning and cannabis education support",
+  "Bookable mobile weed bar experience for parties and private events, planned within New York cannabis rules",
 ];
 
 export default function LoungeEventsSection() {
@@ -385,7 +385,7 @@ export default function LoungeEventsSection() {
           >
             <div className="mb-6 flex items-center gap-3">
               <GlassWater className="h-7 w-7 text-green-400" aria-hidden="true" />
-              <h3 className="font-storybook text-2xl text-parchment">Lounge, events, and education</h3>
+              <h3 className="font-storybook text-2xl text-parchment">Lounge, events, and mobile weed bar</h3>
             </div>
             <ul className="space-y-4">
               {eventItems.map((item) => (

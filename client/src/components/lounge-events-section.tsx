@@ -5,7 +5,7 @@ const eventItems = [
   "Forbidden Fruit on-site consumption lounge",
   "Fun and educational cannabis events",
   "Private events and lounge bookings",
-  "Compliant private event planning and cannabis education support",
+  "Bookable mobile weed bar experience for parties and private events, planned within New York cannabis rules",
 ];
 
 export default function LoungeEventsSection() {
@@ -30,8 +30,9 @@ export default function LoungeEventsSection() {
             </h2>
             <p className="mt-6 font-garden text-lg leading-relaxed text-gray-300">
               The lounge gives guests a place to relax, learn, and connect around craft cannabis.
-              From in-store events to private gatherings, Garden of Weeden can make the Farm to Flame
-              experience part of the occasion.
+              From in-store events to private gatherings and mobile weed bar bookings, Garden of Weeden can
+              make the Farm to Flame experience part of the occasion while keeping each event aligned with
+              New York cannabis rules.
             </p>
             <a
               href="tel:+17164201591"
@@ -51,7 +52,7 @@ export default function LoungeEventsSection() {
           >
             <div className="mb-6 flex items-center gap-3">
               <GlassWater className="h-7 w-7 text-green-400" aria-hidden="true" />
-              <h3 className="font-storybook text-2xl text-parchment">Lounge, events, and education</h3>
+              <h3 className="font-storybook text-2xl text-parchment">Lounge, events, and mobile weed bar</h3>
             </div>
             <ul className="space-y-4">
               {eventItems.map((item) => (

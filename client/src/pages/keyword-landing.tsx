@@ -96,8 +96,8 @@ export default function KeywordLandingPage() {
                     owned businesses instead of large corporate organizations.
                   </p>
                   <p>
-                    The Forbidden Fruit lounge hosts on-site consumption, community events, and
-                    private event options.
+                    The Forbidden Fruit lounge hosts on-site consumption, community events, private
+                    event options, and mobile weed bar bookings planned within New York cannabis rules.
                   </p>
                 </div>
               </div>
@@ -125,7 +125,7 @@ export default function KeywordLandingPage() {
                 <ul className="text-gray-300 space-y-2">
                   <li>Forbidden Fruit on-site consumption lounge</li>
                   <li>Fun and educational cannabis events</li>
-                  <li>Compliant cannabis education support for private events</li>
+                  <li>Bookable mobile weed bar experience for parties and events</li>
                   <li>Contact Jennifer Fornell at (716) 420-1591 for private event scheduling</li>
                 </ul>
               </div>
