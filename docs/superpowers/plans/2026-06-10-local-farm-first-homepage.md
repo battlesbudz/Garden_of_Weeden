@@ -23,7 +23,7 @@
 - Modify: `client/src/components/featured-products-section.tsx`
   - Converts current product preview into a secondary Current Craft Menu bridge.
 - Create: `client/src/components/lounge-events-section.tsx`
-  - Replaces broad service/benefit grid with Forbidden Fruit lounge, private events, mobile weed bar, and Jennifer contact path.
+  - Replaces broad service/benefit grid with Forbidden Fruit lounge, private events, compliant cannabis education support, and Jennifer contact path.
 - Create: `client/src/components/on-the-route-section.tsx`
   - Adds subtle cyclist/local route stop signal.
 - Modify: `client/src/components/newsletter-section.tsx`
@@ -339,7 +339,7 @@ const eventItems = [
   "Forbidden Fruit on-site consumption lounge",
   "Fun and educational cannabis events",
   "Private events and lounge bookings",
-  "Mobile weed bar services for off-site events",
+  "Compliant private event planning and cannabis education support",
 ];
 
 export default function LoungeEventsSection() {

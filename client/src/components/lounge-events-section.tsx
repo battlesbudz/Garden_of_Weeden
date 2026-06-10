@@ -5,7 +5,7 @@ const eventItems = [
   "Forbidden Fruit on-site consumption lounge",
   "Fun and educational cannabis events",
   "Private events and lounge bookings",
-  "Mobile weed bar services for off-site events",
+  "Compliant private event planning and cannabis education support",
 ];
 
 export default function LoungeEventsSection() {
@@ -51,7 +51,7 @@ export default function LoungeEventsSection() {
           >
             <div className="mb-6 flex items-center gap-3">
               <GlassWater className="h-7 w-7 text-green-400" aria-hidden="true" />
-              <h3 className="font-storybook text-2xl text-parchment">Lounge, events, and mobile service</h3>
+              <h3 className="font-storybook text-2xl text-parchment">Lounge, events, and education</h3>
             </div>
             <ul className="space-y-4">
               {eventItems.map((item) => (

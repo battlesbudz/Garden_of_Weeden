@@ -15,7 +15,7 @@ As a NYS microbusiness with a farm 15 miles south of Buffalo, Farm to Flame shou
 ## Conversion Priorities
 
 1. Build trust in the local farm and craft cannabis story.
-2. Drive lounge, event, private event, and mobile weed bar inquiries.
+2. Drive lounge, event, private event, and compliant cannabis education inquiries.
 3. Let visitors view the current menu through the All Leaves menu path without making ecommerce the main brand experience.
 
 ## Required Brand Messages
@@ -27,7 +27,7 @@ As a NYS microbusiness with a farm 15 miles south of Buffalo, Farm to Flame shou
 - Garden of Weeden supports small family farms, women-owned businesses, veteran-owned businesses, minority-owned businesses, microbusinesses, and producers connected to Cannabis Farmers Alliance.
 - Other carried products come from local and regional farms, microbusinesses, and producers with direct relationships through Cannabis Farmers Alliance.
 - Budtenders know the farmer partners, cultivation practices, and product stories behind what is on the shelf.
-- The Forbidden Fruit lounge is part of the experience and can support events, private events, and mobile weed bar inquiries.
+- The Forbidden Fruit lounge is part of the experience and can support events, private events, and compliant cannabis education inquiries.
 - Cycling should appear only as a subtle local convenience signal, not as a major brand theme.
 
 ## Homepage Structure
@@ -108,7 +108,7 @@ Required content:
 - On-site cannabis consumption lounge.
 - Fun and educational cannabis events.
 - Private event scheduling.
-- Mobile weed bar services.
+- Compliant cannabis education support for private events.
 - Contact Jennifer Fornell at `(716) 420-1591` for private event scheduling.
 
 The section should feel inviting and premium, but still clear and practical.
