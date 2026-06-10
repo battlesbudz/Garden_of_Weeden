@@ -50,10 +50,7 @@ export function useUserGuide() {
     localStorage.removeItem('ageVerified');
     localStorage.removeItem('ageVerifiedDate');
     
-    // Open NY OCM consumer education site in new tab (avoids back-button issues)
-    window.open('https://cannabis.ny.gov/consumers', '_blank');
-    
-    // Keep modal open - user must close the browser tab/window to exit
+    window.location.href = 'https://cannabis.ny.gov/consumers';
   };
 
   const handleQuickStartClose = () => {

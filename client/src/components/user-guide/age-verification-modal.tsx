@@ -12,24 +12,77 @@ interface AgeVerificationModalProps {
 
 export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerificationModalProps) {
   const prefersReducedMotion = useReducedMotion();
+  const dialogRef = React.useRef<HTMLDivElement>(null);
+  const previousFocusRef = React.useRef<HTMLElement | null>(null);
   
-  // Simple scroll lock - just use overflow hidden
   React.useEffect(() => {
-    if (isOpen) {
-      // Lock body scroll with simple overflow hidden
-      const originalOverflow = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      
-      return () => {
-        // Restore overflow
-        document.body.style.overflow = originalOverflow;
-      };
+    if (!isOpen) {
+      return;
     }
+
+    previousFocusRef.current = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const hiddenBackground = [
+      document.querySelector('main'),
+      document.querySelector('nav[aria-label="Main navigation"]'),
+      document.querySelector('[data-testid="hopeline-banner"]'),
+    ].filter((element): element is HTMLElement => element instanceof HTMLElement);
+    const previousAriaHidden = hiddenBackground.map((element) => element.getAttribute('aria-hidden'));
+    hiddenBackground.forEach((element) => element.setAttribute('aria-hidden', 'true'));
+
+    const focusTimer = window.setTimeout(() => {
+      dialogRef.current
+        ?.querySelector<HTMLElement>('[data-testid="age-gate-verify-button"]')
+        ?.focus();
+    }, 0);
+
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.body.style.overflow = originalOverflow;
+      hiddenBackground.forEach((element, index) => {
+        const previousValue = previousAriaHidden[index];
+        if (previousValue === null) {
+          element.removeAttribute('aria-hidden');
+        } else {
+          element.setAttribute('aria-hidden', previousValue);
+        }
+      });
+      previousFocusRef.current?.focus();
+    };
   }, [isOpen]);
   
   const handleVerify = () => {
     // No localStorage - age verification required on every page load
     onVerified();
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'Tab') {
+      return;
+    }
+
+    const focusableElements = dialogRef.current?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusableElements?.length) {
+      return;
+    }
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (event.shiftKey && document.activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+    } else if (!event.shiftKey && document.activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
   };
 
   if (!isOpen) return null;
@@ -44,6 +97,9 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
       aria-modal="true"
       aria-labelledby="age-verification-title"
       aria-describedby="age-verification-description"
+      ref={dialogRef}
+      tabIndex={-1}
+      onKeyDown={handleKeyDown}
     >
       {/* Background Image with Overlays */}
       <div className="absolute inset-0 z-0">
@@ -120,7 +176,7 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
           >
             <div className="flex flex-col items-center gap-0.5 p-1.5 bg-black/40 border border-green-500/30 rounded-lg">
               <Award className="h-4 w-4 text-green-500" aria-hidden="true" />
-              <span className="font-garden text-[10px] text-white leading-tight">Veteran-Owned</span>
+              <span className="font-garden text-[10px] text-white leading-tight">Farm to Flame</span>
             </div>
             <div className="flex flex-col items-center gap-0.5 p-1.5 bg-black/40 border border-green-500/30 rounded-lg">
               <MapPin className="h-4 w-4 text-green-500" aria-hidden="true" />

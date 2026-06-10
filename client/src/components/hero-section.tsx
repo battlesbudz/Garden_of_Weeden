@@ -1,4 +1,4 @@
-import { Award, MapPin, Heart, ShoppingBag, ArrowRight, Sparkles } from "lucide-react";
+import { Award, MapPin, Leaf, ShoppingBag, ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -26,15 +26,15 @@ export default function HeroSection() {
   });
 
   const heroTitle = settings?.heroTitle || "Garden of Weeden";
-  const heroTagline = settings?.heroTagline || "Premium Craft Cannabis";
-  const heroSubtitle = settings?.heroSubtitle || "Veteran-owned. Buffalo-grown. Crafted with precision and care for those who appreciate quality.";
-  const heroShopButtonText = settings?.heroShopButtonText || "Shop Our Collection";
+  const heroTagline = settings?.heroTagline || "Farm to Flame Cannabis";
+  const heroSubtitle = settings?.heroSubtitle || "Local, small-batch cannabis products sourced from our farm south of Buffalo and small craft growers across Central and Western NY.";
+  const heroShopButtonText = settings?.heroShopButtonText || "Shop Farm to Flame";
   const heroStoryButtonText = settings?.heroStoryButtonText || "Our Story";
-  const heroVeteranBadge = settings?.heroVeteranBadge || "Veteran-Owned & Operated";
-  const pillar1Title = settings?.pillar1Title || "Veteran-Owned";
+  const heroVeteranBadge = settings?.heroVeteranBadge || "Farm to Flame";
+  const pillar1Title = settings?.pillar1Title || "Local Farm Partners";
   const pillar2Title = settings?.pillar2Title || "Buffalo Roots";
-  const pillar3Title = settings?.pillar3Title || "Wellness Focused";
-  const locationText = settings?.locationText || "Proudly Cultivated in Buffalo, NY";
+  const pillar3Title = settings?.pillar3Title || "Craft Products";
+  const locationText = settings?.locationText || "Proudly cultivated in the regional area";
 
   return (
     <section
@@ -69,7 +69,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.6, ease: "easeOut" }}
         >
-          <Award className="h-4 w-4 text-green-400" />
+          <Award className="h-4 w-4 text-green-400" aria-hidden="true" />
           <span className="font-garden text-sm text-green-400 font-semibold tracking-wide uppercase">{heroVeteranBadge}</span>
         </motion.div>
 
@@ -105,23 +105,21 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.5, ease: "easeOut" }}
         >
-          <Link href="/shop">
-            <button
-              className="group bg-green-500 hover:bg-green-600 text-white px-10 py-5 rounded-xl font-garden font-bold text-lg shadow-xl hover:shadow-2xl hover:shadow-green-500/40 transform hover:scale-105 transition-all duration-300 flex items-center gap-3"
-              data-testid="hero-cta-shop"
-            >
-              <ShoppingBag className="h-5 w-5" />
-              <span>{heroShopButtonText}</span>
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+          <Link
+            href="/shop"
+            className="group bg-green-500 hover:bg-green-600 text-white px-10 py-5 rounded-xl font-garden font-bold text-lg shadow-xl hover:shadow-2xl hover:shadow-green-500/40 transform hover:scale-105 transition-all duration-300 flex items-center gap-3"
+            data-testid="hero-cta-shop"
+          >
+            <ShoppingBag className="h-5 w-5" aria-hidden="true" />
+            <span>{heroShopButtonText}</span>
+            <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
           </Link>
-          <Link href="/about">
-            <button
-              className="border-2 border-parchment/60 text-parchment px-8 py-4 rounded-xl font-garden font-semibold text-base hover:bg-parchment/10 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-              data-testid="hero-cta-story"
-            >
-              {heroStoryButtonText}
-            </button>
+          <Link
+            href="/about"
+            className="border-2 border-parchment/60 text-parchment px-8 py-4 rounded-xl font-garden font-semibold text-base hover:bg-parchment/10 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            data-testid="hero-cta-story"
+          >
+            {heroStoryButtonText}
           </Link>
         </motion.div>
 
@@ -132,19 +130,19 @@ export default function HeroSection() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.6, ease: "easeOut" }}
         >
           <div className="flex items-center gap-2 text-gray-300">
-            <Award className="h-5 w-5 text-green-500" />
+            <Award className="h-5 w-5 text-green-500" aria-hidden="true" />
             <span className="font-garden text-sm md:text-base">{pillar1Title}</span>
           </div>
           <div className="flex items-center gap-2 text-gray-300">
-            <MapPin className="h-5 w-5 text-green-500" />
+            <MapPin className="h-5 w-5 text-green-500" aria-hidden="true" />
             <span className="font-garden text-sm md:text-base">{pillar2Title}</span>
           </div>
           <div className="flex items-center gap-2 text-gray-300">
-            <Heart className="h-5 w-5 text-green-500" />
+            <Leaf className="h-5 w-5 text-green-500" aria-hidden="true" />
             <span className="font-garden text-sm md:text-base">{pillar3Title}</span>
           </div>
           <div className="flex items-center gap-2 text-gray-300">
-            <Sparkles className="h-5 w-5 text-green-500" />
+            <Sparkles className="h-5 w-5 text-green-500" aria-hidden="true" />
             <span className="font-garden text-sm md:text-base">Sun-Grown Quality</span>
           </div>
         </motion.div>
@@ -155,7 +153,7 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ duration: prefersReducedMotion ? 0 : 1, delay: prefersReducedMotion ? 0 : 0.8, ease: "easeOut" }}
         >
-          <MapPin className="h-4 w-4 text-green-500" />
+          <MapPin className="h-4 w-4 text-green-500" aria-hidden="true" />
           <span className="font-garden text-sm text-parchment font-medium">{locationText}</span>
         </motion.div>
       </div>

@@ -19,18 +19,18 @@ export default function Home() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-battles-black">
       <SEOHead
-        title="Garden of Weeden - Veteran-Owned Cannabis | Buffalo, NY"
-        description="Garden of Weeden: Veteran-owned cannabis microbusiness in Buffalo, NY. Shop premium craft flower grown with military precision. From service to soil."
+        title="Garden of Weeden - Farm to Flame Cannabis | Buffalo, NY"
+        description="Garden of Weeden is a NYS licensed microbusiness dispensary and on-site consumption space in Buffalo, NY, focused on Farm to Flame craft cannabis from local growers."
         keywords={[
           "Garden of Weeden",
-          "veteran-owned cannabis Buffalo",
+          "Farm to Flame cannabis Buffalo",
           "Buffalo cannabis shop",
           "Western New York cannabis",
-          "veteran cannabis business",
-          "Buffalo micro-terroir",
+          "local cannabis farmers",
+          "Forbidden Fruit lounge",
           "craft cannabis Buffalo",
           "buy cannabis Buffalo NY",
-          "veteran wellness cannabis",
+          "Central and Western NY cannabis",
           "Buffalo NY dispensary"
         ]}
         canonicalUrl={getCanonicalUrl("/")}

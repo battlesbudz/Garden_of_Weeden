@@ -30,16 +30,16 @@ export default function ServicesSection() {
   });
 
   const benefitsTitle = settings?.benefitsTitle || "Why Choose Garden of Weeden?";
-  const benefitsSubtitle = settings?.benefitsSubtitle || "Experience the difference that veteran values and Buffalo's unique terroir make";
-  const benefitsCtaText = settings?.benefitsCtaText || "Shop Premium Cannabis";
+  const benefitsSubtitle = settings?.benefitsSubtitle || "Farm to Flame means local farmers, small-batch craft products, and budtenders who know the story behind the cannabis.";
+  const benefitsCtaText = settings?.benefitsCtaText || "Shop Farm to Flame";
 
   const icons = [Award, Leaf, Shield, Sparkles, Heart, Users];
 
   const benefits = [
     {
       icon: icons[0],
-      title: settings?.benefit1Title || "Veteran-Crafted Quality",
-      description: settings?.benefit1Desc || "Military precision in every harvest",
+      title: settings?.benefit1Title || "Local Farm Partners",
+      description: settings?.benefit1Desc || "Products sourced from our farm and NYS small craft growers",
     },
     {
       icon: icons[1],
@@ -48,8 +48,8 @@ export default function ServicesSection() {
     },
     {
       icon: icons[2],
-      title: settings?.benefit3Title || "Lab-Tested & Safe",
-      description: settings?.benefit3Desc || "Rigorous quality assurance",
+      title: settings?.benefit3Title || "Lab-Tested Products",
+      description: settings?.benefit3Desc || "Compliance-minded quality standards",
     },
     {
       icon: icons[3],
@@ -58,8 +58,8 @@ export default function ServicesSection() {
     },
     {
       icon: icons[4],
-      title: settings?.benefit5Title || "Wellness-Focused",
-      description: settings?.benefit5Desc || "Supporting healing journeys",
+      title: settings?.benefit5Title || "Forbidden Fruit Lounge",
+      description: settings?.benefit5Desc || "On-site consumption space for relaxing, events, and community",
     },
     {
       icon: icons[5],
@@ -124,12 +124,13 @@ export default function ServicesSection() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: prefersReducedMotion ? 0 : 0.3 }}
         >
-          <Link href="/shop">
-            <button className="group bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-garden font-bold text-base shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-3">
-              <ShoppingBag className="h-5 w-5" />
-              <span>{benefitsCtaText}</span>
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+          <Link
+            href="/shop"
+            className="group bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-garden font-bold text-base shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-3"
+          >
+            <ShoppingBag className="h-5 w-5" aria-hidden="true" />
+            <span>{benefitsCtaText}</span>
+            <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
           </Link>
         </motion.div>
       </div>
