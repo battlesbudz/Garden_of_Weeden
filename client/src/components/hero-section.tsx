@@ -107,7 +107,7 @@ export default function HeroSection() {
         >
           <Link
             href="/shop"
-            className="group bg-green-500 hover:bg-green-600 text-white px-10 py-5 rounded-xl font-garden font-bold text-lg shadow-xl hover:shadow-2xl hover:shadow-green-500/40 transform hover:scale-105 transition-all duration-300 flex items-center gap-3"
+            className="group bg-green-700 hover:bg-green-800 text-white px-10 py-5 rounded-xl font-garden font-bold text-lg shadow-xl hover:shadow-2xl hover:shadow-green-500/40 transform hover:scale-105 transition-all duration-300 flex items-center gap-3"
             data-testid="hero-cta-shop"
           >
             <ShoppingBag className="h-5 w-5" aria-hidden="true" />

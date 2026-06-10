@@ -207,7 +207,7 @@ export function AgeVerificationModal({ isOpen, onVerified, onDenied }: AgeVerifi
             
             <Button
               onClick={handleVerify}
-              className="flex-1 bg-green-500 hover:bg-green-600 text-white font-garden font-semibold text-sm py-2.5 rounded-xl shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300"
+              className="flex-1 bg-green-700 hover:bg-green-800 text-white font-garden font-semibold text-sm py-2.5 rounded-xl shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300"
               data-testid="age-gate-verify-button"
               aria-label="I am 21 years or older - enter site"
             >

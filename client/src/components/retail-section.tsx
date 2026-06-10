@@ -182,7 +182,7 @@ export default function RetailSection() {
           </p>
           <button
             onClick={() => scrollToSection("newsletter")}
-            className="bg-green-500 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-garden font-semibold text-lg shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300"
+            className="bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-lg font-garden font-semibold text-lg shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300"
             aria-label="Subscribe to newsletter for Farm to Flame updates"
             data-testid="retail-join-waitlist"
           >
