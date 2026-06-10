@@ -34,6 +34,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Serve uploaded files statically
   app.use("/uploads", express.static(path.join(process.cwd(), "public", "uploads")));
 
+  // Public health endpoint for Railway. This must not require an auth session.
+  app.get("/health", (_req, res) => {
+    res.status(200).json({ status: "ok" });
+  });
+
   // Auth middleware
   await setupAuth(app);
 
