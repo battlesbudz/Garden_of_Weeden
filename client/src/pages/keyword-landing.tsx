@@ -125,7 +125,7 @@ export default function KeywordLandingPage() {
                 <ul className="text-gray-300 space-y-2">
                   <li>Forbidden Fruit on-site consumption lounge</li>
                   <li>Fun and educational cannabis events</li>
-                  <li>Mobile weed bar services for private events</li>
+                  <li>Compliant cannabis education support for private events</li>
                   <li>CONTACT Jennifer Fornell (716) 420-1591 for private event scheduling</li>
                 </ul>
               </div>

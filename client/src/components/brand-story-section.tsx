@@ -18,10 +18,15 @@ export default function BrandStorySection() {
     queryKey: ['/api/site-settings'],
   });
 
-  const storyTitle = settings?.storyTitle || "Farm to Flame";
-  const storyText = settings?.storyText || "Garden of Weeden is a NYS licensed microbusiness and boutique cannabis dispensary built around a Farm to Flame concept. Our budtenders know the farmer partners, cultivation practices, and craft products we offer, with products sourced from our farm 15 miles south of Buffalo and other small craft growers across Central and Western NY.";
-  const storyButton1Text = settings?.storyButton1Text || "Read Our Farm Story";
-  const storyButton2Text = settings?.storyButton2Text || "Shop Craft Products";
+  const storyTitle = settings?.storyTitle || "What Farm to Flame Means";
+  const storyText = settings?.storyText || "Farm to Flame is not a slogan. Garden of Weeden branded flower and pre-rolls are grown by our own farm 15 miles south of Buffalo, and our partner products come from local growers and microbusinesses we know through Cannabis Farmers Alliance relationships.";
+  const storyButton1Text = settings?.storyButton1Text || "Meet the Farm Story";
+  const storyButton2Text = settings?.storyButton2Text || "View Current Menu";
+  const storyPillars = [
+    { icon: Leaf, label: "Grower-known products" },
+    { icon: Award, label: "Budtender guidance" },
+    { icon: Users, label: "Regional farm relationships" },
+  ];
 
   return (
     <section id="our-story" className="relative py-24 bg-battles-black overflow-hidden">
@@ -45,19 +50,16 @@ export default function BrandStorySection() {
               {storyText}
             </p>
 
-            <div className="grid grid-cols-3 gap-4 mb-10">
-              <div className="text-center p-4 bg-midnight-grove/30 rounded-xl border border-green-500/20">
-                <Award className="h-8 w-8 text-green-500 mx-auto mb-2" aria-hidden="true" />
-                <p className="font-garden text-sm text-gray-400">Local Farms</p>
-              </div>
-              <div className="text-center p-4 bg-midnight-grove/30 rounded-xl border border-green-500/20">
-                <Leaf className="h-8 w-8 text-green-500 mx-auto mb-2" aria-hidden="true" />
-                <p className="font-garden text-sm text-gray-400">Craft Products</p>
-              </div>
-              <div className="text-center p-4 bg-midnight-grove/30 rounded-xl border border-green-500/20">
-                <Users className="h-8 w-8 text-green-500 mx-auto mb-2" aria-hidden="true" />
-                <p className="font-garden text-sm text-gray-400">Community Events</p>
-              </div>
+            <div className="grid grid-cols-1 gap-4 mb-10 sm:grid-cols-3">
+              {storyPillars.map((pillar) => {
+                const Icon = pillar.icon;
+                return (
+                  <div key={pillar.label} className="text-center p-4 bg-midnight-grove/30 rounded-xl border border-green-500/20">
+                    <Icon className="h-8 w-8 text-green-500 mx-auto mb-2" aria-hidden="true" />
+                    <p className="font-garden text-sm text-gray-400">{pillar.label}</p>
+                  </div>
+                );
+              })}
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">

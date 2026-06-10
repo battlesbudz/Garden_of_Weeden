@@ -1,10 +1,11 @@
 import Navigation from "@/components/navigation";
 import HeroSection from "@/components/hero-section";
 import SocialProofSection from "@/components/social-proof-section";
+import LocalFarmNetworkSection from "@/components/local-farm-network-section";
 import FeaturedProductsSection from "@/components/featured-products-section";
 import BrandStorySection from "@/components/brand-story-section";
-import UrgencyBanner from "@/components/urgency-banner";
-import ServicesSection from "@/components/services-section";
+import LoungeEventsSection from "@/components/lounge-events-section";
+import OnTheRouteSection from "@/components/on-the-route-section";
 import NewsletterSection from "@/components/newsletter-section";
 import Footer from "@/components/footer";
 import SEOHead from "@/components/seo/SEOHead";
@@ -20,13 +21,16 @@ export default function Home() {
     <div className="min-h-screen overflow-x-hidden bg-battles-black">
       <SEOHead
         title="Garden of Weeden - Farm to Flame Cannabis | Buffalo, NY"
-        description="Garden of Weeden is a NYS licensed microbusiness dispensary and on-site consumption space in Buffalo, NY, focused on Farm to Flame craft cannabis from local growers."
+        description="Garden of Weeden is a NYS licensed Farm to Flame cannabis microbusiness near Buffalo, NY, offering local small-batch flower from its own farm and regional craft growers connected through Cannabis Farmers Alliance."
         keywords={[
           "Garden of Weeden",
-          "Farm to Flame cannabis Buffalo",
+          "Cannabis Farmers Alliance",
+          "Farm to Flame cannabis",
+          "Buffalo cannabis microbusiness",
           "Buffalo cannabis shop",
           "Western New York cannabis",
           "local cannabis farmers",
+          "Garden of Weeden farm",
           "Forbidden Fruit lounge",
           "craft cannabis Buffalo",
           "buy cannabis Buffalo NY",
@@ -40,10 +44,11 @@ export default function Home() {
       <Navigation />
       <HeroSection />
       <SocialProofSection />
-      <FeaturedProductsSection />
+      <LocalFarmNetworkSection />
       <BrandStorySection />
-      <UrgencyBanner />
-      <ServicesSection />
+      <FeaturedProductsSection />
+      <LoungeEventsSection />
+      <OnTheRouteSection />
       <NewsletterSection />
       <Footer />
     </div>

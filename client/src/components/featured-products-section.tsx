@@ -38,11 +38,11 @@ export default function FeaturedProductsSection() {
     queryKey: ['/api/site-settings'],
   });
 
-  const featuredTitle = settings?.featuredTitle || "Discover Our Harvest";
-  const featuredSubtitle = settings?.featuredSubtitle || "Small-batch cannabis products sourced through our Farm to Flame network in Central and Western NY";
-  const featuredBadgeText = settings?.featuredBadgeText || "Farm to Flame";
+  const featuredTitle = settings?.featuredTitle || "Current Craft Menu";
+  const featuredSubtitle = settings?.featuredSubtitle || "Availability changes with harvests, local releases, and partner farm drops. Browse today's menu when you are ready.";
+  const featuredBadgeText = settings?.featuredBadgeText || "Menu changes with the harvest";
   const featuredCtaText = settings?.featuredCtaText || "View Current Menu";
-  const featuredShippingNote = settings?.featuredShippingNote || "Ask our team about current local farm partner releases and seasonal NYS craft products.";
+  const featuredShippingNote = settings?.featuredShippingNote || "Garden of Weeden branded flower comes from our farm. Partner products come from regional farms and microbusinesses we know.";
 
   const realProducts = products?.slice(0, 3) || [];
 
