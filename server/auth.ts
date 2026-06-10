@@ -9,8 +9,10 @@ import { storage } from "./storage";
 
 const DEFAULT_ISSUER_URL = "https://replit.com/oidc";
 
-function getAppUrl() {
-  return process.env.APP_URL || process.env.RAILWAY_PUBLIC_DOMAIN && `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
+function getAppUrl(): string | undefined {
+  if (process.env.APP_URL) return process.env.APP_URL;
+  if (process.env.RAILWAY_PUBLIC_DOMAIN) return `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
+  return undefined;
 }
 
 function getOidcClientId() {
