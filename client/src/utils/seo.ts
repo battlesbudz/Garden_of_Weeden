@@ -17,7 +17,7 @@ export const SITE_CONFIG = {
   },
   contact: {
     email: "info@gardenofweeden.com",
-    phone: "+1-716-XXX-XXXX"
+    phone: "+1-716-420-1591"
   },
   social: {
     instagram: "https://www.instagram.com/garden_of_weeden_ny?igsh=MTBuZDV4dzB6NnVwbA=="

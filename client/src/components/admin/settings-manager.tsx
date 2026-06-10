@@ -28,7 +28,7 @@ const defaultSettings: SiteSettings = {
   siteName: "Garden of Weeden",
   siteTagline: "Premium Cannabis Experience",
   contactEmail: "info@gardenofweeden.com",
-  contactPhone: "+1-716-XXX-XXXX",
+  contactPhone: "(716) 420-1591",
   address: "Buffalo, NY",
   businessHours: "Mon-Sat: 10am-9pm",
   facebookUrl: "",

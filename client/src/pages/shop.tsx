@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { ShoppingBag, Package, Tags, Filter, ArrowUpDown, X, ShoppingCart, Check, Loader2 } from "lucide-react";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
+import AllLeavesMenu from "@/components/all-leaves-menu";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -37,6 +38,7 @@ const formatCategory = (category: string): string => {
 };
 
 export default function Shop() {
+  const allLeavesMenuUrl = import.meta.env.VITE_ALL_LEAVES_MENU_URL;
   const [selectedBrand, setSelectedBrand] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showOutOfStock, setShowOutOfStock] = useState(false);
@@ -136,6 +138,23 @@ export default function Shop() {
     setSelectedCategory(null);
     setShowOutOfStock(false);
   };
+
+  if (allLeavesMenuUrl) {
+    return (
+      <div className="min-h-screen bg-black text-white">
+        <SEOHead
+          title={getPageTitle("Menu - Garden of Weeden")}
+          description="Browse the current Garden of Weeden All Leaves menu for Farm to Flame craft cannabis products in Buffalo, NY."
+          keywords={["Garden of Weeden", "All Leaves menu", "cannabis menu", "Buffalo NY dispensary", "Farm to Flame"]}
+          canonicalUrl={getCanonicalUrl("/shop")}
+          ogType="website"
+        />
+        <Navigation />
+        <AllLeavesMenu menuUrl={allLeavesMenuUrl} />
+        <Footer />
+      </div>
+    );
+  }
 
   if (shopItemsLoading) {
     return (

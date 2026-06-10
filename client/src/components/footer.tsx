@@ -8,6 +8,7 @@ import { useSiteSettings } from '@/hooks/useSiteSettings';
 export default function Footer() {
   const prefersReducedMotion = useReducedMotion();
   const { settings } = useSiteSettings();
+  const phoneHref = settings.contactPhone.replace(/[^\d+]/g, "");
   
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -72,7 +73,7 @@ export default function Footer() {
                 <span>{settings.contactEmail}</span>
               </a>
               <a 
-                href={`tel:${settings.contactPhone}`}
+                href={`tel:${phoneHref}`}
                 className="flex items-center hover:text-battles-gold transition-colors" 
                 data-testid="footer-phone"
                 aria-label={`Call ${settings.siteName} at ${settings.contactPhone}`}
