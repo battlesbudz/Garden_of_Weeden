@@ -27,14 +27,14 @@ export default function HeroSection() {
 
   const heroTitle = settings?.heroTitle || "Garden of Weeden";
   const heroTagline = settings?.heroTagline || "Farm to Flame Cannabis";
-  const heroSubtitle = settings?.heroSubtitle || "Local, small-batch cannabis products sourced from our farm south of Buffalo and small craft growers across Central and Western NY.";
-  const heroShopButtonText = settings?.heroShopButtonText || "Shop Farm to Flame";
-  const heroStoryButtonText = settings?.heroStoryButtonText || "Our Story";
-  const heroVeteranBadge = settings?.heroVeteranBadge || "Farm to Flame";
-  const pillar1Title = settings?.pillar1Title || "Local Farm Partners";
-  const pillar2Title = settings?.pillar2Title || "Buffalo Roots";
-  const pillar3Title = settings?.pillar3Title || "Craft Products";
-  const locationText = settings?.locationText || "Proudly cultivated in the regional area";
+  const heroSubtitle = settings?.heroSubtitle || "Local, small-batch cannabis from our farm 15 miles south of Buffalo and small craft growers across Central and Western NY.";
+  const heroShopButtonText = settings?.heroShopButtonText || "Explore Farm to Flame";
+  const heroStoryButtonText = settings?.heroStoryButtonText || "View Current Menu";
+  const heroVeteranBadge = settings?.heroVeteranBadge || "Local Farm First";
+  const pillar1Title = settings?.pillar1Title || "Own Farm, No Middleman";
+  const pillar2Title = settings?.pillar2Title || "15 Miles South of Buffalo";
+  const pillar3Title = settings?.pillar3Title || "Cannabis Farmers Alliance";
+  const locationText = settings?.locationText || "NYS licensed microbusiness, dispensary, and on-site consumption lounge";
 
   return (
     <section
@@ -105,22 +105,28 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.5, ease: "easeOut" }}
         >
-          <Link
-            href="/shop"
+          <a
+            href="#local-farm-network"
             className="group bg-green-700 hover:bg-green-800 text-white px-10 py-5 rounded-xl font-garden font-bold text-lg shadow-xl hover:shadow-2xl hover:shadow-green-500/40 transform hover:scale-105 transition-all duration-300 flex items-center gap-3"
             data-testid="hero-cta-shop"
           >
-            <ShoppingBag className="h-5 w-5" aria-hidden="true" />
+            <Leaf className="h-5 w-5" aria-hidden="true" />
             <span>{heroShopButtonText}</span>
             <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-          </Link>
+          </a>
           <Link
-            href="/about"
+            href="/shop"
             className="border-2 border-parchment/60 text-parchment px-8 py-4 rounded-xl font-garden font-semibold text-base hover:bg-parchment/10 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
             data-testid="hero-cta-story"
           >
             {heroStoryButtonText}
           </Link>
+          <a
+            href="#lounge-events"
+            className="font-garden text-sm font-semibold text-parchment/80 underline decoration-green-500/50 underline-offset-4 hover:text-green-300"
+          >
+            Plan a lounge visit or private event
+          </a>
         </motion.div>
 
         <motion.div 
@@ -130,7 +136,7 @@ export default function HeroSection() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.6, ease: "easeOut" }}
         >
           <div className="flex items-center gap-2 text-gray-300">
-            <Award className="h-5 w-5 text-green-500" aria-hidden="true" />
+            <ShoppingBag className="h-5 w-5 text-green-500" aria-hidden="true" />
             <span className="font-garden text-sm md:text-base">{pillar1Title}</span>
           </div>
           <div className="flex items-center gap-2 text-gray-300">
