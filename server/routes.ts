@@ -2,41 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import express from "express";
 import path from "path";
-import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
-import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
-import { db } from "./db";
-import { users } from "@shared/schema";
-import { eq } from "drizzle-orm";
-import {
-  insertNewsletterSubscriberSchema,
-  insertContactSubmissionSchema,
-  insertEventBookingSchema,
-  insertJobApplicationSchema,
-  insertForumCategorySchema,
-  insertForumPostSchema,
-  insertForumCommentSchema,
-  insertMeetingRequestSchema,
-  insertInvestorMessageSchema,
-  insertInvestorAccessRequestSchema,
-  insertUserPointsSchema,
-  insertPointTransactionSchema,
-  insertAchievementSchema,
-  insertUserAchievementSchema,
-  insertSecureDocumentSchema,
-  insertDocumentPermissionSchema,
-  type User,
-  type MeetingRequest,
-  type InvestorMessage,
-  type InvestorAccessRequest,
-  type UserPoints,
-  type PointTransaction,
-  type Achievement,
-  type UserAchievement,
-  type SecureDocument,
-  type DocumentPermission
-} from "@shared/schema";
-import { z } from "zod";
+import { setupAuth } from "./auth";
 import { MailService } from '@sendgrid/mail';
 
 // Import route modules
