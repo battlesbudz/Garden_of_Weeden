@@ -7,8 +7,6 @@ import memoize from "memoizee";
 import connectPg from "connect-pg-simple";
 import { storage } from "./storage";
 
-const DEFAULT_ISSUER_URL = "https://replit.com/oidc";
-
 function getAppUrl(): string | undefined {
   if (process.env.APP_URL) return process.env.APP_URL;
   if (process.env.RAILWAY_PUBLIC_DOMAIN) return `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
@@ -16,11 +14,11 @@ function getAppUrl(): string | undefined {
 }
 
 function getOidcClientId() {
-  return process.env.OIDC_CLIENT_ID || process.env.REPL_ID;
+  return process.env.OIDC_CLIENT_ID;
 }
 
 function getOidcIssuerUrl() {
-  return process.env.OIDC_ISSUER_URL || process.env.ISSUER_URL || DEFAULT_ISSUER_URL;
+  return process.env.OIDC_ISSUER_URL || process.env.ISSUER_URL;
 }
 
 function getOidcClientSecret() {
@@ -28,7 +26,7 @@ function getOidcClientSecret() {
 }
 
 function isOidcConfigured() {
-  return Boolean(getAppUrl() && getOidcClientId());
+  return Boolean(getAppUrl() && getOidcClientId() && getOidcIssuerUrl());
 }
 
 const getOidcConfig = memoize(
@@ -38,8 +36,13 @@ const getOidcConfig = memoize(
       throw new Error("OIDC_CLIENT_ID is not configured");
     }
 
+    const issuerUrl = getOidcIssuerUrl();
+    if (!issuerUrl) {
+      throw new Error("OIDC_ISSUER_URL is not configured");
+    }
+
     return await client.discovery(
-      new URL(getOidcIssuerUrl()),
+      new URL(issuerUrl),
       clientId,
       getOidcClientSecret(),
     );

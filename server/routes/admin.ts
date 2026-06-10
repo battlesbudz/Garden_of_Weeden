@@ -1,6 +1,6 @@
 
 import type { Express } from "express";
-import { isAdmin, isAuthenticated } from "../replitAuth";
+import { isAdmin, isAuthenticated } from "../authMiddleware";
 import { storage } from "../storage";
 import { insertBrandSchema, insertProductSchema, insertSiteSettingSchema, insertShopItemSchema } from "@shared/schema";
 import { z } from "zod";

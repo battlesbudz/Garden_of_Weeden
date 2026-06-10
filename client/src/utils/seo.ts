@@ -4,7 +4,7 @@ export const SITE_CONFIG = {
   name: "Garden of Weeden",
   tagline: "Premium Cannabis Experience",
   description: "Premium cannabis products and experiences in Buffalo, NY. Local microbusiness offering quality cannabis retail and services.",
-  url: import.meta.env.VITE_SITE_URL || "https://gardenofweeden.replit.app",
+  url: import.meta.env.VITE_SITE_URL || "https://gardenofweeden-production.up.railway.app",
   businessName: "Garden of Weeden",
   location: {
     city: "Buffalo",

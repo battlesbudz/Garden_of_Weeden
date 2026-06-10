@@ -58,10 +58,13 @@ npm run db:push
 
 ## Object storage follow-up
 
-`server/objectStorage.ts` was written for Replit Object Storage's sidecar credential service. Railway does not provide that endpoint. File upload/signing flows that use object storage should be migrated to one of:
+`server/objectStorage.ts` now uses standard Google Cloud Storage credentials instead of a Replit sidecar endpoint. File upload/signing flows that use secure document storage require these variables:
 
-- Google Cloud Storage with a service account JSON
-- S3-compatible storage
-- Railway volume for simple local persistence
+```bash
+GOOGLE_APPLICATION_CREDENTIALS_JSON=<service account json>
+GOOGLE_CLOUD_PROJECT_ID=<gcp project id>
+PRIVATE_OBJECT_DIR=/bucket/private
+PUBLIC_OBJECT_SEARCH_PATHS=/bucket/public
+```
 
-The app can still deploy without this if those routes are not exercised, but object storage is the remaining Replit-specific subsystem to replace.
+The app can still deploy without these variables if secure document upload/download routes are not exercised.

@@ -2,6 +2,12 @@
 import { MailService } from '@sendgrid/mail';
 import type { MeetingRequest, InvestorMessage, InvestorAccessRequest } from '@shared/schema';
 
+function getPublicAppUrl() {
+  if (process.env.APP_URL) return process.env.APP_URL;
+  if (process.env.RAILWAY_PUBLIC_DOMAIN) return `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
+  return "https://gardenofweeden-production.up.railway.app";
+}
+
 // Initialize SendGrid (only if API key is available)
 let mailService: MailService | null = null;
 if (process.env.SENDGRID_API_KEY) {
@@ -388,7 +394,7 @@ export async function sendInvestorReplyNotification(message: InvestorMessage) {
             
             <div style="background-color: #e8f5e8; padding: 15px; border-radius: 5px; margin: 20px 0;">
               <p><strong>💡 Need to continue the conversation?</strong></p>
-              <p>Log into the <a href="${process.env.REPLIT_DOMAINS?.split(',')[0] || 'https://your-domain.replit.app'}/investor-portal" style="color: #FFD700; text-decoration: none;"><strong>Investor Portal</strong></a> to send a follow-up message or contact us directly.</p>
+              <p>Log into the <a href="${getPublicAppUrl()}/investor-portal" style="color: #FFD700; text-decoration: none;"><strong>Investor Portal</strong></a> to send a follow-up message or contact us directly.</p>
             </div>
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">

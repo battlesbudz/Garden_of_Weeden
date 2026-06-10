@@ -1,10 +1,10 @@
 
 import type { Express } from "express";
-import { isAuthenticated } from "../replitAuth";
+import { isAuthenticated } from "../authMiddleware";
 import { storage } from "../storage";
 import { insertNewsletterSubscriberSchema, insertContactSubmissionSchema } from "@shared/schema";
 import { z } from "zod";
-import { sendWelcomeEmail, sendNewSubscriberNotification } from "../services/resendEmailService";
+import { sendWelcomeEmail, sendNewSubscriberNotification } from "../services/emailService";
 
 export function registerNewsletterRoutes(app: Express) {
   // Newsletter subscription endpoint
