@@ -1,6 +1,7 @@
 import Navigation from "@/components/navigation";
 import HeroSection from "@/components/hero-section";
 import SocialProofSection from "@/components/social-proof-section";
+import LocalFarmNetworkSection from "@/components/local-farm-network-section";
 import FeaturedProductsSection from "@/components/featured-products-section";
 import BrandStorySection from "@/components/brand-story-section";
 import UrgencyBanner from "@/components/urgency-banner";
@@ -40,6 +41,7 @@ export default function Home() {
       <Navigation />
       <HeroSection />
       <SocialProofSection />
+      <LocalFarmNetworkSection />
       <FeaturedProductsSection />
       <BrandStorySection />
       <UrgencyBanner />
