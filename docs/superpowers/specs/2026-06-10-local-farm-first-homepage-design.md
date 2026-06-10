@@ -10,6 +10,8 @@ Garden of Weeden should lead as a local cannabis microbusiness built around Farm
 
 The homepage should explicitly say Garden of Weeden carries local, small-batch cannabis from its own farm south of Buffalo and from small craft growers across Central and Western NY. It should also explicitly mention Cannabis Farmers Alliance.
 
+As a NYS microbusiness with a farm 15 miles south of Buffalo, Farm to Flame should also mean there is no middleman on Garden of Weeden name-brand flower and pre-rolls. When a customer buys Garden of Weeden branded flower or a Garden of Weeden joint, they are buying cannabis grown by the same company they are buying it from. Most dispensaries have to buy flower from another producer, but Garden of Weeden's own branded products come from its own farm. Other products should be framed as locally sourced from regional farms and microbusinesses that Garden of Weeden knows and has strong relationships with through the Cannabis Farmers Alliance.
+
 ## Conversion Priorities
 
 1. Build trust in the local farm and craft cannabis story.
@@ -21,7 +23,9 @@ The homepage should explicitly say Garden of Weeden carries local, small-batch c
 - Farm to Flame is the central brand idea.
 - Garden of Weeden is a NYS licensed cannabis microbusiness with a dispensary and on-site consumption space.
 - Products are sourced from Garden of Weeden's farm south of Buffalo and other small craft growers across Central and Western NY.
+- Garden of Weeden name-brand flower and pre-rolls come from Garden of Weeden's own farm, with no middleman between the grower and the customer.
 - Garden of Weeden supports small family farms, women-owned businesses, veteran-owned businesses, minority-owned businesses, microbusinesses, and producers connected to Cannabis Farmers Alliance.
+- Other carried products come from local and regional farms, microbusinesses, and producers with direct relationships through Cannabis Farmers Alliance.
 - Budtenders know the farmer partners, cultivation practices, and product stories behind what is on the shelf.
 - The Forbidden Fruit lounge is part of the experience and can support events, private events, and mobile weed bar inquiries.
 - Cycling should appear only as a subtle local convenience signal, not as a major brand theme.
@@ -57,6 +61,8 @@ This is the main proof section. It should show that Garden of Weeden is connecte
 Required content:
 
 - Garden of Weeden's own farm south of Buffalo.
+- Garden of Weeden name-brand flower and pre-rolls grown by the company selling them.
+- No middleman for Garden of Weeden branded flower.
 - Small craft growers in Central and Western NY.
 - Small family farms.
 - Women-owned, veteran-owned, minority-owned, and microbusiness partners.
@@ -72,6 +78,8 @@ Required points:
 
 - Budtenders know the farmer partners.
 - The team understands cultivation practices.
+- Garden of Weeden branded flower and pre-rolls are grown by Garden of Weeden's own farm 15 miles south of Buffalo.
+- The customer can buy a Garden of Weeden joint knowing it came from the same microbusiness they are buying it from.
 - Products are sourced directly from local and regional growers.
 - Customers get product stories and guidance, not anonymous shelf inventory.
 
