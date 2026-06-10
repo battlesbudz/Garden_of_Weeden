@@ -194,7 +194,7 @@ export default function About() {
             Proudly Rooted in Buffalo
           </h2>
           <p className="font-garden text-xl text-gray-300 mb-8 leading-relaxed">
-            Farm to Flame. Locally sourced. Community-focused.
+            Farm to Flame. Locally sourced. Community-focused, with off-street parking for guests.
           </p>
           <blockquote className="font-script text-2xl text-green-500 italic mb-8">
             "Every harvest reflects our region, our farmer partners, and our commitment to craft cannabis."
