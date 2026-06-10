@@ -134,7 +134,7 @@ export default function Footer() {
                   <FaInstagram className="h-6 w-6 text-gray-400 group-hover:text-green-500 transition-colors flex-shrink-0" />
                   <div className="text-left">
                     <div className="font-garden text-sm text-gray-300 group-hover:text-green-500 transition-colors">Instagram</div>
-                    <div className="font-garden text-xs text-gray-500">Follow our journey</div>
+                    <div className="font-garden text-xs text-gray-300">Follow our journey</div>
                   </div>
                 </a>
               )}
@@ -150,7 +150,7 @@ export default function Footer() {
                   <FaFacebook className="h-6 w-6 text-gray-400 group-hover:text-blue-500 transition-colors flex-shrink-0" />
                   <div className="text-left">
                     <div className="font-garden text-sm text-gray-300 group-hover:text-blue-500 transition-colors">Facebook</div>
-                    <div className="font-garden text-xs text-gray-500">Like our page</div>
+                    <div className="font-garden text-xs text-gray-300">Like our page</div>
                   </div>
                 </a>
               )}
@@ -166,7 +166,7 @@ export default function Footer() {
                   <FaTwitter className="h-6 w-6 text-gray-400 group-hover:text-sky-500 transition-colors flex-shrink-0" />
                   <div className="text-left">
                     <div className="font-garden text-sm text-gray-300 group-hover:text-sky-500 transition-colors">Twitter / X</div>
-                    <div className="font-garden text-xs text-gray-500">Follow us</div>
+                    <div className="font-garden text-xs text-gray-300">Follow us</div>
                   </div>
                 </a>
               )}
@@ -185,7 +185,7 @@ export default function Footer() {
             <p className="mt-2 sm:mt-0" data-testid="footer-location">{settings.address}</p>
           </div>
           {settings.footerText && (
-            <p className="text-gray-500 text-xs mt-4 text-center">{settings.footerText}</p>
+            <p className="text-gray-400 text-xs mt-4 text-center">{settings.footerText}</p>
           )}
         </div>
       </div>

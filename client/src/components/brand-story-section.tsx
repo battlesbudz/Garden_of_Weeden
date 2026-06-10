@@ -70,7 +70,7 @@ export default function BrandStorySection() {
               </Link>
               <Link
                 href="/shop"
-                className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-garden font-semibold text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                className="bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-xl font-garden font-semibold text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               >
                 {storyButton2Text}
               </Link>

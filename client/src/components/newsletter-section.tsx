@@ -122,7 +122,7 @@ export default function NewsletterSection() {
               <Button
                 type="submit"
                 disabled={newsletterMutation.isPending}
-                className="bg-green-500 hover:bg-green-600 text-white font-garden font-bold text-base h-14 px-8 shadow-lg hover:shadow-xl hover:shadow-green-500/30 transition-all"
+                className="bg-green-700 hover:bg-green-800 text-white font-garden font-bold text-base h-14 px-8 shadow-lg hover:shadow-xl hover:shadow-green-500/30 transition-all"
                 data-testid="newsletter-subscribe-button"
               >
                 {newsletterMutation.isPending ? (

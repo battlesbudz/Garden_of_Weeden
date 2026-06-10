@@ -126,7 +126,7 @@ export default function ServicesSection() {
         >
           <Link
             href="/shop"
-            className="group bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-garden font-bold text-base shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-3"
+            className="group bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-xl font-garden font-bold text-base shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-3"
           >
             <ShoppingBag className="h-5 w-5" aria-hidden="true" />
             <span>{benefitsCtaText}</span>
