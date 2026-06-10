@@ -6,6 +6,8 @@ import FeaturedProductsSection from "@/components/featured-products-section";
 import BrandStorySection from "@/components/brand-story-section";
 import UrgencyBanner from "@/components/urgency-banner";
 import ServicesSection from "@/components/services-section";
+import LoungeEventsSection from "@/components/lounge-events-section";
+import OnTheRouteSection from "@/components/on-the-route-section";
 import NewsletterSection from "@/components/newsletter-section";
 import Footer from "@/components/footer";
 import SEOHead from "@/components/seo/SEOHead";
@@ -45,7 +47,8 @@ export default function Home() {
       <FeaturedProductsSection />
       <BrandStorySection />
       <UrgencyBanner />
-      <ServicesSection />
+      <LoungeEventsSection />
+      <OnTheRouteSection />
       <NewsletterSection />
       <Footer />
     </div>
