@@ -110,20 +110,6 @@ async function seedDefaultAdmin() {
 
   if (!username || !email || !password) return;
 
-  const [existingAdmin] = await db
-    .select()
-    .from(users)
-    .where(eq(users.role, "admin"))
-    .limit(1);
-
-  if (existingAdmin) return;
-
-  const [existing] = await db
-    .select()
-    .from(users)
-    .where(or(eq(users.username, username), eq(users.email, email)))
-    .limit(1);
-
   const passwordHash = await bcrypt.hash(password, 12);
   const values = {
     username,
@@ -135,10 +121,24 @@ async function seedDefaultAdmin() {
     updatedAt: new Date(),
   };
 
-  if (existing) {
-    await db.update(users).set(values).where(eq(users.id, existing.id));
+  const [matchingDefaultAdmin] = await db
+    .select()
+    .from(users)
+    .where(or(eq(users.username, username), eq(users.email, email)))
+    .limit(1);
+
+  if (matchingDefaultAdmin) {
+    await db.update(users).set(values).where(eq(users.id, matchingDefaultAdmin.id));
     return;
   }
+
+  const [localAdmin] = await db
+    .select()
+    .from(users)
+    .where(sql`${users.role} = 'admin' and ${users.passwordHash} is not null`)
+    .limit(1);
+
+  if (localAdmin) return;
 
   await db.insert(users).values({
     id: `admin_${nanoid(16)}`,
@@ -179,11 +179,33 @@ export async function setupAuth(app: Express) {
   await ensureLocalAuthSchema();
   await seedDefaultAdmin();
 
-  passport.serializeUser((user: Express.User, cb) => cb(null, (user as any).id || (user as any).claims?.sub));
-  passport.deserializeUser(async (id: string, cb) => {
+  passport.serializeUser((user: Express.User, cb) => {
+    const sessionUser = user as any;
+    if (sessionUser.claims?.sub) {
+      cb(null, {
+        provider: "oidc",
+        id: sessionUser.claims.sub,
+        claims: sessionUser.claims,
+        access_token: sessionUser.access_token,
+        refresh_token: sessionUser.refresh_token,
+        expires_at: sessionUser.expires_at,
+      });
+      return;
+    }
+
+    cb(null, { provider: "local", id: sessionUser.id });
+  });
+
+  passport.deserializeUser(async (sessionUser: any, cb) => {
     try {
-      const user = await storage.getUser(id);
-      cb(null, user ? { id: user.id } : false);
+      if (sessionUser?.provider === "oidc") {
+        cb(null, sessionUser);
+        return;
+      }
+
+      const id = typeof sessionUser === "string" ? sessionUser : sessionUser?.id;
+      const user = id ? await storage.getUser(id) : undefined;
+      cb(null, user ? { provider: "local", id: user.id } : false);
     } catch (error) {
       cb(error);
     }
@@ -305,7 +327,7 @@ export const isAuthenticated: RequestHandler = async (req, res, next) => {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
-  if (user.id) return next();
+  if (user.provider === "local" && user.id) return next();
 
   if (!user.expires_at) {
     return res.status(401).json({ message: "Unauthorized" });
