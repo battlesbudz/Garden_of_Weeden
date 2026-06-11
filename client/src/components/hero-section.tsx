@@ -1,167 +1,103 @@
-import { Award, MapPin, Leaf, ShoppingBag, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, CalendarDays, MapPin, Phone, ShoppingBag } from "lucide-react";
 import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
 import { VideoBackground } from "@/components/video-background";
 import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
 
-interface SiteSettings {
-  heroTitle?: string;
-  heroTagline?: string;
-  heroSubtitle?: string;
-  heroShopButtonText?: string;
-  heroStoryButtonText?: string;
-  heroVeteranBadge?: string;
-  pillar1Title?: string;
-  pillar2Title?: string;
-  pillar3Title?: string;
-  locationText?: string;
-}
-
 export default function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
-  
-  const { data: settings } = useQuery<SiteSettings>({
-    queryKey: ['/api/site-settings'],
-  });
-
-  const heroTitle = settings?.heroTitle || "Garden of Weeden";
-  const heroTagline = settings?.heroTagline || "Farm to Flame Cannabis";
-  const heroSubtitle = settings?.heroSubtitle || "Local, small-batch cannabis from our farm 15 miles south of Buffalo and small craft growers across Central and Western NY.";
-  const heroShopButtonText = settings?.heroShopButtonText || "Explore Farm to Flame";
-  const heroStoryButtonText = settings?.heroStoryButtonText || "View Current Menu";
-  const heroVeteranBadge = settings?.heroVeteranBadge || "Local Farm First";
-  const pillar1Title = settings?.pillar1Title || "Own Farm, No Middleman";
-  const pillar2Title = settings?.pillar2Title || "15 Miles South of Buffalo";
-  const pillar3Title = settings?.pillar3Title || "Cannabis Farmers Alliance";
-  const locationText = settings?.locationText || "NYS licensed microbusiness, dispensary, and on-site consumption lounge";
 
   return (
     <section
       id="home"
-      className="relative flex flex-col items-center justify-center bg-battles-black overflow-hidden"
+      className="relative overflow-hidden bg-battles-black text-white"
       style={{
-        marginTop: 'calc(var(--hopeline-banner-height, 40px) + 64px)',
-        minHeight: 'calc(100vh - var(--hopeline-banner-height, 40px) - 64px)',
+        marginTop: "calc(var(--hopeline-banner-height, 40px) + 64px)",
+        minHeight: "calc(100vh - var(--hopeline-banner-height, 40px) - 64px)",
       }}
     >
-      <div className="absolute inset-0 z-0">
-        <div className="w-full h-full opacity-50">
-          <VideoBackground
-            videoSrc={undefined}
-            posterImage={fieldRowsImage}
-            alt="Garden of Weeden cannabis cultivation fields in Buffalo, NY"
-            className=""
-            showControls={false}
-            autoplay={true}
-            muted={true}
-            loop={true}
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-battles-black/90 via-battles-black/50 to-battles-black/95"></div>
-        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-battles-black/40"></div>
+      <div className="absolute inset-0">
+        <VideoBackground
+          videoSrc={undefined}
+          posterImage={fieldRowsImage}
+          alt="Garden of Weeden cannabis farm rows near Buffalo"
+          showControls={false}
+          autoplay
+          muted
+          loop
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-battles-black via-battles-black/80 to-battles-black/35" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-battles-black to-transparent" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 text-center">
+      <div className="relative z-10 mx-auto grid min-h-[inherit] max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.02fr_0.78fr] lg:px-8">
         <motion.div
-          className="inline-flex items-center gap-2 bg-green-500/20 backdrop-blur-sm border border-green-500/50 rounded-full px-5 py-2 mb-8"
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -20 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.6, ease: "easeOut" }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.7 }}
         >
-          <Award className="h-4 w-4 text-green-400" aria-hidden="true" />
-          <span className="font-garden text-sm text-green-400 font-semibold tracking-wide uppercase">{heroVeteranBadge}</span>
-        </motion.div>
-
-        <motion.div 
-          className="mb-6"
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 1, ease: "easeOut" }}
-        >
-          <h1 className="font-enchanted text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-parchment mb-4 leading-[0.9] tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
-            {heroTitle}
-          </h1>
-          <div className="h-1.5 w-32 bg-gradient-to-r from-green-400 via-green-500 to-green-600 mx-auto mb-6 rounded-full shadow-lg shadow-green-500/50"></div>
-        </motion.div>
-
-        <motion.div 
-          className="mb-8"
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 1, delay: prefersReducedMotion ? 0 : 0.3, ease: "easeOut" }}
-        >
-          <h2 className="font-storybook text-2xl md:text-4xl lg:text-5xl text-green-400 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] mb-4 tracking-wide">
-            {heroTagline}
-          </h2>
-          <p className="font-garden text-lg md:text-xl lg:text-2xl text-gray-200 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] max-w-3xl mx-auto leading-relaxed">
-            {heroSubtitle}
+          <p className="font-garden text-sm font-semibold uppercase tracking-[0.28em] text-green-400">
+            Farm to Flame Cannabis
           </p>
-        </motion.div>
+          <h1 className="mt-5 max-w-4xl font-enchanted text-6xl leading-[0.88] text-parchment drop-shadow-[0_5px_18px_rgba(0,0,0,0.9)] sm:text-7xl lg:text-8xl">
+            Garden of Weeden
+          </h1>
+          <p className="mt-7 max-w-2xl font-garden text-xl leading-relaxed text-gray-200 md:text-2xl">
+            A Buffalo cannabis microbusiness with its own farm, a current craft menu, the Forbidden Fruit lounge, and a mobile weed bar built for private events.
+          </p>
 
-        <motion.div 
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.5, ease: "easeOut" }}
-        >
-          <a
-            href="#local-farm-network"
-            className="group bg-green-700 hover:bg-green-800 text-white px-10 py-5 rounded-xl font-garden font-bold text-lg shadow-xl hover:shadow-2xl hover:shadow-green-500/40 transform hover:scale-105 transition-all duration-300 flex items-center gap-3"
-            data-testid="hero-cta-shop"
-          >
-            <Leaf className="h-5 w-5" aria-hidden="true" />
-            <span>{heroShopButtonText}</span>
-            <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-          </a>
-          <Link
-            href="/shop"
-            className="border-2 border-parchment/60 text-parchment px-8 py-4 rounded-xl font-garden font-semibold text-base hover:bg-parchment/10 backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-            data-testid="hero-cta-story"
-          >
-            {heroStoryButtonText}
-          </Link>
-          <a
-            href="#lounge-events"
-            className="font-garden text-sm font-semibold text-parchment/80 underline decoration-green-500/50 underline-offset-4 hover:text-green-300"
-          >
-            Plan a lounge visit or private event
-          </a>
-        </motion.div>
-
-        <motion.div 
-          className="flex flex-wrap justify-center gap-6 md:gap-10 mb-12"
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.8, delay: prefersReducedMotion ? 0 : 0.6, ease: "easeOut" }}
-        >
-          <div className="flex items-center gap-2 text-gray-300">
-            <ShoppingBag className="h-5 w-5 text-green-500" aria-hidden="true" />
-            <span className="font-garden text-sm md:text-base">{pillar1Title}</span>
-          </div>
-          <div className="flex items-center gap-2 text-gray-300">
-            <MapPin className="h-5 w-5 text-green-500" aria-hidden="true" />
-            <span className="font-garden text-sm md:text-base">{pillar2Title}</span>
-          </div>
-          <div className="flex items-center gap-2 text-gray-300">
-            <Leaf className="h-5 w-5 text-green-500" aria-hidden="true" />
-            <span className="font-garden text-sm md:text-base">{pillar3Title}</span>
-          </div>
-          <div className="flex items-center gap-2 text-gray-300">
-            <Sparkles className="h-5 w-5 text-green-500" aria-hidden="true" />
-            <span className="font-garden text-sm md:text-base">Sun-Grown Quality</span>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Link
+              href="/shop"
+              className="inline-flex items-center justify-center rounded-xl bg-green-700 px-7 py-4 font-garden text-base font-bold text-white shadow-xl shadow-black/30 transition hover:bg-green-800"
+            >
+              <ShoppingBag className="mr-2 h-5 w-5" aria-hidden="true" />
+              View Current Menu
+            </Link>
+            <a
+              href="#mobile-weed-bar"
+              className="inline-flex items-center justify-center rounded-xl bg-parchment px-7 py-4 font-garden text-base font-bold text-battles-black shadow-xl shadow-black/30 transition hover:bg-white"
+            >
+              <CalendarDays className="mr-2 h-5 w-5" aria-hidden="true" />
+              Book the Mobile Weed Bar
+            </a>
+            <a
+              href="tel:+17164201591"
+              className="inline-flex items-center justify-center rounded-xl border border-white/30 px-7 py-4 font-garden text-base font-bold text-white backdrop-blur transition hover:border-green-400 hover:text-green-300"
+            >
+              <Phone className="mr-2 h-5 w-5" aria-hidden="true" />
+              Call Jennifer
+            </a>
           </div>
         </motion.div>
 
-        <motion.div 
-          className="inline-flex items-center gap-2 bg-midnight-grove/60 backdrop-blur-sm border border-green-500/40 rounded-full px-6 py-3"
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 1, delay: prefersReducedMotion ? 0 : 0.8, ease: "easeOut" }}
+        <motion.aside
+          className="border-y border-green-500/35 bg-black/45 p-6 backdrop-blur-md lg:border lg:p-7"
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: 28 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.7, delay: prefersReducedMotion ? 0 : 0.1 }}
         >
-          <MapPin className="h-4 w-4 text-green-500" aria-hidden="true" />
-          <span className="font-garden text-sm text-parchment font-medium">{locationText}</span>
-        </motion.div>
+          <div className="grid gap-5">
+            <div>
+              <p className="font-garden text-xs font-semibold uppercase tracking-[0.22em] text-green-400">Today starts here</p>
+              <p className="mt-2 font-storybook text-3xl text-parchment">Menu, lounge, events.</p>
+            </div>
+            <div className="grid gap-3 font-garden text-sm text-gray-300">
+              <div className="flex items-start gap-3 border-t border-white/10 pt-4">
+                <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-green-400" aria-hidden="true" />
+                <span>Garden of Weeden flower and pre-rolls come from the company farm.</span>
+              </div>
+              <div className="flex items-start gap-3 border-t border-white/10 pt-4">
+                <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-green-400" aria-hidden="true" />
+                <span>Partner products come from regional small farms and microbusinesses.</span>
+              </div>
+              <div className="flex items-start gap-3 border-t border-white/10 pt-4">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-green-400" aria-hidden="true" />
+                <span>Buffalo rooted with bike-route access and off-street parking.</span>
+              </div>
+            </div>
+          </div>
+        </motion.aside>
       </div>
     </section>
   );

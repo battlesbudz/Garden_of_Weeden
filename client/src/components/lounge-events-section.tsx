@@ -1,75 +1,51 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { CalendarDays, GlassWater, Phone, Sparkles } from "lucide-react";
 
-const eventItems = [
-  "Forbidden Fruit on-site consumption lounge",
-  "Fun and educational cannabis events",
-  "Private events and lounge bookings",
-  "Bookable mobile weed bar experience for parties and private events, planned within New York cannabis rules",
-];
-
 export default function LoungeEventsSection() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section id="lounge-events" className="relative overflow-hidden bg-battles-black py-24 text-white">
-      <div className="absolute inset-0 bg-gradient-to-b from-battles-black via-green-950/20 to-battles-black" />
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-          <motion.div
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.7 }}
-          >
+    <section id="lounge-events" className="bg-battles-black py-20 text-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <motion.div
+          className="grid gap-8 border-y border-green-500/25 py-10 lg:grid-cols-[0.8fr_1.2fr_auto] lg:items-center"
+          initial={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.65 }}
+        >
+          <div>
             <p className="font-garden text-sm font-semibold uppercase tracking-[0.24em] text-green-400">
               Forbidden Fruit Lounge
             </p>
-            <h2 className="mt-4 font-enchanted text-4xl text-parchment md:text-6xl">
-              Experience the farm story together.
+            <h2 className="mt-3 font-enchanted text-5xl leading-none text-parchment md:text-6xl">
+              Stay awhile.
             </h2>
-            <p className="mt-6 font-garden text-lg leading-relaxed text-gray-300">
-              The lounge gives guests a place to relax, learn, and connect around craft cannabis.
-              From in-store events to private gatherings and mobile weed bar bookings, Garden of Weeden can
-              make the Farm to Flame experience part of the occasion while keeping each event aligned with
-              New York cannabis rules.
-            </p>
-            <a
-              href="tel:+17164201591"
-              className="mt-8 inline-flex items-center rounded-xl bg-green-700 px-8 py-4 font-garden font-bold text-white shadow-xl transition hover:bg-green-800"
-            >
-              <Phone className="mr-2 h-5 w-5" aria-hidden="true" />
-              Contact Jennifer: (716) 420-1591
-            </a>
-          </motion.div>
+          </div>
 
-          <motion.div
-            className="rounded-2xl border border-green-500/25 bg-midnight-grove/45 p-7"
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.7, delay: prefersReducedMotion ? 0 : 0.1 }}
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="flex gap-3">
+              <GlassWater className="mt-1 h-5 w-5 shrink-0 text-green-400" aria-hidden="true" />
+              <p className="font-garden text-sm leading-relaxed text-gray-300">On-site cannabis consumption lounge.</p>
+            </div>
+            <div className="flex gap-3">
+              <CalendarDays className="mt-1 h-5 w-5 shrink-0 text-green-400" aria-hidden="true" />
+              <p className="font-garden text-sm leading-relaxed text-gray-300">Private lounge bookings and hosted events.</p>
+            </div>
+            <div className="flex gap-3">
+              <Sparkles className="mt-1 h-5 w-5 shrink-0 text-green-400" aria-hidden="true" />
+              <p className="font-garden text-sm leading-relaxed text-gray-300">Farm to Flame conversations with the team.</p>
+            </div>
+          </div>
+
+          <a
+            href="tel:+17164201591"
+            className="inline-flex items-center justify-center rounded-xl bg-green-700 px-6 py-4 font-garden text-sm font-bold text-white transition hover:bg-green-800"
           >
-            <div className="mb-6 flex items-center gap-3">
-              <GlassWater className="h-7 w-7 text-green-400" aria-hidden="true" />
-              <h3 className="font-storybook text-2xl text-parchment">Lounge, events, and mobile weed bar</h3>
-            </div>
-            <ul className="space-y-4">
-              {eventItems.map((item) => (
-                <li key={item} className="flex gap-3 font-garden text-gray-300">
-                  <Sparkles className="mt-1 h-4 w-4 shrink-0 text-green-400" aria-hidden="true" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-8 rounded-xl border border-green-500/20 bg-black/25 p-4">
-              <CalendarDays className="mb-2 h-5 w-5 text-green-400" aria-hidden="true" />
-              <p className="font-garden text-sm text-gray-400">
-                Check the in-store events calendar or Instagram for upcoming community and education events.
-              </p>
-            </div>
-          </motion.div>
-        </div>
+            <Phone className="mr-2 h-4 w-4" aria-hidden="true" />
+            Plan With Jennifer
+          </a>
+        </motion.div>
       </div>
     </section>
   );

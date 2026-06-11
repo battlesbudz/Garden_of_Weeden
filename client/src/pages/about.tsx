@@ -149,9 +149,8 @@ export default function About() {
               </p>
               <p className="font-garden text-gray-300 mb-6 leading-relaxed">
                 From our events to your events, we offer services to enhance private gatherings,
-                including a bookable mobile weed bar experience for parties and events, private
-                event hosting in the Forbidden Fruit consumption lounge, and event planning that
-                stays aligned with New York cannabis rules.
+                including a bookable mobile weed bar experience for parties and events, plus
+                private event hosting in the Forbidden Fruit consumption lounge.
               </p>
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-6">
                 <h3 className="font-storybook text-2xl text-parchment mb-4">Events & Services</h3>
