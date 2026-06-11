@@ -1,0 +1,77 @@
+import { CalendarDays, Leaf, ShoppingBag } from "lucide-react";
+import { Link } from "wouter";
+
+const actions = [
+  {
+    icon: ShoppingBag,
+    label: "Shop the menu",
+    title: "See what is available now.",
+    text: "Browse current flower, pre-rolls, vapes, edibles, beverages, and regional craft drops.",
+    href: "/shop",
+    cta: "View Current Menu",
+    primary: true,
+  },
+  {
+    icon: CalendarDays,
+    label: "Book an event",
+    title: "Bring the mobile weed bar to your gathering.",
+    text: "For private parties, events, and Forbidden Fruit lounge bookings, contact Jennifer directly.",
+    href: "tel:+17164201591",
+    cta: "Call Jennifer",
+    primary: true,
+  },
+  {
+    icon: Leaf,
+    label: "Learn the story",
+    title: "Understand Farm to Flame.",
+    text: "Learn how Garden of Weeden connects its own farm, regional growers, and Buffalo-area cannabis experiences.",
+    href: "/about",
+    cta: "About Garden of Weeden",
+    primary: false,
+  },
+];
+
+export default function HomeActionRouterSection() {
+  return (
+    <section className="bg-battles-black py-14 text-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-4 lg:grid-cols-3">
+          {actions.map((action) => {
+            const Icon = action.icon;
+            const className = action.primary
+              ? "border-green-500/35 bg-midnight-grove/55"
+              : "border-white/15 bg-white/5";
+
+            const content = (
+              <div className={`flex h-full flex-col border p-6 transition hover:border-green-400 ${className}`}>
+                <div className="flex items-center gap-3">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-700 text-white">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <p className="font-garden text-xs font-semibold uppercase tracking-[0.22em] text-green-400">
+                    {action.label}
+                  </p>
+                </div>
+                <h2 className="mt-5 font-storybook text-3xl leading-tight text-parchment">{action.title}</h2>
+                <p className="mt-3 flex-1 font-garden text-sm leading-relaxed text-gray-300">{action.text}</p>
+                <span className="mt-6 inline-flex font-garden text-sm font-bold text-green-300">
+                  {action.cta}
+                </span>
+              </div>
+            );
+
+            return action.href.startsWith("/") ? (
+              <Link key={action.label} href={action.href} className="block">
+                {content}
+              </Link>
+            ) : (
+              <a key={action.label} href={action.href} className="block">
+                {content}
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
