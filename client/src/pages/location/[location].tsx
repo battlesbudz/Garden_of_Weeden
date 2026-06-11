@@ -126,7 +126,7 @@ export default function LocationPage() {
               <div className="bg-black rounded-lg p-6 text-center">
                 <MapPin className="h-12 w-12 text-battles-gold mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-battles-gold mb-2">Location</h3>
-                <p className="text-gray-300">Buffalo, NY</p>
+                <p className="text-gray-300">1455 Niagara St, Buffalo, NY 14213</p>
                 <p className="text-gray-400 text-sm">Western New York</p>
               </div>
               

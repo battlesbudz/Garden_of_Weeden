@@ -9,7 +9,8 @@ export const SITE_CONFIG = {
   location: {
     city: "Buffalo",
     state: "NY",
-    address: "Buffalo, NY",
+    address: "1455 Niagara St",
+    postalCode: "14213",
     coordinates: {
       latitude: 42.8864,
       longitude: -78.8784
@@ -47,8 +48,10 @@ export function getOrganizationSchema() {
     "logo": `${SITE_CONFIG.url}/logo.png`,
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": SITE_CONFIG.location.address,
       "addressLocality": SITE_CONFIG.location.city,
       "addressRegion": SITE_CONFIG.location.state,
+      "postalCode": SITE_CONFIG.location.postalCode,
       "addressCountry": "US"
     },
     "contactPoint": {
@@ -77,6 +80,7 @@ export function getLocalBusinessSchema() {
       "streetAddress": SITE_CONFIG.location.address,
       "addressLocality": SITE_CONFIG.location.city,
       "addressRegion": SITE_CONFIG.location.state,
+      "postalCode": SITE_CONFIG.location.postalCode,
       "addressCountry": "US"
     },
     "geo": {

@@ -29,8 +29,8 @@ const defaultSettings: SiteSettings = {
   siteTagline: "Farm to Flame Cannabis",
   contactEmail: "info@gardenofweeden.com",
   contactPhone: "(716) 420-1591",
-  address: "Buffalo, NY",
-  businessHours: "Mon-Sat: 10am-9pm",
+  address: "1455 Niagara St, Buffalo, NY 14213",
+  businessHours: "Mon-Tue: 10am-7:30pm\nWed: 10am-8:30pm\nThu-Sat: 10am-10pm\nSun: 10am-6pm",
   facebookUrl: "",
   instagramUrl: "https://www.instagram.com/garden_of_weeden_ny",
   twitterUrl: "",
@@ -180,7 +180,7 @@ export default function SettingsManager() {
               id="address"
               value={formData.address}
               onChange={(e) => handleChange("address", e.target.value)}
-              placeholder="Buffalo, NY"
+              placeholder="1455 Niagara St, Buffalo, NY 14213"
               className="bg-zinc-900 border-zinc-600 text-white"
               rows={2}
             />
@@ -191,7 +191,7 @@ export default function SettingsManager() {
               id="businessHours"
               value={formData.businessHours}
               onChange={(e) => handleChange("businessHours", e.target.value)}
-              placeholder="Mon-Fri: 9am-5pm&#10;Sat: 10am-4pm&#10;Sun: Closed"
+              placeholder="Mon-Tue: 10am-7:30pm&#10;Wed: 10am-8:30pm&#10;Thu-Sat: 10am-10pm&#10;Sun: 10am-6pm"
               className="bg-zinc-900 border-zinc-600 text-white"
               rows={3}
             />
