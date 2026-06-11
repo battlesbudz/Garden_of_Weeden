@@ -5,7 +5,6 @@ import Footer from "@/components/footer";
 import SEOHead from "@/components/seo/SEOHead";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { getCanonicalUrl } from "@/utils/seo";
-import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
 import flowerCloseupImage from "@assets/AISelect_20251103_131526_Instagram_1762194447917.jpg";
 import dryingRacksImage from "@assets/AISelect_20251103_131504_Instagram_1762194447955.jpg";
 
@@ -190,27 +189,17 @@ export default function About() {
         </section>
 
         <section className="bg-battles-black py-16 text-white">
-          <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
-            <div className="grid grid-cols-2 gap-3">
-              <img
-                src={flowerCloseupImage}
-                alt="Craft cannabis flower at Garden of Weeden"
-                className="h-72 w-full object-cover"
-              />
-              <img
-                src={dryingRacksImage}
-                alt="Small-batch cannabis production at Garden of Weeden"
-                className="mt-10 h-72 w-full object-cover"
-              />
-            </div>
-
-            <div>
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl">
               <p className="font-garden text-sm font-semibold uppercase tracking-[0.24em] text-green-400">
                 Details without the clutter
               </p>
               <h2 className="mt-4 font-enchanted text-5xl leading-none text-parchment md:text-7xl">
                 A few useful answers.
               </h2>
+              <p className="mt-5 font-garden text-base leading-relaxed text-gray-300">
+                The deeper details are kept here so the rest of the page can stay focused. Open only the answers you need.
+              </p>
               <Accordion type="single" collapsible className="mt-8 border-t border-white/10">
                 <AccordionItem value="farm-to-flame" className="border-white/10">
                   <AccordionTrigger className="font-garden text-left text-lg font-bold text-parchment hover:text-green-300 hover:no-underline">
