@@ -68,64 +68,79 @@ export default function About() {
       <Navigation />
 
       <main className="pt-[calc(var(--hopeline-banner-height,40px)+64px)]">
-        <section className="relative overflow-hidden bg-battles-black text-white">
-          <div className="absolute inset-0">
-            <img
-              src={fieldRowsImage}
-              alt="Garden of Weeden cannabis farm rows near Buffalo"
-              className="h-full w-full object-cover opacity-45"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-battles-black via-battles-black/85 to-battles-black/55" />
-          </div>
-
-          <div className="relative z-10 mx-auto grid max-w-7xl gap-8 px-4 py-20 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:px-8">
+        <section className="relative overflow-hidden bg-parchment text-battles-black">
+          <div className="absolute inset-x-0 top-0 h-3 bg-green-800" />
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:px-8 lg:py-20">
             <div>
-              <p className="font-garden text-sm font-semibold uppercase tracking-[0.28em] text-green-400">
+              <p className="font-garden text-sm font-bold uppercase tracking-[0.28em] text-green-800">
                 About Garden of Weeden
               </p>
-              <h1 className="mt-5 max-w-4xl font-enchanted text-6xl leading-[0.9] text-parchment md:text-8xl">
-                Farm to Flame, rooted near Buffalo.
+              <h1 className="mt-5 max-w-4xl font-enchanted text-6xl leading-[0.9] text-battles-black md:text-8xl">
+                The story behind the Garden.
               </h1>
-              <p className="mt-7 max-w-2xl font-garden text-xl font-semibold leading-relaxed text-white">
-                Garden of Weeden is a NYS licensed cannabis microbusiness with its own farm, a Buffalo-area dispensary, the Forbidden Fruit lounge, and a mobile weed bar for private events.
+              <p className="mt-7 max-w-2xl font-garden text-xl font-semibold leading-relaxed text-black/75">
+                Garden of Weeden is a Buffalo-area cannabis microbusiness built around its own farm, regional craft relationships, the Forbidden Fruit lounge, and a mobile weed bar for private events.
               </p>
-            </div>
 
-            <div className="border border-green-500/30 bg-black/55 p-6 backdrop-blur">
-              <p className="font-storybook text-3xl text-parchment">Why it matters</p>
-              <p className="mt-4 font-garden text-sm leading-relaxed text-gray-300">
-                Most dispensaries buy their flower from another producer. Garden of Weeden's name-brand flower can be grown by the same company selling it, while the rest of the menu highlights regional farms and microbusinesses they know.
-              </p>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-8 grid gap-3 border-y border-black/15 py-5 font-garden text-sm font-semibold text-black/70 sm:grid-cols-3">
+                <span>Farm 15 miles south of Buffalo</span>
+                <span>Cannabis Farmers Alliance ties</span>
+                <span>Off-street parking</span>
+              </div>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/shop"
-                  className="inline-flex items-center justify-center rounded-xl bg-green-700 px-5 py-3 font-garden text-sm font-bold text-white transition hover:bg-green-800"
+                  className="inline-flex items-center justify-center rounded-xl bg-battles-black px-5 py-3 font-garden text-sm font-bold text-white transition hover:bg-green-900"
                 >
                   <ShoppingBag className="mr-2 h-4 w-4" aria-hidden="true" />
                   View Menu
                 </Link>
                 <a
                   href="tel:+17164201591"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/25 px-5 py-3 font-garden text-sm font-bold text-white transition hover:border-green-400 hover:text-green-300"
+                  className="inline-flex items-center justify-center rounded-xl border-2 border-battles-black px-5 py-3 font-garden text-sm font-bold text-battles-black transition hover:bg-white"
                 >
                   <Phone className="mr-2 h-4 w-4" aria-hidden="true" />
                   Call Jennifer
                 </a>
               </div>
             </div>
+
+            <div>
+              <div className="grid grid-cols-[0.78fr_1fr] gap-3">
+                <div className="space-y-3 pt-10">
+                  <img
+                    src={flowerCloseupImage}
+                    alt="Craft cannabis flower at Garden of Weeden"
+                    className="h-44 w-full border border-black/10 object-cover shadow-xl"
+                  />
+                  <div className="border border-green-800/25 bg-white/55 p-5 shadow-xl">
+                    <p className="font-storybook text-3xl leading-none text-battles-black">Why it matters</p>
+                    <p className="mt-3 font-garden text-sm leading-relaxed text-black/70">
+                      Their name-brand flower can be grown by the same company selling it.
+                    </p>
+                  </div>
+                </div>
+                <img
+                  src={dryingRacksImage}
+                  alt="Small-batch cannabis production at Garden of Weeden"
+                  className="h-[430px] w-full border border-black/10 object-cover shadow-2xl"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="bg-parchment py-16 text-battles-black">
+        <section className="bg-battles-black py-16 text-white">
           <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:px-8">
             <div>
-              <p className="font-garden text-sm font-bold uppercase tracking-[0.24em] text-green-800">
+              <p className="font-garden text-sm font-bold uppercase tracking-[0.24em] text-green-400">
                 What Farm to Flame means
               </p>
-              <h2 className="mt-4 font-enchanted text-5xl leading-none md:text-7xl">
+              <h2 className="mt-4 font-enchanted text-5xl leading-none text-parchment md:text-7xl">
                 The product story starts closer to home.
               </h2>
-              <p className="mt-6 font-garden text-lg leading-relaxed text-black/75">
+              <p className="mt-6 font-garden text-lg leading-relaxed text-gray-300">
                 Farm to Flame means Garden of Weeden can connect the sale, the staff knowledge, and the grower story. Their own branded flower can move from their farm 15 miles south of Buffalo to their own dispensary and lounge, without a mystery middleman between the grow and the customer.
               </p>
             </div>
@@ -134,11 +149,11 @@ export default function About() {
               {trustPoints.map((point) => {
                 const Icon = point.icon;
                 return (
-                  <div key={point.title} className="grid grid-cols-[auto_1fr] gap-4 border-t border-black/15 pt-5">
-                    <Icon className="mt-1 h-6 w-6 text-green-800" aria-hidden="true" />
+                  <div key={point.title} className="grid grid-cols-[auto_1fr] gap-4 border-t border-white/10 pt-5">
+                    <Icon className="mt-1 h-6 w-6 text-green-400" aria-hidden="true" />
                     <div>
-                      <h3 className="font-storybook text-2xl text-battles-black">{point.title}</h3>
-                      <p className="mt-1 font-garden text-sm leading-relaxed text-black/70">{point.text}</p>
+                      <h3 className="font-storybook text-2xl text-parchment">{point.title}</h3>
+                      <p className="mt-1 font-garden text-sm leading-relaxed text-gray-300">{point.text}</p>
                     </div>
                   </div>
                 );
