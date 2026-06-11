@@ -102,9 +102,9 @@ export default function Navigation() {
               <Link href="/" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-home">
                 Home
               </Link>
-              <Link href="/about" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-about">
+              <a href="/about" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-about">
                 Our Story
-              </Link>
+              </a>
               <Link href="/blog" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-blog">
                 Blog
               </Link>
@@ -232,9 +232,9 @@ export default function Navigation() {
             <Link href="/" className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
               Home
             </Link>
-            <Link href="/about" className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
+            <a href="/about" className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)} data-testid="mobile-nav-link-about">
               Our Story
-            </Link>
+            </a>
             <Link href="/blog" className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)} data-testid="mobile-nav-link-blog">
               Blog
             </Link>
