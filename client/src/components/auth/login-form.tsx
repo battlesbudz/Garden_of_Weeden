@@ -49,7 +49,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
         if (redirectTo && redirectTo !== '/login') {
           window.location.href = redirectTo;
         } else if (user?.role === 'admin') {
-          window.location.href = '/dashboard';
+          window.location.href = '/admin';
         } else {
           window.location.href = '/';
         }

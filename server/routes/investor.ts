@@ -17,7 +17,7 @@ export function registerInvestorRoutes(app: Express) {
       const validatedData = insertInvestorMessageSchema.parse(req.body);
       const message = await storage.createInvestorMessage({
         ...validatedData,
-        investorId: req.user.claims.sub
+        investorId: (req.user?.claims?.sub || req.user?.id)
       });
       
       // Send email notification to admin
@@ -42,7 +42,7 @@ export function registerInvestorRoutes(app: Express) {
   // Get all investor messages (admin only)
   app.get("/api/investor/messages", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {
@@ -60,7 +60,7 @@ export function registerInvestorRoutes(app: Express) {
   // Reply to investor message (admin only)
   app.post("/api/investor/message/:id/reply", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {
@@ -92,7 +92,7 @@ export function registerInvestorRoutes(app: Express) {
   // Mark investor message as read (admin only)
   app.patch("/api/investor/message/:id/read", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {
@@ -115,7 +115,7 @@ export function registerInvestorRoutes(app: Express) {
   // Get investor's own messages (authenticated investor)
   app.get("/api/investor/my-messages", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const messages = await storage.getInvestorMessagesByUserId(userId);
       res.json(messages);
     } catch (error) {
@@ -127,7 +127,7 @@ export function registerInvestorRoutes(app: Express) {
   // Submit investor access request (requires authentication to link to user)
   app.post("/api/investor/access-request", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       
       // Add the userId to the request data
       const requestData = { ...req.body, userId };
@@ -156,7 +156,7 @@ export function registerInvestorRoutes(app: Express) {
   // Get all investor access requests (admin only)
   app.get("/api/investor/access-requests", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {
@@ -174,7 +174,7 @@ export function registerInvestorRoutes(app: Express) {
   // Approve or deny investor access request (admin only)
   app.patch("/api/investor/access-request/:id", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {
@@ -233,7 +233,7 @@ export function registerInvestorRoutes(app: Express) {
   // Check if current user has investor access (authenticated users)
   app.get("/api/investor/check-access", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const hasAccess = await storage.checkInvestorHasAccess(userId);
       res.json({ hasAccess });
     } catch (error) {

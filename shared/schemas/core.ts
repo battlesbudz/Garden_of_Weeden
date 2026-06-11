@@ -18,7 +18,9 @@ export const sessions = pgTable(
 // Required for persisted login sessions and authorization.
 export const users = pgTable("users", {
   id: varchar("id").primaryKey().notNull(),
+  username: varchar("username").unique(),
   email: varchar("email").unique(),
+  passwordHash: varchar("password_hash"),
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
   profileImageUrl: varchar("profile_image_url"),
@@ -29,7 +31,9 @@ export const users = pgTable("users", {
 
 export const upsertUserSchema = createInsertSchema(users).pick({
   id: true,
+  username: true,
   email: true,
+  passwordHash: true,
   firstName: true,
   lastName: true,
   profileImageUrl: true,

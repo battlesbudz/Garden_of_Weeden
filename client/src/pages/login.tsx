@@ -19,7 +19,7 @@ export default function LoginPage() {
     if (redirectTo && redirectTo !== '/login') {
       setLocation(redirectTo);
     } else if (isAdmin) {
-      setLocation("/dashboard");
+      setLocation("/admin");
     } else {
       setLocation("/");
     }
@@ -36,7 +36,7 @@ export default function LoginPage() {
       if (redirectTo && redirectTo !== '/login') {
         setLocation(redirectTo);
       } else if (isAdmin) {
-        setLocation("/dashboard");
+        setLocation("/admin");
       } else {
         setLocation("/");
       }

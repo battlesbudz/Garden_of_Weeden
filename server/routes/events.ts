@@ -60,7 +60,7 @@ export function registerEventRoutes(app: Express) {
   // Get event bookings (admin only)
   app.get("/api/event/bookings", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {

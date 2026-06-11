@@ -8,7 +8,7 @@ export function registerDocumentRoutes(app: Express) {
   // Get upload URL for secure documents (investor upload)
   app.post("/api/investor-docs/upload", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       
       // Check if user has investor access
       const hasAccess = await storage.checkInvestorHasAccess(userId);
@@ -28,7 +28,7 @@ export function registerDocumentRoutes(app: Express) {
   // Upload secure document completion (investor)
   app.post("/api/investor-docs/complete", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       
       // Check if user has investor access
       const hasAccess = await storage.checkInvestorHasAccess(userId);
@@ -68,7 +68,7 @@ export function registerDocumentRoutes(app: Express) {
   // Get investor's personal document library
   app.get("/api/investor-docs/list", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       
       // Check if user has investor access
       const hasAccess = await storage.checkInvestorHasAccess(userId);
@@ -87,7 +87,7 @@ export function registerDocumentRoutes(app: Express) {
   // Download secure document (investor)
   app.get("/api/investor-docs/:id/download", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const documentId = parseInt(req.params.id);
 
       // Check if user has investor access
@@ -124,7 +124,7 @@ export function registerDocumentRoutes(app: Express) {
   // Admin upload URL
   app.post("/api/admin/investor-docs/upload", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       // Check if user is admin
@@ -145,7 +145,7 @@ export function registerDocumentRoutes(app: Express) {
   // Admin document upload completion with assignment
   app.post("/api/admin/investor-docs/complete", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       // Check if user is admin
@@ -217,7 +217,7 @@ export function registerDocumentRoutes(app: Express) {
   // Admin view all documents with filtering
   app.get("/api/admin/investor-docs/list", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       // Check if user is admin
@@ -244,7 +244,7 @@ export function registerDocumentRoutes(app: Express) {
   // Admin toggle document visibility
   app.patch("/api/admin/investor-docs/:id/visibility", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       // Check if user is admin
@@ -266,7 +266,7 @@ export function registerDocumentRoutes(app: Express) {
   // Get all investors for admin assignment UI
   app.get("/api/admin/investors", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       // Check if user is admin

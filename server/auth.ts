@@ -1,11 +1,17 @@
 import * as client from "openid-client";
 import { Strategy, type VerifyFunction } from "openid-client/passport";
 import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
 import session from "express-session";
 import type { Express, RequestHandler } from "express";
 import memoize from "memoizee";
 import connectPg from "connect-pg-simple";
+import bcrypt from "bcryptjs";
+import { nanoid } from "nanoid";
 import { storage } from "./storage";
+import { db } from "./db";
+import { users } from "@shared/schema";
+import { eq, or, sql } from "drizzle-orm";
 
 function getAppUrl(): string | undefined {
   if (process.env.APP_URL) return process.env.APP_URL;
@@ -89,6 +95,57 @@ const ADMIN_EMAILS = [
   "BattlesBudz@gmail.com",
 ];
 
+async function ensureLocalAuthSchema() {
+  await db.execute(sql`
+    ALTER TABLE users
+    ADD COLUMN IF NOT EXISTS username varchar UNIQUE,
+    ADD COLUMN IF NOT EXISTS password_hash varchar
+  `);
+}
+
+async function seedDefaultAdmin() {
+  const username = process.env.DEFAULT_ADMIN_USERNAME;
+  const email = process.env.DEFAULT_ADMIN_EMAIL;
+  const password = process.env.DEFAULT_ADMIN_PASSWORD;
+
+  if (!username || !email || !password) return;
+
+  const [existingAdmin] = await db
+    .select()
+    .from(users)
+    .where(eq(users.role, "admin"))
+    .limit(1);
+
+  if (existingAdmin) return;
+
+  const [existing] = await db
+    .select()
+    .from(users)
+    .where(or(eq(users.username, username), eq(users.email, email)))
+    .limit(1);
+
+  const passwordHash = await bcrypt.hash(password, 12);
+  const values = {
+    username,
+    email,
+    passwordHash,
+    firstName: "Garden",
+    lastName: "Admin",
+    role: "admin",
+    updatedAt: new Date(),
+  };
+
+  if (existing) {
+    await db.update(users).set(values).where(eq(users.id, existing.id));
+    return;
+  }
+
+  await db.insert(users).values({
+    id: `admin_${nanoid(16)}`,
+    ...values,
+  });
+}
+
 async function upsertUser(claims: any): Promise<{ id: string; email: string | null }> {
   const email = claims["email"];
   const isAdmin = ADMIN_EMAILS.some(adminEmail =>
@@ -119,8 +176,40 @@ export async function setupAuth(app: Express) {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  passport.serializeUser((user: Express.User, cb) => cb(null, user));
-  passport.deserializeUser((user: Express.User, cb) => cb(null, user));
+  await ensureLocalAuthSchema();
+  await seedDefaultAdmin();
+
+  passport.serializeUser((user: Express.User, cb) => cb(null, (user as any).id || (user as any).claims?.sub));
+  passport.deserializeUser(async (id: string, cb) => {
+    try {
+      const user = await storage.getUser(id);
+      cb(null, user ? { id: user.id } : false);
+    } catch (error) {
+      cb(error);
+    }
+  });
+
+  passport.use(
+    "local",
+    new LocalStrategy(async (username, password, done) => {
+      try {
+        const [user] = await db
+          .select()
+          .from(users)
+          .where(or(eq(users.username, username), eq(users.email, username)))
+          .limit(1);
+
+        if (!user?.passwordHash) return done(null, false, { message: "Invalid credentials" });
+
+        const valid = await bcrypt.compare(password, user.passwordHash);
+        if (!valid) return done(null, false, { message: "Invalid credentials" });
+
+        return done(null, { id: user.id });
+      } catch (error) {
+        return done(error);
+      }
+    }),
+  );
 
   if (!isOidcConfigured()) {
     console.warn(
@@ -128,9 +217,7 @@ export async function setupAuth(app: Express) {
     );
 
     app.get("/api/login", (_req, res) => {
-      res.status(503).json({
-        message: "Login is not configured. Set Railway OIDC environment variables.",
-      });
+      res.redirect("/login");
     });
 
     app.get("/api/logout", (req, res) => {
@@ -214,7 +301,13 @@ export async function setupAuth(app: Express) {
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
   const user = req.user as any;
 
-  if (!req.isAuthenticated() || !user?.expires_at) {
+  if (!req.isAuthenticated() || !user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  if (user.id) return next();
+
+  if (!user.expires_at) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
@@ -243,7 +336,7 @@ export const isAuthenticated: RequestHandler = async (req, res, next) => {
 export const isAdmin: RequestHandler = async (req, res, next) => {
   await isAuthenticated(req, res, async () => {
     const user = req.user as any;
-    const userId = user?.claims?.sub;
+    const userId = user?.claims?.sub || user?.id;
     if (!userId) {
       return res.status(401).json({ message: "Unauthorized" });
     }

@@ -7,7 +7,7 @@ export function registerGamificationRoutes(app: Express) {
   // Get user points and stats (authenticated users only)
   app.get("/api/gamification/points", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       
       // Update user activity for daily login tracking
       await storage.updateUserActivity(userId);
@@ -27,7 +27,7 @@ export function registerGamificationRoutes(app: Express) {
   // Get user point transactions history (authenticated users only)
   app.get("/api/gamification/transactions", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const transactions = await storage.getUserPointTransactions(userId);
       res.json(transactions);
     } catch (error) {
@@ -50,7 +50,7 @@ export function registerGamificationRoutes(app: Express) {
   // Get user achievements (authenticated users only)
   app.get("/api/gamification/user-achievements", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const userAchievements = await storage.getUserAchievements(userId);
       res.json(userAchievements);
     } catch (error) {
@@ -62,7 +62,7 @@ export function registerGamificationRoutes(app: Express) {
   // Check and unlock achievements (authenticated users only)
   app.post("/api/gamification/check-achievements", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const unlockedAchievements = await storage.checkAndUnlockAchievements(userId);
       res.json({ unlockedAchievements });
     } catch (error) {
@@ -86,7 +86,7 @@ export function registerGamificationRoutes(app: Express) {
   // Initialize default achievements (admin only)
   app.post("/api/gamification/init-achievements", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {

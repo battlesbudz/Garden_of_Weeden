@@ -35,7 +35,7 @@ export function registerJobRoutes(app: Express) {
   // Get job applications (admin only)
   app.get("/api/job/applications", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {

@@ -20,7 +20,7 @@ export function registerForumRoutes(app: Express) {
   // Create forum category (admin only)
   app.post("/api/forum/categories", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {
@@ -95,7 +95,7 @@ export function registerForumRoutes(app: Express) {
   // Create forum post (authenticated users only)
   app.post("/api/forum/posts", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       
       const validatedData = insertForumPostSchema.parse({
         ...req.body,
@@ -130,7 +130,7 @@ export function registerForumRoutes(app: Express) {
   // Create forum comment (authenticated users only)
   app.post("/api/forum/comments", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const validatedData = insertForumCommentSchema.parse({
         ...req.body,
         authorId: userId
@@ -162,7 +162,7 @@ export function registerForumRoutes(app: Express) {
   // Toggle like on post (authenticated users only)
   app.post("/api/forum/posts/:id/like", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const postId = parseInt(req.params.id);
       
       if (isNaN(postId)) {
@@ -191,7 +191,7 @@ export function registerForumRoutes(app: Express) {
   // Toggle like on comment (authenticated users only)
   app.post("/api/forum/comments/:id/like", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const commentId = parseInt(req.params.id);
       
       if (isNaN(commentId)) {
