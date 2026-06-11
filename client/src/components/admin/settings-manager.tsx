@@ -27,7 +27,7 @@ interface SiteSettings {
 const defaultSettings: SiteSettings = {
   siteName: "Garden of Weeden",
   siteTagline: "Farm to Flame Cannabis",
-  contactEmail: "info@gardenofweeden.com",
+  contactEmail: "manager.gardenofweeden@gmail.com",
   contactPhone: "(716) 420-1591",
   address: "1455 Niagara St, Buffalo, NY 14213",
   businessHours: "Mon-Tue: 10am-7:30pm\nWed: 10am-8:30pm\nThu-Sat: 10am-10pm\nSun: 10am-6pm",
@@ -153,7 +153,7 @@ export default function SettingsManager() {
                 type="email"
                 value={formData.contactEmail}
                 onChange={(e) => handleChange("contactEmail", e.target.value)}
-                placeholder="contact@gardenofweeden.biz"
+                placeholder="manager.gardenofweeden@gmail.com"
                 className="bg-zinc-900 border-zinc-600 text-white"
               />
             </div>
