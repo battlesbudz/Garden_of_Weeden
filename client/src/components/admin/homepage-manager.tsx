@@ -88,7 +88,7 @@ const defaultSettings: HomepageSettings = {
   // Hero Section
   heroTitle: "Garden of Weeden",
   heroTagline: "Farm to Flame Cannabis",
-  heroSubtitle: "A Buffalo cannabis microbusiness with its own farm, a current craft menu, the Forbidden Fruit lounge, and a mobile weed bar built for private events.",
+  heroSubtitle: "Buffalo's Farm to Flame cannabis microbusiness: house-grown flower, regional craft products, the Forbidden Fruit lounge, and a mobile weed bar for private events.",
   heroShopButtonText: "View Current Menu",
   heroStoryButtonText: "Book the Mobile Weed Bar",
   heroVeteranBadge: "Farm to Flame",

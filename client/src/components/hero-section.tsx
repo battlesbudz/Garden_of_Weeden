@@ -20,13 +20,30 @@ export default function HeroSection() {
     queryKey: ["/api/site-settings"],
   });
 
+  const defaultHeroSubtitle =
+    "Buffalo's Farm to Flame cannabis microbusiness: house-grown flower, regional craft products, the Forbidden Fruit lounge, and a mobile weed bar for private events.";
+  const staleHeroSubtitles = new Set([
+    "A Buffalo cannabis microbusiness with its own farm, a current craft menu, the Forbidden Fruit lounge, and a mobile weed bar built for private events.",
+  ]);
+  const defaultHeroShopButtonText = "View Current Menu";
+  const staleShopButtonLabels = new Set(["Shop Farm to Flame", "Explore Farm to Flame"]);
+  const defaultHeroStoryButtonText = "Book the Mobile Weed Bar";
+  const staleStoryButtonLabels = new Set(["Our Story"]);
+
   const heroTitle = settings?.heroTitle || "Garden of Weeden";
   const heroTagline = settings?.heroTagline || "Farm to Flame Cannabis";
   const heroSubtitle =
-    settings?.heroSubtitle ||
-    "A Buffalo cannabis microbusiness with its own farm, a current craft menu, the Forbidden Fruit lounge, and a mobile weed bar built for private events.";
-  const heroShopButtonText = settings?.heroShopButtonText || "View Current Menu";
-  const heroStoryButtonText = settings?.heroStoryButtonText || "Book the Mobile Weed Bar";
+    settings?.heroSubtitle && !staleHeroSubtitles.has(settings.heroSubtitle)
+      ? settings.heroSubtitle
+      : defaultHeroSubtitle;
+  const heroShopButtonText =
+    settings?.heroShopButtonText && !staleShopButtonLabels.has(settings.heroShopButtonText)
+      ? settings.heroShopButtonText
+      : defaultHeroShopButtonText;
+  const heroStoryButtonText =
+    settings?.heroStoryButtonText && !staleStoryButtonLabels.has(settings.heroStoryButtonText)
+      ? settings.heroStoryButtonText
+      : defaultHeroStoryButtonText;
   const locationText = settings?.locationText || "Buffalo rooted with bike-route access and off-street parking.";
 
   return (
@@ -48,12 +65,14 @@ export default function HeroSection() {
           muted
           loop
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-battles-black via-battles-black/80 to-battles-black/35" />
+        <div className="absolute inset-0 bg-black/35 md:bg-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-battles-black via-battles-black/85 to-battles-black/45" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-battles-black to-transparent" />
       </div>
 
       <div className="relative z-10 mx-auto grid min-h-[inherit] max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.02fr_0.78fr] lg:px-8">
         <motion.div
+          className="rounded-none bg-black/40 p-4 backdrop-blur-[1px] sm:bg-transparent sm:p-0 sm:backdrop-blur-0"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.7 }}
@@ -64,7 +83,7 @@ export default function HeroSection() {
           <h1 className="mt-5 max-w-4xl font-enchanted text-6xl leading-[0.88] text-parchment drop-shadow-[0_5px_18px_rgba(0,0,0,0.9)] sm:text-7xl lg:text-8xl">
             {heroTitle}
           </h1>
-          <p className="mt-7 max-w-2xl font-garden text-xl leading-relaxed text-gray-200 md:text-2xl">
+          <p className="mt-7 max-w-2xl font-garden text-xl font-semibold leading-relaxed text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.95)] md:text-2xl">
             {heroSubtitle}
           </p>
 
@@ -101,8 +120,8 @@ export default function HeroSection() {
         >
           <div className="grid gap-5">
             <div>
-              <p className="font-garden text-xs font-semibold uppercase tracking-[0.22em] text-green-400">Today starts here</p>
-              <p className="mt-2 font-storybook text-3xl text-parchment">Menu, lounge, events.</p>
+              <p className="font-garden text-xs font-semibold uppercase tracking-[0.22em] text-green-400">Plan your visit</p>
+              <p className="mt-2 font-storybook text-3xl text-parchment">Shop, lounge, book.</p>
             </div>
             <div className="grid gap-3 font-garden text-sm text-gray-300">
               <div className="flex items-start gap-3 border-t border-white/10 pt-4">
