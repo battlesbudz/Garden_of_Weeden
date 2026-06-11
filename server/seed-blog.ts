@@ -54,7 +54,7 @@ When you experience Buffalo-grown cannabis, you're tasting:
     published: true,
     publishedAt: new Date("2024-11-01T10:00:00Z"),
     metaDescription: "Learn how Buffalo's unique Lake Erie climate and Western NY soil create distinctive cannabis micro-terroir with flavors you won't find anywhere else.",
-    metaKeywords: "Buffalo cannabis, micro-terroir, Lake Erie cannabis, Western NY cultivation, craft cannabis Buffalo, local cannabis terroir"
+    metaKeywords: ["Buffalo cannabis", "micro-terroir", "Lake Erie cannabis", "Western NY cultivation", "craft cannabis Buffalo", "local cannabis terroir"]
   },
   {
     title: "A Veteran's Guide to Cannabis Wellness",
@@ -142,7 +142,7 @@ At Garden of Weeden, we're veterans serving veterans:
     published: true,
     publishedAt: new Date("2024-10-28T10:00:00Z"),
     metaDescription: "A comprehensive veteran's guide to cannabis wellness, PTSD management, safe consumption, and holistic health from fellow veterans at Garden of Weeden.",
-    metaKeywords: "veteran cannabis, PTSD cannabis, veteran wellness, cannabis for veterans, veteran-owned dispensary, military cannabis wellness"
+    metaKeywords: ["veteran cannabis", "PTSD cannabis", "veteran wellness", "cannabis for veterans", "veteran-owned dispensary", "military cannabis wellness"]
   },
   {
     title: "Understanding Terpenes: The Secret to Cannabis Flavor and Effect",
@@ -255,7 +255,7 @@ We cultivate for terpene excellence:
     published: true,
     publishedAt: new Date("2024-10-25T10:00:00Z"),
     metaDescription: "Complete guide to cannabis terpenes: Learn how myrcene, limonene, pinene, and other terpenes shape cannabis flavor, aroma, and effects.",
-    metaKeywords: "cannabis terpenes, myrcene, limonene, pinene, terpene guide, cannabis aromatics, entourage effect, terpene profiles"
+    metaKeywords: ["cannabis terpenes", "myrcene", "limonene", "pinene", "terpene guide", "cannabis aromatics", "entourage effect", "terpene profiles"]
   },
   {
     title: "Our Cultivation Process: From Seed to Cure",
@@ -399,7 +399,7 @@ When you choose Garden of Weeden:
     published: true,
     publishedAt: new Date("2024-10-22T10:00:00Z"),
     metaDescription: "Go behind the scenes at Garden of Weeden: Learn our veteran-precision cultivation process from seed selection to final cure.",
-    metaKeywords: "cannabis cultivation, growing cannabis, seed to harvest, curing process, craft cannabis, outdoor growing, Buffalo cultivation"
+    metaKeywords: ["cannabis cultivation", "growing cannabis", "seed to harvest", "curing process", "craft cannabis", "outdoor growing", "Buffalo cultivation"]
   },
   {
     title: "Buffalo Cannabis Scene Guide 2024",
@@ -565,7 +565,7 @@ Whether you're a veteran seeking wellness, a curious consumer exploring legal ca
     published: true,
     publishedAt: new Date("2024-10-20T10:00:00Z"),
     metaDescription: "Complete guide to Buffalo's cannabis scene: dispensaries, events, advocacy, veteran resources, and the community building WNY's green future in 2024.",
-    metaKeywords: "Buffalo cannabis, WNY dispensaries, Buffalo marijuana, cannabis events Buffalo, New York cannabis scene, veteran cannabis Buffalo"
+    metaKeywords: ["Buffalo cannabis", "WNY dispensaries", "Buffalo marijuana", "cannabis events Buffalo", "New York cannabis scene", "veteran cannabis Buffalo"]
   }
 ];
 

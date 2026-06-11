@@ -5,6 +5,11 @@ import { insertBlogPostSchema } from "@shared/schema";
 import { z } from "zod";
 
 export function registerBlogRoutes(app: Express) {
+  const normalizeBlogPostBody = (body: any) => ({
+    ...body,
+    publishedAt: body?.publishedAt ? new Date(body.publishedAt) : body?.publishedAt,
+  });
+
   // Get all published blog posts (public)
   app.get("/api/blog/posts", async (req, res) => {
     try {
@@ -114,7 +119,7 @@ export function registerBlogRoutes(app: Express) {
         return res.status(403).json({ message: "Admin access required" });
       }
 
-      const validatedData = insertBlogPostSchema.parse(req.body);
+      const validatedData = insertBlogPostSchema.parse(normalizeBlogPostBody(req.body));
       const post = await storage.createBlogPost(validatedData);
       
       res.status(201).json(post);
@@ -141,7 +146,7 @@ export function registerBlogRoutes(app: Express) {
       }
 
       const id = parseInt(req.params.id);
-      const validatedData = insertBlogPostSchema.partial().parse(req.body);
+      const validatedData = insertBlogPostSchema.partial().parse(normalizeBlogPostBody(req.body));
       const post = await storage.updateBlogPost(id, validatedData);
       
       res.json(post);

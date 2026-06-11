@@ -75,8 +75,10 @@ export function ObjectUploader({
         console.log("🚀 [UPPY] Upload started");
       })
       .on("upload-progress", (file, progress) => {
-        console.log("📊 [UPPY] Upload progress:", Math.round(progress.bytesUploaded / progress.bytesTotal * 100) + "%");
-        if (progress.bytesUploaded === progress.bytesTotal) {
+        const bytesTotal = progress.bytesTotal ?? 0;
+        const percentComplete = bytesTotal > 0 ? Math.round((progress.bytesUploaded / bytesTotal) * 100) : 0;
+        console.log("📊 [UPPY] Upload progress:", percentComplete + "%");
+        if (bytesTotal > 0 && progress.bytesUploaded === bytesTotal) {
           console.log("🎯 [UPPY] Upload reached 100% - should trigger complete soon");
         }
       })

@@ -141,7 +141,7 @@ export function Leaderboard({ className }: LeaderboardProps) {
                       
                       <div className="text-right">
                         <div className="text-lg font-bold text-battles-gold">
-                          {points.toLocaleString()}
+                          {(points ?? 0).toLocaleString()}
                         </div>
                         <div className="text-xs text-gray-500">
                           points
