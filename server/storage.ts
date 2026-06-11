@@ -285,13 +285,12 @@ export interface IStorage {
   deleteMediaItem(id: number): Promise<void>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<number, User>;
+export class MemStorage {
+  private users: Map<string, User>;
   private newsletterSubscribers: Map<number, NewsletterSubscriber>;
   private contactSubmissions: Map<number, ContactSubmission>;
   private eventBookings: Map<number, EventBooking>;
   private jobApplications: Map<number, JobApplication>;
-  private currentUserId: number;
   private currentSubscriberId: number;
   private currentSubmissionId: number;
   private currentBookingId: number;
@@ -303,19 +302,24 @@ export class MemStorage implements IStorage {
     this.contactSubmissions = new Map();
     this.eventBookings = new Map();
     this.jobApplications = new Map();
-    this.currentUserId = 1;
     this.currentSubscriberId = 1;
     this.currentSubmissionId = 1;
     this.currentBookingId = 1;
     this.currentApplicationId = 1;
   }
 
-  async getUser(id: number): Promise<User | undefined> {
+  async getUser(id: string): Promise<User | undefined> {
     return this.users.get(id);
   }
 
   async getAllUsers(): Promise<User[]> {
     return Array.from(this.users.values());
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(
+      (user) => user.email === email,
+    );
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
@@ -324,10 +328,22 @@ export class MemStorage implements IStorage {
     );
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.currentUserId++;
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
+  async upsertUser(userData: UpsertUser): Promise<User> {
+    const existing = this.users.get(userData.id);
+    const now = new Date();
+    const user: User = {
+      id: userData.id,
+      username: userData.username ?? existing?.username ?? null,
+      email: userData.email ?? existing?.email ?? null,
+      passwordHash: userData.passwordHash ?? existing?.passwordHash ?? null,
+      firstName: userData.firstName ?? existing?.firstName ?? null,
+      lastName: userData.lastName ?? existing?.lastName ?? null,
+      profileImageUrl: userData.profileImageUrl ?? existing?.profileImageUrl ?? null,
+      role: userData.role ?? existing?.role ?? "customer",
+      createdAt: existing?.createdAt ?? now,
+      updatedAt: now,
+    };
+    this.users.set(user.id, user);
     return user;
   }
 
@@ -460,7 +476,7 @@ export class MemStorage implements IStorage {
   async createOrder(order: InsertOrder): Promise<Order> { throw new Error("Not implemented in MemStorage"); }
   async createOrderItem(orderItem: InsertOrderItem): Promise<OrderItem> { throw new Error("Not implemented in MemStorage"); }
   async getAllOrders(): Promise<Order[]> { return []; }
-  async getUserOrders(userId: number): Promise<Order[]> { return []; }
+  async getUserOrders(userId: string): Promise<Order[]> { return []; }
   async getOrder(id: number): Promise<Order | undefined> { return undefined; }
   async getOrderItemsWithProducts(orderId: number): Promise<(OrderItem & { product: Product })[]> { return []; }
   async getAllInvestorUpdates(): Promise<InvestorUpdate[]> { return []; }
@@ -971,6 +987,7 @@ export class DatabaseStorage implements IStorage {
       id: item.order_items.id,
       orderId: item.order_items.orderId,
       productId: item.order_items.productId,
+      productName: item.order_items.productName,
       quantity: item.order_items.quantity,
       price: item.order_items.price,
       product: item.products,
@@ -1318,7 +1335,7 @@ export class DatabaseStorage implements IStorage {
   async checkInvestorHasAccess(userId: string): Promise<boolean> {
     // First get the user's email from their user record
     const user = await this.getUser(userId);
-    if (!user) return false;
+    if (!user?.email) return false;
     
     // Check if user has an approved access request using their email
     const [request] = await db
@@ -1472,10 +1489,11 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createForumComment(insertComment: InsertForumComment): Promise<ForumComment> {
+    const postId = (insertComment as any).postId as number;
     const [comment] = await db
       .insert(forumComments)
       .values(insertComment)
-      .returning();
+      .returning() as ForumComment[];
 
     // Update post reply count and last activity
     await db
@@ -1484,7 +1502,7 @@ export class DatabaseStorage implements IStorage {
         replyCount: sql`${forumPosts.replyCount} + 1`,
         lastActivityAt: new Date()
       })
-      .where(eq(forumPosts.id, insertComment.postId));
+      .where(eq(forumPosts.id, postId));
 
     return comment;
   }
@@ -1508,7 +1526,7 @@ export class DatabaseStorage implements IStorage {
         .where(eq(forumPosts.id, postId));
 
       const [post] = await db.select({ likeCount: forumPosts.likeCount }).from(forumPosts).where(eq(forumPosts.id, postId));
-      return { liked: false, likeCount: post.likeCount };
+      return { liked: false, likeCount: post.likeCount ?? 0 };
     } else {
       // Add like
       await db
@@ -1521,7 +1539,7 @@ export class DatabaseStorage implements IStorage {
         .where(eq(forumPosts.id, postId));
 
       const [post] = await db.select({ likeCount: forumPosts.likeCount }).from(forumPosts).where(eq(forumPosts.id, postId));
-      return { liked: true, likeCount: post.likeCount };
+      return { liked: true, likeCount: post.likeCount ?? 0 };
     }
   }
 
@@ -2157,7 +2175,7 @@ export class DatabaseStorage implements IStorage {
     return !!permission;
   }
 
-  async updateDocumentPermission(documentId: number, investorId: string, canView: boolean, canDownload: boolean, grantedBy: string): Promise<void> {
+  async updateDocumentPermission(documentId: number, investorId: string, canView: boolean, canDownload: boolean, grantedBy?: string): Promise<void> {
     // Try to update existing permission first
     const result = await db
       .update(documentPermissions)
@@ -2176,7 +2194,7 @@ export class DatabaseStorage implements IStorage {
           investorId,
           canView,
           canDownload,
-          grantedBy
+          grantedBy: grantedBy ?? investorId
         });
     }
   }

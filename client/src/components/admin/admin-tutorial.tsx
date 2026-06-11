@@ -265,9 +265,9 @@ export default function AdminTutorial({ onTabChange, currentTab }: AdminTutorial
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <Card className="w-full max-w-lg bg-zinc-900 border-zinc-800 shadow-2xl max-h-[90vh] flex flex-col">
-        <CardHeader className="pb-4">
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/70 backdrop-blur-sm p-4 sm:p-6">
+      <Card className="my-4 w-full max-w-lg bg-zinc-900 border-zinc-800 shadow-2xl">
+        <CardHeader className="pb-4 sticky top-0 z-10 bg-zinc-900 border-b border-zinc-800">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-lg bg-battles-gold/20">
@@ -292,7 +292,7 @@ export default function AdminTutorial({ onTabChange, currentTab }: AdminTutorial
           <Progress value={progress} className="mt-4 h-2 bg-zinc-800" />
         </CardHeader>
         
-        <CardContent className="space-y-4 overflow-y-auto flex-1">
+        <CardContent className="space-y-4 pt-4">
           <p className="text-gray-300 leading-relaxed">{step.description}</p>
           
           {step.action && (
@@ -340,7 +340,7 @@ export default function AdminTutorial({ onTabChange, currentTab }: AdminTutorial
             ))}
           </div>
 
-          <div className="flex items-center justify-between pt-4 border-t border-zinc-800">
+          <div className="sticky bottom-0 -mx-6 flex items-center justify-between gap-3 border-t border-zinc-800 bg-zinc-900 px-6 py-4">
             <Button
               variant="outline"
               onClick={handlePrevious}
