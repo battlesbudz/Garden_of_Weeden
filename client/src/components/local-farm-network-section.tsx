@@ -34,7 +34,7 @@ export default function LocalFarmNetworkSection() {
         >
           <p className="font-garden text-sm font-semibold uppercase tracking-[0.24em] text-green-400">Farm to Flame</p>
           <h2 className="mt-4 max-w-3xl font-enchanted text-5xl leading-none text-parchment md:text-7xl">
-            The joint can start on their farm.
+            House-grown flower, sold by the source.
           </h2>
           <p className="mt-6 max-w-2xl font-garden text-lg leading-relaxed text-gray-300">
             Most dispensaries buy flower from someone else. Garden of Weeden is a microbusiness, so its name-brand cannabis can move from their own cultivation to their own dispensary and lounge.

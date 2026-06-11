@@ -12,7 +12,7 @@ export default function FeaturedProductsSection() {
             <p className="font-garden text-xs font-semibold uppercase tracking-[0.24em] text-green-400">
               Current Craft Menu
             </p>
-            <h2 className="mt-2 font-storybook text-3xl text-parchment">Shop what is fresh now.</h2>
+            <h2 className="mt-2 font-storybook text-3xl text-parchment">Browse the current menu.</h2>
           </div>
 
           <div className="flex flex-wrap gap-2">
