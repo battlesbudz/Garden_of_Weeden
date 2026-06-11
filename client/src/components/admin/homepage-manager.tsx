@@ -417,7 +417,7 @@ export default function HomepageManager() {
             </div>
             
             <div className="border-t border-zinc-700 pt-4 mt-4">
-              <p className="text-gray-400 text-sm mb-3">Placeholder Cards (shown when real products aren't available)</p>
+              <p className="text-gray-400 text-sm mb-3">Fallback Product Cards (shown when live products are not selected)</p>
               <div className="grid md:grid-cols-3 gap-4">
                 {[1, 2, 3].map((num) => (
                   <div key={num} className="bg-zinc-900 p-4 rounded-lg">

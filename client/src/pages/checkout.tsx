@@ -186,7 +186,7 @@ export default function Checkout() {
                         <FormItem>
                           <FormLabel className="text-gray-300">Full Name *</FormLabel>
                           <FormControl>
-                            <Input {...field} className="bg-zinc-800 border-zinc-700 text-white" placeholder="John Doe" />
+                            <Input {...field} className="bg-zinc-800 border-zinc-700 text-white" placeholder="Full name" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -200,7 +200,7 @@ export default function Checkout() {
                           <FormItem>
                             <FormLabel className="text-gray-300">Email *</FormLabel>
                             <FormControl>
-                              <Input {...field} type="email" className="bg-zinc-800 border-zinc-700 text-white" placeholder="john@example.com" />
+                              <Input {...field} type="email" className="bg-zinc-800 border-zinc-700 text-white" placeholder="Email address" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -213,7 +213,7 @@ export default function Checkout() {
                           <FormItem>
                             <FormLabel className="text-gray-300">Phone</FormLabel>
                             <FormControl>
-                              <Input {...field} type="tel" className="bg-zinc-800 border-zinc-700 text-white" placeholder="(555) 555-5555" />
+                              <Input {...field} type="tel" className="bg-zinc-800 border-zinc-700 text-white" placeholder="Phone number" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -241,7 +241,7 @@ export default function Checkout() {
                             <Textarea 
                               {...field} 
                               className="bg-zinc-800 border-zinc-700 text-white min-h-[100px]" 
-                              placeholder="Street address, City, State ZIP"
+                              placeholder="Street address, city, state, ZIP"
                             />
                           </FormControl>
                           <FormMessage />

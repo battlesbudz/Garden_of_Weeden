@@ -192,13 +192,13 @@ export default function About() {
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
               <p className="font-garden text-sm font-semibold uppercase tracking-[0.24em] text-green-400">
-                Details without the clutter
+                Farm to Flame questions
               </p>
               <h2 className="mt-4 font-enchanted text-5xl leading-none text-parchment md:text-7xl">
-                A few useful answers.
+                What guests usually ask before visiting.
               </h2>
               <p className="mt-5 font-garden text-base leading-relaxed text-gray-300">
-                The deeper details are kept here so the rest of the page can stay focused. Open only the answers you need.
+                These answers cover the farm, the menu, the lounge, and private event booking before you stop in.
               </p>
               <Accordion type="single" collapsible className="mt-8 border-t border-white/10">
                 <AccordionItem value="farm-to-flame" className="border-white/10">

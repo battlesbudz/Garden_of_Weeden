@@ -39,7 +39,7 @@ export async function sendNewSubscriberNotification(subscriberEmail: string) {
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
             <p><strong>Garden of Weeden Admin</strong></p>
-            <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
+            <p>Phone: (716) 420-1591 | Email: info@gardenofweeden.com</p>
           </div>
         </div>
       `
@@ -104,16 +104,16 @@ export async function sendWelcomeEmail(subscriberEmail: string) {
             <p>Thank you for subscribing to our newsletter!</p>
             <p>You'll receive updates about:</p>
             <ul>
-              <li>New premium cannabis products</li>
-              <li>Exclusive lounge events and tastings</li>
-              <li>Educational content and industry news</li>
-              <li>Company updates and community news</li>
+              <li>New Farm to Flame releases and local partner drops</li>
+              <li>Forbidden Fruit lounge events and private booking updates</li>
+              <li>Craft cannabis education and Garden of Weeden news</li>
+              <li>Community updates from Buffalo and Western New York</li>
             </ul>
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
             <p><strong>Garden of Weeden</strong></p>
-            <p>Premium Cannabis Tourism Experience</p>
-            <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
+            <p>Farm to Flame Cannabis in Buffalo, NY</p>
+            <p>Phone: (716) 420-1591 | Email: info@gardenofweeden.com</p>
             <p>Instagram: @GardenOfWeedenNY</p>
           </div>
         </div>
@@ -192,7 +192,7 @@ export async function sendExperienceBookingConfirmation(booking: any) {
               ${booking.message ? `<p><strong>Special Requests:</strong> ${booking.message}</p>` : ''}
             </div>
             
-            <p>We're excited to provide you with an exceptional cannabis tourism experience in Western New York!</p>
+            <p>We're excited to talk through your Garden of Weeden event in Western New York.</p>
             
             <p><strong>Next Steps:</strong></p>
             <ul>
@@ -203,8 +203,8 @@ export async function sendExperienceBookingConfirmation(booking: any) {
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
             <p><strong>Garden of Weeden</strong></p>
-            <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
-            <p>Premium Cannabis Tourism • Buffalo, NY</p>
+            <p>Phone: (716) 420-1591 | Email: info@gardenofweeden.com</p>
+            <p>Farm to Flame Cannabis - Buffalo, NY</p>
           </div>
         </div>
       `
@@ -251,7 +251,7 @@ export async function sendExperienceBookingNotification(booking: any) {
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
             <p><strong>Garden of Weeden Admin Dashboard</strong></p>
-            <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
+            <p>Phone: (716) 420-1591 | Email: info@gardenofweeden.com</p>
           </div>
         </div>
       `
@@ -302,7 +302,7 @@ export async function sendInvestorAccessRequestNotification(request: InvestorAcc
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
             <p><strong>Garden of Weeden Investor Admin</strong></p>
-            <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
+            <p>Phone: (716) 420-1591 | Email: info@gardenofweeden.com</p>
           </div>
         </div>
       `
@@ -349,7 +349,7 @@ export async function sendInvestorMessageNotification(message: InvestorMessage) 
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
             <p><strong>Garden of Weeden Investor Portal</strong></p>
-            <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
+            <p>Phone: (716) 420-1591 | Email: info@gardenofweeden.com</p>
           </div>
         </div>
       `
@@ -399,7 +399,7 @@ export async function sendInvestorReplyNotification(message: InvestorMessage) {
           </div>
           <div style="padding: 20px; background-color: #000; color: #FFD700; text-align: center;">
             <p><strong>Garden of Weeden LLC - Investor Relations</strong></p>
-            <p>📞 904-415-7635 | 📧 info@gardenofweeden.com</p>
+            <p>Phone: (716) 420-1591 | Email: info@gardenofweeden.com</p>
             <p style="font-size: 11px; color: #ccc; margin-top: 10px;">
               This is an automated message. Please do not reply directly to this email.
             </p>

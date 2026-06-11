@@ -26,7 +26,7 @@ interface SiteSettings {
 // Default settings that match useSiteSettings.ts
 const defaultSettings: SiteSettings = {
   siteName: "Garden of Weeden",
-  siteTagline: "Premium Cannabis Experience",
+  siteTagline: "Farm to Flame Cannabis",
   contactEmail: "info@gardenofweeden.com",
   contactPhone: "(716) 420-1591",
   address: "Buffalo, NY",
@@ -113,7 +113,7 @@ export default function SettingsManager() {
                 id="siteName"
                 value={formData.siteName}
                 onChange={(e) => handleChange("siteName", e.target.value)}
-                placeholder="Your Business Name"
+                placeholder="Garden of Weeden"
                 className="bg-zinc-900 border-zinc-600 text-white"
               />
             </div>
@@ -123,7 +123,7 @@ export default function SettingsManager() {
                 id="siteTagline"
                 value={formData.siteTagline}
                 onChange={(e) => handleChange("siteTagline", e.target.value)}
-                placeholder="Your catchy tagline"
+                placeholder="Farm to Flame cannabis in Buffalo, NY"
                 className="bg-zinc-900 border-zinc-600 text-white"
               />
             </div>
@@ -153,7 +153,7 @@ export default function SettingsManager() {
                 type="email"
                 value={formData.contactEmail}
                 onChange={(e) => handleChange("contactEmail", e.target.value)}
-                placeholder="contact@yourbusiness.com"
+                placeholder="contact@gardenofweeden.biz"
                 className="bg-zinc-900 border-zinc-600 text-white"
               />
             </div>
@@ -166,7 +166,7 @@ export default function SettingsManager() {
                 id="contactPhone"
                 value={formData.contactPhone}
                 onChange={(e) => handleChange("contactPhone", e.target.value)}
-                placeholder="(555) 123-4567"
+                placeholder="(716) 420-1591"
                 className="bg-zinc-900 border-zinc-600 text-white"
               />
             </div>
@@ -180,7 +180,7 @@ export default function SettingsManager() {
               id="address"
               value={formData.address}
               onChange={(e) => handleChange("address", e.target.value)}
-              placeholder="123 Main Street, City, State 12345"
+              placeholder="Buffalo, NY"
               className="bg-zinc-900 border-zinc-600 text-white"
               rows={2}
             />
@@ -220,7 +220,7 @@ export default function SettingsManager() {
                 id="facebookUrl"
                 value={formData.facebookUrl}
                 onChange={(e) => handleChange("facebookUrl", e.target.value)}
-                placeholder="https://facebook.com/yourbusiness"
+                placeholder="https://facebook.com/gardenofweeden"
                 className="bg-zinc-900 border-zinc-600 text-white"
               />
             </div>
@@ -233,7 +233,7 @@ export default function SettingsManager() {
                 id="instagramUrl"
                 value={formData.instagramUrl}
                 onChange={(e) => handleChange("instagramUrl", e.target.value)}
-                placeholder="https://instagram.com/yourbusiness"
+                placeholder="https://instagram.com/gardenofweeden"
                 className="bg-zinc-900 border-zinc-600 text-white"
               />
             </div>
@@ -246,7 +246,7 @@ export default function SettingsManager() {
                 id="twitterUrl"
                 value={formData.twitterUrl}
                 onChange={(e) => handleChange("twitterUrl", e.target.value)}
-                placeholder="https://twitter.com/yourbusiness"
+                placeholder="https://x.com/gardenofweeden"
                 className="bg-zinc-900 border-zinc-600 text-white"
               />
             </div>
@@ -266,7 +266,7 @@ export default function SettingsManager() {
             id="footerText"
             value={formData.footerText}
             onChange={(e) => handleChange("footerText", e.target.value)}
-            placeholder="Copyright notice or additional footer content..."
+            placeholder="Farm to Flame cannabis microbusiness serving Buffalo and Western New York."
             className="bg-zinc-900 border-zinc-600 text-white"
             rows={3}
           />

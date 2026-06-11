@@ -207,7 +207,7 @@ export default function EventsSection() {
                     <FormItem>
                       <FormLabel>Full Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your full name" {...field} />
+                        <Input placeholder="Full name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -221,7 +221,7 @@ export default function EventsSection() {
                     <FormItem>
                       <FormLabel>Email Address</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="your@email.com" {...field} />
+                        <Input type="email" placeholder="Email address" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -237,7 +237,7 @@ export default function EventsSection() {
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
                       <FormControl>
-                        <Input placeholder="(555) 123-4567" {...field} />
+                        <Input placeholder="Phone number" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

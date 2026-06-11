@@ -68,7 +68,7 @@ export default function LoginPage() {
             Garden of Weeden
           </h1>
           <p className="text-white/80">
-            Your premium cannabis experience awaits
+            Sign in for orders, account access, or the admin dashboard.
           </p>
         </div>
 

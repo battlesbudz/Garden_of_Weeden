@@ -113,7 +113,7 @@ const tutorialSteps: TutorialStep[] = [
     tips: [
       "Hero Section: Main headline, tagline, subtitle, and button text",
       "Trust Badges: Veteran-owned, Buffalo-Proud, and other badges",
-      "Featured Products: Section title, subtitle, and placeholder text",
+      "Featured Products: Section title, subtitle, and fallback card copy",
       "Brand Story: Your story text and button labels",
       "Urgency Banner: Limited-time offers and call-to-action",
       "Benefits Section: All 6 benefit cards (titles and descriptions)",
@@ -169,11 +169,11 @@ const tutorialSteps: TutorialStep[] = [
   {
     id: "complete",
     title: "You're All Set!",
-    description: "You now know how to use every feature of your admin dashboard. All 10 tabs are at your command!",
+    description: "You now know where to manage Garden of Weeden products, content, orders, subscribers, media, users, and settings.",
     tips: [
       "Help Button: Restart this tutorial anytime",
       "Changes are instant: No need to republish",
-      "Questions? Contact support for help"
+      "Review each tab after major site updates so the public pages stay current"
     ]
   }
 ];
