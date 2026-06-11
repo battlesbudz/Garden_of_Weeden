@@ -339,7 +339,7 @@ const eventItems = [
   "Forbidden Fruit on-site consumption lounge",
   "Fun and educational cannabis events",
   "Private events and lounge bookings",
-  "Bookable mobile weed bar experience for parties and private events, planned within New York cannabis rules",
+  "Bookable mobile weed bar experience for parties and private events",
 ];
 
 export default function LoungeEventsSection() {

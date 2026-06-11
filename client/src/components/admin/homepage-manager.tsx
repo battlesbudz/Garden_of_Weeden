@@ -88,9 +88,9 @@ const defaultSettings: HomepageSettings = {
   // Hero Section
   heroTitle: "Garden of Weeden",
   heroTagline: "Farm to Flame Cannabis",
-  heroSubtitle: "Local, small-batch cannabis products sourced from our farm south of Buffalo and small craft growers across Central and Western NY.",
-  heroShopButtonText: "Shop Farm to Flame",
-  heroStoryButtonText: "Our Story",
+  heroSubtitle: "A Buffalo cannabis microbusiness with its own farm, a current craft menu, the Forbidden Fruit lounge, and a mobile weed bar built for private events.",
+  heroShopButtonText: "View Current Menu",
+  heroStoryButtonText: "Book the Mobile Weed Bar",
   heroVeteranBadge: "Farm to Flame",
 
   // Social Proof Section

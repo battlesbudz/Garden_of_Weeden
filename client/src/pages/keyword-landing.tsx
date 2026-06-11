@@ -97,7 +97,7 @@ export default function KeywordLandingPage() {
                   </p>
                   <p>
                     The Forbidden Fruit lounge hosts on-site consumption, community events, private
-                    event options, and mobile weed bar bookings planned within New York cannabis rules.
+                    event options, and mobile weed bar bookings for parties and celebrations.
                   </p>
                 </div>
               </div>
