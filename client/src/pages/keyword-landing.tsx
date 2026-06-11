@@ -126,7 +126,7 @@ export default function KeywordLandingPage() {
                   <li>Forbidden Fruit on-site consumption lounge</li>
                   <li>Fun and educational cannabis events</li>
                   <li>Bookable mobile weed bar experience for parties and events</li>
-                  <li>Contact Jennifer Fornell at (716) 420-1591 for private event scheduling</li>
+                  <li>Contact Garden of Weeden at (716) 420-1591 for private event scheduling</li>
                 </ul>
               </div>
             </div>

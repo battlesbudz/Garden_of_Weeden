@@ -107,7 +107,7 @@ export default function HeroSection() {
               className="inline-flex items-center justify-center rounded-xl border border-white/30 px-7 py-4 font-garden text-base font-bold text-white backdrop-blur transition hover:border-green-400 hover:text-green-300"
             >
               <Phone className="mr-2 h-5 w-5" aria-hidden="true" />
-              Call Jennifer
+              Book a Private Event
             </a>
           </div>
         </motion.div>
