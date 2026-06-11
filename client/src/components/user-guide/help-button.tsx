@@ -70,7 +70,7 @@ export function HelpButton({ onStartTour, onShowGuide }: HelpButtonProps) {
       icon: Mail,
       action: () => {
         setIsOpen(false);
-        window.location.href = 'mailto:info@gardenofweeden.com';
+        window.location.href = 'mailto:manager.gardenofweeden@gmail.com';
       }
     }
   ];

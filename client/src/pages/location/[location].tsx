@@ -140,7 +140,7 @@ export default function LocationPage() {
               <div className="bg-black rounded-lg p-6 text-center">
                 <Phone className="h-12 w-12 text-battles-gold mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-battles-gold mb-2">Contact</h3>
-                <p className="text-gray-300">info@gardenofweeden.com</p>
+                <p className="text-gray-300">manager.gardenofweeden@gmail.com</p>
                 <p className="text-gray-400 text-sm">Ask about current Farm to Flame products</p>
               </div>
             </div>
@@ -159,7 +159,7 @@ export default function LocationPage() {
               </p>
               <div className="space-y-4">
                 <p className="text-battles-gold font-semibold">
-                  Email: info@gardenofweeden.com
+                  Email: manager.gardenofweeden@gmail.com
                 </p>
                 <p className="text-gray-400">
                   Serving {locationData.city}, {locationData.county} and surrounding areas

@@ -17,7 +17,7 @@ export const SITE_CONFIG = {
     }
   },
   contact: {
-    email: "info@gardenofweeden.com",
+    email: "manager.gardenofweeden@gmail.com",
     phone: "+1-716-420-1591"
   },
   social: {
