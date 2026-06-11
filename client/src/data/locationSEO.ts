@@ -34,8 +34,8 @@ export const westernNYLocations: LocationSEOData[] = [
     population: 278349,
     demographics: "Diverse urban community with vibrant local culture",
     distance: "0 miles",
-    seoTitle: "Garden of Weeden Cannabis Dispensary Buffalo NY - Premium Quality Cannabis",
-    seoDescription: "Premium cannabis dispensary in Buffalo, NY. Locally-owned Garden of Weeden offers cannabis flower, edibles, vapes and consumption lounge. Serving Erie County with quality and care.",
+    seoTitle: "Garden of Weeden Cannabis Dispensary Buffalo NY - Farm to Flame Cannabis",
+    seoDescription: "Farm to Flame cannabis dispensary in Buffalo, NY. Locally-owned Garden of Weeden offers craft flower, edibles, vapes, and the Forbidden Fruit lounge.",
     keywords: [
       "cannabis dispensary Buffalo NY",
       "Buffalo marijuana dispensary", 
@@ -43,11 +43,11 @@ export const westernNYLocations: LocationSEOData[] = [
       "Garden of Weeden Buffalo",
       "cannabis shop Erie County NY",
       "Buffalo weed dispensary",
-      "premium cannabis Buffalo"
+      "Farm to Flame cannabis Buffalo"
     ],
     localCompetitors: ["Traditional pharmacies", "Alcohol retailers"],
     uniqueContent: {
-      intro: "Buffalo's premier locally-owned cannabis dispensary, bringing premium cannabis experiences to Western NY residents.",
+      intro: "Buffalo's locally-owned cannabis microbusiness, bringing Farm to Flame craft cannabis to Western NY residents.",
       benefits: [
         "Locally owned and community-focused",
         "Walking distance from downtown Buffalo",
@@ -61,7 +61,7 @@ export const westernNYLocations: LocationSEOData[] = [
         "Central location serving all of Erie County",
         "Easy access from I-90 and Route 33"
       ],
-      callToAction: "Experience premium cannabis quality at Buffalo's trusted local dispensary."
+      callToAction: "Visit Buffalo's trusted local Farm to Flame dispensary."
     },
     lastModified: "2025-11-03",
     priority: 1.0
@@ -75,8 +75,8 @@ export const westernNYLocations: LocationSEOData[] = [
     population: 48671,
     demographics: "Tourist destination with local working community",
     distance: "20 miles from Buffalo",
-    seoTitle: "Cannabis Dispensary Near Niagara Falls NY - Garden of Weeden Premium Cannabis",
-    seoDescription: "Premium cannabis dispensary serving Niagara Falls, NY area. Garden of Weeden in Buffalo offers quality cannabis products, 20 miles from Niagara Falls. Perfect for tourists and locals.",
+    seoTitle: "Cannabis Dispensary Near Niagara Falls NY - Garden of Weeden Craft Cannabis",
+    seoDescription: "Craft cannabis dispensary serving the Niagara Falls, NY area. Garden of Weeden in Buffalo offers local Farm to Flame products 20 miles from Niagara Falls.",
     keywords: [
       "cannabis near Niagara Falls NY",
       "Niagara Falls marijuana dispensary nearby",
@@ -85,7 +85,7 @@ export const westernNYLocations: LocationSEOData[] = [
     ],
     localCompetitors: ["Tourist-focused dispensaries"],
     uniqueContent: {
-      intro: "Niagara Falls cannabis enthusiasts and tourists discover authentic premium quality at Garden of Weeden, just 30 minutes away.",
+      intro: "Niagara Falls cannabis customers can discover local Farm to Flame craft products at Garden of Weeden, just 30 minutes away.",
       benefits: [
         "Easy 30-minute drive from Niagara Falls",
         "Cannabis tourism experience with consumption lounge",
@@ -97,7 +97,7 @@ export const westernNYLocations: LocationSEOData[] = [
         "Growing cannabis tourism market",
         "Border city with diverse cannabis culture"
       ],
-      callToAction: "Experience authentic premium cannabis during your Niagara Falls visit."
+      callToAction: "Add local craft cannabis to your Niagara Falls visit."
     },
     lastModified: "2025-11-03",
     priority: 0.7
@@ -111,8 +111,8 @@ export const westernNYLocations: LocationSEOData[] = [
     population: 57961,
     demographics: "Suburban community, working families, strong local pride",
     distance: "15 miles from Buffalo",
-    seoTitle: "Cannabis Dispensary Near Tonawanda NY - Garden of Weeden Premium Cannabis",
-    seoDescription: "Premium cannabis dispensary serving Tonawanda, NY area. Garden of Weeden in Buffalo offers quality cannabis products, 15 miles from Tonawanda. Quick drive for quality.",
+    seoTitle: "Cannabis Dispensary Near Tonawanda NY - Garden of Weeden Craft Cannabis",
+    seoDescription: "Craft cannabis dispensary serving the Tonawanda, NY area. Garden of Weeden in Buffalo offers Farm to Flame products 15 miles from Tonawanda.",
     keywords: [
       "cannabis near Tonawanda NY",
       "Tonawanda marijuana dispensary nearby",
@@ -121,9 +121,9 @@ export const westernNYLocations: LocationSEOData[] = [
     ],
     localCompetitors: ["Local dispensaries"],
     uniqueContent: {
-      intro: "Tonawanda residents enjoy easy access to premium locally-owned cannabis, just 20 minutes away in Buffalo.",
+      intro: "Tonawanda residents have easy access to locally-owned Farm to Flame cannabis, just 20 minutes away in Buffalo.",
       benefits: [
-        "Quick 20-minute drive to premium cannabis",
+        "Quick 20-minute drive to local craft cannabis",
         "Personal service from dedicated local staff",
         "Educational consumption lounge experience",
         "Supporting local community businesses"
@@ -133,7 +133,7 @@ export const westernNYLocations: LocationSEOData[] = [
         "Growing appreciation for quality local businesses",
         "Strong connection to Buffalo cannabis scene"
       ],
-      callToAction: "Experience premium cannabis quality at Garden of Weeden, your trusted local WNY dispensary."
+      callToAction: "Visit Garden of Weeden for local craft cannabis from a trusted WNY dispensary."
     },
     lastModified: "2025-11-03",
     priority: 0.6
@@ -147,8 +147,8 @@ export const westernNYLocations: LocationSEOData[] = [
     population: 88226,
     demographics: "Large suburban community, diverse working families, vibrant local culture",
     distance: "10 miles from Buffalo",
-    seoTitle: "Cannabis Dispensary Near Cheektowaga NY - Garden of Weeden Premium Cannabis",
-    seoDescription: "Premium cannabis dispensary serving Cheektowaga, NY area. Garden of Weeden in Buffalo offers quality cannabis products, 10 miles from Cheektowaga. Quick drive for quality.",
+    seoTitle: "Cannabis Dispensary Near Cheektowaga NY - Garden of Weeden Craft Cannabis",
+    seoDescription: "Craft cannabis dispensary serving the Cheektowaga, NY area. Garden of Weeden in Buffalo offers Farm to Flame products 10 miles from Cheektowaga.",
     keywords: [
       "cannabis near Cheektowaga NY",
       "Cheektowaga marijuana dispensary nearby",
@@ -158,9 +158,9 @@ export const westernNYLocations: LocationSEOData[] = [
     ],
     localCompetitors: ["Chain dispensaries", "Corporate cannabis stores"],
     uniqueContent: {
-      intro: "Cheektowaga residents enjoy premium locally-owned cannabis just 15 minutes away in downtown Buffalo.",
+      intro: "Cheektowaga residents can visit a locally-owned Farm to Flame cannabis microbusiness just 15 minutes away in Buffalo.",
       benefits: [
-        "Quick 15-minute drive to premium cannabis",
+        "Quick 15-minute drive to local craft cannabis",
         "Personal service from knowledgeable local staff",
         "Supporting local community businesses",
         "Educational cannabis programs for families",
@@ -169,10 +169,10 @@ export const westernNYLocations: LocationSEOData[] = [
       localFacts: [
         "Largest suburb in Erie County with 88,000+ residents",
         "Community seeking authentic local businesses",
-        "Growing appreciation for premium cannabis quality",
+        "Growing appreciation for local craft cannabis",
         "Easy access via Transit Road and Walden Avenue"
       ],
-      callToAction: "Experience premium cannabis quality at Garden of Weeden, serving your Cheektowaga community."
+      callToAction: "Visit Garden of Weeden for Farm to Flame cannabis serving the Cheektowaga community."
     },
     lastModified: "2025-11-03",
     priority: 0.8
@@ -186,24 +186,24 @@ export const westernNYLocations: LocationSEOData[] = [
     population: 129200,
     demographics: "Affluent college town, UB students and professionals, educated community",
     distance: "15 miles from Buffalo",
-    seoTitle: "Cannabis Dispensary Near Amherst NY - Garden of Weeden University Premium Cannabis",
-    seoDescription: "Premium cannabis dispensary serving Amherst, NY and UB area. Garden of Weeden in Buffalo offers quality cannabis products, 15 miles from Amherst. Quality for discerning users.",
+    seoTitle: "Cannabis Dispensary Near Amherst NY - Garden of Weeden Craft Cannabis",
+    seoDescription: "Craft cannabis dispensary serving Amherst, NY and the UB area. Garden of Weeden in Buffalo offers Farm to Flame products 15 miles from Amherst.",
     keywords: [
       "cannabis near Amherst NY",
       "Amherst marijuana dispensary nearby",
       "UB cannabis dispensary",
       "University Buffalo cannabis",
-      "premium cannabis Amherst NY"
+      "craft cannabis Amherst NY"
     ],
     localCompetitors: ["University-area dispensaries", "Chain stores"],
     uniqueContent: {
-      intro: "Amherst professionals and UB community discover premium locally-owned cannabis experiences, just 20 minutes away in Buffalo.",
+      intro: "Amherst professionals and the UB community can discover locally-owned Farm to Flame cannabis, just 20 minutes away in Buffalo.",
       benefits: [
-        "20-minute drive to premium cannabis experience",
+        "20-minute drive to local craft cannabis",
         "Educational focus perfect for university community",
         "Locally-owned quality and exceptional standards",
         "Consumption lounge for responsible social use",
-        "Premium products for discerning professionals"
+        "Craft products for discerning adult customers"
       ],
       localFacts: [
         "Home to University at Buffalo with 30,000+ students",
@@ -211,7 +211,7 @@ export const westernNYLocations: LocationSEOData[] = [
         "Interest in local craft cannabis education",
         "Easy access via I-290 and Maple Road"
       ],
-      callToAction: "Discover premium cannabis quality at Garden of Weeden - education and excellence combined."
+      callToAction: "Discover Farm to Flame cannabis at Garden of Weeden."
     },
     lastModified: "2025-11-03",
     priority: 0.7

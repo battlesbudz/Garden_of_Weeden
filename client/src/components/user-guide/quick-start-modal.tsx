@@ -35,7 +35,7 @@ const quickStartOptions: QuickStartOption[] = [
   {
     id: 'products',
     title: 'Explore Products',
-    description: 'Browse our premium cannabis selection including edibles, vapes, and flower.',
+    description: 'Browse the current craft menu for flower, pre-rolls, edibles, vapes, and local partner products.',
     icon: Coffee,
     action: 'View Products',
     color: 'bg-battles-gold/20 text-battles-gold border-battles-gold/30',
@@ -54,7 +54,7 @@ const quickStartOptions: QuickStartOption[] = [
   {
     id: 'location',
     title: 'Visit Our Garden',
-    description: 'Discover our Buffalo, NY location and micro-terroir cultivation.',
+    description: 'Find the Buffalo-area dispensary, lounge, and off-street parking details.',
     icon: MapPin,
     action: 'Get Directions',
     color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
@@ -138,8 +138,7 @@ export function QuickStartModal({ isOpen, onClose, onStartTour, onOptionSelect }
             </div>
           </div>
           <p className="text-gray-300 text-lg max-w-2xl">
-            Your gateway to a premier cannabis experience. 
-            Choose how you'd like to get started, or take our guided tour.
+            Start with the menu, the Farm to Flame story, or visit details before you stop in.
           </p>
         </DialogHeader>
         
@@ -182,8 +181,8 @@ export function QuickStartModal({ isOpen, onClose, onStartTour, onOptionSelect }
             
             {/* Help Text */}
             <div className="text-center text-sm text-gray-500 py-4">
-              <p>First time here? We recommend taking the guided tour to discover all our features.</p>
-              <p>Returning visitor? Jump right into any section that interests you!</p>
+              <p>First time here? The short tour points you toward the menu, story, lounge, and event options.</p>
+              <p>Returning visitor? Jump straight to the section you need.</p>
             </div>
           </div>
         </ScrollArea>

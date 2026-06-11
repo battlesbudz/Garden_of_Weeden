@@ -36,7 +36,7 @@ const guideSteps: GuideStep[] = [
   {
     id: 'welcome',
     title: 'Welcome to Garden of Weeden!',
-    description: 'This is your gateway to a premium cannabis experience. Let\'s take a quick tour of everything we offer.',
+    description: 'Use this short tour to find the menu, Farm to Flame story, lounge, private events, and visit details.',
     position: 'center',
     icon: Leaf,
     category: 'navigation'
@@ -52,8 +52,8 @@ const guideSteps: GuideStep[] = [
   },
   {
     id: 'retail',
-    title: 'Premium Products',
-    description: 'Discover our curated selection of Cosmic Chewz edibles, Freedom Fog Vapes, and premium flower strains.',
+    title: 'Current Menu',
+    description: 'Browse craft products from Garden of Weeden and regional producers.',
     element: '#retail',
     position: 'top',
     icon: Coffee,
@@ -61,8 +61,8 @@ const guideSteps: GuideStep[] = [
   },
   {
     id: 'experiences',
-    title: 'Book Your Experience',
-    description: 'Schedule private tastings, educational workshops, or group tours at our consumption lounge.',
+    title: 'Book an Event',
+    description: 'Contact Garden of Weeden about the mobile weed bar, lounge bookings, and private events.',
     element: '#events',
     position: 'top',
     icon: Calendar,
@@ -81,7 +81,7 @@ const guideSteps: GuideStep[] = [
   {
     id: 'forum',
     title: 'Discussion Forums',
-    description: 'Share experiences, ask questions, and learn from our community of cannabis tourists and locals.',
+    description: 'Share experiences, ask questions, and connect with local cannabis customers.',
     position: 'top',
     icon: MessageSquare,
     category: 'community'
@@ -105,7 +105,7 @@ const guideSteps: GuideStep[] = [
   {
     id: 'location',
     title: 'Visit Our Location',
-    description: 'Your destination for authentic cannabis experiences and community connection.',
+    description: 'Find visit details for the Buffalo-area dispensary, lounge, and off-street parking.',
     element: '#about',
     position: 'top',
     icon: MapPin,

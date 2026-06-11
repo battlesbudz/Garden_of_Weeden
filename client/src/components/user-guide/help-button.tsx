@@ -36,7 +36,7 @@ export function HelpButton({ onStartTour, onShowGuide }: HelpButtonProps) {
     {
       id: 'tour',
       title: 'Take Tour',
-      description: 'Interactive walkthrough of all features',
+      description: 'Find the menu, story, lounge, and event options',
       icon: Play,
       action: () => {
         setIsOpen(false);
@@ -46,7 +46,7 @@ export function HelpButton({ onStartTour, onShowGuide }: HelpButtonProps) {
     {
       id: 'guide',
       title: 'Quick Start',
-      description: 'Choose your path to get started',
+      description: 'Start with the most common visitor actions',
       icon: BookOpen,
       action: () => {
         setIsOpen(false);
@@ -56,7 +56,7 @@ export function HelpButton({ onStartTour, onShowGuide }: HelpButtonProps) {
     {
       id: 'community',
       title: 'Ask Community',
-      description: 'Get help from fellow members',
+      description: 'Join the local cannabis conversation',
       icon: MessageSquare,
       action: () => {
         setIsOpen(false);
@@ -66,7 +66,7 @@ export function HelpButton({ onStartTour, onShowGuide }: HelpButtonProps) {
     {
       id: 'contact',
       title: 'Contact Us',
-      description: 'Reach out directly for support',
+      description: 'Ask about visits, menu questions, or event bookings',
       icon: Mail,
       action: () => {
         setIsOpen(false);
@@ -124,16 +124,16 @@ export function HelpButton({ onStartTour, onShowGuide }: HelpButtonProps) {
           
           <div className="text-center pt-2 border-t border-gray-700">
             <p className="text-xs text-gray-500">
-              Questions about cannabis tourism in NY?
+              Questions about Garden of Weeden?
             </p>
             <Button
               variant="link"
               size="sm"
               className="text-battles-gold p-0 h-auto"
-              onClick={() => window.open('tel:904-415-7635')}
+              onClick={() => window.open('tel:+17164201591')}
             >
               <Phone className="h-3 w-3 mr-1" />
-              (904) 415-7635
+              (716) 420-1591
             </Button>
           </div>
         </div>

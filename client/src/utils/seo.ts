@@ -2,8 +2,8 @@
 
 export const SITE_CONFIG = {
   name: "Garden of Weeden",
-  tagline: "Premium Cannabis Experience",
-  description: "Premium cannabis products and experiences in Buffalo, NY. Local microbusiness offering quality cannabis retail and services.",
+  tagline: "Farm to Flame Cannabis",
+  description: "Farm to Flame cannabis microbusiness in Buffalo, NY with house-grown flower, regional craft products, the Forbidden Fruit lounge, and private event bookings.",
   url: import.meta.env.VITE_SITE_URL || "https://gardenofweeden-production.up.railway.app",
   businessName: "Garden of Weeden",
   location: {
@@ -140,7 +140,7 @@ export function getBreadcrumbSchema(breadcrumbs: Array<{ name: string; url: stri
 export const CANNABIS_KEYWORDS = {
   home: [
     "cannabis dispensary Buffalo NY",
-    "premium cannabis Buffalo",
+    "Farm to Flame cannabis Buffalo",
     "locally owned cannabis business",
     "legal cannabis Buffalo",
     "cannabis retail store",
@@ -151,7 +151,7 @@ export const CANNABIS_KEYWORDS = {
   shop: [
     "buy cannabis Buffalo",
     "cannabis products NY",
-    "premium cannabis flower",
+    "craft cannabis flower",
     "cannabis edibles",
     "cannabis vapes",
     "cannabis concentrates",

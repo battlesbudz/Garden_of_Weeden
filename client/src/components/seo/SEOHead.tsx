@@ -16,9 +16,9 @@ interface SEOHeadProps extends SEOProps {
 }
 
 export default function SEOHead({
-  title = "Garden of Weeden - Premium Cannabis Experience | Buffalo, NY",
-  description = "Premium cannabis cultivation, processing, and consumption experiences in Buffalo, NY. Microbusiness offering retail cannabis, consumption lounge, and educational events.",
-  keywords = ["cannabis", "dispensary", "Buffalo NY", "premium cannabis", "consumption lounge", "cannabis education"],
+  title = "Garden of Weeden - Farm to Flame Cannabis | Buffalo, NY",
+  description = "Buffalo Farm to Flame cannabis microbusiness with house-grown flower, regional craft products, the Forbidden Fruit lounge, and private event bookings.",
+  keywords = ["cannabis", "dispensary", "Buffalo NY", "Farm to Flame", "consumption lounge", "cannabis education"],
   ogImage = "/og-image.jpg",
   ogType = "website",
   canonicalUrl,

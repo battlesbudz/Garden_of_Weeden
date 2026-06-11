@@ -15,7 +15,7 @@ export interface SiteSettings {
 
 const defaultSettings: SiteSettings = {
   siteName: "Garden of Weeden",
-  siteTagline: "Premium Cannabis Experience",
+  siteTagline: "Farm to Flame Cannabis",
   contactEmail: "info@gardenofweeden.com",
   contactPhone: "(716) 420-1591",
   address: "Buffalo, NY",

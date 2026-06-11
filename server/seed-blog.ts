@@ -447,7 +447,7 @@ While still developing, Buffalo's retail landscape includes:
 - **Advocacy meetings** - Community organizing for reform
 
 ### Social Cannabis Culture
-- **Consumption lounges** (coming soon) - Social spaces for adults
+- **Consumption lounges** - Social spaces for adult cannabis experiences
 - **Cannabis-friendly events** - Music, art, and community
 - **Veteran gatherings** - Cannabis wellness for those who served
 - **Industry networking** - Building Buffalo's green economy
@@ -500,7 +500,7 @@ While consumption lounges develop, Buffalo finds ways:
 ### What's Legal in Buffalo
 - **Adult possession:** Up to 3 ounces for 21+
 - **Public consumption:** Similar restrictions to alcohol
-- **Home growing:** Coming soon (hopefully) with advocacy
+- **Home growing:** A topic many advocates continue to watch closely
 - **Purchase:** From licensed dispensaries only
 
 ### What's Not Legal
