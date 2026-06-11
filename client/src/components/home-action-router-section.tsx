@@ -15,9 +15,9 @@ const actions = [
     icon: CalendarDays,
     label: "Book an event",
     title: "Bring the mobile weed bar to your gathering.",
-    text: "For private parties, events, and Forbidden Fruit lounge bookings, contact Jennifer directly.",
+    text: "For private parties, events, and Forbidden Fruit lounge bookings, contact the company for scheduling.",
     href: "tel:+17164201591",
-    cta: "Call Jennifer",
+    cta: "Book a Private Event",
     primary: true,
   },
   {

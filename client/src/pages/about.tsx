@@ -101,7 +101,7 @@ export default function About() {
                   className="inline-flex items-center justify-center rounded-xl border-2 border-battles-black px-5 py-3 font-garden text-sm font-bold text-battles-black transition hover:bg-white"
                 >
                   <Phone className="mr-2 h-4 w-4" aria-hidden="true" />
-                  Call Jennifer
+                  Book a Private Event
                 </a>
               </div>
             </div>
@@ -249,7 +249,7 @@ export default function About() {
                     How do I book the mobile weed bar?
                   </AccordionTrigger>
                   <AccordionContent className="font-garden text-sm leading-relaxed text-gray-300">
-                    Contact Jennifer Fornell at <a className="font-bold text-green-300" href="tel:+17164201591">(716) 420-1591</a> for private event scheduling.
+                    Contact Garden of Weeden at <a className="font-bold text-green-300" href="tel:+17164201591">(716) 420-1591</a> for private event scheduling.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -267,7 +267,7 @@ export default function About() {
                 Buffalo-area craft cannabis with off-street parking.
               </h2>
               <p className="mt-2 font-garden text-sm leading-relaxed text-gray-300">
-                Shop the menu, ask the team about current Farm to Flame products, or call Jennifer to book the mobile weed bar.
+                Shop the menu, ask the team about current Farm to Flame products, or contact Garden of Weeden to book the mobile weed bar.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -283,7 +283,7 @@ export default function About() {
                 className="inline-flex items-center justify-center rounded-xl border border-white/25 px-6 py-3 font-garden text-sm font-bold text-white transition hover:border-green-400 hover:text-green-300"
               >
                 <MapPin className="mr-2 h-4 w-4" aria-hidden="true" />
-                Call Jennifer
+                Book a Private Event
               </a>
             </div>
           </div>

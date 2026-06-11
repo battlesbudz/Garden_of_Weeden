@@ -48,7 +48,7 @@ export default function MobileWeedBarSection() {
               Bring the weed bar to your party.
             </h2>
             <p className="mt-6 font-garden text-xl leading-relaxed text-black/75">
-              Add Garden of Weeden to private parties, celebrations, and events with a hosted mobile weed bar experience. Jennifer handles private event scheduling and helps shape the setup around the occasion.
+              Add Garden of Weeden to private parties, celebrations, and events with a hosted mobile weed bar experience. Contact the team for private event scheduling and booking details.
             </p>
           </div>
 
@@ -70,7 +70,7 @@ export default function MobileWeedBarSection() {
               className="inline-flex items-center justify-center rounded-xl bg-battles-black px-8 py-4 font-garden text-base font-bold text-white shadow-xl transition hover:bg-green-900"
             >
               <Phone className="mr-2 h-5 w-5" aria-hidden="true" />
-              Book With Jennifer
+              Book a Private Event
             </a>
             <a
               href="tel:+17164201591"
