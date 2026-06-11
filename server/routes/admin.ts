@@ -9,6 +9,12 @@ import { randomUUID } from "crypto";
 import path from "path";
 import fs from "fs";
 
+function publicUser(user: any) {
+  if (!user) return null;
+  const { passwordHash: _passwordHash, ...safeUser } = user;
+  return safeUser;
+}
+
 // Ensure upload directory exists
 const uploadDir = path.join(process.cwd(), "public", "uploads", "brands");
 if (!fs.existsSync(uploadDir)) {
@@ -365,7 +371,7 @@ export function registerAdminRoutes(app: Express) {
   // Check admin status endpoint
   app.get("/api/admin/check", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user?.claims?.sub || req.user?.id;
       const user = await storage.getUser(userId);
       res.json({ isAdmin: user?.role === 'admin' });
     } catch (error) {
@@ -452,7 +458,7 @@ export function registerAdminRoutes(app: Express) {
   app.get("/api/admin/users", isAdmin, async (req: any, res) => {
     try {
       const users = await storage.getAllUsers();
-      res.json(users);
+      res.json(users.map(publicUser));
     } catch (error) {
       console.error("Error fetching users:", error);
       res.status(500).json({ message: "Failed to fetch users" });
@@ -470,7 +476,7 @@ export function registerAdminRoutes(app: Express) {
       }
       
       const user = await storage.updateUserRole(id, role);
-      res.json(user);
+      res.json(publicUser(user));
     } catch (error) {
       console.error("Error updating user role:", error);
       res.status(500).json({ message: "Failed to update user role" });

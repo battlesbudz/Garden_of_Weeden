@@ -1,14 +1,18 @@
+import { type FormEvent, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Shield, User as UserIcon } from "lucide-react";
 
 interface User {
   id: string;
+  username: string | null;
   email: string | null;
   firstName: string | null;
   lastName: string | null;
@@ -19,10 +23,30 @@ interface User {
 
 export default function UsersManager() {
   const { toast } = useToast();
+  const { user: currentUser, updateMe } = useAuth();
+  const [accountForm, setAccountForm] = useState({
+    username: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    currentPassword: "",
+    newPassword: "",
+  });
 
   const { data: users, isLoading } = useQuery<User[]>({
     queryKey: ["/api/admin/users"],
   });
+
+  useEffect(() => {
+    if (!currentUser) return;
+    setAccountForm((form) => ({
+      ...form,
+      username: (currentUser as any).username || "",
+      email: currentUser.email || "",
+      firstName: currentUser.firstName || "",
+      lastName: currentUser.lastName || "",
+    }));
+  }, [currentUser]);
 
   const updateRoleMutation = useMutation({
     mutationFn: async ({ userId, role }: { userId: string; role: string }) => {
@@ -39,6 +63,37 @@ export default function UsersManager() {
 
   const handleRoleChange = (userId: string, role: string) => {
     updateRoleMutation.mutate({ userId, role });
+  };
+
+  const handleAccountSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    updateMe.mutate(
+      {
+        username: accountForm.username,
+        email: accountForm.email,
+        firstName: accountForm.firstName,
+        lastName: accountForm.lastName,
+        currentPassword: accountForm.currentPassword || undefined,
+        newPassword: accountForm.newPassword || undefined,
+      },
+      {
+        onSuccess: () => {
+          setAccountForm((form) => ({ ...form, currentPassword: "", newPassword: "" }));
+          toast({ title: "Admin login updated" });
+        },
+        onError: (error: any) => {
+          toast({
+            title: "Failed to update admin login",
+            description: error.message,
+            variant: "destructive",
+          });
+        },
+      },
+    );
+  };
+
+  const updateAccountField = (field: keyof typeof accountForm, value: string) => {
+    setAccountForm((form) => ({ ...form, [field]: value }));
   };
 
   if (isLoading) {
@@ -60,6 +115,59 @@ export default function UsersManager() {
 
   return (
     <div className="space-y-4">
+      <form onSubmit={handleAccountSubmit} className="rounded-md border border-zinc-800 bg-zinc-900/60 p-4 space-y-4">
+        <div>
+          <h3 className="text-white font-semibold">My admin login</h3>
+          <p className="text-sm text-gray-400">Update the account you use to sign in to this dashboard.</p>
+        </div>
+        <div className="grid gap-3 md:grid-cols-2">
+          <Input
+            value={accountForm.username}
+            onChange={(event) => updateAccountField("username", event.target.value)}
+            placeholder="Username"
+            className="bg-zinc-950 border-zinc-700 text-white"
+            required
+          />
+          <Input
+            value={accountForm.email}
+            onChange={(event) => updateAccountField("email", event.target.value)}
+            placeholder="Email"
+            type="email"
+            className="bg-zinc-950 border-zinc-700 text-white"
+            required
+          />
+          <Input
+            value={accountForm.firstName}
+            onChange={(event) => updateAccountField("firstName", event.target.value)}
+            placeholder="First name"
+            className="bg-zinc-950 border-zinc-700 text-white"
+          />
+          <Input
+            value={accountForm.lastName}
+            onChange={(event) => updateAccountField("lastName", event.target.value)}
+            placeholder="Last name"
+            className="bg-zinc-950 border-zinc-700 text-white"
+          />
+          <Input
+            value={accountForm.currentPassword}
+            onChange={(event) => updateAccountField("currentPassword", event.target.value)}
+            placeholder="Current password"
+            type="password"
+            className="bg-zinc-950 border-zinc-700 text-white"
+          />
+          <Input
+            value={accountForm.newPassword}
+            onChange={(event) => updateAccountField("newPassword", event.target.value)}
+            placeholder="New password"
+            type="password"
+            className="bg-zinc-950 border-zinc-700 text-white"
+          />
+        </div>
+        <Button type="submit" disabled={updateMe.isPending} className="bg-battles-gold text-black hover:bg-battles-gold/90">
+          {updateMe.isPending ? "Saving..." : "Save admin login"}
+        </Button>
+      </form>
+
       <div className="text-sm text-gray-400 mb-4">
         Total users: <span className="text-battles-gold font-semibold">{users.length}</span>
       </div>

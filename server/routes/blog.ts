@@ -19,7 +19,7 @@ export function registerBlogRoutes(app: Express) {
   // Get all blog posts including drafts (admin only)
   app.get("/api/blog/admin/posts", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {
@@ -61,7 +61,7 @@ export function registerBlogRoutes(app: Express) {
         if (!(req as any).user) {
           return res.status(404).json({ message: "Blog post not found" });
         }
-        const userId = (req as any).user.claims.sub;
+        const userId = ((req as any).user?.claims?.sub || (req as any).user?.id);
         const user = await storage.getUser(userId);
         if (!user || user.role !== 'admin') {
           return res.status(404).json({ message: "Blog post not found" });
@@ -90,7 +90,7 @@ export function registerBlogRoutes(app: Express) {
         if (!(req as any).user) {
           return res.status(404).json({ message: "Blog post not found" });
         }
-        const userId = (req as any).user.claims.sub;
+        const userId = ((req as any).user?.claims?.sub || (req as any).user?.id);
         const user = await storage.getUser(userId);
         if (!user || user.role !== 'admin') {
           return res.status(404).json({ message: "Blog post not found" });
@@ -107,7 +107,7 @@ export function registerBlogRoutes(app: Express) {
   // Create a new blog post (admin only)
   app.post("/api/blog/posts", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {
@@ -133,7 +133,7 @@ export function registerBlogRoutes(app: Express) {
   // Update a blog post (admin only)
   app.put("/api/blog/posts/:id", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {
@@ -160,7 +160,7 @@ export function registerBlogRoutes(app: Express) {
   // Delete a blog post (admin only)
   app.delete("/api/blog/posts/:id", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {

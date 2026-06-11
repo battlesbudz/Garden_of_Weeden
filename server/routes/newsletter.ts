@@ -47,7 +47,7 @@ export function registerNewsletterRoutes(app: Express) {
   // Get newsletter subscribers (admin only)
   app.get("/api/newsletter/subscribers", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {
@@ -87,7 +87,7 @@ export function registerNewsletterRoutes(app: Express) {
   // Get contact submissions (admin only)
   app.get("/api/contact/submissions", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user?.claims?.sub || req.user?.id);
       const user = await storage.getUser(userId);
       
       if (!user || user.role !== 'admin') {

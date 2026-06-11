@@ -57,8 +57,12 @@ export default function Navigation() {
     setIsOpen(false);
   };
 
-  const handleLogout = () => {
-    window.location.href = '/api/logout';
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+    window.location.href = "/";
   };
 
   return (
@@ -214,7 +218,7 @@ export default function Navigation() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <a href="/api/login" className="font-garden bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors" data-testid="nav-signin-button" aria-label="Sign in to your account">
+                <a href="/login" className="font-garden bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors" data-testid="nav-signin-button" aria-label="Sign in to your account">
                   Sign In
                 </a>
               )}
@@ -313,7 +317,7 @@ export default function Navigation() {
                 </button>
               </>
             ) : (
-              <a href="/api/login" className="font-garden block bg-green-700 hover:bg-green-800 text-white px-3 py-2 text-base font-semibold w-full text-center rounded">
+              <a href="/login" className="font-garden block bg-green-700 hover:bg-green-800 text-white px-3 py-2 text-base font-semibold w-full text-center rounded">
                 Sign In
               </a>
             )}
