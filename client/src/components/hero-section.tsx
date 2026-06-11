@@ -1,11 +1,33 @@
 import { ArrowRight, CalendarDays, MapPin, Phone, ShoppingBag } from "lucide-react";
 import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 import { VideoBackground } from "@/components/video-background";
 import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
 
+interface SiteSettings {
+  heroTitle?: string;
+  heroTagline?: string;
+  heroSubtitle?: string;
+  heroShopButtonText?: string;
+  heroStoryButtonText?: string;
+  locationText?: string;
+}
+
 export default function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
+  const { data: settings } = useQuery<SiteSettings>({
+    queryKey: ["/api/site-settings"],
+  });
+
+  const heroTitle = settings?.heroTitle || "Garden of Weeden";
+  const heroTagline = settings?.heroTagline || "Farm to Flame Cannabis";
+  const heroSubtitle =
+    settings?.heroSubtitle ||
+    "A Buffalo cannabis microbusiness with its own farm, a current craft menu, the Forbidden Fruit lounge, and a mobile weed bar built for private events.";
+  const heroShopButtonText = settings?.heroShopButtonText || "View Current Menu";
+  const heroStoryButtonText = settings?.heroStoryButtonText || "Book the Mobile Weed Bar";
+  const locationText = settings?.locationText || "Buffalo rooted with bike-route access and off-street parking.";
 
   return (
     <section
@@ -37,13 +59,13 @@ export default function HeroSection() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.7 }}
         >
           <p className="font-garden text-sm font-semibold uppercase tracking-[0.28em] text-green-400">
-            Farm to Flame Cannabis
+            {heroTagline}
           </p>
           <h1 className="mt-5 max-w-4xl font-enchanted text-6xl leading-[0.88] text-parchment drop-shadow-[0_5px_18px_rgba(0,0,0,0.9)] sm:text-7xl lg:text-8xl">
-            Garden of Weeden
+            {heroTitle}
           </h1>
           <p className="mt-7 max-w-2xl font-garden text-xl leading-relaxed text-gray-200 md:text-2xl">
-            A Buffalo cannabis microbusiness with its own farm, a current craft menu, the Forbidden Fruit lounge, and a mobile weed bar built for private events.
+            {heroSubtitle}
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -52,14 +74,14 @@ export default function HeroSection() {
               className="inline-flex items-center justify-center rounded-xl bg-green-700 px-7 py-4 font-garden text-base font-bold text-white shadow-xl shadow-black/30 transition hover:bg-green-800"
             >
               <ShoppingBag className="mr-2 h-5 w-5" aria-hidden="true" />
-              View Current Menu
+              {heroShopButtonText}
             </Link>
             <a
               href="#mobile-weed-bar"
               className="inline-flex items-center justify-center rounded-xl bg-parchment px-7 py-4 font-garden text-base font-bold text-battles-black shadow-xl shadow-black/30 transition hover:bg-white"
             >
               <CalendarDays className="mr-2 h-5 w-5" aria-hidden="true" />
-              Book the Mobile Weed Bar
+              {heroStoryButtonText}
             </a>
             <a
               href="tel:+17164201591"
@@ -93,7 +115,7 @@ export default function HeroSection() {
               </div>
               <div className="flex items-start gap-3 border-t border-white/10 pt-4">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-green-400" aria-hidden="true" />
-                <span>Buffalo rooted with bike-route access and off-street parking.</span>
+                <span>{locationText}</span>
               </div>
             </div>
           </div>
