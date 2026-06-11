@@ -65,7 +65,11 @@ export default function KeywordLandingPage() {
                   </div>
                   <div>
                     <strong className="text-green-500">Location:</strong>
-                    <p className="text-gray-300">Buffalo, NY (Western New York) with off-street parking</p>
+                    <p className="text-gray-300">1455 Niagara St, Buffalo, NY 14213 with off-street parking</p>
+                  </div>
+                  <div>
+                    <strong className="text-green-500">Hours:</strong>
+                    <p className="text-gray-300">Mon-Tue 10am-7:30pm, Wed 10am-8:30pm, Thu-Sat 10am-10pm, Sun 10am-6pm</p>
                   </div>
                   <div>
                     <strong className="text-green-500">Business Type:</strong>

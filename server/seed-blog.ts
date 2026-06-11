@@ -532,7 +532,7 @@ While consumption lounges develop, Buffalo finds ways:
 - **Fair pricing** - Craft quality without craft prices
 
 ### Visit Us
-- **Retail location** - [Your Buffalo address]
+- **Retail location** - 1455 Niagara St, Buffalo, NY 14213
 - **Education sessions** - Check our events calendar
 - **Veteran programs** - Special discounts and support
 - **Community hub** - More than a dispensary, a gathering place
