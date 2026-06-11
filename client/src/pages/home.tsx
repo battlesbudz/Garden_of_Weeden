@@ -1,10 +1,9 @@
 import Navigation from "@/components/navigation";
 import HeroSection from "@/components/hero-section";
-import LocalFarmNetworkSection from "@/components/local-farm-network-section";
-import FeaturedProductsSection from "@/components/featured-products-section";
-import MobileWeedBarSection from "@/components/mobile-weed-bar-section";
-import LoungeEventsSection from "@/components/lounge-events-section";
+import HomeActionRouterSection from "@/components/home-action-router-section";
+import HomeFarmTeaserSection from "@/components/home-farm-teaser-section";
 import OnTheRouteSection from "@/components/on-the-route-section";
+import QuietNewsletterSection from "@/components/quiet-newsletter-section";
 import Footer from "@/components/footer";
 import SEOHead from "@/components/seo/SEOHead";
 import { getCanonicalUrl, getOrganizationSchema, getLocalBusinessSchema } from "@/utils/seo";
@@ -41,11 +40,10 @@ export default function Home() {
       />
       <Navigation />
       <HeroSection />
-      <FeaturedProductsSection />
-      <MobileWeedBarSection />
-      <LocalFarmNetworkSection />
-      <LoungeEventsSection />
+      <HomeActionRouterSection />
+      <HomeFarmTeaserSection />
       <OnTheRouteSection />
+      <QuietNewsletterSection />
       <Footer />
     </div>
   );
