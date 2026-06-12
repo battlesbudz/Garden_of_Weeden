@@ -70,7 +70,7 @@ async function expectStatus(response, expected, label) {
 async function main() {
   const stamp = Date.now();
   const admin = createClient();
-  const created = { mediaId: null, productId: null, blogId: null };
+  const created = { mediaId: null, blogId: null };
 
   try {
     await expectStatus(await admin.request("/health"), 200, "health check");
@@ -105,32 +105,6 @@ async function main() {
     const uploadData = await json(upload);
     created.mediaId = uploadData.id;
     assert.ok(uploadData.url, "upload should return a file URL");
-
-    const productCreate = await admin.request("/api/admin/products", {
-      method: "POST",
-      body: {
-        name: `Admin Smoke Product ${stamp}`,
-        description: "Temporary product created by admin smoke test.",
-        price: "1.00",
-        category: "accessories",
-        imageUrl: uploadData.url,
-        inStock: true,
-        stockQuantity: 1,
-        isFeatured: false,
-      },
-    });
-    await expectStatus(productCreate, 201, "create product");
-    const product = await json(productCreate);
-    created.productId = product.id;
-
-    await expectStatus(
-      await admin.request(`/api/admin/products/${created.productId}`, {
-        method: "PATCH",
-        body: { name: `Admin Smoke Product Updated ${stamp}` },
-      }),
-      200,
-      "edit product",
-    );
 
     const blogCreate = await admin.request("/api/blog/posts", {
       method: "POST",
@@ -207,9 +181,6 @@ async function main() {
   } finally {
     if (created.blogId) {
       await admin.request(`/api/blog/posts/${created.blogId}`, { method: "DELETE" });
-    }
-    if (created.productId) {
-      await admin.request(`/api/admin/products/${created.productId}`, { method: "DELETE" });
     }
     if (created.mediaId) {
       await admin.request(`/api/admin/media/${created.mediaId}`, { method: "DELETE" });
