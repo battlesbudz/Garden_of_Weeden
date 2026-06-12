@@ -1,6 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Handshake, Leaf, Sprout } from "lucide-react";
-// Contrasting pair: overcast wide-field (shows scale) + mature canopy rows (shows yield)
 import farmOvercastImage from "@assets/farm_rows_overcast_wide.jpg";
 import farmMatureImage from "@assets/farm_rows_mature_canopy.jpg";
 
@@ -18,7 +17,7 @@ const proofPoints = [
   {
     icon: Handshake,
     title: "No mystery shelf",
-    text: "Budtenders can speak to the growers, cultivation practices, and product story behind the menu.",
+    text: "Budtenders can speak to the growers, cultivation practices, and product story behind every item.",
   },
 ];
 
@@ -26,57 +25,71 @@ export default function LocalFarmNetworkSection() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section id="local-farm-network" className="bg-midnight-grove/20 py-20 text-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8">
+    <section id="local-farm-network" className="bg-black py-20 text-white">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-start lg:px-8">
+
+        {/* Left: copy */}
         <motion.div
-          initial={{ opacity: 1, x: 0 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.65 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
         >
-          <p className="font-garden text-sm font-semibold uppercase tracking-[0.24em] text-green-400">Farm to Flame</p>
-          <h2 className="mt-4 max-w-3xl font-enchanted text-5xl leading-none text-parchment md:text-7xl">
+          <p className="font-garden text-sm font-bold uppercase tracking-[0.26em] text-green-400">
+            Local Farm Network
+          </p>
+          <h2 className="mt-4 font-enchanted text-5xl leading-tight text-white md:text-6xl">
             House-grown flower, sold by the source.
           </h2>
-          <p className="mt-6 max-w-2xl font-garden text-lg leading-relaxed text-gray-300">
-            Most dispensaries buy flower from someone else. Garden of Weeden is a microbusiness, so its name-brand cannabis can move from their own cultivation to their own dispensary and lounge.
+          <p className="mt-5 font-garden text-lg leading-relaxed text-gray-100">
+            Most dispensaries buy flower from someone else. Garden of Weeden is a microbusiness —
+            its name-brand cannabis moves from their own cultivation directly to their own dispensary and lounge.
           </p>
-        </motion.div>
 
-        <motion.div
-          className="overflow-hidden border border-green-500/25 bg-battles-black shadow-2xl"
-          initial={{ opacity: 1, x: 0 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.65, delay: prefersReducedMotion ? 0 : 0.1 }}
-        >
-          {/* Two-photo grid: overcast wide shot on top, mature canopy below */}
-          <div className="grid grid-cols-2 gap-0.5 bg-green-500/10">
-            <img
-              src={farmOvercastImage}
-              alt="Garden of Weeden farm rows on overcast day — full field scale near Buffalo"
-              className="h-48 w-full object-cover"
-            />
-            <img
-              src={farmMatureImage}
-              alt="Garden of Weeden mature cannabis canopy rows — mid-season growth"
-              className="h-48 w-full object-cover"
-            />
-          </div>
-          <div className="divide-y divide-white/10">
-            {proofPoints.map((point) => {
+          <div className="mt-8 space-y-4">
+            {proofPoints.map((point, i) => {
               const Icon = point.icon;
               return (
-                <div key={point.title} className="grid grid-cols-[auto_1fr] gap-4 p-5">
-                  <Icon className="mt-1 h-6 w-6 text-green-400" aria-hidden="true" />
+                <motion.div
+                  key={point.title}
+                  className="flex gap-4 rounded-xl border border-green-500/30 bg-green-950/60 p-5"
+                  initial={prefersReducedMotion ? {} : { opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: i * 0.1 }}
+                >
+                  <Icon className="mt-0.5 h-6 w-6 shrink-0 text-green-400" aria-hidden="true" />
                   <div>
-                    <h3 className="font-storybook text-xl text-parchment">{point.title}</h3>
-                    <p className="mt-1 font-garden text-sm leading-relaxed text-gray-400">{point.text}</p>
+                    <h3 className="font-storybook text-xl text-white">{point.title}</h3>
+                    <p className="mt-1 font-garden text-sm leading-relaxed text-gray-200">{point.text}</p>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
+        </motion.div>
+
+        {/* Right: two photos stacked */}
+        <motion.div
+          className="grid gap-4"
+          initial={prefersReducedMotion ? {} : { opacity: 0, x: 24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.7, delay: 0.1 }}
+        >
+          <img
+            src={farmOvercastImage}
+            alt="Garden of Weeden farm — wide field view on overcast day near Buffalo"
+            className="h-56 w-full rounded-xl object-cover shadow-xl"
+          />
+          <img
+            src={farmMatureImage}
+            alt="Garden of Weeden mature cannabis canopy rows — mid-season growth"
+            className="h-56 w-full rounded-xl object-cover shadow-xl"
+          />
+          <p className="text-center font-garden text-xs font-bold uppercase tracking-widest text-green-500/60">
+            Garden of Weeden farm · 15 miles south of Buffalo
+          </p>
         </motion.div>
       </div>
     </section>
