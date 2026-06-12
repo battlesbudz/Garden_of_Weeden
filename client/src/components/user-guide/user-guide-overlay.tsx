@@ -36,7 +36,7 @@ const guideSteps: GuideStep[] = [
   {
     id: 'welcome',
     title: 'Welcome to Garden of Weeden!',
-    description: 'Use this short tour to find the menu, Farm to Flame story, lounge, private events, and visit details.',
+    description: 'Use this short tour to find the story, events, contact details, and visit information.',
     position: 'center',
     icon: Leaf,
     category: 'navigation'
@@ -44,69 +44,35 @@ const guideSteps: GuideStep[] = [
   {
     id: 'navigation',
     title: 'Navigation Menu',
-    description: 'Use the top navigation to explore our retail products, book experiences, and access the community hub.',
+    description: 'Use the top navigation to move between the home page, our story, the blog, and contact details.',
     element: 'nav',
     position: 'bottom',
     icon: Navigation,
     category: 'navigation'
   },
   {
-    id: 'retail',
-    title: 'Current Menu',
-    description: 'Browse craft products from Garden of Weeden and regional producers.',
-    element: '#retail',
+    id: 'story',
+    title: 'Our Story',
+    description: 'Read how Farm to Flame connects the farm, the brand, and the local community.',
+    element: '[href="/about"]',
     position: 'top',
-    icon: Coffee,
+    icon: BookOpen,
     category: 'features'
   },
   {
-    id: 'experiences',
+    id: 'events',
     title: 'Book an Event',
     description: 'Contact Garden of Weeden about the mobile weed bar, lounge bookings, and private events.',
-    element: '#events',
+    element: '[href="#contact"]',
     position: 'top',
     icon: Calendar,
     category: 'features'
   },
   {
-    id: 'community',
-    title: 'Community Hub',
-    description: 'Join discussions, access educational content, and connect with fellow cannabis enthusiasts.',
-    element: '[href="/community"]',
-    position: 'bottom',
-    action: 'click',
-    icon: Users,
-    category: 'community'
-  },
-  {
-    id: 'forum',
-    title: 'Discussion Forums',
-    description: 'Share experiences, ask questions, and connect with local cannabis customers.',
-    position: 'top',
-    icon: MessageSquare,
-    category: 'community'
-  },
-  {
-    id: 'education',
-    title: 'Cannabis Education',
-    description: 'Access our comprehensive guides on New York cannabis laws, consumption tips, and tourism etiquette.',
-    position: 'top',
-    icon: BookOpen,
-    category: 'community'
-  },
-  {
-    id: 'rewards',
-    title: 'Rewards System',
-    description: 'Earn points for community participation, unlock achievements, and compete on leaderboards!',
-    position: 'top',
-    icon: Award,
-    category: 'rewards'
-  },
-  {
     id: 'location',
     title: 'Visit Our Location',
-    description: 'Find visit details for the Buffalo-area dispensary, lounge, and off-street parking.',
-    element: '#about',
+    description: 'Find the Buffalo-area dispensary, lounge, and off-street parking details.',
+    element: '#contact',
     position: 'top',
     icon: MapPin,
     category: 'features'
@@ -310,3 +276,4 @@ export function UserGuideOverlay({ isOpen, onClose, onComplete }: UserGuideOverl
     </>
   );
 }
+

@@ -1,18 +1,14 @@
 # Deploying Garden of Weeden on Railway
 
-This app is an Express + Vite + PostgreSQL application. It no longer needs Replit runtime variables to boot.
+This app runs as a standard Express + Vite + PostgreSQL service on Railway.
 
-## Railway settings
-
-Railway can use the included `railway.json`:
+## Railway service settings
 
 - Build command: `npm run build`
 - Start command: `npm run start`
-- Health check: `/health`
+- Health check path: `/health`
 
 ## Required environment variables
-
-Set these in the Railway service Variables tab:
 
 ```bash
 DATABASE_URL=postgresql://...
@@ -21,11 +17,11 @@ APP_URL=https://<your-railway-domain>
 NODE_ENV=production
 ```
 
-`APP_URL` must match the public Railway URL after deployment. If you later add a custom domain, update it.
+`APP_URL` should match the public Railway URL. Update it again if you add a custom domain.
 
 ## Authentication
 
-The previous Replit auth integration required `REPLIT_DOMAINS` and `REPL_ID`, which are not available on Railway. The app now uses provider-neutral OpenID Connect when these variables are present:
+If you use OpenID Connect, set:
 
 ```bash
 OIDC_ISSUER_URL=https://<your-identity-provider>
@@ -33,38 +29,20 @@ OIDC_CLIENT_ID=<client id>
 OIDC_CLIENT_SECRET=<client secret>
 ```
 
-Callback URL to configure in your identity provider:
+Callback URL:
 
 ```text
 https://<your-railway-domain>/api/callback
 ```
 
-Logout and login routes remain:
-
-- `GET /api/login`
-- `GET /api/callback`
-- `GET /api/logout`
-- `GET /api/auth/user`
-
-If OIDC variables are not set, the app still boots and login routes return `503`.
-
 ## Database
 
-Use Railway Postgres or keep the existing Neon database. Either way, set `DATABASE_URL` and run migrations/schema push:
+Use Railway Postgres or another Postgres host. After setting `DATABASE_URL`, push schema changes with:
 
 ```bash
 npm run db:push
 ```
 
-## Object storage follow-up
+## File storage
 
-`server/objectStorage.ts` now uses standard Google Cloud Storage credentials instead of a Replit sidecar endpoint. File upload/signing flows that use secure document storage require these variables:
-
-```bash
-GOOGLE_APPLICATION_CREDENTIALS_JSON=<service account json>
-GOOGLE_CLOUD_PROJECT_ID=<gcp project id>
-PRIVATE_OBJECT_DIR=/bucket/private
-PUBLIC_OBJECT_SEARCH_PATHS=/bucket/public
-```
-
-The app can still deploy without these variables if secure document upload/download routes are not exercised.
+If you use the secure document upload/download flow, set the Google Cloud storage credentials used by `server/objectStorage.ts`.

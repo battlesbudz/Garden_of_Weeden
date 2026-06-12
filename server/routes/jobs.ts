@@ -1,5 +1,5 @@
 
-import type { Express } from "express";
+import type { Express, Request, Response } from "express";
 import { isAuthenticated } from "../authMiddleware";
 import { storage } from "../storage";
 import { insertJobApplicationSchema } from "@shared/schema";
@@ -7,8 +7,7 @@ import { z } from "zod";
 import { sendJobApplicationNotification } from "../services/emailService";
 
 export function registerJobRoutes(app: Express) {
-  // Job application endpoint
-  app.post("/api/job/apply", async (req, res) => {
+  const handleJobApplication = async (req: Request, res: Response) => {
     try {
       const validatedData = insertJobApplicationSchema.parse(req.body);
       const application = await storage.createJobApplication(validatedData);
@@ -30,7 +29,11 @@ export function registerJobRoutes(app: Express) {
       console.error("Job application error:", error);
       res.status(500).json({ message: "Failed to submit job application" });
     }
-  });
+  };
+
+  // Job application endpoints (plural used by client; singular kept for backwards compatibility)
+  app.post("/api/job-applications", handleJobApplication);
+  app.post("/api/job/apply", handleJobApplication);
 
   // Get job applications (admin only)
   app.get("/api/job/applications", isAuthenticated, async (req: any, res) => {

@@ -2,7 +2,7 @@
 import type { Express } from "express";
 import { isAdmin, isAuthenticated } from "../authMiddleware";
 import { storage } from "../storage";
-import { insertBrandSchema, insertProductSchema, insertSiteSettingSchema, insertShopItemSchema } from "@shared/schema";
+import { insertBrandSchema, insertSiteSettingSchema, users } from "@shared/schema";
 import { z } from "zod";
 import multer from "multer";
 import { randomUUID } from "crypto";
@@ -160,134 +160,6 @@ export function registerAdminRoutes(app: Express) {
     }
   });
 
-  // ========== PRODUCT MANAGEMENT ==========
-  
-  // Get all products (admin)
-  app.get("/api/admin/products", isAdmin, async (req: any, res) => {
-    try {
-      const products = await storage.getProductsWithBrands();
-      res.json(products);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      res.status(500).json({ message: "Failed to fetch products" });
-    }
-  });
-
-  // Create product
-  app.post("/api/admin/products", isAdmin, async (req: any, res) => {
-    try {
-      const validatedData = insertProductSchema.parse(req.body);
-      const product = await storage.createProduct(validatedData);
-      res.status(201).json(product);
-    } catch (error) {
-      console.error("Error creating product:", error);
-      res.status(500).json({ message: "Failed to create product" });
-    }
-  });
-
-  // Update product
-  app.patch("/api/admin/products/:id", isAdmin, async (req: any, res) => {
-    try {
-      const id = parseInt(req.params.id);
-      const validatedData = insertProductSchema.partial().parse(req.body);
-      const product = await storage.updateProduct(id, validatedData);
-      res.json(product);
-    } catch (error) {
-      console.error("Error updating product:", error);
-      res.status(500).json({ message: "Failed to update product" });
-    }
-  });
-
-  // Delete product
-  app.delete("/api/admin/products/:id", isAdmin, async (req: any, res) => {
-    try {
-      const id = parseInt(req.params.id);
-      await storage.deleteProduct(id);
-      res.status(204).send();
-    } catch (error) {
-      console.error("Error deleting product:", error);
-      res.status(500).json({ message: "Failed to delete product" });
-    }
-  });
-
-  // ========== SHOP ITEMS MANAGEMENT ==========
-  
-  // Get all shop items (admin)
-  app.get("/api/admin/shop-items", isAdmin, async (req: any, res) => {
-    try {
-      const items = await storage.getAllShopItems();
-      res.json(items);
-    } catch (error) {
-      console.error("Error fetching shop items:", error);
-      res.status(500).json({ message: "Failed to fetch shop items" });
-    }
-  });
-
-  // Get shop items with product details (admin)
-  app.get("/api/admin/shop-items/with-products", isAdmin, async (req: any, res) => {
-    try {
-      const items = await storage.getShopItemsWithProducts();
-      res.json(items);
-    } catch (error) {
-      console.error("Error fetching shop items with products:", error);
-      res.status(500).json({ message: "Failed to fetch shop items" });
-    }
-  });
-
-  // Create shop item (import product to shop)
-  app.post("/api/admin/shop-items", isAdmin, async (req: any, res) => {
-    try {
-      const validatedData = insertShopItemSchema.parse(req.body);
-      
-      // Check if product is already in shop
-      const existing = await storage.getShopItemByProductId(validatedData.productId);
-      if (existing) {
-        return res.status(400).json({ message: "Product is already in the shop" });
-      }
-      
-      const item = await storage.createShopItem(validatedData);
-      res.status(201).json(item);
-    } catch (error) {
-      console.error("Error creating shop item:", error);
-      res.status(500).json({ message: "Failed to add product to shop" });
-    }
-  });
-
-  // Update shop item
-  app.patch("/api/admin/shop-items/:id", isAdmin, async (req: any, res) => {
-    try {
-      const id = parseInt(req.params.id);
-      const validatedData = insertShopItemSchema.partial().parse(req.body);
-      const item = await storage.updateShopItem(id, validatedData);
-      res.json(item);
-    } catch (error) {
-      console.error("Error updating shop item:", error);
-      res.status(500).json({ message: "Failed to update shop item" });
-    }
-  });
-
-  // Delete shop item (remove product from shop)
-  app.delete("/api/admin/shop-items/:id", isAdmin, async (req: any, res) => {
-    try {
-      const id = parseInt(req.params.id);
-      await storage.deleteShopItem(id);
-      res.status(204).send();
-    } catch (error) {
-      console.error("Error deleting shop item:", error);
-      res.status(500).json({ message: "Failed to remove product from shop" });
-    }
-  });
-
-  // Public endpoint for shop items (for the shop page)
-  app.get("/api/shop-items", async (req: any, res) => {
-    try {
-      const items = await storage.getShopItemsWithProducts();
-      res.json(items);
-    } catch (error) {
-      console.error("Error fetching shop items:", error);
-      res.status(500).json({ message: "Failed to fetch shop items" });
-    }
-  });
 
   // ========== EXISTING ADMIN ROUTES ==========
 
@@ -302,15 +174,6 @@ export function registerAdminRoutes(app: Express) {
         case 'subscribers':
           data = await storage.getAllNewsletterSubscribers();
           filename = 'newsletter-subscribers';
-          break;
-        case 'applications':
-          data = await storage.getAllJobApplications();
-          filename = 'job-applications';
-          data = data.map(({ resumeFileData, ...rest }) => rest);
-          break;
-        case 'events':
-          data = await storage.getAllEventBookings();
-          filename = 'event-bookings';
           break;
         case 'contacts':
           data = await storage.getAllContactSubmissions();
@@ -341,30 +204,6 @@ export function registerAdminRoutes(app: Express) {
     } catch (error) {
       console.error("Error generating CSV:", error);
       res.status(500).json({ message: "Failed to generate CSV" });
-    }
-  });
-
-  // Download resume endpoint (admin only)
-  app.get("/api/admin/resume/:id", isAdmin, async (req: any, res) => {
-    try {
-      const applications = await storage.getAllJobApplications();
-      const application = applications.find(app => app.id === parseInt(req.params.id));
-
-      if (!application || !application.resumeFileData) {
-        return res.status(404).json({ message: "Resume not found" });
-      }
-
-      const [mimeInfo, base64Data] = application.resumeFileData.split(',');
-      const mimeType = mimeInfo.split(':')[1].split(';')[0];
-      const buffer = Buffer.from(base64Data, 'base64');
-
-      res.setHeader('Content-Type', mimeType);
-      res.setHeader('Content-Disposition', `attachment; filename="${application.resumeFileName}"`);
-      res.send(buffer);
-
-    } catch (error) {
-      console.error("Error downloading resume:", error);
-      res.status(500).json({ message: "Failed to download resume" });
     }
   });
 
@@ -483,93 +322,5 @@ export function registerAdminRoutes(app: Express) {
     }
   });
 
-  // ========== ORDERS ==========
-  
-  // Get all orders (admin only)
-  app.get("/api/admin/orders", isAdmin, async (req: any, res) => {
-    try {
-      const orders = await storage.getAllOrders();
-      res.json(orders);
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      res.status(500).json({ message: "Failed to fetch orders" });
-    }
-  });
-
-  // Update order status (admin only)
-  app.patch("/api/admin/orders/:id/status", isAdmin, async (req: any, res) => {
-    try {
-      const orderId = parseInt(req.params.id);
-      const { status } = req.body;
-      
-      if (!status) {
-        return res.status(400).json({ message: "Status is required" });
-      }
-      
-      const order = await storage.updateOrderStatus(orderId, status);
-      res.json(order);
-    } catch (error) {
-      console.error("Error updating order status:", error);
-      res.status(500).json({ message: "Failed to update order status" });
-    }
-  });
-
-  // Update payment status (admin only) - for marking orders as paid
-  app.patch("/api/admin/orders/:id/payment", isAdmin, async (req: any, res) => {
-    try {
-      const orderId = parseInt(req.params.id);
-      const { paymentStatus } = req.body;
-      
-      if (!paymentStatus) {
-        return res.status(400).json({ message: "Payment status is required" });
-      }
-      
-      // Update payment status and set paidAt if marking as completed
-      const paidAt = paymentStatus === "completed" ? new Date() : undefined;
-      const order = await storage.updateOrderPayment(orderId, paymentStatus, undefined, paidAt);
-      
-      // If marked as paid, also update order status
-      if (paymentStatus === "completed") {
-        await storage.updateOrderStatus(orderId, "paid");
-      }
-      
-      res.json(order);
-    } catch (error) {
-      console.error("Error updating payment status:", error);
-      res.status(500).json({ message: "Failed to update payment status" });
-    }
-  });
-
-  // Update order details (admin only)
-  app.patch("/api/admin/orders/:id", isAdmin, async (req: any, res) => {
-    try {
-      const orderId = parseInt(req.params.id);
-      const { customerName, customerEmail, customerPhone, shippingAddress, notes } = req.body;
-      
-      const order = await storage.updateOrder(orderId, {
-        customerName,
-        customerEmail,
-        customerPhone,
-        shippingAddress,
-        notes,
-      });
-      
-      res.json(order);
-    } catch (error) {
-      console.error("Error updating order:", error);
-      res.status(500).json({ message: "Failed to update order" });
-    }
-  });
-
-  // Delete order (admin only)
-  app.delete("/api/admin/orders/:id", isAdmin, async (req: any, res) => {
-    try {
-      const orderId = parseInt(req.params.id);
-      await storage.deleteOrder(orderId);
-      res.status(204).send();
-    } catch (error) {
-      console.error("Error deleting order:", error);
-      res.status(500).json({ message: "Failed to delete order" });
-    }
-  });
 }
+

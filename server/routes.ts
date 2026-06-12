@@ -8,18 +8,10 @@ import { MailService } from '@sendgrid/mail';
 // Import route modules
 import { registerAuthRoutes } from "./routes/auth";
 import { registerNewsletterRoutes } from "./routes/newsletter";
+import { registerAdminRoutes } from "./routes/admin";
+import { registerBlogRoutes } from "./routes/blog";
 import { registerEventRoutes } from "./routes/events";
 import { registerJobRoutes } from "./routes/jobs";
-import { registerForumRoutes } from "./routes/forum";
-import { registerGamificationRoutes } from "./routes/gamification";
-import { registerInvestorRoutes } from "./routes/investor";
-import { registerDocumentRoutes } from "./routes/documents";
-import { registerAdminRoutes } from "./routes/admin";
-import { registerCalendarRoutes } from "./routes/calendar";
-import { registerBlogRoutes } from "./routes/blog";
-import { registerShopRoutes } from "./routes/shop";
-import { registerCartRoutes } from "./routes/cart";
-import { registerCheckoutRoutes } from "./routes/checkout";
 
 // Initialize SendGrid (only if API key is available)
 let mailService: MailService | null = null;
@@ -45,18 +37,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Register all route modules
   registerAuthRoutes(app);
   registerNewsletterRoutes(app);
+  registerAdminRoutes(app);
+  registerBlogRoutes(app);
   registerEventRoutes(app);
   registerJobRoutes(app);
-  registerForumRoutes(app);
-  registerGamificationRoutes(app);
-  registerInvestorRoutes(app);
-  registerDocumentRoutes(app);
-  registerAdminRoutes(app);
-  registerCalendarRoutes(app);
-  registerBlogRoutes(app);
-  registerShopRoutes(app);
-  registerCartRoutes(app);
-  registerCheckoutRoutes(app);
 
   const httpServer = createServer(app);
   return httpServer;

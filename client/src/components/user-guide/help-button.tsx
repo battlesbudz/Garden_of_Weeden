@@ -10,9 +10,9 @@ import {
   HelpCircle, 
   Play, 
   BookOpen, 
-  MessageSquare, 
   Phone,
   Mail,
+  MapPin,
   ExternalLink
 } from 'lucide-react';
 
@@ -36,7 +36,7 @@ export function HelpButton({ onStartTour, onShowGuide }: HelpButtonProps) {
     {
       id: 'tour',
       title: 'Take Tour',
-      description: 'Find the menu, story, lounge, and event options',
+      description: 'Find the story, lounge, and event options',
       icon: Play,
       action: () => {
         setIsOpen(false);
@@ -55,18 +55,18 @@ export function HelpButton({ onStartTour, onShowGuide }: HelpButtonProps) {
     },
     {
       id: 'community',
-      title: 'Ask Community',
-      description: 'Join the local cannabis conversation',
-      icon: MessageSquare,
+      title: 'Visit Location',
+      description: 'Find hours, parking, and contact details',
+      icon: MapPin,
       action: () => {
         setIsOpen(false);
-        window.location.href = '/community';
+        window.location.href = '/about#contact';
       }
     },
     {
       id: 'contact',
       title: 'Contact Us',
-      description: 'Ask about visits, menu questions, or event bookings',
+      description: 'Ask about visits or event bookings',
       icon: Mail,
       action: () => {
         setIsOpen(false);

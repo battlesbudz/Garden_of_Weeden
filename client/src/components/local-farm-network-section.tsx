@@ -12,7 +12,7 @@ const proofPoints = [
   {
     icon: Leaf,
     title: "Cannabis Farmers Alliance",
-    text: "The wider menu supports local small farms, microbusinesses, and regional producers they know.",
+    text: "The wider selection supports local small farms, microbusinesses, and regional producers they know.",
   },
   {
     icon: Handshake,

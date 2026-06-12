@@ -4,7 +4,7 @@ import { GraduationCap, Lightbulb, Sprout, Award, Target, Leaf } from 'lucide-re
 
 const timelineEvents = [
   { year: 'Farm', icon: Leaf, title: 'Local Farmer Partners', description: 'Products sourced from our farm south of Buffalo and small craft growers across Central and Western NY', highlight: 'Local Roots', position: 'left' as const },
-  { year: 'Cultivation', icon: Sprout, title: 'Small-Batch Craft', description: 'Budtenders learn the cultivation practices and farmer stories behind the products on the menu', highlight: 'Craft Knowledge', position: 'right' as const },
+  { year: 'Cultivation', icon: Sprout, title: 'Small-Batch Craft', description: 'Budtenders learn the cultivation practices and farmer stories behind the products they carry', highlight: 'Craft Knowledge', position: 'right' as const },
   { year: 'Education', icon: GraduationCap, title: 'Customer Guidance', description: 'Clear cannabis education, product context, and New York compliance guide the customer experience', highlight: 'Know the Source', position: 'left' as const },
   { year: 'Dispensary', icon: Target, title: 'Garden of Weeden', description: 'A NYS licensed microbusiness dispensary serving local craft products in Buffalo, NY', highlight: 'NYS Licensed', position: 'right' as const },
   { year: 'Lounge', icon: Lightbulb, title: 'Forbidden Fruit', description: 'An on-site consumption lounge for relaxing, events, education, and private gatherings', highlight: 'Community Space', position: 'left' as const },
@@ -29,7 +29,7 @@ export function ServiceToSoilTimeline() {
             Farm to Flame
           </h2>
           <p className="text-xl text-gray-400 font-garden max-w-3xl mx-auto">
-            A local craft cannabis journey from regional farms to the Forbidden Fruit lounge and dispensary menu.
+            A local craft cannabis journey from regional farms to the Forbidden Fruit lounge and dispensary experience.
           </p>
         </motion.div>
 

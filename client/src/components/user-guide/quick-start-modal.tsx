@@ -34,12 +34,13 @@ interface QuickStartOption {
 const quickStartOptions: QuickStartOption[] = [
   {
     id: 'products',
-    title: 'Explore Products',
-    description: 'Browse the current craft menu for flower, pre-rolls, edibles, vapes, and local partner products.',
+    title: 'Explore the Story',
+    description: 'Read how Farm to Flame connects the farm, the brand, and the local community.',
     icon: Coffee,
-    action: 'View Products',
+    action: 'Read More',
     color: 'bg-battles-gold/20 text-battles-gold border-battles-gold/30',
-    path: '#retail'
+    path: '/about',
+    navigate: true
   },
   {
     id: 'about',
@@ -58,7 +59,8 @@ const quickStartOptions: QuickStartOption[] = [
     icon: MapPin,
     action: 'Get Directions',
     color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-    path: '#about'
+    path: '/about#contact',
+    navigate: true
   }
 ];
 
@@ -138,7 +140,7 @@ export function QuickStartModal({ isOpen, onClose, onStartTour, onOptionSelect }
             </div>
           </div>
           <p className="text-gray-300 text-lg max-w-2xl">
-            Start with the menu, the Farm to Flame story, or visit details before you stop in.
+            Start with the Farm to Flame story, visit details, or event booking before you stop in.
           </p>
         </DialogHeader>
         
@@ -180,10 +182,10 @@ export function QuickStartModal({ isOpen, onClose, onStartTour, onOptionSelect }
             </div>
             
             {/* Help Text */}
-            <div className="text-center text-sm text-gray-500 py-4">
-              <p>First time here? The short tour points you toward the menu, story, lounge, and event options.</p>
+          <div className="text-center text-sm text-gray-500 py-4">
+              <p>First time here? The short tour points you toward the story, lounge, and event options.</p>
               <p>Returning visitor? Jump straight to the section you need.</p>
-            </div>
+          </div>
           </div>
         </ScrollArea>
         

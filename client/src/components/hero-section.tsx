@@ -1,4 +1,4 @@
-import { MapPin, Phone, ShoppingBag } from "lucide-react";
+import { ArrowRight, MapPin, Phone } from "lucide-react";
 import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -21,10 +21,14 @@ export default function HeroSection() {
   });
 
   const staleHeroSubtitles = new Set([
-    "A Buffalo cannabis microbusiness with its own farm, a current craft menu, the Forbidden Fruit lounge, and a mobile weed bar built for private events.",
+    "A Buffalo cannabis microbusiness with its own farm, the Forbidden Fruit lounge, and a mobile weed bar built for private events.",
   ]);
-  const staleShopButtonLabels = new Set(["Shop Farm to Flame", "Explore Farm to Flame"]);
-  const staleStoryButtonLabels = new Set(["Our Story"]);
+  const staleHeroButtonLabels = new Set(["Our Story", "Book a Private Event"]);
+  const staleStoryButtonLabels = new Set(["Book the Mobile Weed Bar"]);
+  staleHeroButtonLabels.add("View Current Menu");
+  staleHeroButtonLabels.add("View Menu");
+  staleHeroButtonLabels.add("Shop Current Menu");
+  staleHeroButtonLabels.add("Shop Craft Products");
 
   const heroTitle = settings?.heroTitle || "Garden of Weeden";
   const heroTagline = settings?.heroTagline || "Farm to Flame Cannabis";
@@ -33,13 +37,13 @@ export default function HeroSection() {
       ? settings.heroSubtitle
       : "Buffalo's Farm to Flame cannabis microbusiness: house-grown flower, regional craft products, the Forbidden Fruit lounge, and a mobile weed bar for private events.";
   const heroShopButtonText =
-    settings?.heroShopButtonText && !staleShopButtonLabels.has(settings.heroShopButtonText)
+    settings?.heroShopButtonText && !staleHeroButtonLabels.has(settings.heroShopButtonText)
       ? settings.heroShopButtonText
-      : "View Current Menu";
+      : "Our Story";
   const heroStoryButtonText =
-    settings?.heroStoryButtonText && !staleStoryButtonLabels.has(settings.heroStoryButtonText)
+    settings?.heroStoryButtonText && !staleHeroButtonLabels.has(settings.heroStoryButtonText)
       ? settings.heroStoryButtonText
-      : "Book the Mobile Weed Bar";
+      : "Book a Private Event";
   const locationText = settings?.locationText || "Buffalo rooted with bike-route access and off-street parking.";
 
   return (
@@ -51,7 +55,7 @@ export default function HeroSection() {
         minHeight: "calc(100vh - var(--hopeline-banner-height, 40px) - 64px)",
       }}
     >
-      {/* Background with heavy dark overlay so text is always legible */}
+      {/* Background with a lighter scrim so the image stays readable under the copy */}
       <div className="absolute inset-0">
         <VideoBackground
           videoSrc={undefined}
@@ -62,9 +66,9 @@ export default function HeroSection() {
           muted
           loop
         />
-        <div className="absolute inset-0 bg-black/65" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40" />
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black to-transparent" />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-black/10" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-[inherit] max-w-5xl flex-col justify-center px-6 py-20 lg:px-8">
@@ -72,6 +76,7 @@ export default function HeroSection() {
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.7 }}
+          className="max-w-3xl rounded-[28px] border border-white/10 bg-black/20 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.28)] backdrop-blur-[2px] md:p-7"
         >
           {/* Eyebrow */}
           <p className="font-garden text-sm font-bold uppercase tracking-[0.3em] text-green-400">
@@ -91,10 +96,10 @@ export default function HeroSection() {
           {/* CTAs */}
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
             <Link
-              href="/shop"
+              href="/about"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 px-8 py-4 font-garden text-base font-bold text-white shadow-lg transition hover:bg-green-500"
             >
-              <ShoppingBag className="h-5 w-5" aria-hidden="true" />
+              <ArrowRight className="h-5 w-5" aria-hidden="true" />
               {heroShopButtonText}
             </Link>
             <a

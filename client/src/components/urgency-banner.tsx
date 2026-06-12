@@ -1,5 +1,4 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { Link } from "wouter";
 import { ArrowRight, Clock, Leaf } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -20,7 +19,7 @@ export default function UrgencyBanner() {
   const urgencyBadge = settings?.urgencyBadge || "Farm to Flame Drop";
   const urgencyTitle = settings?.urgencyTitle || "Small-Batch Craft Products";
   const urgencyDesc = settings?.urgencyDesc || "Ask about current local farm partner releases and seasonal NYS craft products.";
-  const urgencyCtaText = settings?.urgencyCtaText || "Shop Current Menu";
+  const urgencyCtaText = settings?.urgencyCtaText || "Book a Private Event";
 
   return (
     <section className="relative py-16 bg-gradient-to-r from-green-600 via-green-500 to-green-600 overflow-hidden">
@@ -52,13 +51,13 @@ export default function UrgencyBanner() {
             </div>
           </div>
 
-          <Link
-            href="/shop"
+          <a
+            href="#contact"
             className="group bg-white hover:bg-parchment text-green-600 px-10 py-4 rounded-xl font-garden font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-3 whitespace-nowrap"
           >
             <span>{urgencyCtaText}</span>
             <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-          </Link>
+          </a>
         </motion.div>
       </div>
     </section>

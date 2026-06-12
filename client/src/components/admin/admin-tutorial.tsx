@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { X, ChevronRight, ChevronLeft, CheckCircle2, PlayCircle, RotateCcw, HelpCircle, Tags, Package, Mail, Settings, FileText, Users, Image, ShoppingBag } from "lucide-react";
+import { X, ChevronRight, ChevronLeft, CheckCircle2, PlayCircle, RotateCcw, HelpCircle, Tags, Mail, Settings, FileText, Users, Image } from "lucide-react";
 
 interface TutorialStep {
   id: string;
@@ -18,7 +18,7 @@ const tutorialSteps: TutorialStep[] = [
   {
     id: "welcome",
     title: "Welcome to Your Admin Dashboard",
-    description: "This tutorial will guide you through all 10 tabs of your admin dashboard. You'll learn how to manage products, process orders, customize your homepage, and more.",
+    description: "This tutorial will guide you through the tabs that still matter in your admin dashboard. You'll learn how to manage site branding, newsletter subscribers, blog posts, homepage content, media, users, and settings.",
     tips: [
       "Restart this tutorial anytime using the Help button",
       "Click tabs at the top to navigate between sections",
@@ -36,48 +36,6 @@ const tutorialSteps: TutorialStep[] = [
       "Display Order: Lower numbers appear first in the filter list",
       "Active Toggle: Hide a brand temporarily without deleting it",
       "Edit/Delete: Use pencil and trash icons on each row"
-    ]
-  },
-  {
-    id: "products",
-    title: "Products Tab (Catalog)",
-    description: "Your complete product catalog. This is where you define all product details - the Shop tab controls which ones are actually for sale.",
-    targetTab: "products",
-    tips: [
-      "Add Product: Name, price, category, description, and images",
-      "Brand Association: Link products to brands for filtering",
-      "Stock Quantity: Track inventory levels",
-      "Featured Toggle: Featured products appear on the homepage",
-      "Categories: Flower, Edibles, Concentrates, Pre-Rolls, etc.",
-      "Strain Types: Indica, Sativa, Hybrid (for customer preferences)"
-    ]
-  },
-  {
-    id: "shop",
-    title: "Shop Tab (What's For Sale)",
-    description: "Controls what appears on your public Shop page. Import products from your catalog, set sale prices, and manage stock quantities.",
-    targetTab: "shop",
-    tips: [
-      "Import Product: Add catalog products to your shop",
-      "Shop Price: Set a different price than the catalog price",
-      "Quantity: How many you have in stock to sell",
-      "Active Toggle: Hide items without removing them",
-      "Auto Stock Sync: Quantity decreases when orders are placed",
-      "Out of Stock: Items with 0 quantity show as unavailable"
-    ]
-  },
-  {
-    id: "orders",
-    title: "Orders Tab",
-    description: "View and manage all customer orders. See order details, update status, and track payments.",
-    targetTab: "orders",
-    tips: [
-      "Order List: Shows order number, customer, total, and status",
-      "Order Details: Click to see items, quantities, and customer info",
-      "Status Updates: Mark orders as Processing, Completed, or Cancelled",
-      "Payment Status: Pending, Paid, or Failed",
-      "Customer Info: Name, email, phone, and delivery address",
-      "Order History: All orders are preserved even if products are deleted"
     ]
   },
   {
@@ -108,14 +66,13 @@ const tutorialSteps: TutorialStep[] = [
   {
     id: "homepage",
     title: "Homepage Tab",
-    description: "Customize every section of your homepage without any coding. Each section is collapsible for easy editing.",
+    description: "Customize the homepage copy and layout sections without any coding. Each section is collapsible for easy editing.",
     targetTab: "homepage",
     tips: [
       "Hero Section: Main headline, tagline, subtitle, and button text",
       "Trust Badges: Veteran-owned, Buffalo-Proud, and other badges",
-      "Featured Products: Section title, subtitle, and fallback card copy",
       "Brand Story: Your story text and button labels",
-      "Urgency Banner: Limited-time offers and call-to-action",
+      "Urgency Banner: Highlight current events or announcements",
       "Benefits Section: All 6 benefit cards (titles and descriptions)",
       "Newsletter Section: Headline, subtitle, and benefit bullets",
       "Preview Button: See changes before saving",
@@ -169,7 +126,7 @@ const tutorialSteps: TutorialStep[] = [
   {
     id: "complete",
     title: "You're All Set!",
-    description: "You now know where to manage Garden of Weeden products, content, orders, subscribers, media, users, and settings.",
+    description: "You now know where to manage Garden of Weeden content, subscribers, media, users, and settings.",
     tips: [
       "Help Button: Restart this tutorial anytime",
       "Changes are instant: No need to republish",
