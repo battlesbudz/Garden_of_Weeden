@@ -126,12 +126,23 @@ export class SandboxProvider implements PaymentProvider {
     orderId?: number;
     status?: string;
   }> {
-    const data = payload as Record<string, unknown>;
+    const data = typeof payload === "string"
+      ? JSON.parse(payload) as Record<string, unknown>
+      : payload as Record<string, unknown>;
     return {
       eventType: data.event_type as string || 'sandbox_event',
       transactionId: data.transaction_id as string,
-      orderId: data.order_id ? parseInt(data.order_id as string) : undefined,
+      orderId: parseOrderId(data.order_id),
       status: data.status as string,
     };
   }
+}
+
+function parseOrderId(orderId: unknown): number | undefined {
+  if (typeof orderId === "number" && Number.isInteger(orderId)) return orderId;
+  if (typeof orderId === "string") {
+    const parsed = parseInt(orderId, 10);
+    return Number.isNaN(parsed) ? undefined : parsed;
+  }
+  return undefined;
 }
