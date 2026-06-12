@@ -2,6 +2,8 @@ import Navigation from "@/components/navigation";
 import HeroSection from "@/components/hero-section";
 import HomeActionRouterSection from "@/components/home-action-router-section";
 import HomeFarmTeaserSection from "@/components/home-farm-teaser-section";
+import LocalFarmNetworkSection from "@/components/local-farm-network-section";
+import BrandStorySection from "@/components/brand-story-section";
 import OnTheRouteSection from "@/components/on-the-route-section";
 import QuietNewsletterSection from "@/components/quiet-newsletter-section";
 import Footer from "@/components/footer";
@@ -42,6 +44,8 @@ export default function Home() {
       <HeroSection />
       <HomeActionRouterSection />
       <HomeFarmTeaserSection />
+      <LocalFarmNetworkSection />
+      <BrandStorySection />
       <OnTheRouteSection />
       <QuietNewsletterSection />
       <Footer />
