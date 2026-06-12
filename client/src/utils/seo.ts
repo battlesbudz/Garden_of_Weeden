@@ -180,24 +180,8 @@ export const CANNABIS_KEYWORDS = {
     "cannabis community Buffalo",
     "cannabis events NY",
     "cannabis meetups",
-    "cannabis discussion forum",
-    "cannabis social network",
     "cannabis advocacy",
-    "cannabis user groups",
-    "cannabis industry networking",
     "cannabis culture",
     "cannabis enthusiasts"
-  ],
-  investors: [
-    "cannabis investment opportunities",
-    "cannabis business investment",
-    "cannabis industry funding",
-    "marijuana business investors",
-    "cannabis startup investment",
-    "legal cannabis investment",
-    "cannabis market opportunities",
-    "cannabis business plan",
-    "cannabis industry growth",
-    "cannabis venture capital"
   ]
 };
