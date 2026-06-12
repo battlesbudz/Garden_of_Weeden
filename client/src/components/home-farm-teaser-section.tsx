@@ -1,6 +1,7 @@
 import { ArrowRight, MapPin, Sprout } from "lucide-react";
 import { Link } from "wouter";
-import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
+// Early-stage planting with blue mulch and wide sky — shows scale of the operation
+import farmTeaserImage from "@assets/farm_rows_early_blue_mulch.jpg";
 
 export default function HomeFarmTeaserSection() {
   return (
@@ -8,8 +9,8 @@ export default function HomeFarmTeaserSection() {
       <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8">
         <div className="overflow-hidden border border-black/10 bg-battles-black">
           <img
-            src={fieldRowsImage}
-            alt="Garden of Weeden cannabis farm rows near Buffalo"
+            src={farmTeaserImage}
+            alt="Garden of Weeden cannabis rows in early season — blue mulch, wide field, Buffalo area farm"
             className="h-72 w-full object-cover opacity-90"
           />
         </div>

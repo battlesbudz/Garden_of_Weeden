@@ -5,8 +5,10 @@ import Footer from "@/components/footer";
 import SEOHead from "@/components/seo/SEOHead";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { getCanonicalUrl } from "@/utils/seo";
-import flowerCloseupImage from "@assets/AISelect_20251103_131526_Instagram_1762194447917.jpg";
-import dryingRacksImage from "@assets/AISelect_20251103_131504_Instagram_1762194447955.jpg";
+// Golden hour farm shot 1 — warm light, rows receding to treeline
+import flowerCloseupImage from "@assets/farm_rows_golden_hour_1.jpg";
+// Golden hour farm shot 2 — same warm light, different angle with homestead visible
+import dryingRacksImage from "@assets/farm_rows_golden_hour_2.jpg";
 
 const trustPoints = [
   {

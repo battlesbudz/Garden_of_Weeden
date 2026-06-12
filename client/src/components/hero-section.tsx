@@ -3,7 +3,8 @@ import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { VideoBackground } from "@/components/video-background";
-import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
+// Hero background: lush sunny farm rows — full canopy, deep green, peak summer
+import heroFarmImage from "@assets/farm_rows_lush_sunny_1.jpg";
 
 interface SiteSettings {
   heroTitle?: string;
@@ -58,8 +59,8 @@ export default function HeroSection() {
       <div className="absolute inset-0">
         <VideoBackground
           videoSrc={undefined}
-          posterImage={fieldRowsImage}
-          alt="Garden of Weeden cannabis farm rows near Buffalo"
+          posterImage={heroFarmImage}
+          alt="Garden of Weeden cannabis farm rows near Buffalo, NY — lush summer growth"
           showControls={false}
           autoplay
           muted
@@ -80,65 +81,55 @@ export default function HeroSection() {
           <p className="font-garden text-sm font-semibold uppercase tracking-[0.28em] text-green-400">
             {heroTagline}
           </p>
-          <h1 className="mt-5 max-w-4xl font-enchanted text-6xl leading-[0.88] text-parchment drop-shadow-[0_5px_18px_rgba(0,0,0,0.9)] sm:text-7xl lg:text-8xl">
+          <h1 className="mt-4 font-enchanted text-6xl leading-none text-parchment drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)] md:text-8xl">
             {heroTitle}
           </h1>
-          <p className="mt-7 max-w-2xl font-garden text-xl font-semibold leading-relaxed text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.95)] md:text-2xl">
+          <p className="mt-6 max-w-xl font-garden text-lg leading-relaxed text-gray-300">
             {heroSubtitle}
           </p>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
             <Link
               href="/shop"
-              className="inline-flex items-center justify-center rounded-xl bg-green-700 px-7 py-4 font-garden text-base font-bold text-white shadow-xl shadow-black/30 transition hover:bg-green-800"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-700 px-6 py-3.5 font-garden text-sm font-bold text-white transition hover:bg-green-600"
             >
-              <ShoppingBag className="mr-2 h-5 w-5" aria-hidden="true" />
+              <ShoppingBag className="h-4 w-4" aria-hidden="true" />
               {heroShopButtonText}
             </Link>
             <a
-              href="#mobile-weed-bar"
-              className="inline-flex items-center justify-center rounded-xl bg-parchment px-7 py-4 font-garden text-base font-bold text-battles-black shadow-xl shadow-black/30 transition hover:bg-white"
+              href="tel:+17164201591"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/10 px-6 py-3.5 font-garden text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20"
             >
-              <CalendarDays className="mr-2 h-5 w-5" aria-hidden="true" />
+              <Phone className="h-4 w-4" aria-hidden="true" />
               {heroStoryButtonText}
             </a>
-            <a
-              href="tel:+17164201591"
-              className="inline-flex items-center justify-center rounded-xl border border-white/30 px-7 py-4 font-garden text-base font-bold text-white backdrop-blur transition hover:border-green-400 hover:text-green-300"
-            >
-              <Phone className="mr-2 h-5 w-5" aria-hidden="true" />
-              Book a Private Event
-            </a>
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-garden text-sm text-gray-400">
+            <span className="flex items-center gap-1.5">
+              <MapPin className="h-4 w-4 text-green-500" aria-hidden="true" />
+              {locationText}
+            </span>
           </div>
         </motion.div>
 
-        <motion.aside
-          className="border-y border-green-500/35 bg-black/45 p-6 backdrop-blur-md lg:border lg:p-7"
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: 28 }}
+        <motion.div
+          className="hidden lg:block"
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.7, delay: prefersReducedMotion ? 0 : 0.1 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.9, delay: 0.2 }}
         >
-          <div className="grid gap-5">
-            <div>
-              <p className="font-garden text-xs font-semibold uppercase tracking-[0.22em] text-green-400">Plan your visit</p>
-              <p className="mt-2 font-storybook text-3xl text-parchment">Shop, lounge, book.</p>
-            </div>
-            <div className="grid gap-3 font-garden text-sm text-gray-300">
-              <div className="flex items-start gap-3 border-t border-white/10 pt-4">
-                <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-green-400" aria-hidden="true" />
-                <span>Garden of Weeden flower and pre-rolls come from the company farm.</span>
-              </div>
-              <div className="flex items-start gap-3 border-t border-white/10 pt-4">
-                <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-green-400" aria-hidden="true" />
-                <span>Partner products come from regional small farms and microbusinesses.</span>
-              </div>
-              <div className="flex items-start gap-3 border-t border-white/10 pt-4">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-green-400" aria-hidden="true" />
-                <span>{locationText}</span>
-              </div>
-            </div>
+          <div className="overflow-hidden border border-white/10 shadow-2xl">
+            <img
+              src={heroFarmImage}
+              alt="Garden of Weeden farm rows — own-farm cannabis near Buffalo, NY"
+              className="h-[420px] w-full object-cover opacity-90"
+            />
           </div>
-        </motion.aside>
+          <p className="mt-3 text-center font-garden text-xs font-semibold uppercase tracking-widest text-green-500/70">
+            Own farm · 15 miles south of Buffalo
+          </p>
+        </motion.div>
       </div>
     </section>
   );
