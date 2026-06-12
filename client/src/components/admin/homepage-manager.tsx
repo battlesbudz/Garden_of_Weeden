@@ -89,8 +89,8 @@ const defaultSettings: HomepageSettings = {
   heroTitle: "Garden of Weeden",
   heroTagline: "Farm to Flame Cannabis",
   heroSubtitle: "Buffalo's Farm to Flame cannabis microbusiness: house-grown flower, regional craft products, the Forbidden Fruit lounge, and a mobile weed bar for private events.",
-  heroShopButtonText: "View Current Menu",
-  heroStoryButtonText: "Book the Mobile Weed Bar",
+  heroShopButtonText: "Our Story",
+  heroStoryButtonText: "Book a Private Event",
   heroVeteranBadge: "Farm to Flame",
 
   // Social Proof Section
@@ -109,7 +109,7 @@ const defaultSettings: HomepageSettings = {
   featuredTitle: "Discover Our Harvest",
   featuredSubtitle: "Small-batch cannabis products sourced through our Farm to Flame network in Central and Western NY",
   featuredBadgeText: "Farm to Flame",
-  featuredCtaText: "View Current Menu",
+  featuredCtaText: "Contact the Team",
   featuredShippingNote: "Ask our team about current local farm partner releases and seasonal NYS craft products.",
   placeholder1Name: "Premium Flower",
   placeholder1Desc: "Hand-selected local craft cannabis",
@@ -122,13 +122,13 @@ const defaultSettings: HomepageSettings = {
   storyTitle: "Farm to Flame",
   storyText: "Garden of Weeden is a NYS licensed microbusiness and boutique cannabis dispensary built around a Farm to Flame concept. Our budtenders know the farmer partners, cultivation practices, and craft products we offer.",
   storyButton1Text: "Read Our Farm Story",
-  storyButton2Text: "Shop Craft Products",
+  storyButton2Text: "Book a Private Event",
 
   // Urgency Banner
   urgencyBadge: "Farm to Flame Drop",
   urgencyTitle: "Small-Batch Craft Products",
   urgencyDesc: "Ask about current local farm partner releases and seasonal NYS craft products.",
-  urgencyCtaText: "Shop Current Menu",
+  urgencyCtaText: "Book a Private Event",
 
   // Benefits Section
   benefitsTitle: "Why Choose Garden of Weeden?",
@@ -145,7 +145,7 @@ const defaultSettings: HomepageSettings = {
   benefit5Desc: "On-site consumption space for relaxing, events, and community",
   benefit6Title: "Buffalo Local",
   benefit6Desc: "Community-rooted cultivation",
-  benefitsCtaText: "Shop Farm to Flame",
+  benefitsCtaText: "Contact the Team",
 
   // Newsletter Section
   newsletterTitle: "Join the Garden List",

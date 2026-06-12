@@ -1,7 +1,6 @@
 import { Award, Heart, Users, Leaf, Shield, Sparkles } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Link } from "wouter";
-import { ArrowRight, ShoppingBag } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
 interface SiteSettings {
@@ -31,7 +30,7 @@ export default function ServicesSection() {
 
   const benefitsTitle = settings?.benefitsTitle || "Why Choose Garden of Weeden?";
   const benefitsSubtitle = settings?.benefitsSubtitle || "Farm to Flame means local farmers, small-batch craft products, and budtenders who know the story behind the cannabis.";
-  const benefitsCtaText = settings?.benefitsCtaText || "Shop Farm to Flame";
+  const benefitsCtaText = settings?.benefitsCtaText || "Contact the Team";
 
   const icons = [Award, Leaf, Shield, Sparkles, Heart, Users];
 
@@ -124,14 +123,13 @@ export default function ServicesSection() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: prefersReducedMotion ? 0 : 0.3 }}
         >
-          <Link
-            href="/shop"
+          <a
+            href="#contact"
             className="group bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-xl font-garden font-bold text-base shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-3"
           >
-            <ShoppingBag className="h-5 w-5" aria-hidden="true" />
             <span>{benefitsCtaText}</span>
             <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-          </Link>
+          </a>
         </motion.div>
       </div>
     </section>

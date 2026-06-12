@@ -20,7 +20,7 @@ export default function BrandStorySection() {
     settings?.storyText ||
     "Farm to Flame is not a slogan. Garden of Weeden branded flower and pre-rolls are grown by our own farm 15 miles south of Buffalo, and our partner products come from local growers and microbusinesses we know through Cannabis Farmers Alliance relationships.";
   const storyButton1Text = settings?.storyButton1Text || "Our Full Story";
-  const storyButton2Text = settings?.storyButton2Text || "View Current Menu";
+  const storyButton2Text = settings?.storyButton2Text || "Book a Private Event";
 
   const storyPillars = [
     { icon: Leaf, label: "Grower-known products" },
@@ -94,7 +94,7 @@ export default function BrandStorySection() {
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
-              href="/shop"
+              href="#contact"
               className="inline-flex items-center justify-center rounded-xl bg-green-700 px-7 py-4 font-garden text-sm font-bold text-white transition hover:bg-green-800"
             >
               {storyButton2Text}

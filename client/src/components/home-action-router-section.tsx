@@ -1,23 +1,14 @@
-import { CalendarDays, Leaf, ShoppingBag } from "lucide-react";
+import { CalendarDays, Leaf, MapPin } from "lucide-react";
 import { Link } from "wouter";
 
 const actions = [
-  {
-    icon: ShoppingBag,
-    label: "Shop the menu",
-    title: "See what's available now.",
-    text: "Browse current flower, pre-rolls, vapes, edibles, beverages, and regional craft drops.",
-    href: "/shop",
-    cta: "View Current Menu",
-    accent: true,
-  },
   {
     icon: CalendarDays,
     label: "Book an event",
     title: "Bring the mobile weed bar to your gathering.",
     text: "For private parties, events, and Forbidden Fruit lounge bookings, contact us for scheduling.",
     href: "tel:+17164201591",
-    cta: "Book a Private Event",
+    cta: "Contact for Events",
     accent: true,
   },
   {
@@ -27,6 +18,15 @@ const actions = [
     text: "Learn how Garden of Weeden connects its own farm, regional growers, and Buffalo-area cannabis experiences.",
     href: "/about",
     cta: "About Garden of Weeden",
+    accent: false,
+  },
+  {
+    icon: MapPin,
+    label: "Visit Buffalo",
+    title: "Find Garden of Weeden in person.",
+    text: "Visit the Buffalo location, ask about current Farm to Flame products, and use the off-street parking on site.",
+    href: "#contact",
+    cta: "Contact Info",
     accent: false,
   },
 ];

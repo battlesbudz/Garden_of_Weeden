@@ -93,7 +93,7 @@ export default function KeywordLandingPage() {
                 <div className="space-y-4 font-garden text-gray-300">
                   <p>
                     Budtenders know the farmer partners, cultivation practices, and product stories
-                    behind the cannabis on the menu.
+                    behind the cannabis they carry.
                   </p>
                   <p>
                     The mission is to support small family farms, women, veteran, and minority
@@ -149,10 +149,10 @@ export default function KeywordLandingPage() {
                 adults 21+ in Western New York.
               </p>
               <Link
-                href="/shop"
+                href="/about#contact"
                 className="inline-flex items-center justify-center bg-battles-gold text-black font-semibold rounded-lg px-6 py-3 hover:bg-yellow-400 transition-colors"
               >
-                View Current Menu
+                Contact the Team
               </Link>
             </div>
           </div>

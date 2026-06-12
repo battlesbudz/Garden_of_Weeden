@@ -1,4 +1,4 @@
-import { CalendarDays, Handshake, Leaf, MapPin, Phone, ShoppingBag, Sprout, Users } from "lucide-react";
+import { CalendarDays, Handshake, Leaf, MapPin, Phone, Sprout, Users } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
@@ -19,7 +19,7 @@ const trustPoints = [
   {
     icon: Handshake,
     title: "Regional relationships",
-    text: "The wider menu supports small farms, microbusinesses, and producers in Central and Western New York.",
+    text: "The wider selection supports small farms, microbusinesses, and producers in Central and Western New York.",
   },
   {
     icon: Leaf,
@@ -30,9 +30,9 @@ const trustPoints = [
 
 const offerings = [
   {
-    icon: ShoppingBag,
-    title: "Dispensary menu",
-    text: "Current flower, pre-rolls, vapes, edibles, beverages, and regional craft drops.",
+    icon: Sprout,
+    title: "Craft products",
+    text: "House-grown flower, pre-rolls, and regional small-batch cannabis from trusted local partners.",
   },
   {
     icon: Users,
@@ -91,11 +91,11 @@ export default function About() {
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="/shop"
+                  href="#contact"
                   className="inline-flex items-center justify-center rounded-xl bg-battles-black px-5 py-3 font-garden text-sm font-bold text-white transition hover:bg-green-900"
                 >
-                  <ShoppingBag className="mr-2 h-4 w-4" aria-hidden="true" />
-                  View Menu
+                  <CalendarDays className="mr-2 h-4 w-4" aria-hidden="true" />
+                  Book an Event
                 </Link>
                 <a
                   href="tel:+17164201591"
@@ -170,9 +170,9 @@ export default function About() {
                 <p className="font-garden text-sm font-semibold uppercase tracking-[0.24em] text-green-400">
                   What you can do here
                 </p>
-                <h2 className="mt-4 font-enchanted text-5xl leading-none text-parchment md:text-7xl">
-                  Shop, lounge, and book Garden of Weeden.
-                </h2>
+              <h2 className="mt-4 font-enchanted text-5xl leading-none text-parchment md:text-7xl">
+                Lounge, connect, and book Garden of Weeden.
+              </h2>
               </div>
               <div className="grid gap-4 md:grid-cols-3">
                 {offerings.map((offering) => {
@@ -200,7 +200,7 @@ export default function About() {
                 What guests usually ask before visiting.
               </h2>
               <p className="mt-5 font-garden text-base leading-relaxed text-gray-300">
-                These answers cover the farm, the menu, the lounge, and private event booking before you stop in.
+                These answers cover the farm, the products, the lounge, and private event booking before you stop in.
               </p>
               <Accordion type="single" collapsible className="mt-8 border-t border-white/10">
                 <AccordionItem value="farm-to-flame" className="border-white/10">
@@ -221,10 +221,10 @@ export default function About() {
                 </AccordionItem>
                 <AccordionItem value="menu-source" className="border-white/10">
                   <AccordionTrigger className="font-garden text-left text-lg font-bold text-parchment hover:text-green-300 hover:no-underline">
-                    Where does the menu come from?
+                    Where do the products come from?
                   </AccordionTrigger>
                   <AccordionContent className="font-garden text-sm leading-relaxed text-gray-300">
-                    Garden of Weeden branded products can come from their own farm. The broader menu includes products from regional small farms, microbusinesses, and craft producers connected through relationships like the Cannabis Farmers Alliance.
+                    Garden of Weeden branded products can come from their own farm. The broader selection includes products from regional small farms, microbusinesses, and craft producers connected through relationships like the Cannabis Farmers Alliance.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="lounge" className="border-white/10">
@@ -258,22 +258,22 @@ export default function About() {
                 Buffalo-area craft cannabis with off-street parking.
               </h2>
               <p className="mt-2 font-garden text-sm leading-relaxed text-gray-300">
-                Shop the menu, ask the team about current Farm to Flame products, or contact Garden of Weeden to book the mobile weed bar.
+                Ask the team about current Farm to Flame products, or contact Garden of Weeden to book the mobile weed bar.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/shop"
+                href="#contact"
                 className="inline-flex items-center justify-center rounded-xl bg-green-700 px-6 py-3 font-garden text-sm font-bold text-white transition hover:bg-green-800"
               >
-                <ShoppingBag className="mr-2 h-4 w-4" aria-hidden="true" />
-                View Menu
+                <MapPin className="mr-2 h-4 w-4" aria-hidden="true" />
+                Contact Info
               </Link>
               <a
                 href="tel:+17164201591"
                 className="inline-flex items-center justify-center rounded-xl border border-white/25 px-6 py-3 font-garden text-sm font-bold text-white transition hover:border-green-400 hover:text-green-300"
               >
-                <MapPin className="mr-2 h-4 w-4" aria-hidden="true" />
+                <Phone className="mr-2 h-4 w-4" aria-hidden="true" />
                 Book a Private Event
               </a>
             </div>

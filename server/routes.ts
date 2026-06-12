@@ -8,13 +8,8 @@ import { MailService } from '@sendgrid/mail';
 // Import route modules
 import { registerAuthRoutes } from "./routes/auth";
 import { registerNewsletterRoutes } from "./routes/newsletter";
-import { registerEventRoutes } from "./routes/events";
-import { registerJobRoutes } from "./routes/jobs";
 import { registerAdminRoutes } from "./routes/admin";
 import { registerBlogRoutes } from "./routes/blog";
-import { registerShopRoutes } from "./routes/shop";
-import { registerCartRoutes } from "./routes/cart";
-import { registerCheckoutRoutes } from "./routes/checkout";
 
 // Initialize SendGrid (only if API key is available)
 let mailService: MailService | null = null;
@@ -40,13 +35,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Register all route modules
   registerAuthRoutes(app);
   registerNewsletterRoutes(app);
-  registerEventRoutes(app);
-  registerJobRoutes(app);
   registerAdminRoutes(app);
   registerBlogRoutes(app);
-  registerShopRoutes(app);
-  registerCartRoutes(app);
-  registerCheckoutRoutes(app);
 
   const httpServer = createServer(app);
   return httpServer;

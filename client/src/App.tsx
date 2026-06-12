@@ -6,11 +6,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import LoginPage from "@/pages/login";
-import Shop from "@/pages/shop";
-import Cart from "@/pages/cart";
-import Checkout from "@/pages/checkout";
-import OrderDetails from "@/pages/order";
-import MyOrders from "@/pages/my-orders";
 import About from "@/pages/about";
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
@@ -22,7 +17,6 @@ import TermsOfService from "./pages/terms-of-service";
 import AgeVerification from "./pages/age-verification";
 import KeywordLandingPage from "./pages/keyword-landing";
 import LocationPage from "./pages/location/[location]";
-import ProductsComingSoon from "@/pages/products-coming-soon";
 import { AgeVerificationModal } from "@/components/user-guide/age-verification-modal";
 import { QuickStartModal } from "@/components/user-guide/quick-start-modal";
 import { UserGuideOverlay } from "@/components/user-guide/user-guide-overlay";
@@ -51,11 +45,6 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/shop" component={Shop} />
-        <Route path="/cart" component={Cart} />
-        <Route path="/checkout" component={Checkout} />
-        <Route path="/orders/:id" component={OrderDetails} />
-        <Route path="/my-orders" component={MyOrders} />
         <Route path="/about" component={About} />
         
         {/* Blog Pages */}
@@ -64,10 +53,6 @@ function Router() {
         
         {/* Admin Dashboard */}
         <Route path="/admin" component={AdminDashboard} />
-        
-        {/* Product Pages */}
-        <Route path="/products" component={ProductsComingSoon} />
-        <Route path="/products/:slug" component={ProductsComingSoon} />
         
         {/* SEO Landing Pages */}
         <Route path="/buffalo-cannabis" component={KeywordLandingPage} />

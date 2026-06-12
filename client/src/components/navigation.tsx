@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, User, ShoppingBag, ShoppingCart, LogOut, Shield, ClipboardList } from "lucide-react";
+import { Menu, X, User, LogOut, Shield } from "lucide-react";
 import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
 import { useReducedMotion } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import logoImage from "@assets/garden_of_weeden_logo_transparent_1762191379653.png";
-import type { CartWithItems } from "@shared/schema";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,12 +16,6 @@ export default function Navigation() {
   const { user, isAuthenticated, isAdmin } = useAuth();
   const { settings } = useSiteSettings();
   const prefersReducedMotion = useReducedMotion();
-
-  const { data: cart } = useQuery<CartWithItems>({
-    queryKey: ["/api/cart"],
-  });
-
-  const cartItemCount = cart?.itemCount || 0;
   
   // Check which social links are available
   const hasSocialLinks = settings.instagramUrl || settings.facebookUrl || settings.twitterUrl;
@@ -112,22 +104,6 @@ export default function Navigation() {
               <Link href="/blog" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-blog">
                 Blog
               </Link>
-              <Link href="/products" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors" data-testid="nav-link-products">
-                Products
-              </Link>
-              <Link href="/shop" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center" data-testid="nav-link-shop">
-                <ShoppingBag className="h-4 w-4 mr-1" aria-hidden="true" />
-                Shop
-              </Link>
-              <Link href="/cart" className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center relative" data-testid="nav-link-cart">
-                <ShoppingCart className="h-4 w-4 mr-1" aria-hidden="true" />
-                Cart
-                {cartItemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-battles-gold text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                    {cartItemCount > 9 ? '9+' : cartItemCount}
-                  </span>
-                )}
-              </Link>
               <button
                 onClick={() => navigateToSection("contact")}
                 className="font-garden text-battles-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
@@ -197,11 +173,8 @@ export default function Navigation() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-gray-900 border-green-500/30">
-                    <DropdownMenuItem asChild className="text-white hover:text-green-400">
-                      <Link href="/my-orders">
-                        <ClipboardList className="h-4 w-4 mr-2" />
-                        My Orders
-                      </Link>
+                  <DropdownMenuItem asChild className="text-white hover:text-green-400">
+                      <a href="/about">Our Story</a>
                     </DropdownMenuItem>
                     {isAdmin && (
                       <DropdownMenuItem asChild className="text-battles-gold hover:text-yellow-400">
@@ -241,22 +214,6 @@ export default function Navigation() {
             </a>
             <Link href="/blog" className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)} data-testid="mobile-nav-link-blog">
               Blog
-            </Link>
-            <Link href="/products" className="font-garden block text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left" onClick={() => setIsOpen(false)}>
-              Products
-            </Link>
-            <Link href="/shop" className="font-garden flex items-center text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full" onClick={() => setIsOpen(false)}>
-              <ShoppingBag className="h-4 w-4 mr-2" />
-              Shop
-            </Link>
-            <Link href="/cart" className="font-garden flex items-center text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full" onClick={() => setIsOpen(false)}>
-              <ShoppingCart className="h-4 w-4 mr-2" />
-              Cart
-              {cartItemCount > 0 && (
-                <span className="ml-2 bg-battles-gold text-black text-xs font-bold rounded-full px-2 py-0.5">
-                  {cartItemCount}
-                </span>
-              )}
             </Link>
             <button
               onClick={() => navigateToSection("contact")}
@@ -304,10 +261,6 @@ export default function Navigation() {
             {/* Mobile Auth */}
             {isAuthenticated ? (
               <>
-                <Link href="/my-orders" className="font-garden flex items-center text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full" onClick={() => setIsOpen(false)}>
-                  <ClipboardList className="h-4 w-4 mr-2" />
-                  My Orders
-                </Link>
                 <button
                   onClick={handleLogout}
                   className="font-garden flex items-center text-white hover:text-green-400 px-3 py-2 text-base font-medium w-full text-left"

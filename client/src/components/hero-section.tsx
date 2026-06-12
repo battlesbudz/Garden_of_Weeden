@@ -1,4 +1,4 @@
-import { MapPin, Phone, ShoppingBag } from "lucide-react";
+import { ArrowRight, MapPin, Phone } from "lucide-react";
 import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -21,10 +21,10 @@ export default function HeroSection() {
   });
 
   const staleHeroSubtitles = new Set([
-    "A Buffalo cannabis microbusiness with its own farm, a current craft menu, the Forbidden Fruit lounge, and a mobile weed bar built for private events.",
+    "A Buffalo cannabis microbusiness with its own farm, the Forbidden Fruit lounge, and a mobile weed bar built for private events.",
   ]);
-  const staleShopButtonLabels = new Set(["Shop Farm to Flame", "Explore Farm to Flame"]);
-  const staleStoryButtonLabels = new Set(["Our Story"]);
+  const staleHeroButtonLabels = new Set(["Our Story", "Book a Private Event"]);
+  const staleStoryButtonLabels = new Set(["Book the Mobile Weed Bar"]);
 
   const heroTitle = settings?.heroTitle || "Garden of Weeden";
   const heroTagline = settings?.heroTagline || "Farm to Flame Cannabis";
@@ -33,13 +33,13 @@ export default function HeroSection() {
       ? settings.heroSubtitle
       : "Buffalo's Farm to Flame cannabis microbusiness: house-grown flower, regional craft products, the Forbidden Fruit lounge, and a mobile weed bar for private events.";
   const heroShopButtonText =
-    settings?.heroShopButtonText && !staleShopButtonLabels.has(settings.heroShopButtonText)
+    settings?.heroShopButtonText && !staleHeroButtonLabels.has(settings.heroShopButtonText)
       ? settings.heroShopButtonText
-      : "View Current Menu";
+      : "Our Story";
   const heroStoryButtonText =
-    settings?.heroStoryButtonText && !staleStoryButtonLabels.has(settings.heroStoryButtonText)
+    settings?.heroStoryButtonText && !staleHeroButtonLabels.has(settings.heroStoryButtonText)
       ? settings.heroStoryButtonText
-      : "Book the Mobile Weed Bar";
+      : "Book a Private Event";
   const locationText = settings?.locationText || "Buffalo rooted with bike-route access and off-street parking.";
 
   return (
@@ -91,10 +91,10 @@ export default function HeroSection() {
           {/* CTAs */}
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
             <Link
-              href="/shop"
+              href="/about"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 px-8 py-4 font-garden text-base font-bold text-white shadow-lg transition hover:bg-green-500"
             >
-              <ShoppingBag className="h-5 w-5" aria-hidden="true" />
+              <ArrowRight className="h-5 w-5" aria-hidden="true" />
               {heroShopButtonText}
             </Link>
             <a

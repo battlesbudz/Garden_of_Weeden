@@ -8,11 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Shield, Package, Tags, LayoutDashboard, Mail, Download, Settings, Users, FileText, Home, Image, ShoppingBag, ClipboardList } from "lucide-react";
+import { Shield, Tags, LayoutDashboard, Mail, Download, Settings, Users, FileText, Home, Image } from "lucide-react";
 import BrandsManager from "@/components/admin/brands-manager";
-import ProductsManager from "@/components/admin/products-manager";
-import ShopManager from "@/components/admin/shop-manager";
-import OrdersManager from "@/components/admin/orders-manager";
 import SettingsManager from "@/components/admin/settings-manager";
 import UsersManager from "@/components/admin/users-manager";
 import BlogManager from "@/components/admin/blog-manager";
@@ -107,7 +104,7 @@ export default function AdminDashboard() {
             <LayoutDashboard className="w-10 h-10 text-battles-gold" />
             <div>
               <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
-              <p className="text-gray-400">Manage your shop content and settings</p>
+              <p className="text-gray-400">Manage content, media, users, and settings</p>
             </div>
           </div>
           <AdminTutorial onTabChange={setActiveTab} currentTab={activeTab} />
@@ -118,18 +115,6 @@ export default function AdminDashboard() {
             <TabsTrigger value="brands" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
               <Tags className="w-4 h-4 mr-2" />
               Brands
-            </TabsTrigger>
-            <TabsTrigger value="products" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
-              <Package className="w-4 h-4 mr-2" />
-              Products
-            </TabsTrigger>
-            <TabsTrigger value="shop" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
-              <ShoppingBag className="w-4 h-4 mr-2" />
-              Shop
-            </TabsTrigger>
-            <TabsTrigger value="orders" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
-              <ClipboardList className="w-4 h-4 mr-2" />
-              Orders
             </TabsTrigger>
             <TabsTrigger value="subscribers" className="data-[state=active]:bg-battles-gold data-[state=active]:text-black">
               <Mail className="w-4 h-4 mr-2" />
@@ -165,62 +150,11 @@ export default function AdminDashboard() {
                   Brand Management
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  Add, edit, and manage the brands displayed on your shop page. Brands help customers filter and find products easily.
+                  Add, edit, and manage the brands displayed across the site.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <BrandsManager />
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="products">
-            <Card className="bg-zinc-900 border-zinc-800">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Package className="w-5 h-5 text-battles-gold" />
-                  Product Management
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Add, edit, and manage the products displayed on your shop page. Set prices, categories, and mark items as featured.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ProductsManager />
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="shop">
-            <Card className="bg-zinc-900 border-zinc-800">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <ShoppingBag className="w-5 h-5 text-battles-gold" />
-                  Shop Management
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Import products from your catalog to display on the shop page. Set shop-specific pricing and quantities.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ShopManager />
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="orders">
-            <Card className="bg-zinc-900 border-zinc-800">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <ClipboardList className="w-5 h-5 text-battles-gold" />
-                  Order Management
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  View and manage customer orders. Update order status and track payments.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <OrdersManager />
               </CardContent>
             </Card>
           </TabsContent>
