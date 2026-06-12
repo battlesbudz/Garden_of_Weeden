@@ -96,7 +96,7 @@ Your brand story is your superpower. Double down on it with:
 
 **What's Working:**
 - ✅ **Modern Stack**: React + Vite + TypeScript + TanStack Query
-- ✅ **Authentication**: Secure Replit Auth with OIDC flow
+- ✅ **Authentication**: Secure session-based auth with OIDC flow
 - ✅ **Database**: PostgreSQL with Drizzle ORM for type safety
 - ✅ **Multi-Tier Access**: Customer, investor, admin roles
 - ✅ **Session Management**: Proper cookie handling and refresh tokens
