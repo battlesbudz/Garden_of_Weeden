@@ -2,12 +2,15 @@
 import type { Express } from "express";
 import { isAdmin, isAuthenticated } from "../authMiddleware";
 import { storage } from "../storage";
-import { insertBrandSchema, insertProductSchema, insertSiteSettingSchema, insertShopItemSchema } from "@shared/schema";
+import { insertBrandSchema, insertProductSchema, insertSiteSettingSchema, insertShopItemSchema, users } from "@shared/schema";
 import { z } from "zod";
 import multer from "multer";
 import { randomUUID } from "crypto";
 import path from "path";
 import fs from "fs";
+import { eq } from "drizzle-orm";
+import { db } from "../db";
+import { getSessionUserId } from "../auth";
 
 function publicUser(user: any) {
   if (!user) return null;
@@ -36,10 +39,12 @@ const upload = multer({
   storage: diskStorage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
   fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith("image/")) {
+    const isSvg = file.mimetype === "image/svg+xml" || path.extname(file.originalname).toLowerCase() === ".svg";
+
+    if (!isSvg && file.mimetype.startsWith("image/")) {
       cb(null, true);
     } else {
-      cb(new Error("Only image files are allowed"));
+      cb(new Error(isSvg ? "SVG uploads are not allowed" : "Only image files are allowed"));
     }
   },
 });
@@ -369,11 +374,9 @@ export function registerAdminRoutes(app: Express) {
   });
 
   // Check admin status endpoint
-  app.get("/api/admin/check", isAuthenticated, async (req: any, res) => {
+  app.get("/api/admin/check", isAdmin, async (req: any, res) => {
     try {
-      const userId = req.user?.claims?.sub || req.user?.id;
-      const user = await storage.getUser(userId);
-      res.json({ isAdmin: user?.role === 'admin' });
+      res.json({ isAdmin: true });
     } catch (error) {
       console.error("Error checking admin status:", error);
       res.status(500).json({ message: "Failed to check admin status" });
@@ -473,6 +476,22 @@ export function registerAdminRoutes(app: Express) {
       
       if (!role || !['customer', 'admin'].includes(role)) {
         return res.status(400).json({ message: "Invalid role. Must be 'customer' or 'admin'" });
+      }
+
+      const actorId = getSessionUserId(req);
+        if (!actorId) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        if (actorId === id && role === "customer") {
+          const adminUsers = await db
+            .select()
+            .from(users)
+            .where(eq(users.role, "admin"));
+
+          if (adminUsers.length <= 1) {
+            return res.status(400).json({ message: "Cannot remove the last admin account" });
+          }
       }
       
       const user = await storage.updateUserRole(id, role);

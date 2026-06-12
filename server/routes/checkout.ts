@@ -2,6 +2,7 @@ import type { Express, Request, Response } from "express";
 import { storage } from "../storage";
 import { paymentService } from "../payments/payment-service";
 import { z } from "zod";
+import { getSessionUserId, isAuthenticated } from "../auth";
 
 const checkoutSchema = z.object({
   customerName: z.string().min(1, "Name is required"),
@@ -39,7 +40,7 @@ export function registerCheckoutRoutes(app: Express) {
   // Process checkout
   app.post("/api/checkout", async (req: Request, res: Response) => {
     try {
-      const userId = (req as any).user?.claims?.sub;
+      const userId = getSessionUserId(req);
       const sessionId = getCartSessionId(req);
       
       // Validate checkout data
@@ -192,19 +193,29 @@ export function registerCheckoutRoutes(app: Express) {
   });
 
   // Get order details (for order confirmation page)
-  app.get("/api/orders/:id", async (req: Request, res: Response) => {
+  app.get("/api/orders/:id", isAuthenticated, async (req: Request, res: Response) => {
     try {
       const orderId = parseInt(req.params.id);
+      if (Number.isNaN(orderId)) {
+        return res.status(400).json({ message: "Invalid order id" });
+      }
+
       const order = await storage.getOrder(orderId);
       
       if (!order) {
         return res.status(404).json({ message: "Order not found" });
       }
       
-      // Only allow users to view their own orders (or if not logged in, by session match)
-      const userId = (req as any).user?.claims?.sub;
-      if (order.userId && order.userId !== userId) {
-        return res.status(403).json({ message: "Access denied" });
+      const userId = getSessionUserId(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      if (!order.userId || order.userId !== userId) {
+        const isAdminUser = req.user && (await storage.getUser(userId))?.role === "admin";
+        if (!isAdminUser) {
+          return res.status(403).json({ message: "Access denied" });
+        }
       }
       
       // Get order items with product details
@@ -220,7 +231,7 @@ export function registerCheckoutRoutes(app: Express) {
   // Get user's orders
   app.get("/api/orders", async (req: Request, res: Response) => {
     try {
-      const userId = (req as any).user?.claims?.sub;
+      const userId = getSessionUserId(req);
       
       if (!userId) {
         return res.status(401).json({ message: "Authentication required" });
@@ -238,7 +249,8 @@ export function registerCheckoutRoutes(app: Express) {
   app.post("/api/webhooks/payment", async (req: Request, res: Response) => {
     try {
       const signature = req.headers["x-payment-signature"] as string;
-      const result = await paymentService.handleWebhook(req.body, signature);
+      const webhookPayload = (req as Request & { rawBody?: string }).rawBody || req.body;
+      const result = await paymentService.handleWebhook(webhookPayload, signature);
       
       if (result.orderId && result.status) {
         const statusMap: Record<string, string> = {
@@ -258,6 +270,10 @@ export function registerCheckoutRoutes(app: Express) {
       
       res.json({ received: true });
     } catch (error) {
+      if (error instanceof Error && (error.message === "Missing payment webhook signature" || error.message === "Invalid payment webhook signature")) {
+        return res.status(401).json({ message: error.message });
+      }
+
       console.error("Error processing webhook:", error);
       res.status(500).json({ message: "Webhook processing failed" });
     }

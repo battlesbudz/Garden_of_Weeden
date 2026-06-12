@@ -4,7 +4,13 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
-app.use(express.json());
+app.use(
+  express.json({
+    verify: (req, _res, buffer) => {
+      (req as Request & { rawBody?: string }).rawBody = buffer.toString();
+    },
+  }),
+);
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
