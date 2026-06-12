@@ -2,7 +2,7 @@ import type { Express, Request, Response } from "express";
 import { storage } from "../storage";
 import { paymentService } from "../payments/payment-service";
 import { z } from "zod";
-import { getSessionUserId, isAuthenticated } from "../auth";
+import { getSessionUserId } from "../auth";
 
 const checkoutSchema = z.object({
   customerName: z.string().min(1, "Name is required"),
@@ -193,7 +193,7 @@ export function registerCheckoutRoutes(app: Express) {
   });
 
   // Get order details (for order confirmation page)
-  app.get("/api/orders/:id", isAuthenticated, async (req: Request, res: Response) => {
+  app.get("/api/orders/:id", async (req: Request, res: Response) => {
     try {
       const orderId = parseInt(req.params.id);
       if (Number.isNaN(orderId)) {
@@ -207,14 +207,16 @@ export function registerCheckoutRoutes(app: Express) {
       }
       
       const userId = getSessionUserId(req);
-      if (!userId) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
+      if (order.userId) {
+        if (!userId) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
 
-      if (!order.userId || order.userId !== userId) {
-        const isAdminUser = req.user && (await storage.getUser(userId))?.role === "admin";
-        if (!isAdminUser) {
-          return res.status(403).json({ message: "Access denied" });
+        if (order.userId !== userId) {
+          const currentUser = await storage.getUser(userId);
+          if (!currentUser || currentUser.role !== "admin") {
+            return res.status(403).json({ message: "Access denied" });
+          }
         }
       }
       

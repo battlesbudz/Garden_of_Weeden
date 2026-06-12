@@ -20,6 +20,10 @@ function getAppUrl(): string | undefined {
   return undefined;
 }
 
+function isOidcConfigured() {
+  return Boolean(getAppUrl() && getOidcClientId() && getOidcIssuerUrl());
+}
+
 function getOidcClientId() {
   return process.env.OIDC_CLIENT_ID;
 }
@@ -30,10 +34,6 @@ function getOidcIssuerUrl() {
 
 function getOidcClientSecret() {
   return process.env.OIDC_CLIENT_SECRET;
-}
-
-function isOidcConfigured() {
-  return Boolean(getAppUrl() && getOidcClientId() && getOidcIssuerUrl());
 }
 
 const getOidcConfig = memoize(
@@ -88,7 +88,7 @@ export function getSession() {
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: isOidcConfigured() ? "lax" : "strict",
       maxAge: sessionTtl,
     },
   });
