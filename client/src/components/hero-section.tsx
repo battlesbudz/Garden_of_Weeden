@@ -51,7 +51,7 @@ export default function HeroSection() {
         minHeight: "calc(100vh - var(--hopeline-banner-height, 40px) - 64px)",
       }}
     >
-      {/* Background with heavy dark overlay so text is always legible */}
+      {/* Background with a lighter scrim so the image stays readable under the copy */}
       <div className="absolute inset-0">
         <VideoBackground
           videoSrc={undefined}
@@ -62,9 +62,9 @@ export default function HeroSection() {
           muted
           loop
         />
-        <div className="absolute inset-0 bg-black/65" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40" />
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black to-transparent" />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-black/10" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-[inherit] max-w-5xl flex-col justify-center px-6 py-20 lg:px-8">
@@ -72,6 +72,7 @@ export default function HeroSection() {
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.7 }}
+          className="max-w-3xl rounded-[28px] border border-white/10 bg-black/20 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.28)] backdrop-blur-[2px] md:p-7"
         >
           {/* Eyebrow */}
           <p className="font-garden text-sm font-bold uppercase tracking-[0.3em] text-green-400">
