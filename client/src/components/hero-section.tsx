@@ -25,6 +25,10 @@ export default function HeroSection() {
   ]);
   const staleHeroButtonLabels = new Set(["Our Story", "Book a Private Event"]);
   const staleStoryButtonLabels = new Set(["Book the Mobile Weed Bar"]);
+  staleHeroButtonLabels.add("View Current Menu");
+  staleHeroButtonLabels.add("View Menu");
+  staleHeroButtonLabels.add("Shop Current Menu");
+  staleHeroButtonLabels.add("Shop Craft Products");
 
   const heroTitle = settings?.heroTitle || "Garden of Weeden";
   const heroTagline = settings?.heroTagline || "Farm to Flame Cannabis";
