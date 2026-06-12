@@ -2,7 +2,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, Award, Leaf, Users } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
+// Perspective shot with barn visible — mid-season rows showing the homestead context
+import fieldRowsImage from "@assets/farm_rows_perspective_barn.jpg";
 
 interface SiteSettings {
   storyTitle?: string;

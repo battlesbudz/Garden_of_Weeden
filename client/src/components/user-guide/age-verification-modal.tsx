@@ -2,7 +2,8 @@ import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Shield, Award, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
+// Second lush sunny farm shot — used in age verification as welcoming first impression
+import fieldRowsImage from "@assets/farm_rows_lush_sunny_2.jpg";
 
 interface AgeVerificationModalProps {
   isOpen: boolean;

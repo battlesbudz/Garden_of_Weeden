@@ -1,6 +1,8 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Handshake, Leaf, Sprout } from "lucide-react";
-import fieldRowsImage from "@assets/AISelect_20251103_131607_Instagram_1762194447870.jpg";
+// Contrasting pair: overcast wide-field (shows scale) + mature canopy rows (shows yield)
+import farmOvercastImage from "@assets/farm_rows_overcast_wide.jpg";
+import farmMatureImage from "@assets/farm_rows_mature_canopy.jpg";
 
 const proofPoints = [
   {
@@ -48,7 +50,19 @@ export default function LocalFarmNetworkSection() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.65, delay: prefersReducedMotion ? 0 : 0.1 }}
         >
-          <img src={fieldRowsImage} alt="Garden of Weeden farm rows near Buffalo" className="h-64 w-full object-cover" />
+          {/* Two-photo grid: overcast wide shot on top, mature canopy below */}
+          <div className="grid grid-cols-2 gap-0.5 bg-green-500/10">
+            <img
+              src={farmOvercastImage}
+              alt="Garden of Weeden farm rows on overcast day — full field scale near Buffalo"
+              className="h-48 w-full object-cover"
+            />
+            <img
+              src={farmMatureImage}
+              alt="Garden of Weeden mature cannabis canopy rows — mid-season growth"
+              className="h-48 w-full object-cover"
+            />
+          </div>
           <div className="divide-y divide-white/10">
             {proofPoints.map((point) => {
               const Icon = point.icon;
