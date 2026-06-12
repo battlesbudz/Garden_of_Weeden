@@ -5,20 +5,20 @@ const actions = [
   {
     icon: ShoppingBag,
     label: "Shop the menu",
-    title: "See what is available now.",
+    title: "See what's available now.",
     text: "Browse current flower, pre-rolls, vapes, edibles, beverages, and regional craft drops.",
     href: "/shop",
     cta: "View Current Menu",
-    primary: true,
+    accent: true,
   },
   {
     icon: CalendarDays,
     label: "Book an event",
     title: "Bring the mobile weed bar to your gathering.",
-    text: "For private parties, events, and Forbidden Fruit lounge bookings, contact the company for scheduling.",
+    text: "For private parties, events, and Forbidden Fruit lounge bookings, contact us for scheduling.",
     href: "tel:+17164201591",
     cta: "Book a Private Event",
-    primary: true,
+    accent: true,
   },
   {
     icon: Leaf,
@@ -27,35 +27,42 @@ const actions = [
     text: "Learn how Garden of Weeden connects its own farm, regional growers, and Buffalo-area cannabis experiences.",
     href: "/about",
     cta: "About Garden of Weeden",
-    primary: false,
+    accent: false,
   },
 ];
 
 export default function HomeActionRouterSection() {
   return (
-    <section className="bg-battles-black py-14 text-white">
+    <section className="bg-green-950 py-14 text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-4 lg:grid-cols-3">
+        <div className="grid gap-5 lg:grid-cols-3">
           {actions.map((action) => {
             const Icon = action.icon;
-            const className = action.primary
-              ? "border-green-500/35 bg-midnight-grove/55"
-              : "border-white/15 bg-white/5";
 
             const content = (
-              <div className={`flex h-full flex-col border p-6 transition hover:border-green-400 ${className}`}>
+              <div
+                className={`flex h-full flex-col rounded-xl border p-7 transition-all hover:scale-[1.01] ${
+                  action.accent
+                    ? "border-green-500/50 bg-black/40 hover:border-green-400"
+                    : "border-white/20 bg-black/25 hover:border-white/50"
+                }`}
+              >
                 <div className="flex items-center gap-3">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-700 text-white">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-600 text-white">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
-                  <p className="font-garden text-xs font-semibold uppercase tracking-[0.22em] text-green-400">
+                  <p className="font-garden text-xs font-bold uppercase tracking-[0.22em] text-green-300">
                     {action.label}
                   </p>
                 </div>
-                <h2 className="mt-5 font-storybook text-3xl leading-tight text-parchment">{action.title}</h2>
-                <p className="mt-3 flex-1 font-garden text-sm leading-relaxed text-gray-300">{action.text}</p>
-                <span className="mt-6 inline-flex font-garden text-sm font-bold text-green-300">
-                  {action.cta}
+                <h2 className="mt-5 font-storybook text-2xl font-semibold leading-snug text-white">
+                  {action.title}
+                </h2>
+                <p className="mt-3 flex-1 font-garden text-sm leading-relaxed text-gray-100">
+                  {action.text}
+                </p>
+                <span className="mt-6 inline-flex items-center gap-1 font-garden text-sm font-bold text-green-300">
+                  {action.cta} →
                 </span>
               </div>
             );
