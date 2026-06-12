@@ -32,7 +32,15 @@ if (process.env.SENDGRID_API_KEY) {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Serve uploaded files statically
-  app.use("/uploads", express.static(path.join(process.cwd(), "public", "uploads")));
+  app.use("/uploads", express.static(path.join(process.cwd(), "public", "uploads"), {
+    setHeaders: (res, filePath) => {
+      const extension = path.extname(filePath).toLowerCase();
+      if (extension === ".svg") {
+        res.setHeader("Content-Type", "application/octet-stream");
+        res.setHeader("Content-Disposition", "attachment");
+      }
+    },
+  }));
 
   // Public health endpoint for Railway. This must not require an auth session.
   app.get("/health", (_req, res) => {

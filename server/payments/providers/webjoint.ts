@@ -21,6 +21,7 @@ import type {
   RefundRequest,
   RefundResult,
 } from '../provider-interface';
+import { createHmac, timingSafeEqual } from "crypto";
 
 export class WebJointProvider implements PaymentProvider {
   name = 'webjoint';
@@ -225,8 +226,20 @@ export class WebJointProvider implements PaymentProvider {
     orderId?: number;
     status?: string;
   }> {
-    if (this.webhookSecret && signature) {
-      // Implement signature verification based on WebJoint's webhook format
+    if (this.webhookSecret) {
+      if (!signature) {
+        throw new Error("Missing payment webhook signature");
+      }
+
+      const rawPayload = typeof payload === "string" ? payload : JSON.stringify(payload);
+      const provided = signature.replace("sha256=", "");
+      const expected = createHmac("sha256", this.webhookSecret).update(rawPayload).digest("hex");
+
+      const expectedBuffer = Buffer.from(expected, "utf8");
+      const providedBuffer = Buffer.from(provided, "utf8");
+      if (expectedBuffer.length !== providedBuffer.length || !timingSafeEqual(expectedBuffer, providedBuffer)) {
+        throw new Error("Invalid payment webhook signature");
+      }
     }
 
     const data = payload as Record<string, unknown>;

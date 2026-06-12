@@ -2,6 +2,7 @@ import type { Express, Request, Response } from "express";
 import { storage } from "../storage";
 import { z } from "zod";
 import crypto from "crypto";
+import { getSessionUserId } from "../auth";
 
 const addToCartSchema = z.object({
   productId: z.number(),
@@ -36,7 +37,7 @@ export function registerCartRoutes(app: Express) {
   // Get or create cart for current user/session
   app.get("/api/cart", async (req: Request, res: Response) => {
     try {
-      const userId = (req as any).user?.claims?.sub;
+      const userId = getSessionUserId(req);
       const sessionId = getCartSessionId(req, res);
       
       const cart = await storage.getOrCreateCart(userId, sessionId);
@@ -52,7 +53,7 @@ export function registerCartRoutes(app: Express) {
   // Add item to cart
   app.post("/api/cart/items", async (req: Request, res: Response) => {
     try {
-      const userId = (req as any).user?.claims?.sub;
+      const userId = getSessionUserId(req);
       const sessionId = getCartSessionId(req, res);
       
       const parsed = addToCartSchema.safeParse(req.body);
@@ -117,6 +118,9 @@ export function registerCartRoutes(app: Express) {
   app.patch("/api/cart/items/:itemId", async (req: Request, res: Response) => {
     try {
       const itemId = parseInt(req.params.itemId);
+      if (Number.isNaN(itemId)) {
+        return res.status(400).json({ message: "Invalid cart item id" });
+      }
       
       const parsed = updateQuantitySchema.safeParse(req.body);
       if (!parsed.success) {
@@ -126,14 +130,28 @@ export function registerCartRoutes(app: Express) {
       const { quantity } = parsed.data;
       
       if (quantity === 0) {
-        await storage.removeFromCart(itemId);
-      } else {
-        // Get the cart item to check the product and shop item
-        const userId = (req as any).user?.claims?.sub;
+        const userId = getSessionUserId(req);
         const sessionId = getCartSessionId(req, res);
         const cart = await storage.getOrCreateCart(userId, sessionId);
         const existingCart = await storage.getCartWithItems(cart.id);
         const cartItem = existingCart?.items.find(item => item.id === itemId);
+
+        if (!cartItem) {
+          return res.status(404).json({ message: "Cart item not found" });
+        }
+
+        await storage.removeFromCart(itemId);
+      } else {
+        // Get the cart item to check the product and shop item
+        const userId = getSessionUserId(req);
+        const sessionId = getCartSessionId(req, res);
+        const cart = await storage.getOrCreateCart(userId, sessionId);
+        const existingCart = await storage.getCartWithItems(cart.id);
+        const cartItem = existingCart?.items.find(item => item.id === itemId);
+
+        if (!cartItem) {
+          return res.status(404).json({ message: "Cart item not found" });
+        }
         
         if (cartItem) {
           // Check stock availability
@@ -153,7 +171,7 @@ export function registerCartRoutes(app: Express) {
       }
       
       // Get the user's cart and return it
-      const userId = (req as any).user?.claims?.sub;
+      const userId = getSessionUserId(req);
       const sessionId = getCartSessionId(req, res);
       const cart = await storage.getOrCreateCart(userId, sessionId);
       const cartWithItems = await storage.getCartWithItems(cart.id);
@@ -169,14 +187,25 @@ export function registerCartRoutes(app: Express) {
   app.delete("/api/cart/items/:itemId", async (req: Request, res: Response) => {
     try {
       const itemId = parseInt(req.params.itemId);
+      if (Number.isNaN(itemId)) {
+        return res.status(400).json({ message: "Invalid cart item id" });
+      }
       
+      const userId = getSessionUserId(req);
+      const sessionId = getCartSessionId(req, res);
+      const cart = await storage.getOrCreateCart(userId, sessionId);
+      const existingCart = await storage.getCartWithItems(cart.id);
+      const cartItem = existingCart?.items.find(item => item.id === itemId);
+
+      if (!cartItem) {
+        return res.status(404).json({ message: "Cart item not found" });
+      }
+
       await storage.removeFromCart(itemId);
       
       // Get the user's cart and return it
-      const userId = (req as any).user?.claims?.sub;
-      const sessionId = getCartSessionId(req, res);
-      const cart = await storage.getOrCreateCart(userId, sessionId);
-      const cartWithItems = await storage.getCartWithItems(cart.id);
+      const updatedCart = await storage.getOrCreateCart(userId, sessionId);
+      const cartWithItems = await storage.getCartWithItems(updatedCart.id);
       
       res.json(cartWithItems);
     } catch (error) {
@@ -188,7 +217,7 @@ export function registerCartRoutes(app: Express) {
   // Clear cart
   app.delete("/api/cart", async (req: Request, res: Response) => {
     try {
-      const userId = (req as any).user?.claims?.sub;
+      const userId = getSessionUserId(req);
       const sessionId = getCartSessionId(req, res);
       
       const cart = await storage.getOrCreateCart(userId, sessionId);

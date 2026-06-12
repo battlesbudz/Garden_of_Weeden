@@ -21,6 +21,7 @@ import type {
   RefundRequest,
   RefundResult,
 } from '../provider-interface';
+import { createHmac, timingSafeEqual } from "crypto";
 
 export class PayboticProvider implements PaymentProvider {
   name = 'paybotic';
@@ -227,10 +228,20 @@ export class PayboticProvider implements PaymentProvider {
     orderId?: number;
     status?: string;
   }> {
-    // Verify webhook signature if webhook secret is configured
-    if (this.webhookSecret && signature) {
-      // Implement signature verification based on Paybotic's webhook format
-      // This is a placeholder - update when you receive webhook documentation
+    if (this.webhookSecret) {
+      if (!signature) {
+        throw new Error("Missing payment webhook signature");
+      }
+
+      const rawPayload = typeof payload === "string" ? payload : JSON.stringify(payload);
+      const provided = signature.replace("sha256=", "");
+      const expected = createHmac("sha256", this.webhookSecret).update(rawPayload).digest("hex");
+
+      const expectedBuffer = Buffer.from(expected, "utf8");
+      const providedBuffer = Buffer.from(provided, "utf8");
+      if (expectedBuffer.length !== providedBuffer.length || !timingSafeEqual(expectedBuffer, providedBuffer)) {
+        throw new Error("Invalid payment webhook signature");
+      }
     }
 
     const data = payload as Record<string, unknown>;

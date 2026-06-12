@@ -12,6 +12,7 @@ import { storage } from "./storage";
 import { db } from "./db";
 import { users } from "@shared/schema";
 import { eq, or, sql } from "drizzle-orm";
+import type { Request } from "express";
 
 function getAppUrl(): string | undefined {
   if (process.env.APP_URL) return process.env.APP_URL;
@@ -56,25 +57,38 @@ const getOidcConfig = memoize(
   { maxAge: 3600 * 1000 },
 );
 
+function getRequiredEnvVar(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`${name} is required for secure startup`);
+  }
+  return value;
+}
+
+export function getSessionUserId(req: Request): string | undefined {
+  const user = req.user as any;
+  return user?.claims?.sub ?? user?.id;
+}
+
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
   const pgStore = connectPg(session);
   const sessionStore = new pgStore({
     conString: process.env.DATABASE_URL,
-    createTableIfMissing: false,
+    createTableIfMissing: true,
     ttl: sessionTtl,
     tableName: "sessions",
   });
 
   return session({
-    secret: process.env.SESSION_SECRET || "change-me-before-production",
+    secret: getRequiredEnvVar("SESSION_SECRET"),
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: "strict",
       maxAge: sessionTtl,
     },
   });
@@ -321,13 +335,14 @@ export async function setupAuth(app: Express) {
 }
 
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
+  const userId = getSessionUserId(req);
   const user = req.user as any;
 
-  if (!req.isAuthenticated() || !user) {
+  if (!req.isAuthenticated() || !userId) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
-  if (user.provider === "local" && user.id) return next();
+  if (user?.provider === "local") return next();
 
   if (!user.expires_at) {
     return res.status(401).json({ message: "Unauthorized" });
@@ -357,8 +372,7 @@ export const isAuthenticated: RequestHandler = async (req, res, next) => {
 
 export const isAdmin: RequestHandler = async (req, res, next) => {
   await isAuthenticated(req, res, async () => {
-    const user = req.user as any;
-    const userId = user?.claims?.sub || user?.id;
+    const userId = getSessionUserId(req);
     if (!userId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
