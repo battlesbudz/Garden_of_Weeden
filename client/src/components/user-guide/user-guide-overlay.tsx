@@ -11,13 +11,9 @@ import {
   Play, 
   CheckCircle, 
   Navigation, 
-  MessageSquare,
   Calendar,
-  Award,
   BookOpen,
-  Users,
   MapPin,
-  Coffee,
   Leaf
 } from 'lucide-react';
 
@@ -29,7 +25,7 @@ interface GuideStep {
   position: 'top' | 'bottom' | 'left' | 'right' | 'center';
   action?: 'click' | 'hover' | 'scroll';
   icon: React.ComponentType<any>;
-  category: 'navigation' | 'features' | 'community' | 'rewards';
+  category: 'navigation' | 'features';
 }
 
 const guideSteps: GuideStep[] = [
@@ -142,10 +138,6 @@ export function UserGuideOverlay({ isOpen, onClose, onComplete }: UserGuideOverl
         return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
       case 'features':
         return 'bg-battles-gold/20 text-battles-gold border-battles-gold/30';
-      case 'community':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'rewards':
-        return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
       default:
         return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     }
