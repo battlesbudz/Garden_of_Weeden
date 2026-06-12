@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
 import { z } from "zod";
 import { eq, or } from "drizzle-orm";
-import { isAuthenticated } from "../auth";
+import { isAuthenticated, getSessionUserId } from "../auth";
 import { storage } from "../storage";
 import { db } from "../db";
 import { users } from "@shared/schema";
@@ -28,6 +28,41 @@ const updateMeSchema = z.object({
   currentPassword: z.string().optional(),
   newPassword: z.string().min(8).optional(),
 });
+
+type RateBucket = {
+  count: number;
+  resetAt: number;
+};
+
+const rateLimitBuckets = new Map<string, RateBucket>();
+
+function createRateLimiter(
+  maxAttempts: number,
+  windowMs: number,
+  keyPrefix: string,
+  keySelector?: (req: any) => string,
+) {
+  return (req: any, res: any, next: any) => {
+    const keySource = keySelector?.(req) || req.ip || "unknown";
+    const key = `${keyPrefix}:${keySource}`;
+    const now = Date.now();
+    const bucket = rateLimitBuckets.get(key) || { count: 0, resetAt: now + windowMs };
+
+    if (bucket.resetAt <= now) {
+      bucket.count = 0;
+      bucket.resetAt = now + windowMs;
+    }
+
+    bucket.count += 1;
+    rateLimitBuckets.set(key, bucket);
+
+    if (bucket.count > maxAttempts) {
+      return res.status(429).json({ message: "Too many requests. Please try again later." });
+    }
+
+    return next();
+  };
+}
 
 function publicUser(user: any) {
   if (!user) return null;
@@ -101,12 +136,12 @@ export function registerAuthRoutes(app: Express) {
     }
   });
 
-  app.patch("/api/auth/me", isAuthenticated, async (req: any, res, next) => {
+  app.patch("/api/auth/me", isAuthenticated, createRateLimiter(5, 15 * 60 * 1000, "auth-update", (req) => getSessionUserId(req) || req.user?.id || req.ip || "unknown"), async (req: any, res, next) => {
     try {
       const parsed = updateMeSchema.safeParse(req.body);
       if (!parsed.success) return res.status(400).json({ message: "Invalid account details" });
 
-      const userId = req.user?.claims?.sub || req.user?.id;
+      const userId = getSessionUserId(req);
       const current = userId ? await storage.getUser(userId) : undefined;
       if (!current) return res.status(401).json({ message: "Unauthorized" });
 
