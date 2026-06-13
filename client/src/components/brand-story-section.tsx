@@ -14,10 +14,15 @@ interface SiteSettings {
 export default function BrandStorySection() {
   const prefersReducedMotion = useReducedMotion();
   const { data: settings } = useQuery<SiteSettings>({ queryKey: ["/api/site-settings"] });
+  const staleStoryTexts = new Set([
+    "Garden of Weeden is a NYS licensed microbusiness and boutique cannabis dispensary built around a Farm to Flame concept. Our budtenders know the farmer partners, cultivation practices, and craft products we offer.",
+  ]);
 
   const storyTitle = settings?.storyTitle || "What Farm to Flame Means";
   const storyText =
-    settings?.storyText ||
+    settings?.storyText && !staleStoryTexts.has(settings.storyText)
+      ? settings.storyText
+      :
     "Farm to Flame is not a slogan. Our branded flower and pre-rolls are grown by our own farm 15 miles south of Buffalo, and our partner products come from local growers and microbusinesses we know through Cannabis Farmers Alliance relationships.";
   const storyButton1Text = settings?.storyButton1Text || "Our Full Story";
   const storyButton2Text = settings?.storyButton2Text || "Book a Private Event";
