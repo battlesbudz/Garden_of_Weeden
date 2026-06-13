@@ -14,17 +14,17 @@ const trustPoints = [
   {
     icon: Sprout,
     title: "Own-farm flower",
-    text: "Garden of Weeden branded flower and pre-rolls can come from the company's own farm 15 miles south of Buffalo.",
+    text: "Our branded flower and pre-rolls can come from our own farm 15 miles south of Buffalo.",
   },
   {
     icon: Handshake,
     title: "Regional relationships",
-    text: "The wider selection supports small farms, microbusinesses, and producers in Central and Western New York.",
+    text: "Our wider menu supports small farms, microbusinesses, and producers in Central and Western New York.",
   },
   {
     icon: Leaf,
     title: "Cannabis Farmers Alliance",
-    text: "Producer relationships are connected through the Cannabis Farmers Alliance and local craft cannabis community.",
+    text: "Our producer relationships are connected through the Cannabis Farmers Alliance and the local craft cannabis community.",
   },
 ];
 
@@ -74,13 +74,13 @@ export default function About() {
           <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:px-8 lg:py-20">
             <div>
               <p className="font-garden text-sm font-bold uppercase tracking-[0.28em] text-green-800">
-                About Garden of Weeden
+                About us
               </p>
               <h1 className="mt-5 max-w-4xl font-enchanted text-6xl leading-[0.9] text-battles-black md:text-8xl">
-                The story behind the Garden.
+                Our story behind the Garden.
               </h1>
               <p className="mt-7 max-w-2xl font-garden text-xl font-semibold leading-relaxed text-black/75">
-                Garden of Weeden is a Buffalo-area cannabis microbusiness built around its own farm, regional craft relationships, the Forbidden Fruit lounge, and a mobile weed bar for private events.
+                We are a Buffalo-area cannabis microbusiness built around our own farm, regional craft relationships, the Forbidden Fruit lounge, and a mobile weed bar for private events.
               </p>
 
               <div className="mt-8 grid gap-3 border-y border-black/15 py-5 font-garden text-sm font-semibold text-black/70 sm:grid-cols-3">
@@ -118,7 +118,7 @@ export default function About() {
                   <div className="border border-green-800/25 bg-white/55 p-5 shadow-xl">
                     <p className="font-storybook text-3xl leading-none text-battles-black">Why it matters</p>
                     <p className="mt-3 font-garden text-sm leading-relaxed text-black/70">
-                      Their name-brand flower can be grown by the same company selling it.
+                      We can grow our name-brand flower and sell it ourselves.
                     </p>
                   </div>
                 </div>
@@ -142,7 +142,7 @@ export default function About() {
                 The product story starts closer to home.
               </h2>
               <p className="mt-6 font-garden text-lg leading-relaxed text-gray-300">
-                Farm to Flame means Garden of Weeden can connect the sale, the staff knowledge, and the grower story. Their own branded flower can move from their farm 15 miles south of Buffalo to their own dispensary and lounge, without a mystery middleman between the grow and the customer.
+                Farm to Flame means we can connect the sale, the staff knowledge, and the grower story. Our own branded flower can move from our farm 15 miles south of Buffalo to our own dispensary and lounge, without a mystery middleman between the grow and the customer.
               </p>
             </div>
 
@@ -170,9 +170,9 @@ export default function About() {
                 <p className="font-garden text-sm font-semibold uppercase tracking-[0.24em] text-green-400">
                   What you can do here
                 </p>
-              <h2 className="mt-4 font-enchanted text-5xl leading-none text-parchment md:text-7xl">
-                Lounge, connect, and book Garden of Weeden.
-              </h2>
+                <h2 className="mt-4 font-enchanted text-5xl leading-none text-parchment md:text-7xl">
+                  Lounge, connect, and book with us.
+                </h2>
               </div>
               <div className="grid gap-4 md:grid-cols-3">
                 {offerings.map((offering) => {
@@ -208,7 +208,7 @@ export default function About() {
                     What does Farm to Flame mean?
                   </AccordionTrigger>
                   <AccordionContent className="font-garden text-sm leading-relaxed text-gray-300">
-                    It is Garden of Weeden's way of describing cannabis with a closer local source: house-grown branded flower from their own farm, plus regional craft products from growers and producers they know.
+                    It is our way of describing cannabis with a closer local source: house-grown branded flower from our own farm, plus regional craft products from growers and producers we know.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="microbusiness" className="border-white/10">
@@ -216,7 +216,7 @@ export default function About() {
                     What is a cannabis microbusiness?
                   </AccordionTrigger>
                   <AccordionContent className="font-garden text-sm leading-relaxed text-gray-300">
-                    For Garden of Weeden, it means the business is not only a dispensary. It can connect cultivation, production, retail, and on-site consumption into one local cannabis experience.
+                    For us, it means we are not only a dispensary. We can connect cultivation, production, retail, and on-site consumption into one local cannabis experience.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="menu-source" className="border-white/10">
@@ -224,7 +224,7 @@ export default function About() {
                     Where do the products come from?
                   </AccordionTrigger>
                   <AccordionContent className="font-garden text-sm leading-relaxed text-gray-300">
-                    Garden of Weeden branded products can come from their own farm. The broader selection includes products from regional small farms, microbusinesses, and craft producers connected through relationships like the Cannabis Farmers Alliance.
+                    Our branded products can come from our own farm. The broader menu includes products from regional small farms, microbusinesses, and craft producers connected through relationships like the Cannabis Farmers Alliance.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="lounge" className="border-white/10">
@@ -232,7 +232,7 @@ export default function About() {
                     What is the Forbidden Fruit lounge?
                   </AccordionTrigger>
                   <AccordionContent className="font-garden text-sm leading-relaxed text-gray-300">
-                    The Forbidden Fruit lounge is Garden of Weeden's on-site cannabis consumption lounge for guests, events, and community experiences.
+                    The Forbidden Fruit lounge is our on-site cannabis consumption lounge for guests, events, and community experiences.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="booking" className="border-white/10">
@@ -240,7 +240,7 @@ export default function About() {
                     How do I book the mobile weed bar?
                   </AccordionTrigger>
                   <AccordionContent className="font-garden text-sm leading-relaxed text-gray-300">
-                    Contact Garden of Weeden at <a className="font-bold text-green-300" href="tel:+17164201591">(716) 420-1591</a> for private event scheduling.
+                    Contact us at <a className="font-bold text-green-300" href="tel:+17164201591">(716) 420-1591</a> for private event scheduling.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -252,13 +252,13 @@ export default function About() {
           <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
             <div>
               <p className="font-garden text-sm font-semibold uppercase tracking-[0.22em] text-green-400">
-                Visit Garden of Weeden
+                Visit us
               </p>
               <h2 className="mt-2 font-storybook text-3xl text-parchment">
                 Buffalo-area craft cannabis with off-street parking.
               </h2>
               <p className="mt-2 font-garden text-sm leading-relaxed text-gray-300">
-                Ask the team about current Farm to Flame products, or contact Garden of Weeden to book the mobile weed bar.
+                Shop the menu, ask us about current Farm to Flame products, or contact us to book the mobile weed bar.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
