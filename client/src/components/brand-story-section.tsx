@@ -18,7 +18,7 @@ export default function BrandStorySection() {
   const storyTitle = settings?.storyTitle || "What Farm to Flame Means";
   const storyText =
     settings?.storyText ||
-    "Farm to Flame is not a slogan. Garden of Weeden branded flower and pre-rolls are grown by our own farm 15 miles south of Buffalo, and our partner products come from local growers and microbusinesses we know through Cannabis Farmers Alliance relationships.";
+    "Farm to Flame is not a slogan. Our branded flower and pre-rolls are grown by our own farm 15 miles south of Buffalo, and our partner products come from local growers and microbusinesses we know through Cannabis Farmers Alliance relationships.";
   const storyButton1Text = settings?.storyButton1Text || "Our Full Story";
   const storyButton2Text = settings?.storyButton2Text || "Book a Private Event";
 
@@ -47,7 +47,7 @@ export default function BrandStorySection() {
             />
           </div>
           <p className="mt-3 text-center font-garden text-xs font-bold uppercase tracking-widest text-green-800/70">
-            Garden of Weeden Farm · Est. 2024 · Buffalo, NY
+            Our Farm · Est. 2024 · Buffalo, NY
           </p>
         </motion.div>
 
@@ -59,7 +59,7 @@ export default function BrandStorySection() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.75, delay: 0.1 }}
         >
           <p className="font-garden text-sm font-bold uppercase tracking-[0.26em] text-green-700">
-            Our Story
+            Our story
           </p>
           <h2 className="mt-3 font-enchanted text-5xl leading-tight text-black md:text-6xl">
             {storyTitle}

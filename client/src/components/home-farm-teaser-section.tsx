@@ -23,8 +23,8 @@ export default function HomeFarmTeaserSection() {
             House-grown flower. Regional craft partners.
           </h2>
           <p className="mt-5 font-garden text-lg leading-relaxed text-black/80">
-            Garden of Weeden branded flower comes from the company's own farm 15 miles south of Buffalo.
-            The wider selection brings in regional small farms and microbusinesses connected through the Cannabis Farmers Alliance.
+            Our branded flower comes from our own farm 15 miles south of Buffalo.
+            Our wider menu brings in regional small farms and microbusinesses connected through the Cannabis Farmers Alliance.
           </p>
 
           <div className="mt-6 grid grid-cols-2 gap-3 font-garden text-sm font-semibold text-black/70">

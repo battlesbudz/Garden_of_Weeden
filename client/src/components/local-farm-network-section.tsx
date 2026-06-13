@@ -7,12 +7,12 @@ const proofPoints = [
   {
     icon: Sprout,
     title: "Own farm flower",
-    text: "Garden of Weeden branded flower and pre-rolls come from the company farm 15 miles south of Buffalo.",
+    text: "Our branded flower and pre-rolls come from our farm 15 miles south of Buffalo.",
   },
   {
     icon: Leaf,
     title: "Cannabis Farmers Alliance",
-    text: "The wider selection supports local small farms, microbusinesses, and regional producers they know.",
+    text: "Our wider menu supports local small farms, microbusinesses, and regional producers we know.",
   },
   {
     icon: Handshake,
@@ -42,8 +42,8 @@ export default function LocalFarmNetworkSection() {
             House-grown flower, sold by the source.
           </h2>
           <p className="mt-5 font-garden text-lg leading-relaxed text-gray-100">
-            Most dispensaries buy flower from someone else. Garden of Weeden is a microbusiness —
-            its name-brand cannabis moves from their own cultivation directly to their own dispensary and lounge.
+            Most dispensaries buy flower from someone else. We are a microbusiness —
+            our name-brand cannabis moves from our own cultivation directly to our own dispensary and lounge.
           </p>
 
           <div className="mt-8 space-y-4">

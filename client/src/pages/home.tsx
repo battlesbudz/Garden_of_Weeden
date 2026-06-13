@@ -20,7 +20,7 @@ export default function Home() {
     <div className="min-h-screen overflow-x-hidden bg-battles-black">
       <SEOHead
         title="Garden of Weeden - Farm to Flame Cannabis | Buffalo, NY"
-        description="Garden of Weeden is a NYS licensed Farm to Flame cannabis microbusiness near Buffalo, NY, offering local small-batch flower from its own farm and regional craft growers connected through Cannabis Farmers Alliance."
+        description="We are a NYS licensed Farm to Flame cannabis microbusiness near Buffalo, NY, offering local small-batch flower from our own farm and regional craft growers connected through Cannabis Farmers Alliance."
         keywords={[
           "Garden of Weeden",
           "Cannabis Farmers Alliance",

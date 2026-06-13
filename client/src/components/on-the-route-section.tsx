@@ -12,7 +12,7 @@ export default function OnTheRouteSection() {
             Rooted in the neighborhood.
           </h2>
           <p className="mt-3 max-w-2xl font-garden text-gray-300">
-            Passing through by car, on foot, or along the local bike route, Garden of Weeden is an easy
+            Passing through by car, on foot, or along the local bike route, we are an easy
             stop for Farm to Flame products, lounge events, and local cannabis conversations, with off-street parking available.
           </p>
         </div>
