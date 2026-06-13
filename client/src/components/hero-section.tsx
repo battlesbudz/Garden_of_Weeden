@@ -22,6 +22,7 @@ export default function HeroSection() {
 
   const staleHeroSubtitles = new Set([
     "A Buffalo cannabis microbusiness with its own farm, the Forbidden Fruit lounge, and a mobile weed bar built for private events.",
+    "Buffalo's Farm to Flame cannabis microbusiness: house-grown flower, regional craft products, the Forbidden Fruit lounge, and a mobile weed bar for private events.",
   ]);
   const staleHeroButtonLabels = new Set(["Our Story", "Book a Private Event"]);
   const staleStoryButtonLabels = new Set(["Book the Mobile Weed Bar"]);
