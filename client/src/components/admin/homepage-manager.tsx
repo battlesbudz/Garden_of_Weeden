@@ -90,7 +90,7 @@ const defaultSettings: HomepageSettings = {
   heroTagline: "Farm to Flame Cannabis",
   heroSubtitle: "We are Buffalo's Farm to Flame cannabis microbusiness: house-grown flower, regional craft products, the Forbidden Fruit lounge, and a mobile weed bar for private events.",
   heroShopButtonText: "Our Story",
-  heroStoryButtonText: "Book a Private Event",
+  heroStoryButtonText: "Book Our Mobile Weed Bar",
   heroVeteranBadge: "Farm to Flame",
 
   // Social Proof Section
