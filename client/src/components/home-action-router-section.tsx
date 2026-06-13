@@ -15,9 +15,9 @@ const actions = [
     icon: Leaf,
     label: "Learn the story",
     title: "Understand Farm to Flame.",
-    text: "Learn how Garden of Weeden connects its own farm, regional growers, and Buffalo-area cannabis experiences.",
+    text: "Learn how we connect our own farm, regional growers, and Buffalo-area cannabis experiences.",
     href: "/about",
-    cta: "About Garden of Weeden",
+    cta: "About us",
     accent: false,
   },
   {

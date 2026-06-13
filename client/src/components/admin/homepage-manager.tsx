@@ -88,9 +88,9 @@ const defaultSettings: HomepageSettings = {
   // Hero Section
   heroTitle: "Garden of Weeden",
   heroTagline: "Farm to Flame Cannabis",
-  heroSubtitle: "Buffalo's Farm to Flame cannabis microbusiness: house-grown flower, regional craft products, the Forbidden Fruit lounge, and a mobile weed bar for private events.",
+  heroSubtitle: "We are Buffalo's Farm to Flame cannabis microbusiness: house-grown flower, regional craft products, the Forbidden Fruit lounge, and a mobile weed bar for private events.",
   heroShopButtonText: "Our Story",
-  heroStoryButtonText: "Book a Private Event",
+  heroStoryButtonText: "Book Our Mobile Weed Bar",
   heroVeteranBadge: "Farm to Flame",
 
   // Social Proof Section
@@ -120,7 +120,7 @@ const defaultSettings: HomepageSettings = {
 
   // Brand Story Section
   storyTitle: "Farm to Flame",
-  storyText: "Garden of Weeden is a NYS licensed microbusiness and boutique cannabis dispensary built around a Farm to Flame concept. Our budtenders know the farmer partners, cultivation practices, and craft products we offer.",
+  storyText: "We are a NYS licensed microbusiness and boutique cannabis dispensary built around a Farm to Flame concept. Our budtenders know the farmer partners, cultivation practices, and craft products we offer.",
   storyButton1Text: "Read Our Farm Story",
   storyButton2Text: "Book a Private Event",
 
