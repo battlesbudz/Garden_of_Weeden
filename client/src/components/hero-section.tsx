@@ -24,7 +24,7 @@ export default function HeroSection() {
     "A Buffalo cannabis microbusiness with its own farm, the Forbidden Fruit lounge, and a mobile weed bar built for private events.",
     "Buffalo's Farm to Flame cannabis microbusiness: house-grown flower, regional craft products, the Forbidden Fruit lounge, and a mobile weed bar for private events.",
   ]);
-  const staleHeroButtonLabels = new Set(["Our Story"]);
+  const staleHeroButtonLabels = new Set(["Our Story", "Book a Private Event"]);
   staleHeroButtonLabels.add("View Current Menu");
   staleHeroButtonLabels.add("View Menu");
   staleHeroButtonLabels.add("Shop Current Menu");
